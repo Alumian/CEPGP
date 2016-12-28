@@ -1,0 +1,1724 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Button name="CEPGPHeaderButton" virtual="true">
+		<ButtonText name="$parentText"/>
+		<NormalFont inherits="GameFontNormal"/>
+		<HighlightFont inherits="GameFontHighlight"/>
+		<DisabledFont inherits="GameFontDisable"/>
+		<Scripts>
+			<OnClick>
+
+			</OnClick>
+		</Scripts>
+	</Button>
+	
+	<Button name="LootDistButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="360" y="15"/>
+		</Size>
+		<Frames>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentClass" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="80" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRank" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="150" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEP" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="247" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="289" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPR" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="329" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				CEPGP_LootDistButton_OnClick();
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="GuildButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="360" y="15"/>
+		</Size>
+		<Frames>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentClass" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="80" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRank" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="150" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="250" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="292" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPR" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="332" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				CEPGP_LootDistButton_OnClick();
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="RaidButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="360" y="15"/>
+		</Size>
+		<Frames>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentGroup" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="45" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRank" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="145" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="240" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="285" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPR" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="330" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				CEPGP_LootDistButton_OnClick();
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	
+	<Frame name="CEPGP_frame" parent="UIParent" hidden="true" enableMouse="true" toplevel="true" movable="true">
+		<Size>
+			<AbsDimension x="400" y="480" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<Color r="0" g="0" b="0" />
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Frames>
+			<Button name="CEPGP_button_guild" inherits="GameMenuButtonTemplate" text="Guild">
+                <Size>
+                    <AbsDimension x="100" y="21" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="CEPGP_frame">
+                        <Offset>
+                            <AbsDimension x="10" y="-12" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+						CEPGP_guild:Show();
+						CEPGP_raid:Hide();
+						CEPGP_loot:Hide();
+						CEPGP_distribute:Hide();
+						mode = "guild";
+						populateFrame();
+                    </OnClick>
+                </Scripts>
+            </Button>
+			<Button name="CEPGP_button_raid" inherits="GameMenuButtonTemplate" text="Raid">
+                <Size>
+                    <AbsDimension x="100" y="21" />
+                </Size>
+                <Anchors>
+                    <Anchor point="RIGHT" relativeTo="CEPGP_button_guild">
+                        <Offset>
+                            <AbsDimension x="100" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+						CEPGP_raid:Show();
+						CEPGP_guild:Hide();
+						CEPGP_loot:Hide();
+						CEPGP_distribute:Hide();
+						mode = "raid";
+						populateFrame();
+                    </OnClick>
+                </Scripts>
+            </Button>
+			<Button name="CEPGP_button_loot_dist" inherits="GameMenuButtonTemplate" text="Loot Distribution">
+                <Size>
+                    <AbsDimension x="125" y="21" />
+                </Size>
+                <Anchors>
+                    <Anchor point="RIGHT" relativeTo="CEPGP_button_raid">
+                        <Offset>
+                            <AbsDimension x="155" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+						CEPGP_guild:Hide();
+						CEPGP_raid:Hide();
+						CEPGP_loot:Show();
+						CEPGP_distribute:Hide();
+						mode = "loot";
+						cleanTable();
+						if LootFrame:IsVisible() == 1 then
+							LootFrame_Update();
+						end
+					</OnClick>
+                </Scripts>
+            </Button>
+			<Button name="CEPGP_frame_close" inherits="UIPanelCloseButton">
+                <Size>
+                    <AbsDimension x="40" y="40" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-3" y="-3" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+                        CEPGP_frame:Hide()
+                    </OnClick>
+                </Scripts>
+            </Button>
+			<Frame name="CEPGP_guild" enableMouse="true" toplevel="true" hidden="true">
+				<Size>
+					<AbsDimension x="400" y="450" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-30" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+				<Frame name="CEPGP_guild_scrollframe">
+						<Size>
+							<AbsDimension x="360" y="300"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_guild" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-75"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<ScrollFrame name="GuildScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="360" y="350"/>
+								</Size>
+								<Anchors>
+									<Anchor point="RIGHT">
+										<Offset>
+											<AbsDimension x="-7" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateGuildScrollBar); 
+									</OnVerticalScroll>
+									<OnShow>
+										CEPGP_UpdateGuildScrollBar();
+									</OnShow>
+								</Scripts>
+							</ScrollFrame>
+							<Button name="GuildButton1" inherits="GuildButtonTemplate" id="1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="5" y="-6"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton2" inherits="GuildButtonTemplate" id="2" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton1" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton3" inherits="GuildButtonTemplate" id="3" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton2" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton4" inherits="GuildButtonTemplate" id="4" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton3" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton5" inherits="GuildButtonTemplate" id="5" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton4" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton6" inherits="GuildButtonTemplate" id="6" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton5" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton7" inherits="GuildButtonTemplate" id="7" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton6" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton8" inherits="GuildButtonTemplate" id="8" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton7" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton9" inherits="GuildButtonTemplate" id="9" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton8" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton10" inherits="GuildButtonTemplate" id="10" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton9" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton11" inherits="GuildButtonTemplate" id="11" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton10" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton12" inherits="GuildButtonTemplate" id="12" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton11" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton13" inherits="GuildButtonTemplate" id="13" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton12" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton14" inherits="GuildButtonTemplate" id="14" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton13" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton15" inherits="GuildButtonTemplate" id="15" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton14" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton16" inherits="GuildButtonTemplate" id="16" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton15" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton17" inherits="GuildButtonTemplate" id="17" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton16" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GuildButton18" inherits="GuildButtonTemplate" id="18" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton17" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Scripts>
+							<OnLoad>
+								this:SetBackdropColor(0.1, 0.1, 0.1);
+							</OnLoad>
+						</Scripts>
+						</Frames>
+					</Frame>
+					<Button name="CEPGP_guild_name" inherits="CEPGPHeaderButton" text="Name">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="5" y="-50" />
+									<!--<AbsDimension x="40" y="0" />-->
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_guild_class" inherits="CEPGPHeaderButton" text="Class">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_guild_name">
+								<Offset>
+									<AbsDimension x="77" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_guild_rank" inherits="CEPGPHeaderButton" text="Rank">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_guild_class">
+								<Offset>
+									<AbsDimension x="70" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_guild_EP" inherits="CEPGPHeaderButton" text="EP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_guild_rank">
+								<Offset>
+									<AbsDimension x="90" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_guild_GP" inherits="CEPGPHeaderButton" text="GP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_guild_EP">
+								<Offset>
+									<AbsDimension x="42" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_guild_PR" inherits="CEPGPHeaderButton" text="PR">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_guild_GP">
+								<Offset>
+									<AbsDimension x="39" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_guild_add_EP" inherits="GameMenuButtonTemplate" text="Add Guild EP">
+						<Size>
+							<AbsDimension x="100" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="10" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_guild_decay" inherits="GameMenuButtonTemplate" text="Decay Guild EPGP">
+						<Size>
+							<AbsDimension x="120" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_guild_add_EP">
+								<Offset>
+									<AbsDimension x="115" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_guild_reset" inherits="GameMenuButtonTemplate" text="Reset All EPGP Standings">
+						<Size>
+							<AbsDimension x="160" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="-9" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_guild_mode" inherits="GameFontNormal" text="Current View: Guild">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnDragStart>
+						CEPGP_frame:StartMoving()
+					</OnDragStart>
+					<OnDragStop>
+						CEPGP_frame:StopMovingOrSizing()
+					</OnDragStop>
+				</Scripts>
+			</Frame>
+			<Frame name="CEPGP_raid" enableMouse="true" toplevel="true" hidden="true">
+				<Size>
+					<AbsDimension x="400" y="450" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-30" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_raid_mode" inherits="GameFontNormal" text="Current View: Raid">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Frame name="CEPGP_raid_scrollframe">
+						<Size>
+							<AbsDimension x="360" y="350"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_raid" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-75"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<ScrollFrame name="RaidScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="360" y="350"/>
+								</Size>
+								<Anchors>
+									<Anchor point="RIGHT">
+										<Offset>
+											<AbsDimension x="-7" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateRaidScrollBar); 
+									</OnVerticalScroll>
+									<OnShow>
+										CEPGP_UpdateRaidScrollBar();
+									</OnShow>
+								</Scripts>
+							</ScrollFrame>
+							<Button name="RaidButton1" inherits="RaidButtonTemplate" id="1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="5" y="-6"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton2" inherits="RaidButtonTemplate" id="2" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton1" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton3" inherits="RaidButtonTemplate" id="3" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton2" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton4" inherits="RaidButtonTemplate" id="4" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton3" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton5" inherits="RaidButtonTemplate" id="5" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton4" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton6" inherits="RaidButtonTemplate" id="6" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton5" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton7" inherits="RaidButtonTemplate" id="7" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton6" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton8" inherits="RaidButtonTemplate" id="8" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton7" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton9" inherits="RaidButtonTemplate" id="9" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton8" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton10" inherits="RaidButtonTemplate" id="10" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton9" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton11" inherits="RaidButtonTemplate" id="11" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton10" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton12" inherits="RaidButtonTemplate" id="12" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton11" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton13" inherits="RaidButtonTemplate" id="13" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton12" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton14" inherits="RaidButtonTemplate" id="14" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton13" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton15" inherits="RaidButtonTemplate" id="15" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton14" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton16" inherits="RaidButtonTemplate" id="16" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton15" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton17" inherits="RaidButtonTemplate" id="17" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton16" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="RaidButton18" inherits="RaidButtonTemplate" id="18" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="RaidButton17" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Scripts>
+							<OnLoad>
+								this:SetBackdropColor(0.1, 0.1, 0.1);
+							</OnLoad>
+						</Scripts>
+						</Frames>
+					</Frame>
+					<Button name="CEPGP_raid_group" inherits="CEPGPHeaderButton" text="Group">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="5" y="-50" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_raid_name" inherits="CEPGPHeaderButton" text="Name">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_raid_group">
+								<Offset>
+									<AbsDimension x="44" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_raid_rank" inherits="CEPGPHeaderButton" text="Rank">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_raid_name">
+								<Offset>
+									<AbsDimension x="97" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_raid_EP" inherits="CEPGPHeaderButton" text="EP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_raid_rank">
+								<Offset>
+									<AbsDimension x="84" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_raid_GP" inherits="CEPGPHeaderButton" text="GP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_raid_EP">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_raid_PR" inherits="CEPGPHeaderButton" text="PR">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_raid_GP">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_raid_add_EP" inherits="GameMenuButtonTemplate" text="Add Raid EP">
+						<Size>
+							<AbsDimension x="100" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="10" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnDragStart>
+						CEPGP_frame:StartMoving()
+					</OnDragStart>
+					<OnDragStop>
+						CEPGP_frame:StopMovingOrSizing()
+					</OnDragStop>
+				</Scripts>
+			</Frame>
+			<Frame name="CEPGP_loot" enableMouse="true" toplevel="true" hidden="true">
+				<Size>
+					<AbsDimension x="400" y="450" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-30" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_loot_mode" inherits="GameFontNormal" text="Current View: Loot Distribution">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="CEPGP_loot_distributing" inherits="GameMenuButtonTemplate" text="Distributing" hidden="true">
+						<Size>
+							<AbsDimension x="100" y="22" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="-15" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CEPGP_loot:Hide();
+								CEPGP_distribute:Show();
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_loot_announce" inherits="CEPGPHeaderButton" text="Announce">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="20" y="-10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_loot_item" inherits="CEPGPHeaderButton" text="Item">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_loot_announce">
+								<Offset>
+									<AbsDimension x="55" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_loot_GP" inherits="CEPGPHeaderButton" text="GP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_loot_item">
+								<Offset>
+									<AbsDimension x="240" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnDragStart>
+						CEPGP_frame:StartMoving()
+					</OnDragStart>
+					<OnDragStop>
+						CEPGP_frame:StopMovingOrSizing()
+					</OnDragStop>
+				</Scripts>
+			</Frame>
+			<Frame name="CEPGP_distribute" enableMouse="true" toplevel="true" hidden="true">
+				<Size>
+					<AbsDimension x="400" y="450" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-30" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_distribute_mode" inherits="GameFontNormal" text="Distributing Item">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP">
+									<Offset>
+										<AbsDimension x="0" y="-20" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_distribute_item" inherits="GameFontNormal" text="Item">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="50" y="-30" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_distribute_item_name" inherits="GameFontNormal">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="CEPGP_distribute">
+									<Offset>
+										<AbsDimension x="49" y="-45" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_distribute_GP_head" inherits="GameFontNormal" text="GP">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="337" y="-30" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_distribute_GP_value" inherits="GameFontNormal" text="0">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="BOTTOM" relativeTo="CEPGP_distribute_GP_head">
+									<Offset>
+										<AbsDimension x="0" y="-15" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Frame name="CEPGP_distribute_scrollframe">
+						<Size>
+							<AbsDimension x="360" y="350"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_distribute" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-75"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<ScrollFrame name="DistributeScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="360" y="350"/>
+								</Size>
+								<Anchors>
+									<Anchor point="RIGHT">
+										<Offset>
+											<AbsDimension x="-7" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										FauxScrollFrame_OnVerticalScroll(120, CEPGP_UpdateLootScrollBar); 
+									</OnVerticalScroll>
+									<OnShow>
+										CEPGP_UpdateLootScrollBar();
+									</OnShow>
+								</Scripts>
+							</ScrollFrame>
+							<Button name="LootDistButton1" inherits="LootDistButtonTemplate" id="1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="5" y="-6"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton2" inherits="LootDistButtonTemplate" id="2" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton1" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton3" inherits="LootDistButtonTemplate" id="3" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton2" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton4" inherits="LootDistButtonTemplate" id="4" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton3" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton5" inherits="LootDistButtonTemplate" id="5" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton4" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton6" inherits="LootDistButtonTemplate" id="6" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton5" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton7" inherits="LootDistButtonTemplate" id="7" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton6" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton8" inherits="LootDistButtonTemplate" id="8" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton7" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton9" inherits="LootDistButtonTemplate" id="9" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton8" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton10" inherits="LootDistButtonTemplate" id="10" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton9" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Scripts>
+							<OnLoad>
+								this:SetBackdropColor(0.1, 0.1, 0.1);
+							</OnLoad>
+						</Scripts>
+						</Frames>
+					</Frame>
+					<Button name="CEPGP_distribute_item_tex">
+						<Size>
+							<AbsDimension x="30" y="30" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="CEPGP_distribute_item_name">
+								<Offset>
+									<AbsDimension x="-32" y="5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_distribute_item_name_frame">
+						<Size>
+							<AbsDimension x="228" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="CENTER" relativeTo="CEPGP_distribute_item_name" />
+						</Anchors>
+					</Button>
+					<!--Display for the raid members-->
+					<Button name="CEPGP_distribute_raid_name" inherits="CEPGPHeaderButton" text="Name">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="5" y="-60" />
+									<!--<AbsDimension x="40" y="0" />-->
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CEPGP_LootDistSortResults("name");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_distribute_raid_class" inherits="CEPGPHeaderButton" text="Class">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_distribute_raid_name">
+								<Offset>
+									<AbsDimension x="80" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_distribute_raid_rank" inherits="CEPGPHeaderButton" text="Rank">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_distribute_raid_class">
+								<Offset>
+									<AbsDimension x="70" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_distribute_raid_EP" inherits="CEPGPHeaderButton" text="EP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_distribute_raid_rank">
+								<Offset>
+									<AbsDimension x="90" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_distribute_raid_GP" inherits="CEPGPHeaderButton" text="GP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_distribute_raid_EP">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CEPGP_distribute_raid_PR" inherits="CEPGPHeaderButton" text="PR">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_distribute_raid_GP">
+								<Offset>
+									<AbsDimension x="32" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnDragStart>
+						CEPGP_frame:StartMoving()
+					</OnDragStart>
+					<OnDragStop>
+						CEPGP_frame:StopMovingOrSizing()
+					</OnDragStop>
+				</Scripts>
+			</Frame>
+		</Frames>
+		
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+				this:RegisterEvent("CHAT_MSG_WHISPER");
+				this:RegisterEvent("ADDON_LOADED");
+				this:RegisterEvent("GUILD_ROSTER_UPDATE");
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving();
+            </OnDragStart>
+            <OnDragStop>
+				this:StopMovingOrSizing();
+            </OnDragStop>
+			<OnEvent>
+				CEPGP_OnEvent();
+			</OnEvent>
+		</Scripts>
+		
+	</Frame>
+
+	<Frame name="CEPGP_distribute_popup" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true">
+		<Size>
+			<AbsDimension x="400" y="245"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="CEPGP_distribute_popup_header" inherits="GameFontNormal" text="Distributing Item">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="CEPGP_distribute_popup">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_distribute_popup_title" inherits="GameFontNormal" text="Item Info">
+                    <Anchors>
+                        <Anchor point="BOTTOM" relativeTo="CEPGP_distribute_popup_header">
+                            <Offset>
+                                <AbsDimension x="0" y="-30"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="CEPGP_distribute_popup_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="16"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_distribute_popup);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CEPGP_distribute_popup_gp" inherits="GameMenuButtonTemplate" text="Give for GP">
+				<Size>
+					<AbsDimension x="100" y="80"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="20" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_distribute_popup);
+						CEPGP_distribute_popup_give(true);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CEPGP_distribute_popup_free" inherits="GameMenuButtonTemplate" text="Give for Free">
+				<Size>
+					<AbsDimension x="100" y="80"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-20" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_distribute_popup);
+						CEPGP_distribute_popup_give(false);
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CEPGP_context_popup" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="300" y="175"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="CEPGP_context_popup_header" inherits="GameFontNormal" text="Moderation">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_context_popup_title" inherits="GameFontNormal" text="Add Guild EP">
+                    <Anchors>
+                        <Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_header">
+                            <Offset>
+                                <AbsDimension x="0" y="-30"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+				<FontString name="CEPGP_context_popup_desc" inherits="GameFontNormal" text="Add Guild EP">
+                    <Anchors>
+                        <Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_title">
+                            <Offset>
+                                <AbsDimension x="0" y="-20"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+				<FontString name="CEPGP_context_amount_string" inherits="GameFontNormal" text="EP">
+                    <Anchors>
+                        <Anchor point="RIGHT">
+                            <Offset>
+                                <AbsDimension x="-110" y="0" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="CEPGP_context_amount" inherits="InputBoxTemplate">
+				<Size>
+					<AbsDimension x="50" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:SetAutoFocus(false);
+						this:SetText("0");
+					</OnLoad>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+				</Scripts>
+			</EditBox>
+			<Button name="CEPGP_context_popup_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
+				<Size>
+					<AbsDimension x="75" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_context_popup);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CEPGP_context_popup_confirm" inherits="GameMenuButtonTemplate" text="Confirm">
+				<Size>
+					<AbsDimension x="75" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="16"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_context_popup);
+						<!--addEP((this:GetName().."Info"):GetText(), CEPGP_context_amount:GetText());-->
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+</Ui>
