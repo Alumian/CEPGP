@@ -5,3 +5,8 @@ For this addon to work, anyone using the addon must be able to at the very least
 
 The addon is entirely GUI based and has no chat commands. All functionality is handled within the frame with the exception of the one command /cepgp show which will simply show the frame if it doesn't appear automatically.
 The frame is designed to only appear automatically on raid bosses from Molten Core, Onyxia's Lair and World Bosses all the way up to Naxxramas.
+
+To install:
+  Download this addon
+  Extract it to ../Interface/AddOns/
+  Rename the extracted folder from CEPGP-master to CEPGP
