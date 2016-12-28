@@ -210,6 +210,7 @@ function CEPGP_UpdateRaidScrollBar()
     tSize = GetNumRaidMembers();
     FauxScrollFrame_Update(RaidScrollFrame, tSize, 18, 240);
     for y = 1, 18, 1 do
+		rank = nil;
         yoffset = y + FauxScrollFrame_GetOffset(RaidScrollFrame);
         if (yoffset <= tSize) then
 			name, _, group, _, class = GetRaidRosterInfo(yoffset);
@@ -263,7 +264,7 @@ function CEPGP_LootDistButton_OnClick()
 	elseif strfind(this:GetName(), "RaidButton") then --A player from the raid menu is clicked (awards EP)
 		local name = getglobal(this:GetName() .. "Info"):GetText();
 		if not getGuildInfo(name) then
-			print("Player is not in the guild - Cannot award EP or GP", true);
+			print(name .. " is not a guild member - Cannot award EP or GP", true);
 			return;
 		end
 		ShowUIPanel(CEPGP_context_popup);
