@@ -276,6 +276,8 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_context_popup_GP_check);
 		ShowUIPanel(CEPGP_context_popup_EP_check_text);
 		ShowUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adding EP to " .. name);
@@ -296,6 +298,8 @@ function CEPGP_ListButton_OnClick()
 		HideUIPanel(CEPGP_context_popup_GP_check);
 		ShowUIPanel(CEPGP_context_popup_EP_check_text);
 		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Add Guild EP");
 		CEPGP_context_popup_desc:SetText("Adds EP to all guild members");
@@ -312,6 +316,8 @@ function CEPGP_ListButton_OnClick()
 		HideUIPanel(CEPGP_context_popup_GP_check);
 		HideUIPanel(CEPGP_context_popup_EP_check_text);
 		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(nil);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Decay Guild EPGP");
 		CEPGP_context_popup_desc:SetText("Decays EPGP standings by a percentage\nValid Range: 0-100");
@@ -328,6 +334,8 @@ function CEPGP_ListButton_OnClick()
 		HideUIPanel(CEPGP_context_popup_GP_check);
 		HideUIPanel(CEPGP_context_popup_EP_check_text);
 		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(nil);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Reset Guild EPGP");
 		CEPGP_context_popup_desc:SetText("Resets the Guild EPGP standings\n|c00FF0000Are you sure this is what you want to do?\nThis cannot be reversed!\nNote: This will report to Guild chat|r");
@@ -350,6 +358,8 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_context_popup_GP_check);
 		ShowUIPanel(CEPGP_context_popup_EP_check_text);
 		ShowUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
@@ -366,6 +376,8 @@ function CEPGP_ListButton_OnClick()
 		HideUIPanel(CEPGP_context_popup_GP_check);
 		HideUIPanel(CEPGP_context_popup_EP_check_text);
 		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(nil);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Award Raid EP");
 		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to the entire raid");
