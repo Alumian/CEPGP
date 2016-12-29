@@ -272,13 +272,18 @@ function CEPGP_LootDistButton_OnClick()
 		local name = getglobal(this:GetName() .. "Info"):GetText();
 		ShowUIPanel(CEPGP_context_popup);
 		ShowUIPanel(CEPGP_context_amount);
+		
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
-															addEP(name, tonumber(CEPGP_context_amount:GetText()));
+															if CEPGP_context_popup_EP_check:IsChecked() == 1 then
+																addEP(name, tonumber(CEPGP_context_amount:GetText()));
+															else
+																addGP(name, tonumber(CEPGP_context_amount:GetText()));
+															end
 														end);
 		
 	elseif strfind(obj, "CEPGP_guild_add_EP") then --Click the Add Guild EP button in the Guild menu

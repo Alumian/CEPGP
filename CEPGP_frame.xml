@@ -1615,6 +1615,24 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
+				<FontString name="CEPGP_context_popup_EP_check_text" inherits="GameFontNormal" text="EP">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="CEPGP_context_popup">
+							<Offset>
+								<AbsDimension x="32" y="-15"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_context_popup_GP_check_text" inherits="GameFontNormal" text="GP">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="CEPGP_context_popup">
+							<Offset>
+								<AbsDimension x="32" y="-35"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 				<FontString name="CEPGP_context_popup_header" inherits="GameFontNormal" text="Moderation">
 					<Anchors>
 						<Anchor point="TOP">
@@ -1645,6 +1663,48 @@
 			</Layer>
 		</Layers>
 		<Frames>
+			<CheckButton name="CEPGP_context_popup_EP_check" inherits="UIOptionsCheckButtonTemplate" checked="true">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="10" y="-10" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks('LeftButtonDown');
+					</OnLoad>
+					<OnClick>
+						if this:GetChecked() == 1 then
+							CEPGP_context_popup_GP_check:SetChecked("false");
+						else
+							this:SetChecked("true");
+						end
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CEPGP_context_popup_GP_check" inherits="UIOptionsCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_EP_check">
+						<Offset>
+							<AbsDimension x="0" y="-20" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks('LeftButtonDown');
+					</OnLoad>
+					<OnClick>
+						if this:GetChecked() == 1 then
+							CEPGP_context_popup_EP_check:SetChecked("false");
+						else
+							this:SetChecked("true");
+						end
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 			<EditBox name="CEPGP_context_amount" inherits="InputBoxTemplate">
 				<Size>
 					<AbsDimension x="50" y="20" />
