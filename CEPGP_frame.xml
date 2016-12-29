@@ -1678,6 +1678,7 @@
 					<OnClick>
 						if this:GetChecked() == 1 then
 							CEPGP_context_popup_GP_check:SetChecked(nil);
+							CEPGP_context_popup_desc:SetText("Adding EP");
 						else
 							this:SetChecked(1);
 						end
@@ -1699,6 +1700,7 @@
 					<OnClick>
 						if this:GetChecked() == 1 then
 							CEPGP_context_popup_EP_check:SetChecked(nil);
+							CEPGP_context_popup_desc:SetText("Adding GP");
 						else
 							this:SetChecked(1);
 						end

@@ -278,9 +278,10 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_context_popup_GP_check_text);
 		CEPGP_context_popup_EP_check:SetChecked(1);
 		CEPGP_context_popup_GP_check:SetChecked(nil);
-		CEPGP_context_popup_header:SetText("Guild Moderation");
-		CEPGP_context_popup_title:SetText("Give EP to " .. name);
-		CEPGP_context_popup_desc:SetText("Adding EP to " .. name);
+		CEPGP_context_popup_header:SetText("Moderation");
+		CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
+		CEPGP_context_popup_desc:SetText("Adding EP");
+		CEPGP_context_amount:SetText("0");
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
@@ -303,6 +304,7 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Add Guild EP");
 		CEPGP_context_popup_desc:SetText("Adds EP to all guild members");
+		CEPGP_context_amount:SetText("0");
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
@@ -321,6 +323,7 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Decay Guild EPGP");
 		CEPGP_context_popup_desc:SetText("Decays EPGP standings by a percentage\nValid Range: 0-100");
+		CEPGP_context_amount:SetText("0");
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
