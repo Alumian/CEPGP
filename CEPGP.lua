@@ -272,7 +272,11 @@ function CEPGP_ListButton_OnClick()
 		local name = getglobal(this:GetName() .. "Info"):GetText();
 		ShowUIPanel(CEPGP_context_popup);
 		ShowUIPanel(CEPGP_context_amount);
-		
+		ShowUIPanel(CEPGP_context_popup_EP_check);
+		ShowUIPanel(CEPGP_context_popup_GP_check);
+		ShowUIPanel(CEPGP_context_popup_EP_check_text);
+		ShowUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1)
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adding EP to " .. name);
@@ -289,6 +293,11 @@ function CEPGP_ListButton_OnClick()
 	elseif strfind(obj, "CEPGP_guild_add_EP") then --Click the Add Guild EP button in the Guild menu
 		ShowUIPanel(CEPGP_context_popup);
 		ShowUIPanel(CEPGP_context_amount);
+		ShowUIPanel(CEPGP_context_popup_EP_check);
+		HideUIPanel(CEPGP_context_popup_GP_check);
+		ShowUIPanel(CEPGP_context_popup_EP_check_text);
+		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1)
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Add Guild EP");
 		CEPGP_context_popup_desc:SetText("Adds EP to all guild members");
@@ -301,9 +310,13 @@ function CEPGP_ListButton_OnClick()
 	elseif strfind(obj, "CEPGP_guild_decay") then --Click the Decay Guild EPGP button in the Guild menu
 		ShowUIPanel(CEPGP_context_popup);
 		ShowUIPanel(CEPGP_context_amount);
+		HideUIPanel(CEPGP_context_popup_EP_check);
+		HideUIPanel(CEPGP_context_popup_GP_check);
+		HideUIPanel(CEPGP_context_popup_EP_check_text);
+		HideUIPanel(CEPGP_context_popup_GP_check_text);
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Decay Guild EPGP");
-		CEPGP_context_popup_desc:SetText("Decays Guild EPGP standings by a given percentage\nValid Range: 0-100");
+		CEPGP_context_popup_desc:SetText("Decays EPGP standings by a percentage\nValid Range: 0-100");
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
@@ -313,6 +326,10 @@ function CEPGP_ListButton_OnClick()
 	elseif strfind(obj, "CEPGP_guild_reset") then --Click the Reset All EPGP Standings button in the Guild menu
 		ShowUIPanel(CEPGP_context_popup);
 		HideUIPanel(CEPGP_context_amount);
+		HideUIPanel(CEPGP_context_popup_EP_check);
+		HideUIPanel(CEPGP_context_popup_GP_check);
+		HideUIPanel(CEPGP_context_popup_EP_check_text);
+		HideUIPanel(CEPGP_context_popup_GP_check_text);
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Reset Guild EPGP");
 		CEPGP_context_popup_desc:SetText("Resets the Guild EPGP standings\n|c00FF0000Are you sure this is what you want to do?\nThis cannot be reversed!\nNote: This will report to Guild chat|r");
@@ -331,6 +348,11 @@ function CEPGP_ListButton_OnClick()
 		end
 		ShowUIPanel(CEPGP_context_popup);
 		ShowUIPanel(CEPGP_context_amount);
+		ShowUIPanel(CEPGP_context_popup_EP_check);
+		ShowUIPanel(CEPGP_context_popup_GP_check);
+		ShowUIPanel(CEPGP_context_popup_EP_check_text);
+		ShowUIPanel(CEPGP_context_popup_GP_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1)
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
@@ -343,6 +365,10 @@ function CEPGP_ListButton_OnClick()
 	elseif strfind(obj, "CEPGP_raid_add_EP") then --Click the Add Raid EP button in the Raid menu
 		ShowUIPanel(CEPGP_context_popup);
 		ShowUIPanel(CEPGP_context_amount);
+		HideUIPanel(CEPGP_context_popup_EP_check);
+		HideUIPanel(CEPGP_context_popup_GP_check);
+		HideUIPanel(CEPGP_context_popup_EP_check_text);
+		HideUIPanel(CEPGP_context_popup_GP_check_text);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Award Raid EP");
 		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to the entire raid");
