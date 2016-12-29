@@ -83,7 +83,7 @@
 			</OnLoad>
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
-				CEPGP_LootDistButton_OnClick();
+				CEPGP_ListButton_OnClick();
 			</OnClick>
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
@@ -158,7 +158,7 @@
 			</OnLoad>
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
-				CEPGP_LootDistButton_OnClick();
+				CEPGP_ListButton_OnClick();
 			</OnClick>
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
@@ -233,7 +233,7 @@
 			</OnLoad>
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
-				CEPGP_LootDistButton_OnClick();
+				CEPGP_ListButton_OnClick();
 			</OnClick>
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
@@ -653,7 +653,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
-								CEPGP_LootDistButton_OnClick();
+								CEPGP_ListButton_OnClick();
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -671,7 +671,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
-								CEPGP_LootDistButton_OnClick();
+								CEPGP_ListButton_OnClick();
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -689,7 +689,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
-								CEPGP_LootDistButton_OnClick();
+								CEPGP_ListButton_OnClick();
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1025,7 +1025,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
-								CEPGP_LootDistButton_OnClick();
+								CEPGP_ListButton_OnClick();
 							</OnClick>
 						</Scripts>
 					</Button>

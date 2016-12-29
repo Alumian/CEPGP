@@ -258,7 +258,7 @@ function CEPGP_UpdateRaidScrollBar()
     end
 end
 
-function CEPGP_LootDistButton_OnClick()
+function CEPGP_ListButton_OnClick()
 	obj = this:GetName();
 	
 	--[[ Distribution Menu ]]--
