@@ -1,4 +1,4 @@
---Globals
+--[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
 mode = "guild";
@@ -8,6 +8,11 @@ VERSION = "0.6.1";
 debugMode = false;
 responses = {};
 roster = {};
+
+--[[ Stock function backups ]]--
+LFUpdate = LootFrame_Update;
+LFEvent = LootFrame_OnEvent;
+CFEvent = ChatFrame_OnEvent;
 
 function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
@@ -61,12 +66,17 @@ function CEPGP_OnEvent()
 			[4] = class,
 			[5] = officerNote
 			};
-			CEPGP_UpdateGuildScrollBar();
+			
+			if mode == "guild" then
+				CEPGP_UpdateGuildScrollBar();
+			elseif mode == "raid" then
+				CEPGP_UpdateRaidScrollBar();
+			end
 		end
 	elseif event == "RAID_ROSTER_UPDATE" then
 		for i = 1, GetNumRaidMembers() do
 			local name = GetRaidRosterInfo(i);
-			local rank, rankIndex, class, officerNote = getGuildInfo(name);
+			local _, rank, rankIndex, class, officerNote = getGuildInfo(name);
 			roster[name] = {
 			[1] = i,
 			[2] = rank,
@@ -74,7 +84,7 @@ function CEPGP_OnEvent()
 			[4] = class,
 			[5] = officerNote
 			};
-			CEPGP_UpdateGuildScrollBar();
+			CEPGP_UpdateRaidScrollBar();
 		end	
 	end
 end
@@ -366,32 +376,6 @@ function CEPGP_LootDistSortResults(criteria)
 	CEPGP_UpdateLootScrollBar();
 end
 
---[[function CEPGP_Sort(button)
-	local sort = (button:GetText())
-	if CEPGP_distribute:IsVisible() == 1
-		if sort == "Rank" then
-			
-		
-
-end
-]]
-
-
---[[TODO:	
-	Add "polling" period where players may whisper me to be added to a list to be considered for loot
-	
-	Add sorting by EP, GP or PR
-	
-	Refine slash command section: SlashCmdList["slashcommand"] = function(msg)
-	
-	Maybe add a section for easily awarding EP as well
-]]
-
---Stock function backups
-LFUpdate = LootFrame_Update;
-LFEvent = LootFrame_OnEvent;
-CFEvent = ChatFrame_OnEvent;
-
 --[[getEPGP(Officer Note) - Working as intended
 	returns EP and GP
 	]]
@@ -515,7 +499,10 @@ function SlashCmdList.ARG(msg, editbox)
 	elseif strfind(msg, "currentchannel") then
 		print("Current channel to report: " .. getCurChannel());
 	
-	elseif strfind(msg,"addguildep") then
+	
+	--[[ MARKED FOR REDUNDANCY - PENDING DELETION ]]--
+	
+	--[[elseif strfind(msg,"addguildep") then
 		local EP = getVal(msg);
 		SendChatMessage("Awarded " .. EP .. " EP to all guild members", CHANNEL, "Common", CHANNEL);
 		addGuildEP(EP);
@@ -539,7 +526,7 @@ function SlashCmdList.ARG(msg, editbox)
 		decay(amount);
 		
 	elseif strfind(msg,"resetall") then
-		resetAll();
+		resetAll();]]
 		
 	elseif strfind(msg, "debug") then
 		debugMode = not debugMode;
@@ -552,13 +539,13 @@ function SlashCmdList.ARG(msg, editbox)
 	elseif strfind(msg, "setdefaultchannel") then
 		if msg == "setdefaultchannel" or msg == "setdefaultchannel " then
 			print("|cFF80FFFFPlease enter a valid  channel. Valid options are:|r");
-			print("|cFF80FFFFsay, yell, emote, party, raid, guild, officer, whisper, channel, system|r");
+			print("|cFF80FFFFsay, yell, party, raid, guild, officer|r");
 			return;
 		end
 		local newChannel = getVal(msg);
 		newChannel = strupper(newChannel);
 		local valid = false;
-		local channels = {"SAY","YELL","EMOTE","PARTY","RAID","GUILD","OFFICER","WHISPER","CHANNEL","SYSTEM"};
+		local channels = {"SAY","YELL","PARTY","RAID","GUILD","OFFICER"};
 		local i = 1;
 		while channels[i] ~= nil do
 			if channels[i] == newChannel then
@@ -572,7 +559,7 @@ function SlashCmdList.ARG(msg, editbox)
 			print("Default channel set to: " .. CHANNEL);
 		else
 			print("Please enter a valid chat channel. Valid options are:");
-			print("say, yell, emote, party, raid, guild, officer, whisper, channel, system");
+			print("say, yell, party, raid, guild, officer");
 		end
 	
 	end
@@ -789,7 +776,6 @@ end
 
 --[[addRaidEP(amount) - Working as intended
 	Adds 'amount' EP to the whole raid group
-	Fixed spagetti code
 ]]
 function addRaidEP(amount)
 	local total = GetNumRaidMembers();
@@ -797,19 +783,20 @@ function addRaidEP(amount)
 		for i = 1, total do
 			local name = GetRaidRosterInfo(i);
 			if tContains(roster, name, true) then
-				if roster[name][5] == "" or roster[name][5] == "Click here to set an Officer's Note" then
-					GuildRosterSetOfficerNote(i, amount .. ",1");
+				local index = getGuildInfo(name);
+				if not checkEPGP(roster[name][5]) then
+					GuildRosterSetOfficerNote(index, amount .. ",1");
 				else
 					EP,GP = getEPGP(roster[name][5]);
 					EP = tonumber(EP);
 					GP = tonumber(GP);
 					amount = tonumber(amount);
-					GuildRosterSetOfficerNote(i, EP + amount .. "," .. GP);
+					GuildRosterSetOfficerNote(index, EP + amount .. "," .. GP);
 				end
 			end
 		end
 	end
-	SendChatMessage(amount .. " EP awarded to all raid members", RAID, "Common");
+	SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, "Common");
 end
 
 --[[addGuildEP(amount) - Working as intended
