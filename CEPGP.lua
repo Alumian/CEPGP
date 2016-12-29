@@ -719,29 +719,31 @@ end
 	Calls for raid members to whisper for items
 ]]
 function distribute(link, x)
-	local iString = getItemString(link);
-	local name, _, _, _, _, _, _, _, tex = GetItemInfo(iString);
-	tex = {bgFile = tex,};
-    gp = _G[mode..'itemGP'..x]:GetText();
-	responses = {};
-	CEPGP_UpdateLootScrollBar();
-    SendChatMessage("--------------------------", RAID, "Common");
-    SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID_WARNING", "Common");
-    SendChatMessage("GP Value: " .. gp, RAID, "Common");
-    SendChatMessage("Whisper me !need for mainspec only", RAID, "Common");
-    SendChatMessage("--------------------------", RAID, "Common");
-	CEPGP_distribute:Show();
-	CEPGP_loot:Hide();
-	_G["CEPGP_distribute_item_name"]:SetText(link);
-	_G["CEPGP_distribute_item_name_frame"]:SetScript('OnClick', function() SetItemRef(iString) end);
-	_G["CEPGP_distribute_item_tex"]:SetBackdrop(tex);
-	_G["CEPGP_distribute_item_tex"]:SetScript('OnEnter', function() GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT") GameTooltip:SetHyperlink(iString) GameTooltip:Show() end);
-	_G["CEPGP_distribute_item_tex"]:SetScript('OnLeave', function() GameTooltip:Hide() end);
-	_G["CEPGP_distribute_GP_value"]:SetText(gp);
-	--[[
-	TODO: Listen to chat log for anyone who whispers !need
-			Compile a list of everyone who whispered
-	]]
+	local _, isML = GetLootMethod();
+	if isML == 0 then
+		local iString = getItemString(link);
+		local name, _, _, _, _, _, _, _, tex = GetItemInfo(iString);
+		tex = {bgFile = tex,};
+		gp = _G[mode..'itemGP'..x]:GetText();
+		responses = {};
+		CEPGP_UpdateLootScrollBar();
+		SendChatMessage("--------------------------", RAID, "Common");
+		SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID_WARNING", "Common");
+		SendChatMessage("GP Value: " .. gp, RAID, "Common");
+		SendChatMessage("Whisper me !need for mainspec only", RAID, "Common");
+		SendChatMessage("--------------------------", RAID, "Common");
+		CEPGP_distribute:Show();
+		CEPGP_loot:Hide();
+		_G["CEPGP_distribute_item_name"]:SetText(link);
+		_G["CEPGP_distribute_item_name_frame"]:SetScript('OnClick', function() SetItemRef(iString) end);
+		_G["CEPGP_distribute_item_tex"]:SetBackdrop(tex);
+		_G["CEPGP_distribute_item_tex"]:SetScript('OnEnter', function() GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT") GameTooltip:SetHyperlink(iString) GameTooltip:Show() end);
+		_G["CEPGP_distribute_item_tex"]:SetScript('OnLeave', function() GameTooltip:Hide() end);
+		_G["CEPGP_distribute_GP_value"]:SetText(gp);
+	else
+		print("You are not the Master Looter");
+		return;
+	end
 end
 
 function checkEPGP(note)
