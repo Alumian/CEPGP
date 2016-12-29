@@ -276,7 +276,6 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_context_popup_GP_check);
 		ShowUIPanel(CEPGP_context_popup_EP_check_text);
 		ShowUIPanel(CEPGP_context_popup_GP_check_text);
-		CEPGP_context_popup_EP_check:SetChecked(1)
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adding EP to " .. name);
@@ -297,7 +296,6 @@ function CEPGP_ListButton_OnClick()
 		HideUIPanel(CEPGP_context_popup_GP_check);
 		ShowUIPanel(CEPGP_context_popup_EP_check_text);
 		HideUIPanel(CEPGP_context_popup_GP_check_text);
-		CEPGP_context_popup_EP_check:SetChecked(1)
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Add Guild EP");
 		CEPGP_context_popup_desc:SetText("Adds EP to all guild members");
@@ -352,7 +350,6 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_context_popup_GP_check);
 		ShowUIPanel(CEPGP_context_popup_EP_check_text);
 		ShowUIPanel(CEPGP_context_popup_GP_check_text);
-		CEPGP_context_popup_EP_check:SetChecked(1)
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
