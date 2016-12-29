@@ -249,28 +249,95 @@ function CEPGP_UpdateRaidScrollBar()
 end
 
 function CEPGP_LootDistButton_OnClick()
-	if strfind(this:GetName(), "LootDistButton") then --A player in the distribution menu is clicked
+	obj = this:GetName();
+	
+	--[[ Distribution Menu ]]--
+	if strfind(obj, "LootDistButton") then --A player in the distribution menu is clicked
 		ShowUIPanel(CEPGP_distribute_popup);
 		CEPGP_distribute_popup_title:SetText(getglobal(this:GetName() .. "Info"):GetText());
 		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID());
-		
-	elseif strfind(this:GetName(), "GuildButton") then --A player from the guild menu is clicked (awards EP)
+	
+		--[[ Guild Menu ]]--
+	elseif strfind(obj, "GuildButton") then --A player from the guild menu is clicked (awards EP)
 		local name = getglobal(this:GetName() .. "Info"):GetText();
 		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															addEP(name, tonumber(CEPGP_context_amount:GetText()));
+														end);
 		
-	elseif strfind(this:GetName(), "RaidButton") then --A player from the raid menu is clicked (awards EP)
+	elseif strfind(obj, "CEPGP_guild_add_EP") then --Click the Add Guild EP button in the Guild menu
+		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
+		CEPGP_context_popup_header:SetText("Guild Moderation");
+		CEPGP_context_popup_title:SetText("Add Guild EP");
+		CEPGP_context_popup_desc:SetText("Add a given amount of EP to every character in the guild");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															addGuildEP(tonumber(CEPGP_context_amount:GetText()));
+														end);
+	
+	elseif strfind(obj, "CEPGP_guild_decay") then --Click the Decay Guild EPGP button in the Guild menu
+		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
+		CEPGP_context_popup_header:SetText("Guild Moderation");
+		CEPGP_context_popup_title:SetText("Decay Guild EPGP");
+		CEPGP_context_popup_desc:SetText("Decays Guild EPGP standings by a given percentage\nValid Range: 0-100");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															decay(tonumber(CEPGP_context_amount:GetText()));
+														end);
+		
+	elseif strfind(obj, "CEPGP_guild_reset") then --Click the Reset All EPGP Standings button in the Guild menu
+		ShowUIPanel(CEPGP_context_popup);
+		HideUIPanel(CEPGP_context_amount);
+		CEPGP_context_popup_header:SetText("Guild Moderation");
+		CEPGP_context_popup_title:SetText("Reset Guild EPGP");
+		CEPGP_context_popup_desc:SetText("Resets the Guild EPGP standings\n|c00FF0000Are you sure this is what you want to do?\nThis cannot be reversed!\nNote: This will report to Guild chat|r");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															resetAll();
+														end);
+		
+		--[[ Raid Menu ]]--
+	elseif strfind(obj, "RaidButton") then --A player from the raid menu is clicked (awards EP)
 		local name = getglobal(this:GetName() .. "Info"):GetText();
 		if not getGuildInfo(name) then
 			print(name .. " is not a guild member - Cannot award EP or GP", true);
 			return;
 		end
 		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															addEP(name, tonumber(CEPGP_context_amount:GetText()));
+														end);
+	
+	elseif strfind(obj, "CEPGP_raid_add_EP") then --Click the Add Raid EP button in the Raid menu
+		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
+		CEPGP_context_popup_header:SetText("Raid Moderation");
+		CEPGP_context_popup_title:SetText("Award Raid EP");
+		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to the entire raid");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															addRaidEP(tonumber(CEPGP_context_amount:GetText()));
+														end);
+	else
+		print(obj);
 	end
 end
 
@@ -717,6 +784,7 @@ function resetAll()
 			GuildRosterSetOfficerNote(i, "0,1");
 		end
 	end
+	SendChatMessage("All EPGP standings have been cleared!", "GUILD", "COMMON");
 end
 
 --[[addRaidEP(amount) - Working as intended
@@ -737,7 +805,6 @@ function addRaidEP(amount)
 					GP = tonumber(GP);
 					amount = tonumber(amount);
 					GuildRosterSetOfficerNote(i, EP + amount .. "," .. GP);
---					SendChatMessage("You've been awarded " .. amount .. " EP", WHISPER, "Common", name) --removed: you want to hit spam filter? This is how you hit spam filer.
 				end
 			end
 		end
@@ -766,6 +833,7 @@ function addGuildEP(amount)
 			end
 		end
 	end
+	SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, "COMMON");
 end
 
 --[[addGP(player, amount) - Working as intended
@@ -836,6 +904,9 @@ function decay(amount)
 			EP = math.floor((tonumber(EP)*(1-(amount/100)))*100)/100;
 			amount = tonumber(amount);
 			GP = math.floor(tonumber(GP)*(1-(amount/100)));
+			if GP < 1 then
+				GP = 1;
+			end
 			GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		end
 	end

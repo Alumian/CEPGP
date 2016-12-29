@@ -653,6 +653,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
+								CEPGP_LootDistButton_OnClick();
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -670,6 +671,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
+								CEPGP_LootDistButton_OnClick();
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -687,6 +689,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
+								CEPGP_LootDistButton_OnClick();
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1022,6 +1025,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
+								CEPGP_LootDistButton_OnClick();
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1624,7 +1628,7 @@
                     <Anchors>
                         <Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_header">
                             <Offset>
-                                <AbsDimension x="0" y="-30"/>
+                                <AbsDimension x="0" y="-20"/>
                             </Offset>
                         </Anchor>
                     </Anchors>
@@ -1633,16 +1637,7 @@
                     <Anchors>
                         <Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_title">
                             <Offset>
-                                <AbsDimension x="0" y="-20"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </FontString>
-				<FontString name="CEPGP_context_amount_string" inherits="GameFontNormal" text="EP">
-                    <Anchors>
-                        <Anchor point="RIGHT">
-                            <Offset>
-                                <AbsDimension x="-110" y="0" />
+                                <AbsDimension x="0" y="-45"/>
                             </Offset>
                         </Anchor>
                     </Anchors>
@@ -1657,7 +1652,7 @@
 				<Anchors>
 					<Anchor point="CENTER">
 						<Offset>
-							<AbsDimension x="0" y="0" />
+							<AbsDimension x="0" y="-15" />
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -1699,14 +1694,7 @@
 							<AbsDimension x="16" y="16"/>
 					</Offset>
 				</Anchor>
-			</Anchors>
-				<Scripts>
-					<OnClick>
-						PlaySound("gsTitleOptionExit");
-						HideUIPanel(CEPGP_context_popup);
-						<!--addEP((this:GetName().."Info"):GetText(), CEPGP_context_amount:GetText());-->
-					</OnClick>
-				</Scripts>
+				</Anchors>
 			</Button>
 		</Frames>
 		<Scripts>
