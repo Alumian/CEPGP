@@ -8,12 +8,12 @@ VERSION = "0.6.1";
 debugMode = false;
 responses = {};
 roster = {};
-
+--
 --[[ Stock function backups ]]--
 LFUpdate = LootFrame_Update;
 LFEvent = LootFrame_OnEvent;
 CFEvent = ChatFrame_OnEvent;
-
+--
 function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		if CHANNEL == nil then
