@@ -1528,6 +1528,7 @@
 				this:RegisterEvent("CHAT_MSG_WHISPER");
 				this:RegisterEvent("ADDON_LOADED");
 				this:RegisterEvent("GUILD_ROSTER_UPDATE");
+				this:RegisterEvent("RAID_ROSTER_UPDATE");
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();

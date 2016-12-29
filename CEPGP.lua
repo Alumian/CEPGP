@@ -423,6 +423,7 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
+		CEPGP_context_popup_desc:SetText("Adding EP");
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
@@ -843,6 +844,7 @@ end
 	Adds 'amount' EP to the whole raid group
 ]]
 function addRaidEP(amount)
+	amount = math.floor(amount);
 	local total = GetNumRaidMembers();
 	if total > 0 then
 		for i = 1, total do
@@ -855,8 +857,14 @@ function addRaidEP(amount)
 					EP,GP = getEPGP(roster[name][5]);
 					EP = tonumber(EP);
 					GP = tonumber(GP);
-					amount = tonumber(amount);
-					GuildRosterSetOfficerNote(index, EP + amount .. "," .. GP);
+					EP = EP + amount;
+					if GP < 1 then
+						GP = 1;
+					end
+					if EP < 0 then
+						EP = 0;
+					end
+					GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 				end
 			end
 		end
@@ -870,6 +878,7 @@ end
 function addGuildEP(amount)
 	local total = ntgetn(roster);
 	local EP, GP = nil;
+	amount = math.floor(amount);
 	if total > 0 then
 		for name,_ in pairs(roster)do
 			offNote = roster[name][5];
@@ -878,10 +887,15 @@ function addGuildEP(amount)
 				GuildRosterSetOfficerNote(index, amount .. ",1");
 			else
 				EP,GP = getEPGP(roster[name][5]);
-				EP = tonumber(EP);
+				EP = tonumber(EP) + amount;
 				GP = tonumber(GP);
-				amount = tonumber(amount);
-				GuildRosterSetOfficerNote(index, EP + amount .. "," .. GP);
+				if GP < 1 then
+					GP = 1;
+				end
+				if EP < 0 then
+					EP = 0;
+				end
+				GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 			end
 		end
 	end
@@ -894,6 +908,7 @@ end
 ]]
 function addGP(player, amount)
 	local EP, GP = nil;
+	amount = math.floor(amount);
 	if tContains(roster, player, true) then
 		offNote = roster[player][5];
 		index = roster[player][1];
@@ -902,9 +917,14 @@ function addGP(player, amount)
 			offNote = "0,1";
 		end
 		EP,GP = getEPGP(offNote);
+		GP = tonumber(GP) + amount;
 		EP = tonumber(EP);
-		amount = tonumber(amount);
-		GP = math.floor(tonumber(GP)+amount);
+		if GP < 1 then
+			GP = 1;
+		end
+		if EP < 0 then
+			EP = 0;
+		end
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		SendChatMessage(amount .. " GP added to " .. player, CHANNEL, "Common", CHANNEL);
 	else
@@ -921,6 +941,7 @@ function addEP(player, amount)
 		print(_, "No EP value specified");
 		return;
 	end
+	amount = math.floor(amount);
 	local EP, GP = nil;
 	if tContains(roster, player, true) then
 		offNote = roster[player][5];
@@ -930,9 +951,14 @@ function addEP(player, amount)
 			offNote = "0,1";
 		end
 		EP,GP = getEPGP(offNote);
-		EP = tonumber(EP);
-		amount = tonumber(amount);
-		EP = math.floor(tonumber(EP)+amount);
+		EP = tonumber(EP) + amount;
+		GP = tonumber(GP);
+		if GP < 1 then
+			GP = 1;
+		end
+		if EP < 0 then
+			EP = 0;
+		end
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		SendChatMessage(amount .. " EP added to " .. player, CHANNEL, "Common", CHANNEL);
 	else
@@ -953,11 +979,13 @@ function decay(amount)
 			offNote = amount .. ",1";
 		else
 			EP,GP = getEPGP(offNote);
-			EP = math.floor((tonumber(EP)*(1-(amount/100)))*100)/100;
-			amount = tonumber(amount);
+			EP = math.floor(tonumber(EP)*(1-(amount/100)));
 			GP = math.floor(tonumber(GP)*(1-(amount/100)));
 			if GP < 1 then
 				GP = 1;
+			end
+			if EP < 0 then
+				EP = 0;
 			end
 			GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		end
