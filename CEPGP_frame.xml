@@ -1663,7 +1663,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="CEPGP_context_popup_EP_check" inherits="UIOptionsCheckButtonTemplate">
+			<CheckButton name="CEPGP_context_popup_EP_check" inherits="UIOptionsCheckButtonTemplate" checked="1">
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
