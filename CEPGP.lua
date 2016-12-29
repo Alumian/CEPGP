@@ -275,11 +275,11 @@ function CEPGP_ListButton_OnClick()
 		
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Give EP to " .. name);
-		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
+		CEPGP_context_popup_desc:SetText("Adding EP to " .. name);
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
-															if CEPGP_context_popup_EP_check:IsChecked() == 1 then
+															if CEPGP_context_popup_EP_check:GetChecked() then
 																addEP(name, tonumber(CEPGP_context_amount:GetText()));
 															else
 																addGP(name, tonumber(CEPGP_context_amount:GetText()));
@@ -291,7 +291,7 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_context_amount);
 		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Add Guild EP");
-		CEPGP_context_popup_desc:SetText("Add a given amount of EP to every character in the guild");
+		CEPGP_context_popup_desc:SetText("Adds EP to all guild members");
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
