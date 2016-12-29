@@ -1663,7 +1663,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<CheckButton name="CEPGP_context_popup_EP_check" inherits="UIOptionsCheckButtonTemplate" checked="true">
+			<CheckButton name="CEPGP_context_popup_EP_check" inherits="UIOptionsCheckButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT">
 						<Offset>
@@ -1677,9 +1677,9 @@
 					</OnLoad>
 					<OnClick>
 						if this:GetChecked() == 1 then
-							CEPGP_context_popup_GP_check:SetChecked("false");
+							CEPGP_context_popup_GP_check:SetChecked(nil);
 						else
-							this:SetChecked("true");
+							this:SetChecked(1);
 						end
 					</OnClick>
 				</Scripts>
@@ -1698,9 +1698,9 @@
 					</OnLoad>
 					<OnClick>
 						if this:GetChecked() == 1 then
-							CEPGP_context_popup_EP_check:SetChecked("false");
+							CEPGP_context_popup_EP_check:SetChecked(nil);
 						else
-							this:SetChecked("true");
+							this:SetChecked(1);
 						end
 					</OnClick>
 				</Scripts>
