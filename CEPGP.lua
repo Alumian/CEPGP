@@ -36,7 +36,7 @@ function CEPGP_OnEvent()
 			local inGuild = false;
 			if tContains(roster, arg2, true) then
 				EP, GP = getEPGP(roster[arg2][5]);
-				class = roster[arg2][4];
+				class = roster[arg2][2];
 				inGuild = true;
 			end
 			if inGuild then
@@ -127,19 +127,17 @@ function CEPGP_UpdateLootScrollBar()
 	t = tSort(t, criteria)
     FauxScrollFrame_Update(DistributeScrollFrame, tSize, 10, 120);
     for y = 1, 10, 1 do
-		rank = nil;
         yoffset = y + FauxScrollFrame_GetOffset(DistributeScrollFrame);
         if (yoffset <= tSize) then
-            if not tContains(t, yoffset) then
+            if not tContains(t, yoffset, true) then
                 getglobal("LootDistButton" .. y):Hide();
             else
-				t2 = t[yoffset];
-				name = t2[1];
-				class = t2[2];
-				rank = t2[3];
-				EP = t2[5];
-				GP = t2[6];
-				PR = t2[7];
+				name = t[yoffset][1];
+				class = t[yoffset][2];
+				rank = t[yoffset][3];
+				EP = t[yoffset][5];
+				GP = t[yoffset][6];
+				PR = t[yoffset][7];
 				if class then
 					colour = RAID_CLASS_COLORS[string.upper(class)];
 				else
@@ -1142,47 +1140,49 @@ function tSort(t, index)
 	table.insert(t2, t[1]);
 	table.remove(t, 1);
 	local tSize = table.getn(t);
-	for x = 1, tSize do
-		local t2Size = table.getn(t2);
-		for y = 1, t2Size do
-			if y < t2Size then
-				if critReverse then
-					if (t[1][index] >= t2[y][index]) then
-						table.insert(t2, y, t[1]);
-						table.remove(t, 1);
-						break;
-					elseif (t[1][index] < t2[y][index]) and (t[1][index] >= t2[(y + 1)][index]) then
-						table.insert(t2, (y + 1), t[1]);
-						table.remove(t, 1);
-						break;
-					end
-				else
-					if (t[1][index] <= t2[y][index]) then
-						table.insert(t2, y, t[1]);
-						table.remove(t, 1);
-						break;
-					elseif (t[1][index] > t2[y][index]) and (t[1][index] <= t2[(y + 1)][index]) then
-						table.insert(t2, (y + 1), t[1]);
-						table.remove(t, 1);
-						break;
-					end
-				end
-			elseif y == t2Size then
-				if critReverse then
-					if t[1][index] > t2[y][index] then
-						table.insert(t2, y, t[1]);
-						table.remove(t, 1);
+	if tSize > 0 then
+		for x = 1, tSize do
+			local t2Size = table.getn(t2);
+			for y = 1, t2Size do
+				if y < t2Size then
+					if critReverse then
+						if (t[1][index] >= t2[y][index]) then
+							table.insert(t2, y, t[1]);
+							table.remove(t, 1);
+							break;
+						elseif (t[1][index] < t2[y][index]) and (t[1][index] >= t2[(y + 1)][index]) then
+							table.insert(t2, (y + 1), t[1]);
+							table.remove(t, 1);
+							break;
+						end
 					else
-						table.insert(t2, t[1]);
-						table.remove(t, 1);
+						if (t[1][index] <= t2[y][index]) then
+							table.insert(t2, y, t[1]);
+							table.remove(t, 1);
+							break;
+						elseif (t[1][index] > t2[y][index]) and (t[1][index] <= t2[(y + 1)][index]) then
+							table.insert(t2, (y + 1), t[1]);
+							table.remove(t, 1);
+							break;
+						end
 					end
-				else
-					if t[1][index] < t2[y][index] then
-						table.insert(t2, y, t[1]);
-						table.remove(t, 1);
+				elseif y == t2Size then
+					if critReverse then
+						if t[1][index] > t2[y][index] then
+							table.insert(t2, y, t[1]);
+							table.remove(t, 1);
+						else
+							table.insert(t2, t[1]);
+							table.remove(t, 1);
+						end
 					else
-						table.insert(t2, t[1]);
-						table.remove(t, 1);
+						if t[1][index] < t2[y][index] then
+							table.insert(t2, y, t[1]);
+							table.remove(t, 1);
+						else
+							table.insert(t2, t[1]);
+							table.remove(t, 1);
+						end
 					end
 				end
 			end
