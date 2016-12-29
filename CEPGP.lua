@@ -278,7 +278,7 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_context_popup_GP_check_text);
 		CEPGP_context_popup_EP_check:SetChecked(1);
 		CEPGP_context_popup_GP_check:SetChecked(nil);
-		CEPGP_context_popup_header:SetText("Moderation");
+		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adding EP");
 		CEPGP_context_amount:SetText("0");
@@ -364,12 +364,15 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_context_popup_EP_check:SetChecked(1);
 		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
-		CEPGP_context_popup_title:SetText("Give EP to " .. name);
-		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
+		CEPGP_context_popup_title:SetText("Adds an amount of EP to " .. name);
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
-															addEP(name, tonumber(CEPGP_context_amount:GetText()));
+															if CEPGP_context_popup_EP_check:GetChecked() then
+																addEP(name, tonumber(CEPGP_context_amount:GetText()));
+															else
+																addGP(name, tonumber(CEPGP_context_amount:GetText()));
+															end
 														end);
 	
 	elseif strfind(obj, "CEPGP_raid_add_EP") then --Click the Add Raid EP button in the Raid menu
@@ -383,7 +386,7 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Award Raid EP");
-		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to the entire raid");
+		CEPGP_context_popup_desc:SetText("Adds an amount of EP to the entire raid");
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
@@ -519,11 +522,8 @@ function SlashCmdList.ARG(msg, editbox)
 	
 	if msg == "" then
 		print("Classic EPGP Usage");
-		print("Note: All commands are case-insensitive");
-		print("/cepgp |cFF80FF80addGuildEP x|r - |cFFFF8080Adds x EP to all guild members)|r");
-		print("/cepgp |cFF80FF80addGP player x|r - |cFFFF8080Adds x GP to all a specified player)|r");
-		print("/cepgp |cFF80FF80decay x|r - |cFFFF8080Decays guildwide EP by x%|r");
-		print("|cFFFF8080Note: This will send a chat message confirming the decay|r");
+		print("/cepgp |cFF80FF80show|r - |cFFFF8080Manually shows the CEPGP window|r");
+		print("/cepgp |cFF80FF80debug|r - |cFFFF8080Toggles debug mode|r");
 		print("/cepgp |cFF80FF80setDefaultChannel channel|r - |cFFFF8080Sets the default channel to send confirmation messages. Default is Guild|r");
 		
 	elseif msg == "show" then
@@ -541,35 +541,6 @@ function SlashCmdList.ARG(msg, editbox)
 		
 	elseif strfind(msg, "currentchannel") then
 		print("Current channel to report: " .. getCurChannel());
-	
-	
-	--[[ MARKED FOR REDUNDANCY - PENDING DELETION ]]--
-	
-	--[[elseif strfind(msg,"addguildep") then
-		local EP = getVal(msg);
-		SendChatMessage("Awarded " .. EP .. " EP to all guild members", CHANNEL, "Common", CHANNEL);
-		addGuildEP(EP);
-	
-	elseif strfind(msg, "addep") then	
-		local method = {};
-		local player = string.gsub(msg, "addep", "");
-		player = string.gsub(player, " ", "", 1);
-		local amount = tonumber(strsub(player, strfind(player, " ")+1, string.len(player)));
-		player = strsub(player, 1, strfind(player, " "));
-		player = string.gsub(player, " ", "");
-		addEP(player, amount);
-		print("Adding " .. amount .. " EP to " .. player);
-	
-	elseif strfind(msg, "addraidep") then
-		local amount = getVal(msg);
-		addRaidEP(amount);
-			
-	elseif strfind(msg,"decay") then
-		local amount = getVal(msg);
-		decay(amount);
-		
-	elseif strfind(msg,"resetall") then
-		resetAll();]]
 		
 	elseif strfind(msg, "debug") then
 		debugMode = not debugMode;
