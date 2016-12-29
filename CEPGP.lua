@@ -278,7 +278,7 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_context_popup_GP_check_text);
 		CEPGP_context_popup_EP_check:SetChecked(1);
 		CEPGP_context_popup_GP_check:SetChecked(nil);
-		CEPGP_context_popup_header:SetText("Moderation");
+		CEPGP_context_popup_header:SetText("Guild Moderation");
 		CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
 		CEPGP_context_popup_desc:SetText("Adding EP");
 		CEPGP_context_amount:SetText("0");
@@ -364,12 +364,15 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_context_popup_EP_check:SetChecked(1);
 		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
-		CEPGP_context_popup_title:SetText("Give EP to " .. name);
-		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to " .. name);
+		CEPGP_context_popup_title:SetText("Adds an amount of EP to " .. name);
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
-															addEP(name, tonumber(CEPGP_context_amount:GetText()));
+															if CEPGP_context_popup_EP_check:GetChecked() then
+																addEP(name, tonumber(CEPGP_context_amount:GetText()));
+															else
+																addGP(name, tonumber(CEPGP_context_amount:GetText()));
+															end
 														end);
 	
 	elseif strfind(obj, "CEPGP_raid_add_EP") then --Click the Add Raid EP button in the Raid menu
@@ -383,7 +386,7 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
 		CEPGP_context_popup_title:SetText("Award Raid EP");
-		CEPGP_context_popup_desc:SetText("Adds a specified amount of EP to the entire raid");
+		CEPGP_context_popup_desc:SetText("Adds an amount of EP to the entire raid");
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
