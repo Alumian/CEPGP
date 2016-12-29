@@ -516,11 +516,8 @@ function SlashCmdList.ARG(msg, editbox)
 	
 	if msg == "" then
 		print("Classic EPGP Usage");
-		print("Note: All commands are case-insensitive");
-		print("/cepgp |cFF80FF80addGuildEP x|r - |cFFFF8080Adds x EP to all guild members)|r");
-		print("/cepgp |cFF80FF80addGP player x|r - |cFFFF8080Adds x GP to all a specified player)|r");
-		print("/cepgp |cFF80FF80decay x|r - |cFFFF8080Decays guildwide EP by x%|r");
-		print("|cFFFF8080Note: This will send a chat message confirming the decay|r");
+		print("/cepgp |cFF80FF80show|r - |cFFFF8080Manually shows the CEPGP window|r");
+		print("/cepgp |cFF80FF80debug|r - |cFFFF8080Toggles debug mode|r");
 		print("/cepgp |cFF80FF80setDefaultChannel channel|r - |cFFFF8080Sets the default channel to send confirmation messages. Default is Guild|r");
 		
 	elseif msg == "show" then
@@ -538,35 +535,6 @@ function SlashCmdList.ARG(msg, editbox)
 		
 	elseif strfind(msg, "currentchannel") then
 		print("Current channel to report: " .. getCurChannel());
-	
-	
-	--[[ MARKED FOR REDUNDANCY - PENDING DELETION ]]--
-	
-	--[[elseif strfind(msg,"addguildep") then
-		local EP = getVal(msg);
-		SendChatMessage("Awarded " .. EP .. " EP to all guild members", CHANNEL, "Common", CHANNEL);
-		addGuildEP(EP);
-	
-	elseif strfind(msg, "addep") then	
-		local method = {};
-		local player = string.gsub(msg, "addep", "");
-		player = string.gsub(player, " ", "", 1);
-		local amount = tonumber(strsub(player, strfind(player, " ")+1, string.len(player)));
-		player = strsub(player, 1, strfind(player, " "));
-		player = string.gsub(player, " ", "");
-		addEP(player, amount);
-		print("Adding " .. amount .. " EP to " .. player);
-	
-	elseif strfind(msg, "addraidep") then
-		local amount = getVal(msg);
-		addRaidEP(amount);
-			
-	elseif strfind(msg,"decay") then
-		local amount = getVal(msg);
-		decay(amount);
-		
-	elseif strfind(msg,"resetall") then
-		resetAll();]]
 		
 	elseif strfind(msg, "debug") then
 		debugMode = not debugMode;
