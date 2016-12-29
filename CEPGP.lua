@@ -364,7 +364,7 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_context_popup_EP_check:SetChecked(1);
 		CEPGP_context_popup_GP_check:SetChecked(nil);
 		CEPGP_context_popup_header:SetText("Raid Moderation");
-		CEPGP_context_popup_title:SetText("Adds an amount of EP to " .. name);
+		CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
 		CEPGP_context_popup_confirm:SetScript('OnClick', function()
 															PlaySound("gsTitleOptionExit");
 															HideUIPanel(CEPGP_context_popup);
@@ -1088,7 +1088,7 @@ function print(str, err)
 	if err == nil then
 		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFCEPGP: " .. tostring(str) .. "|r");
 	else
-		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFCEPGP: " .. "Error - " .. tostring(str) .. "|r");
+		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFCEPGP:|r " .. "|c00FF0000Error|r|c006969FF - " .. tostring(str) .. "|r");
 	end
 end
 
