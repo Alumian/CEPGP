@@ -8,6 +8,8 @@ VERSION = "0.6.1";
 debugMode = false;
 responses = {};
 roster = {};
+criteria = 4;
+critReverse = false;
 --
 --[[ Stock function backups ]]--
 LFUpdate = LootFrame_Update;
@@ -61,31 +63,19 @@ function CEPGP_OnEvent()
 			local name, rank, rankIndex, _, class, _, _, officerNote = GetGuildRosterInfo(i);
 			roster[name] = {
 			[1] = i,
-			[2] = rank,
-			[3] = rankIndex,
-			[4] = class,
+			[2] = class,
+			[3] = rank,
+			[4] = rankIndex,
 			[5] = officerNote
 			};
-			
-			if mode == "guild" then
-				CEPGP_UpdateGuildScrollBar();
-			elseif mode == "raid" then
-				CEPGP_UpdateRaidScrollBar();
-			end
+		end
+		if mode == "guild" then
+			CEPGP_UpdateGuildScrollBar();
+		elseif mode == "raid" then
+			CEPGP_UpdateRaidScrollBar();
 		end
 	elseif event == "RAID_ROSTER_UPDATE" then
-		for i = 1, GetNumRaidMembers() do
-			local name = GetRaidRosterInfo(i);
-			local _, rank, rankIndex, class, officerNote = getGuildInfo(name);
-			roster[name] = {
-			[1] = i,
-			[2] = rank,
-			[3] = rankIndex,
-			[4] = class,
-			[5] = officerNote
-			};
-			CEPGP_UpdateRaidScrollBar();
-		end	
+		CEPGP_UpdateRaidScrollBar();
 	end
 end
 
@@ -101,33 +91,55 @@ function CEPGP_UpdateLootScrollBar()
 	local GP;
 	local offNote;
 	local colour;
-    t = responses;
-    tSize = table.getn(t);
+    t = {};
+    tSize = table.getn(responses);
+	for x = 1, tSize do
+		name = responses[x]
+		for i = 1, GetNumRaidMembers() do
+			if name == GetRaidRosterInfo(i) then
+				_, _, _, _, class = GetRaidRosterInfo(i);
+			end
+		end
+		if tContains(roster, name, true) then
+			rank = roster[name][3];
+			rankIndex = roster[name][4];
+			offNote = roster[name][5];
+			EP, GP = getEPGP(offNote);
+			PR = math.floor((EP/GP)*100)/100;
+		end
+		if not rank then
+			rank = "Not in Guild";
+			rankIndex = 10;
+			EP = 0;
+			GP = 1;
+			PR = 0;
+		end
+		t[x] = {
+			[1] = name,
+			[2] = class,
+			[3] = rank,
+			[4] = rankIndex,
+			[5] = EP,
+			[6] = GP,
+			[7] = PR
+			}
+	end
+	t = tSort(t, criteria)
     FauxScrollFrame_Update(DistributeScrollFrame, tSize, 10, 120);
     for y = 1, 10, 1 do
 		rank = nil;
         yoffset = y + FauxScrollFrame_GetOffset(DistributeScrollFrame);
         if (yoffset <= tSize) then
-            local t2 = t[yoffset];
-            if (t2 == nil) then
+            if not tContains(t, yoffset) then
                 getglobal("LootDistButton" .. y):Hide();
             else
-				name = t[yoffset];
-				for i = 1, GetNumRaidMembers() do
-					if name == GetRaidRosterInfo(i) then
-						_, _, _, _, class = GetRaidRosterInfo(i);
-					end
-				end
-				if tContains(roster, name, true) then
-					rank = roster[name][2];
-					offNote = roster[name][5];
-					EP, GP = getEPGP(offNote);
-				end
-				if not rank then
-					rank = "Not in Guild";
-					EP = "1";
-					GP = "1";
-				end
+				t2 = t[yoffset];
+				name = t2[1];
+				class = t2[2];
+				rank = t2[3];
+				EP = t2[5];
+				GP = t2[6];
+				PR = t2[7];
 				if class then
 					colour = RAID_CLASS_COLORS[string.upper(class)];
 				else
@@ -155,7 +167,7 @@ function CEPGP_UpdateLootScrollBar()
 end
 
 function CEPGP_UpdateGuildScrollBar()
-    local y;
+    local x, y;
     local yoffset;
     local t;
     local tSize;
@@ -166,47 +178,64 @@ function CEPGP_UpdateGuildScrollBar()
 	local GP;
 	local offNote;
 	local colour;
-    t = roster;
-    tSize = ntgetn(t);
+    t = {};
+	tSize = ntgetn(roster);
+	for x = 1, tSize do
+		name = indexToName(x);
+		index, class, rank, rankIndex, offNote = getGuildInfo(name);
+		EP, GP = getEPGP(offNote)
+		t[x] = {
+			[1] = name,
+			[2] = class,
+			[3] = rank,
+			[4] = rankIndex,
+			[5] = EP,
+			[6] = GP,
+			[7] = math.floor((EP/GP)*100)/100,
+			[8] = 0
+		}
+	end
+	t = tSort(t, criteria)
     FauxScrollFrame_Update(GuildScrollFrame, tSize, 18, 240);
     for y = 1, 18, 1 do
         yoffset = y + FauxScrollFrame_GetOffset(GuildScrollFrame);
         if (yoffset <= tSize) then
-			name = indexToName(yoffset)
-            if (name == nil) then
+		    if not tContains(t, yoffset, true) then
                 getglobal("GuildButton" .. y):Hide();
             else
-				rank = roster[name][2];
-				class = roster[name][4]
-				offNote = roster[name][5];
-				EP, GP = getEPGP(offNote);
+				name = t[yoffset][1]
+				class = t[yoffset][2];
+				rank = t[yoffset][3];
+				EP = t[yoffset][5];
+				GP = t[yoffset][6];
+				PR = t[yoffset][7];
 				if class then
 					colour = RAID_CLASS_COLORS[string.upper(class)];
 				else
 					colour = RAID_CLASS_COLORS["WARRIOR"];
 				end
-                getglobal("GuildButton" .. y .. "Info"):SetText(name);
-                getglobal("GuildButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("GuildButton" .. y .. "Info"):SetText(name);
+				getglobal("GuildButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("GuildButton" .. y .. "Class"):SetText(class);
-                getglobal("GuildButton" .. y .. "Class"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("GuildButton" .. y .. "Class"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("GuildButton" .. y .. "Rank"):SetText(rank);
-                getglobal("GuildButton" .. y .. "Rank"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("GuildButton" .. y .. "Rank"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("GuildButton" .. y .. "EP"):SetText(EP);
-                getglobal("GuildButton" .. y .. "EP"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("GuildButton" .. y .. "EP"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("GuildButton" .. y .. "GP"):SetText(GP);
-                getglobal("GuildButton" .. y .. "GP"):SetTextColor(colour.r, colour.g, colour.b);
-				getglobal("GuildButton" .. y .. "PR"):SetText(math.floor((EP/GP)*100)/100);
-                getglobal("GuildButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("GuildButton" .. y .. "GP"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("GuildButton" .. y .. "PR"):SetText(PR);
+				getglobal("GuildButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("GuildButton" .. y):Show();
 			end
-        else
-            getglobal("GuildButton" .. y):Hide();
-        end
+		else
+			getglobal("GuildButton" .. y):Hide();
+		end
     end
 end
 
 function CEPGP_UpdateRaidScrollBar()
-    local y;
+    local x, y;
     local yoffset;
     local t;
     local tSize;
@@ -217,41 +246,70 @@ function CEPGP_UpdateRaidScrollBar()
 	local GP;
 	local offNote;
 	local colour;
+	t = {};
     tSize = GetNumRaidMembers();
+	for x = 1, tSize do
+		name, _, group, _, class = GetRaidRosterInfo(x);
+		if tContains(roster, name, true) then
+			rank = roster[name][3];
+			rankIndex = roster[name][4];
+			offNote = roster[name][5];
+			EP, GP = getEPGP(offNote);
+			PR = math.floor((EP/GP)*100)/100;
+		end
+		if not rank then
+			rank = "Not in Guild";
+			rankIndex = 10;
+			EP = 0;
+			GP = 1;
+			PR = 0;
+		end
+		t[x] = {
+			[1] = name,
+			[2] = class,
+			[3] = rank,
+			[4] = rankIndex,
+			[5] = EP,
+			[6] = GP,
+			[7] = PR,
+			[8] = group
+		}
+	end
+	t = tSort(t, criteria)
     FauxScrollFrame_Update(RaidScrollFrame, tSize, 18, 240);
     for y = 1, 18, 1 do
-		rank = nil;
         yoffset = y + FauxScrollFrame_GetOffset(RaidScrollFrame);
         if (yoffset <= tSize) then
-			name, _, group, _, class = GetRaidRosterInfo(yoffset);
-			if tContains(roster, name, true) then
-				rank = roster[name][2];
-				offNote = roster[name][5];
-				EP, GP = getEPGP(offNote);
+            if not tContains(t, yoffset, true) then
+                getglobal("RaidButton" .. y):Hide();
+            else
+				t2 = t[yoffset];
+				name = t2[1];
+				class = t2[2];
+				rank = t2[3];
+				EP = t2[5];
+				GP = t2[6];
+				PR = t2[7];
+				group = t2[8];
+				if class then
+					colour = RAID_CLASS_COLORS[string.upper(class)];
+				else
+					colour = RAID_CLASS_COLORS["WARRIOR"];
+				end
+				getglobal("RaidButton" .. y .. "Group"):SetText(group);
+				getglobal("RaidButton" .. y .. "Group"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("RaidButton" .. y .. "Info"):SetText(name);
+				getglobal("RaidButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("RaidButton" .. y .. "Rank"):SetText(rank);
+				getglobal("RaidButton" .. y .. "Rank"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("RaidButton" .. y .. "EP"):SetText(EP);
+				getglobal("RaidButton" .. y .. "EP"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("RaidButton" .. y .. "GP"):SetText(GP);
+				getglobal("RaidButton" .. y .. "GP"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("RaidButton" .. y .. "PR"):SetText(PR);
+				getglobal("RaidButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("RaidButton" .. y):Show();
 			end
-			if not rank then
-				rank = "Not in Guild";
-				EP = "1";
-				GP = "1";
-			end
-			if class then
-				colour = RAID_CLASS_COLORS[string.upper(class)];
-			else
-				colour = RAID_CLASS_COLORS["WARRIOR"];
-			end
-			getglobal("RaidButton" .. y .. "Group"):SetText(group);
-			getglobal("RaidButton" .. y .. "Group"):SetTextColor(colour.r, colour.g, colour.b);
-			getglobal("RaidButton" .. y .. "Info"):SetText(name);
-			getglobal("RaidButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
-			getglobal("RaidButton" .. y .. "Rank"):SetText(rank);
-			getglobal("RaidButton" .. y .. "Rank"):SetTextColor(colour.r, colour.g, colour.b);
-			getglobal("RaidButton" .. y .. "EP"):SetText(EP);
-			getglobal("RaidButton" .. y .. "EP"):SetTextColor(colour.r, colour.g, colour.b);
-			getglobal("RaidButton" .. y .. "GP"):SetText(GP);
-			getglobal("RaidButton" .. y .. "GP"):SetTextColor(colour.r, colour.g, colour.b);
-			getglobal("RaidButton" .. y .. "PR"):SetText(math.floor((EP/GP)*100)/100);
-			getglobal("RaidButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
-			getglobal("RaidButton" .. y):Show();
         else
             getglobal("RaidButton" .. y):Hide();
         end
@@ -413,15 +471,6 @@ function CEPGP_distribute_popup_give(value)
 	end
 end
 
-function CEPGP_LootDistSortResults(criteria)
-	if not responses then
-		return;
-	elseif criteria == "name" then
-		table.sort(responses);
-	end
-	CEPGP_UpdateLootScrollBar();
-end
-
 --[[getEPGP(Officer Note) - Working as intended
 	returns EP and GP
 	]]
@@ -431,8 +480,8 @@ function getEPGP(offNote)
 	if not checkEPGP(offNote) then
 		return 0, 1;
 	end
-	EP = strsub(offNote, 1, strfind(offNote, ",")-1);
-	GP = strsub(offNote, strfind(offNote, ",")+1, string.len(offNote));
+	EP = tonumber(strsub(offNote, 1, strfind(offNote, ",")-1));
+	GP = tonumber(strsub(offNote, strfind(offNote, ",")+1, string.len(offNote)));
 	return EP, GP;
 end
 
@@ -1060,6 +1109,59 @@ function tContains(t, val, bool)
 	return false;
 end
 
+function tSort(t, index)
+	local t2 = {};
+	table.insert(t2, t[1]);
+	table.remove(t, 1);
+	local tSize = table.getn(t);
+	for x = 1, tSize do
+		local t2Size = table.getn(t2);
+		for y = 1, t2Size do
+			if y < t2Size then
+				if critReverse then
+					if (t[1][index] >= t2[y][index]) then
+						table.insert(t2, y, t[1]);
+						table.remove(t, 1);
+						break;
+					elseif (t[1][index] < t2[y][index]) and (t[1][index] >= t2[(y + 1)][index]) then
+						table.insert(t2, (y + 1), t[1]);
+						table.remove(t, 1);
+						break;
+					end
+				else
+					if (t[1][index] <= t2[y][index]) then
+						table.insert(t2, y, t[1]);
+						table.remove(t, 1);
+						break;
+					elseif (t[1][index] > t2[y][index]) and (t[1][index] <= t2[(y + 1)][index]) then
+						table.insert(t2, (y + 1), t[1]);
+						table.remove(t, 1);
+						break;
+					end
+				end
+			elseif y == t2Size then
+				if critReverse then
+					if t[1][index] > t2[y][index] then
+						table.insert(t2, y, t[1]);
+						table.remove(t, 1);
+					else
+						table.insert(t2, t[1]);
+						table.remove(t, 1);
+					end
+				else
+					if t[1][index] < t2[y][index] then
+						table.insert(t2, y, t[1]);
+						table.remove(t, 1);
+					else
+						table.insert(t2, t[1]);
+						table.remove(t, 1);
+					end
+				end
+			end
+		end
+	end
+	return t2;
+end
 
 --[[ntgetn(table) - Working as intended
 	table.getn clone that can handle tables which do not have numerical indexes.
@@ -1080,6 +1182,19 @@ function indexToName(i)
 	end
 end
 
+function setCriteria(x, disp)
+	if criteria == x then
+		critReverse = not critReverse
+	end
+	criteria = x;
+	if disp == "Raid" then
+		CEPGP_UpdateRaidScrollBar();
+	elseif disp == "Guild" then
+		CEPGP_UpdateGuildScrollBar();
+	elseif disp == "Loot" then
+		CEPGP_UpdateLootScrollBar();
+	end
+end
 --[[print(string) - Working as intended
 	Faster way of writing DEFAULT_CHAT_FRAME:AddMessage(string)
 	I'm lazy. Sue me. Wait - Don't sue me.
@@ -1091,6 +1206,7 @@ function print(str, err)
 		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFCEPGP:|r " .. "|c00FF0000Error|r|c006969FF - " .. tostring(str) .. "|r");
 	end
 end
+
 
 --[[getCurChannel() - Working as intended - Does this even have a purpose? Revise.
 	Returns the current reporting channel

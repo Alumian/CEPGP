@@ -6,11 +6,6 @@
 		<NormalFont inherits="GameFontNormal"/>
 		<HighlightFont inherits="GameFontHighlight"/>
 		<DisabledFont inherits="GameFontDisable"/>
-		<Scripts>
-			<OnClick>
-
-			</OnClick>
-		</Scripts>
 	</Button>
 	
 	<Button name="LootDistButtonTemplate" virtual="true">
@@ -576,6 +571,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
+								setCriteria(1, "Guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -590,6 +586,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(2, "Guild");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_guild_rank" inherits="CEPGPHeaderButton" text="Rank">
 						<Size>
@@ -602,6 +603,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(4, "Guild");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_guild_EP" inherits="CEPGPHeaderButton" text="EP">
 						<Size>
@@ -614,6 +620,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(5, "Guild");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_guild_GP" inherits="CEPGPHeaderButton" text="GP">
 						<Size>
@@ -626,6 +637,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(6, "Guild");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_guild_PR" inherits="CEPGPHeaderButton" text="PR">
 						<Size>
@@ -638,6 +654,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(7, "Guild");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_guild_add_EP" inherits="GameMenuButtonTemplate" text="Add Guild EP">
 						<Size>
@@ -950,6 +971,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(8, "Raid");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_raid_name" inherits="CEPGPHeaderButton" text="Name">
 						<Size>
@@ -962,6 +988,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(1, "Raid");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_raid_rank" inherits="CEPGPHeaderButton" text="Rank">
 						<Size>
@@ -974,6 +1005,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(4, "Raid");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_raid_EP" inherits="CEPGPHeaderButton" text="EP">
 						<Size>
@@ -986,6 +1022,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(5, "Raid");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_raid_GP" inherits="CEPGPHeaderButton" text="GP">
 						<Size>
@@ -998,6 +1039,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(6, "Raid");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_raid_PR" inherits="CEPGPHeaderButton" text="PR">
 						<Size>
@@ -1010,6 +1056,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(7, "Raid");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_raid_add_EP" inherits="GameMenuButtonTemplate" text="Add Raid EP">
 						<Size>
@@ -1367,7 +1418,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								CEPGP_LootDistSortResults("name");
+								setCriteria(1, "Loot");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1382,6 +1433,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(2, "Loot");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_distribute_raid_rank" inherits="CEPGPHeaderButton" text="Rank">
 						<Size>
@@ -1394,6 +1450,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(4, "Loot");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_distribute_raid_EP" inherits="CEPGPHeaderButton" text="EP">
 						<Size>
@@ -1406,6 +1467,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(5, "Loot");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_distribute_raid_GP" inherits="CEPGPHeaderButton" text="GP">
 						<Size>
@@ -1418,6 +1484,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(6, "Loot");
+							</OnClick>
+						</Scripts>
 					</Button>
 					<Button name="CEPGP_distribute_raid_PR" inherits="CEPGPHeaderButton" text="PR">
 						<Size>
@@ -1430,6 +1501,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<Scripts>
+							<OnClick>
+								setCriteria(7, "Loot");
+							</OnClick>
+						</Scripts>
 					</Button>
 				</Frames>
 				<Scripts>
