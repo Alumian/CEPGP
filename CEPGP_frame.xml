@@ -1509,6 +1509,9 @@
 					</Button>
 				</Frames>
 				<Scripts>
+					<OnShow>
+						CEPGP_loot_distributing:Show();
+					</OnShow>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
 					</OnLoad>
@@ -1630,6 +1633,7 @@
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(CEPGP_distribute_popup);
 						CEPGP_distribute_popup_give(true);
+						CEPGP_loot_distributing:Hide();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -1649,6 +1653,7 @@
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(CEPGP_distribute_popup);
 						CEPGP_distribute_popup_give(false);
+						CEPGP_loot_distributing:Hide();
 					</OnClick>
 				</Scripts>
 			</Button>
