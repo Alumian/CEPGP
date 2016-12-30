@@ -143,7 +143,6 @@ function CEPGP_UpdateLootScrollBar()
 				else
 					colour = RAID_CLASS_COLORS["WARRIOR"];
 				end
-				EP, GP = getEPGP(offNote);
                 getglobal("LootDistButton" .. y .. "Info"):SetText(name);
                 getglobal("LootDistButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "Class"):SetText(class);
