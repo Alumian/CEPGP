@@ -114,12 +114,9 @@ function CEPGP_OnEvent()
 			for i = 1, GetNumRaidMembers() do
 				if UnitName("player") == GetRaidRosterInfo(i) then
 					_, isLead = GetRaidRosterInfo(i);
-					if isLead == 2 then
-						isLead = true;
-					end
 				end
 			end
-			if (GetLootMethod() == "master" and isML == 0) or (GetLootMethod() == "group" and isLead) then
+			if (GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2) then
 				if tContains(bossNameIndex, name, true) then --[[ If the npc is in the boss name index ]]--
 					for k, v in pairs(bossNameIndex) do
 						if name == k then
@@ -436,6 +433,10 @@ function CEPGP_UpdateRaidScrollBar()
 end
 
 function CEPGP_ListButton_OnClick()
+	if CanEditOfficerNote() == nil then
+		print("You don't have access to modify EPGP", 1);
+		return;
+	end
 	obj = this:GetName();
 	--[[ Distribution Menu ]]--
 	if strfind(obj, "LootDistButton") then --A player in the distribution menu is clicked
@@ -915,7 +916,7 @@ function distribute(link, x)
 			leader = true;
 		end
 	end
-	if isML == 0 then
+	if isML() == 0 then
 		local iString = getItemString(link);
 		local name, _, _, _, _, _, _, _, tex = GetItemInfo(iString);
 		tex = {bgFile = tex,};

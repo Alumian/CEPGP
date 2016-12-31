@@ -1583,7 +1583,7 @@
 
 	<Frame name="CEPGP_distribute_popup" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true">
 		<Size>
-			<AbsDimension x="400" y="245"/>
+			<AbsDimension x="300" y="100"/>
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER"/>
@@ -1654,12 +1654,12 @@
 			</Button>
 			<Button name="CEPGP_distribute_popup_gp" inherits="GameMenuButtonTemplate" text="Give for GP">
 				<Size>
-					<AbsDimension x="100" y="80"/>
+					<AbsDimension x="75" y="30"/>
 				</Size>
 				<Anchors>
-					<Anchor point="LEFT" relativePoint="LEFT">
+					<Anchor point="BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x="20" y="0"/>
+							<AbsDimension x="16" y="16"/>
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -1674,12 +1674,12 @@
 			</Button>
 			<Button name="CEPGP_distribute_popup_free" inherits="GameMenuButtonTemplate" text="Give for Free">
 				<Size>
-					<AbsDimension x="100" y="80"/>
+					<AbsDimension x="75" y="30"/>
 				</Size>
 				<Anchors>
-					<Anchor point="RIGHT" relativePoint="RIGHT">
+					<Anchor point="BOTTOMRIGHT">
 						<Offset>
-							<AbsDimension x="-20" y="0"/>
+							<AbsDimension x="-16" y="16"/>
 					</Offset>
 				</Anchor>
 			</Anchors>
