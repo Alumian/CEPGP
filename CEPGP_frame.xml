@@ -1566,6 +1566,7 @@
 				this:RegisterEvent("GUILD_ROSTER_UPDATE");
 				this:RegisterEvent("RAID_ROSTER_UPDATE");
 				this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
+				this:RegisterEvent("CHAT_MSG_ADDON");
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();
