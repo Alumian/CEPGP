@@ -19,6 +19,7 @@ CFEvent = ChatFrame_OnEvent;
 --
 function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
+		requestVersion();
 		if CHANNEL == nil then
 			CHANNEL = "GUILD"
 		end
@@ -154,7 +155,11 @@ function CEPGP_OnEvent()
 	elseif (event == "CHAT_MSG_ADDON") then
 		if (arg1 == "CEPGP")then
 			CEPGP_IncAddonMsg(arg2, arg4);
-		end		
+		elseif arg1 == "CEPGP_version" then
+			if arg2 > VERSION then
+				print("Your addon is out of date. Version " .. arg2 .. " is now available for download at https://github.com/Alumian/CEPGP");
+			end
+		end
 	end
 end
 
@@ -166,6 +171,10 @@ end
 
 function CEPGP_SendAddonMsg(message)
 	SendAddonMessage("CEPGP", message, "GUILD");
+end
+
+function requestVersion()
+	SendAddonMessage("CEPGP_version", VERSION, "GUILD");
 end
 
 function CEPGP_UpdateLootScrollBar()
