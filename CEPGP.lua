@@ -4,7 +4,7 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.8.0";
+VERSION = "0.8.1";
 debugMode = false;
 responses = {};
 roster = {};
@@ -161,10 +161,17 @@ end
 
 function CEPGP_IncAddonMsg(message, sender)
 	local s1, s2, s3, s4 = strSplit(message, " ");
+	print(message);
 	if s1 == "update" then
 		GuildRoster();
 	elseif s1 == version then
-		if s2 > VERSION then
+		local v1, v2, v3 = strSplit(VERSION, ".");
+		local nv1, nv2, nv3 = strSplit(message, ".");
+		if nv1 > v1 then
+			print("Your addon is out of date. Version " .. s2 .. " is now available for download at https://github.com/Alumian/CEPGP");
+		elseif nv1 == v1 and nv2 > v2 then
+			print("Your addon is out of date. Version " .. s2 .. " is now available for download at https://github.com/Alumian/CEPGP");
+		elseif nv1 == v1 and nv2 == v2 and nv3 > v3 then
 			print("Your addon is out of date. Version " .. s2 .. " is now available for download at https://github.com/Alumian/CEPGP");
 		end
 	end
