@@ -4,7 +4,7 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.7.0";
+VERSION = "0.8.1";
 debugMode = false;
 responses = {};
 roster = {};
@@ -110,49 +110,66 @@ function CEPGP_OnEvent()
 		else
 			local name = strsub(arg1, 1, strfind(arg1, " dies")-1);
 			local EP;
-			if tContains(bossNameIndex, name, true) then --[[ If the npc is in the boss name index ]]--
-				for k, v in pairs(bossNameIndex) do
-					if name == k then
-						EP = v;
+			local isLead;
+			for i = 1, GetNumRaidMembers() do
+				if UnitName("player") == GetRaidRosterInfo(i) then
+					_, isLead = GetRaidRosterInfo(i);
+					if isLead == 2 then
+						isLead = true;
 					end
-				end
-				if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
-					this:RegisterEvent("PLAYER_REGEN_ENABLED");
-					kills = kills + 1;
-					if kills == 3 then
-						kills = 0;
-						addRaidEP(EP, "The Bug Trio has been slain! The raid has been awarded " .. EP .. " EP");
-					end
-				elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
-					this:RegisterEvent("PLAYER_REGEN_ENABLED");
-					kills = kills + 1;
-					if kills == 2 then
-						kills = 0;
-						addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
-					end
-				elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
-					this:RegisterEvent("PLAYER_REGEN_ENABLED");
-					kills = kills + 1;
-					if kills == 4 then
-						kills = 0;
-						addRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP");
-					end
-				else
-					addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
 				end
 			end
-			if name == "Flamewalker Healer" or name == "Flamewalker Elite" then
-				this:RegisterEvent("PLAYER_REGEN_ENABLED");
-				kills = kills + 1;
-				if kills == 8 then
-					kills = 0;
-					addRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP");
+			if (GetLootMethod() == "master" and isML == 0) or (GetLootMethod() == "group" and isLead) then
+				if tContains(bossNameIndex, name, true) then --[[ If the npc is in the boss name index ]]--
+					for k, v in pairs(bossNameIndex) do
+						if name == k then
+							EP = v;
+						end
+					end
+					
+					if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
+						this:RegisterEvent("PLAYER_REGEN_ENABLED");
+						kills = kills + 1;
+						if kills == 3 then
+							kills = 0;
+							addRaidEP(EP, "The Bug Trio has been slain! The raid has been awarded " .. EP .. " EP");
+						end
+						
+					elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
+						this:RegisterEvent("PLAYER_REGEN_ENABLED");
+						kills = kills + 1;
+						if kills == 2 then
+							kills = 0;
+							addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
+						end
+						
+					elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
+						this:RegisterEvent("PLAYER_REGEN_ENABLED");
+						kills = kills + 1;
+						if kills == 4 then
+							kills = 0;
+							addRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP");
+						end
+					else
+						addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
+					end
+				end
+				
+				if name == "Flamewalker Healer" or name == "Flamewalker Elite" then
+					this:RegisterEvent("PLAYER_REGEN_ENABLED");
+					kills = kills + 1;
+					if kills == 8 then
+						kills = 0;
+						addRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP");
+					end
 				end
 			end
 		end
+		
 	elseif event == "PLAYER_REGEN_ENABLED" then
 		kills = 0;
 		this:UnregisterEvent("PLAYER_REGEN_ENABLED");
+		
 	elseif (event == "CHAT_MSG_ADDON") then
 		if (arg1 == "CEPGP")then
 			CEPGP_IncAddonMsg(arg2, arg4);
@@ -891,7 +908,6 @@ end
 	Calls for raid members to whisper for items
 ]]
 function distribute(link, x)
-	local _, isML = GetLootMethod();
 	local leader = false;
 	local player = GetUnitName("player");
 	if tContains(roster, player, true) then
@@ -920,7 +936,7 @@ function distribute(link, x)
 		_G["CEPGP_distribute_item_tex"]:SetScript('OnLeave', function() GameTooltip:Hide() end);
 		_G["CEPGP_distribute_GP_value"]:SetText(gp);
 	else
-		print("You are not the Master Looter.", 1);
+		print("You are not the Loot Master.", 1);
 		return;
 	end
 end
@@ -1388,9 +1404,10 @@ function CEPGP_strSplit(msgStr, c)
 end
 
 
---[[getCurChannel() - Working as intended - Does this even have a purpose? Revise.
-	Returns the current reporting channel
-]]
-function getCurChannel()
-	return CHANNEL;
+--[[ isML(player) ]]--
+--[[ Returns the index of the loot master in the raid group. 
+	 The main functionality of this method is it returns 0 if the local player is the loot master ]]--
+function isML()
+	local _, isML = GetLootMethod();
+	return isML;
 end
