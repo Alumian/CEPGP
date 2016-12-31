@@ -1,12 +1,16 @@
-# Classic-EPGP Version 0.6.1 Alpha (Stable Release)
+# Classic-EPGP Version 0.8.0 Beta (Stable Release)
 An addon designed to handle your guild's EPGP standings by storing the respective values in your Officer Notes. Another primary function of the addon is to handle loot moderation which you must be the master looter to utilise.
 
 For this addon to work, anyone using the addon must be able to at the very least view Officer Notes. To adjust EP and GP values you must be able to edit Officer Notes.
 
-The addon is entirely GUI based and has no chat commands. All functionality is handled within the frame with the exception of the one command /cepgp show which will simply show the frame if it doesn't appear automatically.
-The frame is designed to only appear automatically on raid bosses from Molten Core, Onyxia's Lair and World Bosses all the way up to Naxxramas.
+The addon is entirely GUI based and the frame is designed to only appear automatically on raid bosses from Molten Core, Onyxia's Lair and World Bosses all the way up to Naxxramas.
+
+Functionality:
+* /cepgp show - Shows the CEPGP window
+* /cepgp debug - Enables debug mode
+* /cepgp setdefaultchannel - Changes the default reporting channel. This is set to Guild by default.
 
 To install:
-  Download this addon
-  Extract it to ../Interface/AddOns/
-  Rename the extracted folder from CEPGP-master to CEPGP
+  1. Download this addon 
+  2. Extract it to ../Interface/AddOns/ 
+  3. Rename the extracted folder from CEPGP-master to CEPGP
