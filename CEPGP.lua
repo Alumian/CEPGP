@@ -4,12 +4,13 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.7.0";
+VERSION = "0.8.0";
 debugMode = false;
 responses = {};
 roster = {};
 criteria = 4;
 critReverse = false;
+kills = 0;
 --
 --[[ Stock function backups ]]--
 LFUpdate = LootFrame_Update;
@@ -59,6 +60,17 @@ function CEPGP_OnEvent()
 		end
 	elseif event == "GUILD_ROSTER_UPDATE" then
 		SetGuildRosterShowOffline(true);
+		if CanEditOfficerNote() == 1 then --[[ Hides context sensitive options if player cannot edit officer notes ]]--
+			ShowUIPanel(CEPGP_guild_add_EP);
+			ShowUIPanel(CEPGP_guild_decay);
+			ShowUIPanel(CEPGP_guild_reset);
+			ShowUIPanel(CEPGP_raid_add_EP);
+		else
+			HideUIPanel(CEPGP_guild_add_EP);
+			HideUIPanel(CEPGP_guild_decay);
+			HideUIPanel(CEPGP_guild_reset);
+			HideUIPanel(CEPGP_raid_add_EP);
+		end
 		for i = 1, GetNumGuildMembers() do
 			local name, rank, rankIndex, _, class, _, _, officerNote = GetGuildRosterInfo(i);
 			roster[name] = {
@@ -75,7 +87,70 @@ function CEPGP_OnEvent()
 			CEPGP_UpdateRaidScrollBar();
 		end
 	elseif event == "RAID_ROSTER_UPDATE" then
+		if UnitInRaid("player") then
+			ShowUIPanel(CEPGP_button_raid);
+			ShowUIPanel(CEPGP_button_loot_dist);
+		else --[[ Hides the raid and loot distribution buttons if the player is not in a raid group ]]--
+			HideUIPanel(CEPGP_raid);
+			HideUIPanel(CEPGP_loot);
+			HideUIPanel(CEPGP_button_raid);
+			HideUIPanel(CEPGP_button_loot_dist);
+			HideUIPanel(CEPGP_distribute_popup);
+			HideUIPanel(CEPGP_context_popup);
+			mode = "guild";
+			ShowUIPanel(CEPGP_guild);
+			populateFrame();
+		end
 		CEPGP_UpdateRaidScrollBar();
+	elseif event == "CHAT_MSG_COMBAT_HOSTILE_DEATH" then
+		if not strfind(arg1, " dies") then
+			return;
+		else
+			local name = strsub(arg1, 1, strfind(arg1, " dies")-1);
+			local EP;
+			if tContains(bossNameIndex, name, true) then --[[ If the npc is in the boss name index ]]--
+				for k, v in pairs(bossNameIndex) do
+					if name == k then
+						EP = v;
+					end
+				end
+				if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
+					this:RegisterEvent("PLAYER_REGEN_ENABLED");
+					kills = kills + 1;
+					if kills == 3 then
+						kills = 0;
+						addRaidEP(EP, "The Bug Trio has been slain! The raid has been awarded " .. EP .. " EP");
+					end
+				elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
+					this:RegisterEvent("PLAYER_REGEN_ENABLED");
+					kills = kills + 1;
+					if kills == 2 then
+						kills = 0;
+						addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
+					end
+				elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
+					this:RegisterEvent("PLAYER_REGEN_ENABLED");
+					kills = kills + 1;
+					if kills == 4 then
+						kills = 0;
+						addRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP");
+					end
+				else
+					addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
+				end
+			end
+			if name == "Flamewalker Healer" or name == "Flamewalker Elite" then
+				this:RegisterEvent("PLAYER_REGEN_ENABLED");
+				kills = kills + 1;
+				if kills == 8 then
+					kills = 0;
+					addRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP");
+				end
+			end
+		end
+	elseif event == "PLAYER_REGEN_ENABLED" then
+		kills = 0;
+		this:UnregisterEvent("PLAYER_REGEN_ENABLED");
 	end
 end
 
@@ -315,158 +390,154 @@ end
 
 function CEPGP_ListButton_OnClick()
 	obj = this:GetName();
-	local leader = false;
-	local player = GetUnitName("player");
-	if tContains(roster, player, true) then
-		if roster[player][4] == 0 then
-			leader = true;
+	--[[ Distribution Menu ]]--
+	if strfind(obj, "LootDistButton") then --A player in the distribution menu is clicked
+		ShowUIPanel(CEPGP_distribute_popup);
+		CEPGP_distribute_popup_title:SetText(getglobal(this:GetName() .. "Info"):GetText());
+		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID());
+	
+		--[[ Guild Menu ]]--
+	elseif strfind(obj, "GuildButton") then --A player from the guild menu is clicked (awards EP)
+		local name = getglobal(this:GetName() .. "Info"):GetText();
+		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
+		ShowUIPanel(CEPGP_context_popup_EP_check);
+		ShowUIPanel(CEPGP_context_popup_GP_check);
+		ShowUIPanel(CEPGP_context_popup_subtract_check);
+		ShowUIPanel(CEPGP_context_popup_EP_check_text);
+		ShowUIPanel(CEPGP_context_popup_GP_check_text);
+		ShowUIPanel(CEPGP_context_popup_subtract_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
+		CEPGP_context_popup_header:SetText("Guild Moderation");
+		CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
+		CEPGP_context_popup_desc:SetText("Adding EP");
+		CEPGP_context_amount:SetText("0");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															if CEPGP_context_popup_EP_check:GetChecked() then
+																addEP(name, tonumber(CEPGP_context_amount:GetText()));
+															else
+																addGP(name, tonumber(CEPGP_context_amount:GetText()));
+															end
+														end);
+		
+	elseif strfind(obj, "CEPGP_guild_add_EP") then --Click the Add Guild EP button in the Guild menu
+		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
+		ShowUIPanel(CEPGP_context_popup_EP_check);
+		HideUIPanel(CEPGP_context_popup_GP_check);
+		ShowUIPanel(CEPGP_context_popup_subtract_check);
+		ShowUIPanel(CEPGP_context_popup_EP_check_text);
+		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		ShowUIPanel(CEPGP_context_popup_subtract_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
+		CEPGP_context_popup_header:SetText("Guild Moderation");
+		CEPGP_context_popup_title:SetText("Add Guild EP");
+		CEPGP_context_popup_desc:SetText("Adds EP to all guild members");
+		CEPGP_context_amount:SetText("0");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															addGuildEP(tonumber(CEPGP_context_amount:GetText()));
+														end);
+	
+	elseif strfind(obj, "CEPGP_guild_decay") then --Click the Decay Guild EPGP button in the Guild menu
+		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
+		HideUIPanel(CEPGP_context_popup_EP_check);
+		HideUIPanel(CEPGP_context_popup_GP_check);
+		HideUIPanel(CEPGP_context_popup_subtract_check);
+		HideUIPanel(CEPGP_context_popup_EP_check_text);
+		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		HideUIPanel(CEPGP_context_popup_subtract_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(nil);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
+		CEPGP_context_popup_header:SetText("Guild Moderation");
+		CEPGP_context_popup_title:SetText("Decay Guild EPGP");
+		CEPGP_context_popup_desc:SetText("Decays EPGP standings by a percentage\nValid Range: 0-100");
+		CEPGP_context_amount:SetText("0");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															decay(tonumber(CEPGP_context_amount:GetText()));
+														end);
+		
+	elseif strfind(obj, "CEPGP_guild_reset") then --Click the Reset All EPGP Standings button in the Guild menu
+		ShowUIPanel(CEPGP_context_popup);
+		HideUIPanel(CEPGP_context_amount);
+		HideUIPanel(CEPGP_context_popup_EP_check);
+		HideUIPanel(CEPGP_context_popup_GP_check);
+		HideUIPanel(CEPGP_context_popup_subtract_check);
+		HideUIPanel(CEPGP_context_popup_EP_check_text);
+		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		HideUIPanel(CEPGP_context_popup_subtract_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(nil);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
+		CEPGP_context_popup_header:SetText("Guild Moderation");
+		CEPGP_context_popup_title:SetText("Reset Guild EPGP");
+		CEPGP_context_popup_desc:SetText("Resets the Guild EPGP standings\n|c00FF0000Are you sure this is what you want to do?\nThis cannot be reversed!\nNote: This will report to Guild chat|r");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															resetAll();
+														end);
+		
+		--[[ Raid Menu ]]--
+	elseif strfind(obj, "RaidButton") then --A player from the raid menu is clicked (awards EP)
+		local name = getglobal(this:GetName() .. "Info"):GetText();
+		if not getGuildInfo(name) then
+			print(name .. " is not a guild member - Cannot award EP or GP", true);
+			return;
 		end
-	end
-	if leader == true then
-		--[[ Distribution Menu ]]--
-		if strfind(obj, "LootDistButton") then --A player in the distribution menu is clicked
-			ShowUIPanel(CEPGP_distribute_popup);
-			CEPGP_distribute_popup_title:SetText(getglobal(this:GetName() .. "Info"):GetText());
-			CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID());
-		
-			--[[ Guild Menu ]]--
-		elseif strfind(obj, "GuildButton") then --A player from the guild menu is clicked (awards EP)
-			local name = getglobal(this:GetName() .. "Info"):GetText();
-			ShowUIPanel(CEPGP_context_popup);
-			ShowUIPanel(CEPGP_context_amount);
-			ShowUIPanel(CEPGP_context_popup_EP_check);
-			ShowUIPanel(CEPGP_context_popup_GP_check);
-			ShowUIPanel(CEPGP_context_popup_EP_check_text);
-			ShowUIPanel(CEPGP_context_popup_GP_check_text);
-			CEPGP_context_popup_EP_check:SetChecked(1);
-			CEPGP_context_popup_GP_check:SetChecked(nil);
-			CEPGP_context_popup_header:SetText("Guild Moderation");
-			CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
-			CEPGP_context_popup_desc:SetText("Adding EP");
-			CEPGP_context_amount:SetText("0");
-			CEPGP_context_amount:SetNumeric(true);
-			CEPGP_context_popup_confirm:SetScript('OnClick', function()
-																PlaySound("gsTitleOptionExit");
-																HideUIPanel(CEPGP_context_popup);
-																if CEPGP_context_popup_EP_check:GetChecked() then
-																	addEP(name, tonumber(CEPGP_context_amount:GetText()));
-																else
-																	addGP(name, tonumber(CEPGP_context_amount:GetText()));
-																end
-															end);
-			
-		elseif strfind(obj, "CEPGP_guild_add_EP") then --Click the Add Guild EP button in the Guild menu
-			ShowUIPanel(CEPGP_context_popup);
-			ShowUIPanel(CEPGP_context_amount);
-			ShowUIPanel(CEPGP_context_popup_EP_check);
-			HideUIPanel(CEPGP_context_popup_GP_check);
-			ShowUIPanel(CEPGP_context_popup_EP_check_text);
-			HideUIPanel(CEPGP_context_popup_GP_check_text);
-			CEPGP_context_popup_EP_check:SetChecked(1);
-			CEPGP_context_popup_GP_check:SetChecked(nil);
-			CEPGP_context_popup_header:SetText("Guild Moderation");
-			CEPGP_context_popup_title:SetText("Add Guild EP");
-			CEPGP_context_popup_desc:SetText("Adds EP to all guild members");
-			CEPGP_context_amount:SetText("0");
-			CEPGP_context_amount:SetNumeric(true);
-			CEPGP_context_popup_confirm:SetScript('OnClick', function()
-																PlaySound("gsTitleOptionExit");
-																HideUIPanel(CEPGP_context_popup);
-																addGuildEP(tonumber(CEPGP_context_amount:GetText()));
-															end);
-		
-		elseif strfind(obj, "CEPGP_guild_decay") then --Click the Decay Guild EPGP button in the Guild menu
-			ShowUIPanel(CEPGP_context_popup);
-			ShowUIPanel(CEPGP_context_amount);
-			HideUIPanel(CEPGP_context_popup_EP_check);
-			HideUIPanel(CEPGP_context_popup_GP_check);
-			HideUIPanel(CEPGP_context_popup_EP_check_text);
-			HideUIPanel(CEPGP_context_popup_GP_check_text);
-			CEPGP_context_popup_EP_check:SetChecked(nil);
-			CEPGP_context_popup_GP_check:SetChecked(nil);
-			CEPGP_context_popup_header:SetText("Guild Moderation");
-			CEPGP_context_popup_title:SetText("Decay Guild EPGP");
-			CEPGP_context_popup_desc:SetText("Decays EPGP standings by a percentage\nValid Range: 0-100");
-			CEPGP_context_amount:SetText("0");
-			CEPGP_context_amount:SetNumeric(true);
-			CEPGP_context_popup_confirm:SetScript('OnClick', function()
-																PlaySound("gsTitleOptionExit");
-																HideUIPanel(CEPGP_context_popup);
-																decay(tonumber(CEPGP_context_amount:GetText()));
-															end);
-			
-		elseif strfind(obj, "CEPGP_guild_reset") then --Click the Reset All EPGP Standings button in the Guild menu
-			ShowUIPanel(CEPGP_context_popup);
-			HideUIPanel(CEPGP_context_amount);
-			HideUIPanel(CEPGP_context_popup_EP_check);
-			HideUIPanel(CEPGP_context_popup_GP_check);
-			HideUIPanel(CEPGP_context_popup_EP_check_text);
-			HideUIPanel(CEPGP_context_popup_GP_check_text);
-			CEPGP_context_popup_EP_check:SetChecked(nil);
-			CEPGP_context_popup_GP_check:SetChecked(nil);
-			CEPGP_context_popup_header:SetText("Guild Moderation");
-			CEPGP_context_popup_title:SetText("Reset Guild EPGP");
-			CEPGP_context_popup_desc:SetText("Resets the Guild EPGP standings\n|c00FF0000Are you sure this is what you want to do?\nThis cannot be reversed!\nNote: This will report to Guild chat|r");
-			CEPGP_context_popup_confirm:SetScript('OnClick', function()
-																PlaySound("gsTitleOptionExit");
-																HideUIPanel(CEPGP_context_popup);
-																resetAll();
-															end);
-			
-			--[[ Raid Menu ]]--
-		elseif strfind(obj, "RaidButton") then --A player from the raid menu is clicked (awards EP)
-			local name = getglobal(this:GetName() .. "Info"):GetText();
-			if not getGuildInfo(name) then
-				print(name .. " is not a guild member - Cannot award EP or GP", true);
-				return;
-			end
-			ShowUIPanel(CEPGP_context_popup);
-			ShowUIPanel(CEPGP_context_amount);
-			ShowUIPanel(CEPGP_context_popup_EP_check);
-			ShowUIPanel(CEPGP_context_popup_GP_check);
-			ShowUIPanel(CEPGP_context_popup_EP_check_text);
-			ShowUIPanel(CEPGP_context_popup_GP_check_text);
-			CEPGP_context_popup_EP_check:SetChecked(1);
-			CEPGP_context_popup_GP_check:SetChecked(nil);
-			CEPGP_context_popup_header:SetText("Raid Moderation");
-			CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
-			CEPGP_context_popup_desc:SetText("Adding EP");
-			CEPGP_context_amount:SetText("0");
-			CEPGP_context_amount:SetNumeric(true);
-			CEPGP_context_popup_confirm:SetScript('OnClick', function()
-																PlaySound("gsTitleOptionExit");
-																HideUIPanel(CEPGP_context_popup);
-																if CEPGP_context_popup_EP_check:GetChecked() then
-																	addEP(name, tonumber(CEPGP_context_amount:GetText()));
-																else
-																	addGP(name, tonumber(CEPGP_context_amount:GetText()));
-																end
-															end);
-		
-		elseif strfind(obj, "CEPGP_raid_add_EP") then --Click the Add Raid EP button in the Raid menu
-			ShowUIPanel(CEPGP_context_popup);
-			ShowUIPanel(CEPGP_context_amount);
-			HideUIPanel(CEPGP_context_popup_EP_check);
-			HideUIPanel(CEPGP_context_popup_GP_check);
-			HideUIPanel(CEPGP_context_popup_EP_check_text);
-			HideUIPanel(CEPGP_context_popup_GP_check_text);
-			CEPGP_context_popup_EP_check:SetChecked(nil);
-			CEPGP_context_popup_GP_check:SetChecked(nil);
-			CEPGP_context_popup_header:SetText("Raid Moderation");
-			CEPGP_context_popup_title:SetText("Award Raid EP");
-			CEPGP_context_popup_desc:SetText("Adds an amount of EP to the entire raid");
-			CEPGP_context_amount:SetText("0");
-			CEPGP_context_amount:SetNumeric(true);
-			CEPGP_context_popup_confirm:SetScript('OnClick', function()
-																PlaySound("gsTitleOptionExit");
-																HideUIPanel(CEPGP_context_popup);
-																addRaidEP(tonumber(CEPGP_context_amount:GetText()));
-															end);
-		else
-			print(obj);
-		end
+		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
+		ShowUIPanel(CEPGP_context_popup_EP_check);
+		ShowUIPanel(CEPGP_context_popup_GP_check);
+		ShowUIPanel(CEPGP_context_popup_subtract_check);
+		ShowUIPanel(CEPGP_context_popup_EP_check_text);
+		ShowUIPanel(CEPGP_context_popup_GP_check_text);
+		ShowUIPanel(CEPGP_context_popup_subtract_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(1);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
+		CEPGP_context_popup_header:SetText("Raid Moderation");
+		CEPGP_context_popup_title:SetText("Add EP/GP to " .. name);
+		CEPGP_context_popup_desc:SetText("Adding EP");
+		CEPGP_context_amount:SetText("0");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															if CEPGP_context_popup_EP_check:GetChecked() then
+																addEP(name, tonumber(CEPGP_context_amount:GetText()));
+															else
+																addGP(name, tonumber(CEPGP_context_amount:GetText()));
+															end
+														end);
+	
+	elseif strfind(obj, "CEPGP_raid_add_EP") then --Click the Add Raid EP button in the Raid menu
+		ShowUIPanel(CEPGP_context_popup);
+		ShowUIPanel(CEPGP_context_amount);
+		HideUIPanel(CEPGP_context_popup_EP_check);
+		HideUIPanel(CEPGP_context_popup_GP_check);
+		ShowUIPanel(CEPGP_context_popup_subtract_check);
+		HideUIPanel(CEPGP_context_popup_EP_check_text);
+		HideUIPanel(CEPGP_context_popup_GP_check_text);
+		ShowUIPanel(CEPGP_context_popup_subtract_check_text);
+		CEPGP_context_popup_EP_check:SetChecked(nil);
+		CEPGP_context_popup_GP_check:SetChecked(nil);
+		CEPGP_context_popup_header:SetText("Raid Moderation");
+		CEPGP_context_popup_title:SetText("Award Raid EP");
+		CEPGP_context_popup_desc:SetText("Adds an amount of EP to the entire raid");
+		CEPGP_context_amount:SetText("0");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															addRaidEP(tonumber(CEPGP_context_amount:GetText()));
+														end);
 	else
-		print("You must be a guild leader to do this action.", 1);
+		print(obj);
 	end
 end
 
@@ -519,10 +590,10 @@ function LootFrame_OnEvent(event)
 			CEPGP_UpdateLootScrollBar();
 		end
 	elseif event == "LOOT_OPENED" then
-		if UnitName("target") then
+		if UnitName("target") and UnitInRaid("player") then
 --			_G['CEPGP_looting'].text:SetText("Looting " .. UnitName("target"))
 --			_G['CEPGP_looting']:SetPoint('TOPLEFT', _G['CEPGP_mode'], 'CENTER', _G['CEPGP_looting'].text:GetStringWidth()/(-2), 0)
-			if tContains(bossNameIndex, UnitName("target")) then
+			if tContains(bossNameIndex, UnitName("target"), true) then
 				CEPGP_frame:Show();
 				mode = "loot";
 				CEPGP_guild:Hide();
@@ -805,33 +876,29 @@ function distribute(link, x)
 			leader = true;
 		end
 	end
-	if leader == true then
-		if isML == 0 then
-			local iString = getItemString(link);
-			local name, _, _, _, _, _, _, _, tex = GetItemInfo(iString);
-			tex = {bgFile = tex,};
-			gp = _G[mode..'itemGP'..x]:GetText();
-			responses = {};
-			CEPGP_UpdateLootScrollBar();
-			SendChatMessage("--------------------------", RAID, "Common");
-			SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID_WARNING", "Common");
-			SendChatMessage("GP Value: " .. gp, RAID, "Common");
-			SendChatMessage("Whisper me !need for mainspec only", RAID, "Common");
-			SendChatMessage("--------------------------", RAID, "Common");
-			CEPGP_distribute:Show();
-			CEPGP_loot:Hide();
-			_G["CEPGP_distribute_item_name"]:SetText(link);
-			_G["CEPGP_distribute_item_name_frame"]:SetScript('OnClick', function() SetItemRef(iString) end);
-			_G["CEPGP_distribute_item_tex"]:SetBackdrop(tex);
-			_G["CEPGP_distribute_item_tex"]:SetScript('OnEnter', function() GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT") GameTooltip:SetHyperlink(iString) GameTooltip:Show() end);
-			_G["CEPGP_distribute_item_tex"]:SetScript('OnLeave', function() GameTooltip:Hide() end);
-			_G["CEPGP_distribute_GP_value"]:SetText(gp);
-		else
-			print("You are not the Master Looter.", 1);
-			return;
-		end
+	if isML == 0 then
+		local iString = getItemString(link);
+		local name, _, _, _, _, _, _, _, tex = GetItemInfo(iString);
+		tex = {bgFile = tex,};
+		gp = _G[mode..'itemGP'..x]:GetText();
+		responses = {};
+		CEPGP_UpdateLootScrollBar();
+		SendChatMessage("--------------------------", RAID, "Common");
+		SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID_WARNING", "Common");
+		SendChatMessage("GP Value: " .. gp, RAID, "Common");
+		SendChatMessage("Whisper me !need for mainspec only", RAID, "Common");
+		SendChatMessage("--------------------------", RAID, "Common");
+		CEPGP_distribute:Show();
+		CEPGP_loot:Hide();
+		_G["CEPGP_distribute_item_name"]:SetText(link);
+		_G["CEPGP_distribute_item_name_frame"]:SetScript('OnClick', function() SetItemRef(iString) end);
+		_G["CEPGP_distribute_item_tex"]:SetBackdrop(tex);
+		_G["CEPGP_distribute_item_tex"]:SetScript('OnEnter', function() GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT") GameTooltip:SetHyperlink(iString) GameTooltip:Show() end);
+		_G["CEPGP_distribute_item_tex"]:SetScript('OnLeave', function() GameTooltip:Hide() end);
+		_G["CEPGP_distribute_GP_value"]:SetText(gp);
 	else
-		print("You must be a guild leader to do this action.", 1);
+		print("You are not the Master Looter.", 1);
+		return;
 	end
 end
 
@@ -867,8 +934,9 @@ end
 
 --[[addRaidEP(amount) - Working as intended
 	Adds 'amount' EP to the whole raid group
+	If a raid boss is killed, 'boss' should be parsed where name is the boss name
 ]]
-function addRaidEP(amount)
+function addRaidEP(amount, msg)
 	amount = math.floor(amount);
 	local total = GetNumRaidMembers();
 	if total > 0 then
@@ -894,13 +962,21 @@ function addRaidEP(amount)
 			end
 		end
 	end
-	SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, "Common");
+	if msg then
+		SendChatMessage(msg, "RAID", "Common");
+	else
+		SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, "Common");
+	end
 end
 
 --[[addGuildEP(amount) - Working as intended
 	Adds 'amount' EP to the whole guild
 ]]
 function addGuildEP(amount)
+	if amount == nil then
+		print("Please enter a valid number", 1);
+		return;
+	end
 	local total = ntgetn(roster);
 	local EP, GP = nil;
 	amount = math.floor(amount);
@@ -932,6 +1008,10 @@ end
 	Note: Player must be part of the guild
 ]]
 function addGP(player, amount)
+	if amount == nil then
+		print("Please enter a valid number", 1);
+		return;
+	end
 	local EP, GP = nil;
 	amount = math.floor(amount);
 	if tContains(roster, player, true) then
@@ -963,7 +1043,7 @@ end
 ]]
 function addEP(player, amount)
 	if amount == nil then
-		print(_, "No EP value specified");
+		print("Please enter a valid number", 1);
 		return;
 	end
 	amount = math.floor(amount);
@@ -995,6 +1075,10 @@ end
 	Decays the EP of the entire guild by 'amount'%
 ]]
 function decay(amount)
+	if amount == nil then
+		print("Please enter a valid number", 1);
+		return;
+	end
 	local EP, GP = nil;
 	for name,_ in pairs(roster)do
 		offNote = roster[name][5];

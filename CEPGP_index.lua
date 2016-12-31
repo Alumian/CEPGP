@@ -1,15 +1,94 @@
 --The item level of each item
-bossNameIndex = {"Onyxia",
-				"Razorgore the Untamed", "Vaelastrasz the Corrupt", "Broodlord Lashlayer", "Firemaw", "Ebonroc", "Flamegor", "Chromaggus", "Nefarian",
-				"Lucifron", "Magmadar", "Gehennas", "Garr", "Baron Geddon", "Shazzrah", "Sulfuron Harbinger", "Golemagg the Incinerator", "Majordomo Executus", "Ragnaros",
-				"Kurinnaxx", "General Rajaxx", "Moam", "Buru the Gorger", "Ayamiss the Hunter", "Ossirian the Unscarred",
-				"The Prophet Skeram", "Battleguard Sartura", "Fankriss the Unyielding", "Princess Huhuran", "Vek'lor", "Vek'nilash", "C'Thun", "Yauj", "Vem", "Kri", "Viscidus", "Ouro",
-				"Anub'Rekhan", "Grand Widow Faerlina", "Maexxna",
-				"Noth the Plaguebringer", "Heigan the Unclean", "Loatheb",
-				"Instructor Razuvious", "Gothik the Harvester",
-				"Patchwerk", "Grobbulus", "Gluth", "Thaddius",
-				"Sapphiron", "Kel'Thuzad",
-				"High Priest Venoxis", "High Priestess Mar'li", "High Priest Thekal", "High Priestess Arlokk", "Hakkar", "Bloodlord Mandokir", "Jin'do the Hexxer", "Gahz'ranka", "Doom Lord Kazzak", "Azuregos", "Teremus the Devourer", "Emeriss", "Lethon", "Ysondre", "Taerar"}
+bossNameIndex = {
+					["Onyxia"] = 7,
+					
+					-- Molten Core --
+					["Lucifron"] = 10,
+					["Magmadar"] = 10,
+					["Gehennas"] = 10,
+					["Garr"] = 10,
+					["Baron Geddon"] = 10,
+					["Shazzrah"] = 10,
+					["Sulfuron Harbinger"] = 10,
+					["Golemagg the Incinerator"] = 10,
+					["Majordomo Executus"] = 10,
+					["Ragnaros"] = 15,
+					
+					-- Blackwing Lair --
+					["Razorgore the Untamed"] = 12,
+					["Vaelastrasz the Corrupt"] = 12,
+					["Broodlord Lashlayer"] = 12,
+					["Firemaw"] = 12,
+					["Ebonroc"] = 12,
+					["Flamegor"] = 12,
+					["Chromaggus"] = 12,
+					["Nefarian"] = 17,
+
+					-- Zul'Gurub --
+					["High Priest Venoxis"] = 0,
+					["High Priestess Mar'li"] = 0,
+					["High Priest Thekal"] = 0,
+					["High Priestess Arlokk"] = 0,
+					["Bloodlord Mandokir"] = 0,
+					["Jin'do the Hexxer"] = 0,
+					["Gahz'ranka"] = 0,
+					["Hakkar"] = 0,
+					
+					-- AQ20 --
+					["Kurinnaxx"] = 0,
+					["General Rajaxx"] = 0,
+					["Moam"] = 0,
+					["Buru the Gorger"] = 0,
+					["Ayamiss the Hunter"] = 0,
+					["Ossirian the Unscarred"] = 0,
+					
+					-- AQ40 --
+					["The Prophet Skeram"] = 15,
+					["Battleguard Sartura"] = 15,
+					["Fankriss the Unyielding"] = 15,
+					["Princess Huhuran"] = 15,
+					["Princess Yauj"] = 15,
+					["Vem"] = 15,
+					["Lord Kri"] = 15,
+					["Viscidus"] = 15,
+					["Ouro"] = 15,
+					["Emperor Vek'lor"] = 15,
+					["Emperor Vek'nilash"] = 15,
+					["C'Thun"] = 20,
+					
+					-- Naxxramas --
+					["Anub'Rekhan"] = 17,
+					["Grand Widow Faerlina"] = 17,
+					["Maexxna"] = 25,
+
+					["Noth the Plaguebringer"] = 17,
+					["Heigan the Unclean"] = 17,
+					["Loatheb"] = 25,
+
+					["Instructor Razuvious"] = 17,
+					["Gothik the Harvester"] = 17,
+					["Highlord Mograine"] = 25,
+					["Thane Korth'azz"] = 25,
+					["Lady Blaumeux"] = 25,
+					["Sir Zeliek"] = 25,
+
+					["Patchwerk"] = 17,
+					["Grobbulus"] = 17,
+					["Gluth"] = 17,
+					["Thaddius"] = 25,
+
+					["Sapphiron"] = 25,
+					["Kel'Thuzad"] = 25,
+					
+					-- World Bosses --
+					["Doom Lord Kazzak"] = 10,
+					["Azuregos"] = 10,
+					["Teremus the Devourer"] = 10,
+					["Emeriss"] = 10,
+					["Lethon"] = 10,
+					["Ysondre"] = 10,
+					["Taerar"] = 10
+				}
 
 itemsIndex = 
 {
@@ -907,6 +986,7 @@ itemsIndex =
 	["Dark Edge of Insanity"] = 84,
 	["Husk of the Old God"] = 88,
 	["Carapace of the Old God"] = 88,
+	["Eye of C'Thun"] = 88,
 	
 	
 	--Naxxramas
