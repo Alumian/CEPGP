@@ -4,7 +4,7 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.8.0";
+VERSION = "0.7.0";
 debugMode = false;
 responses = {};
 roster = {};
@@ -19,9 +19,10 @@ CFEvent = ChatFrame_OnEvent;
 --
 function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
-		CEPGP_SendAddonMsg("version-"..VERSION..".".."-")
+		local ver2 = string.gsub(VERSION, "%.", ",");
+		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
 		if CHANNEL == nil then
-			CHANNEL = "GUILD"
+			CHANNEL = "GUILD";
 		end
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
@@ -164,14 +165,17 @@ function CEPGP_IncAddonMsg(message, sender)
 	if s1 == "update" then
 		GuildRoster();
 	elseif s1 == "version" then
-		local v1, v2, v3 = CEPGP_strSplit(VERSION, ".");
-		local nv1, nv2, nv3 = CEPGP_strSplit(message, ".");
-		if nv1 > v1 then
-			print("Your addon is out of date. Version " .. s2 .. " is now available for download at https://github.com/Alumian/CEPGP");
+		local ver2 = string.gsub(VERSION, "%.", ",");
+		local v1, v2, v3 = CEPGP_strSplit(ver2..",", ",");
+		local nv1, nv2, nv3 = CEPGP_strSplit(s2, ",");
+		local s5 = (nv1.."."..nv2.."."..nv3)
+		outMessage = "Your addon is out of date. Version " .. s5 .. " is now available for download at https://github.com/Alumian/CEPGP"
+		if v1 > v1 then
+			print(outMessage);
 		elseif nv1 == v1 and nv2 > v2 then
-			print("Your addon is out of date. Version " .. s2 .. " is now available for download at https://github.com/Alumian/CEPGP");
+			print(outMessage);
 		elseif nv1 == v1 and nv2 == v2 and nv3 > v3 then
-			print("Your addon is out of date. Version " .. s2 .. " is now available for download at https://github.com/Alumian/CEPGP");
+			print(outMessage);
 		end
 	end
 end
