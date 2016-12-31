@@ -1566,6 +1566,7 @@
 				this:RegisterEvent("GUILD_ROSTER_UPDATE");
 				this:RegisterEvent("RAID_ROSTER_UPDATE");
 				this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
+				this:RegisterEvent("CHAT_MSG_ADDON");
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();
@@ -1749,15 +1750,6 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="CEPGP_context_popup_subtract_check_text" inherits="GameFontNormal" text="Subtract">
-					<Anchors>
-						<Anchor point="TOPLEFT" relativeTo="CEPGP_context_popup">
-							<Offset>
-								<AbsDimension x="32" y="-55"/>
-							</Offset>
-						</Anchor>
-					</Anchors>
-				</FontString>
 				<FontString name="CEPGP_context_popup_header" inherits="GameFontNormal" text="Moderation">
 					<Anchors>
 						<Anchor point="TOP">
@@ -1831,15 +1823,6 @@
 						end
 					</OnClick>
 				</Scripts>
-			</CheckButton>
-			<CheckButton name="CEPGP_context_popup_subtract_check" inherits="UIOptionsCheckButtonTemplate">
-				<Anchors>
-					<Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_GP_check">
-						<Offset>
-							<AbsDimension x="0" y="-20" />
-						</Offset>
-					</Anchor>
-				</Anchors>
 			</CheckButton>
 			<EditBox name="CEPGP_context_amount" inherits="InputBoxTemplate">
 				<Size>
