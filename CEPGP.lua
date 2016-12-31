@@ -151,7 +151,21 @@ function CEPGP_OnEvent()
 	elseif event == "PLAYER_REGEN_ENABLED" then
 		kills = 0;
 		this:UnregisterEvent("PLAYER_REGEN_ENABLED");
+	elseif (event == "CHAT_MSG_ADDON") then
+		if (arg1 == "CEPGP")then
+			CEPGP_IncAddonMsg(arg2, arg4);
+		end		
 	end
+end
+
+function CEPGP_IncAddonMsg(message, sender)
+	if message == "update" then
+		GuildRoster();
+	end
+end
+
+function CEPGP_SendAddonMsg(message)
+	SendAddonMessage("CEPGP", message, "GUILD");
 end
 
 function CEPGP_UpdateLootScrollBar()
@@ -922,6 +936,7 @@ function resetAll()
 			GuildRosterSetOfficerNote(i, "0,1");
 		end
 	end
+	CEPGP_SendAddonMsg("update");
 	SendChatMessage("All EPGP standings have been cleared!", "GUILD", "COMMON");
 end
 
@@ -956,8 +971,10 @@ function addRaidEP(amount, msg)
 		end
 	end
 	if msg then
+		CEPGP_SendAddonMsg("update");
 		SendChatMessage(msg, "RAID", "Common");
 	else
+		CEPGP_SendAddonMsg("update");
 		SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, "Common");
 	end
 end
@@ -993,6 +1010,7 @@ function addGuildEP(amount)
 			end
 		end
 	end
+	CEPGP_SendAddonMsg("update");
 	SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, "COMMON");
 end
 
@@ -1024,6 +1042,7 @@ function addGP(player, amount)
 			EP = 0;
 		end
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
+		CEPGP_SendAddonMsg("update");
 		SendChatMessage(amount .. " GP added to " .. player, CHANNEL, "Common", CHANNEL);
 	else
 		print("Player not found in guild roster.", true);
@@ -1058,6 +1077,7 @@ function addEP(player, amount)
 			EP = 0;
 		end
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
+		CEPGP_SendAddonMsg("update");
 		SendChatMessage(amount .. " EP added to " .. player, CHANNEL, "Common", CHANNEL);
 	else
 		print("Player not found in guild roster.", true);
@@ -1092,6 +1112,7 @@ function decay(amount)
 			GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		end
 	end
+	CEPGP_SendAddonMsg("update");
 	SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, "Common", CHANNEL);
 end
 
