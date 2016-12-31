@@ -4,7 +4,7 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.8.1";
+VERSION = "0.8.0";
 debugMode = false;
 responses = {};
 roster = {};
@@ -19,7 +19,7 @@ CFEvent = ChatFrame_OnEvent;
 --
 function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
-		CEPGP_SendAddonMsg("version "..VERSION)
+		CEPGP_SendAddonMsg("version-"..VERSION..".".."-")
 		if CHANNEL == nil then
 			CHANNEL = "GUILD"
 		end
@@ -160,13 +160,12 @@ function CEPGP_OnEvent()
 end
 
 function CEPGP_IncAddonMsg(message, sender)
-	local s1, s2, s3, s4 = strSplit(message, " ");
-	print(message);
+	local s1, s2, s3, s4 = strSplit(message, "-");
 	if s1 == "update" then
 		GuildRoster();
-	elseif s1 == version then
-		local v1, v2, v3 = strSplit(VERSION, ".");
-		local nv1, nv2, nv3 = strSplit(message, ".");
+	elseif s1 == "version" then
+		local v1, v2, v3 = CEPGP_strSplit(VERSION, ".");
+		local nv1, nv2, nv3 = CEPGP_strSplit(message, ".");
 		if nv1 > v1 then
 			print("Your addon is out of date. Version " .. s2 .. " is now available for download at https://github.com/Alumian/CEPGP");
 		elseif nv1 == v1 and nv2 > v2 then
@@ -1373,7 +1372,7 @@ function print(str, err)
 	end
 end
 
-function strSplit(msgStr, c)
+function CEPGP_strSplit(msgStr, c)
 	local table_str = {};
 	local capture = string.format("(.-)%s", c);
 	
