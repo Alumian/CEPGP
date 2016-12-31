@@ -19,7 +19,7 @@ CFEvent = ChatFrame_OnEvent;
 --
 function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
-		requestVersion();
+		CEPGP_SendAddonMsg("version "..VERSION)
 		if CHANNEL == nil then
 			CHANNEL = "GUILD"
 		end
@@ -155,26 +155,23 @@ function CEPGP_OnEvent()
 	elseif (event == "CHAT_MSG_ADDON") then
 		if (arg1 == "CEPGP")then
 			CEPGP_IncAddonMsg(arg2, arg4);
-		elseif arg1 == "CEPGP_version" then
-			if arg2 > VERSION then
-				print("Your addon is out of date. Version " .. arg2 .. " is now available for download at https://github.com/Alumian/CEPGP");
-			end
 		end
 	end
 end
 
 function CEPGP_IncAddonMsg(message, sender)
-	if message == "update" then
+	local s1, s2, s3, s4 = strSplit(message, " ");
+	if s1 == "update" then
 		GuildRoster();
+	elseif s1 == version then
+		if s2 > VERSION then
+			print("Your addon is out of date. Version " .. s2 .. " is now available for download at https://github.com/Alumian/CEPGP");
+		end
 	end
 end
 
 function CEPGP_SendAddonMsg(message)
 	SendAddonMessage("CEPGP", message, "GUILD");
-end
-
-function requestVersion()
-	SendAddonMessage("CEPGP_version", VERSION, "GUILD");
 end
 
 function CEPGP_UpdateLootScrollBar()
@@ -1367,6 +1364,17 @@ function print(str, err)
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFCEPGP:|r " .. "|c00FF0000Error|r|c006969FF - " .. tostring(str) .. "|r");
 	end
+end
+
+function strSplit(msgStr, c)
+	local table_str = {};
+	local capture = string.format("(.-)%s", c);
+	
+	for v in string.gfind(msgStr, capture) do
+		table.insert(table_str, v);
+	end
+	
+	return unpack(table_str);
 end
 
 
