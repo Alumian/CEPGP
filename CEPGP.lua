@@ -26,6 +26,7 @@ function CEPGP_OnEvent()
 		end
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
+	
 	elseif event == "CHAT_MSG_WHISPER" and arg1 == "!need" and CEPGP_distribute:IsVisible() == 1 then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
@@ -171,6 +172,9 @@ function CEPGP_OnEvent()
 		if (arg1 == "CEPGP")then
 			CEPGP_IncAddonMsg(arg2, arg4);
 		end
+	
+	elseif event == "UI_ERROR_MESSAGE" then
+		print(arg1, 1);
 	end
 end
 
@@ -586,15 +590,28 @@ function CEPGP_distribute_popup_give(value)
 	for i = 1, 40 do
 		if GetMasterLootCandidate(i) == CEPGP_distribute_popup_title:GetText() then
 			GiveMasterLoot(CEPGP_distribute_popup:GetID(), i);
-			if value then
-				addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
-				SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, "Common");
-			else
-				SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for free", RAID, "Common");
-			end
-			CEPGP_distribute:Hide();
-			CEPGP_loot:Show();
 		end
+	end
+end
+
+function CEPGP_distribute_popup_OnEvent(event)
+	local value = CEPGP_distribute_value:GetText();
+	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and value then
+		print(CEPGP_distribute_popup_title:GetText() .. "'s inventory is full", 1);
+		CEPGP_distribute_value:SetText("");
+	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and value then
+		print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
+		CEPGP_distribute_value:SetText("");
+	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() then
+		addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
+		if value then
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, "Common");
+		else
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for free", RAID, "Common");
+		end
+		CEPGP_distribute_value:SetText("");
+		CEPGP_distribute:Hide();
+		CEPGP_loot:Show();
 	end
 end
 
@@ -923,8 +940,18 @@ function distribute(link, x)
 		gp = _G[mode..'itemGP'..x]:GetText();
 		responses = {};
 		CEPGP_UpdateLootScrollBar();
+		local rank;
+		for i = 1, GetNumRaidMembers() do
+			if UnitName("player") == GetRaidRosterInfo(i) then
+				_, rank = GetRaidRosterInfo(i);
+			end
+		end
 		SendChatMessage("--------------------------", RAID, "Common");
-		SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID_WARNING", "Common");
+		if rank > 0 then
+			SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID_WARNING", "Common");
+		else
+			SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID", "Common");
+		end
 		SendChatMessage("GP Value: " .. gp, RAID, "Common");
 		SendChatMessage("Whisper me !need for mainspec only", RAID, "Common");
 		SendChatMessage("--------------------------", RAID, "Common");

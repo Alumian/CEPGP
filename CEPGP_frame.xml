@@ -1631,6 +1631,12 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
+				<FontString name="CEPGP_distribute_value" inherits="GameFontNormal" text="">
+					<Size>
+						<AbsDimension x="0" y="0" />
+					</Size>
+                    <Anchors />
+                </FontString>
 			</Layer>
 		</Layers>
 		<Frames>
@@ -1665,6 +1671,7 @@
 			</Anchors>
 				<Scripts>
 					<OnClick>
+						CEPGP_distribute_value:SetText("true")
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(CEPGP_distribute_popup);
 						CEPGP_distribute_popup_give(true);
@@ -1685,6 +1692,7 @@
 			</Anchors>
 				<Scripts>
 					<OnClick>
+						CEPGP_distribute_value:SetText("false")
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(CEPGP_distribute_popup);
 						CEPGP_distribute_popup_give(false);
@@ -1695,8 +1703,13 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
+				this:RegisterEvent("UI_ERROR_MESSAGE");
+				this:RegisterEvent("LOOT_SLOT_CLEARED");
 				this:RegisterForDrag("LeftButton");
 			</OnLoad>
+			<OnEvent>
+				CEPGP_distribute_popup_OnEvent(event);
+			</OnEvent>
 		</Scripts>
 	</Frame>
 	
