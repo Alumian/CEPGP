@@ -3,26 +3,26 @@ bossNameIndex = {
 					["Onyxia"] = 7,
 					
 					-- Molten Core --
-					["Lucifron"] = 10,
-					["Magmadar"] = 10,
-					["Gehennas"] = 10,
-					["Garr"] = 10,
-					["Baron Geddon"] = 10,
-					["Shazzrah"] = 10,
-					["Sulfuron Harbinger"] = 10,
-					["Golemagg the Incinerator"] = 10,
-					["Majordomo Executus"] = 10,
-					["Ragnaros"] = 15,
+					["Lucifron"] = 5,
+					["Magmadar"] = 5,
+					["Gehennas"] = 5,
+					["Garr"] = 5,
+					["Baron Geddon"] = 5,
+					["Shazzrah"] = 5,
+					["Sulfuron Harbinger"] = 5,
+					["Golemagg the Incinerator"] = 5,
+					["Majordomo Executus"] = 5,
+					["Ragnaros"] = 7,
 					
 					-- Blackwing Lair --
-					["Razorgore the Untamed"] = 12,
-					["Vaelastrasz the Corrupt"] = 12,
-					["Broodlord Lashlayer"] = 12,
-					["Firemaw"] = 12,
-					["Ebonroc"] = 12,
-					["Flamegor"] = 12,
-					["Chromaggus"] = 12,
-					["Nefarian"] = 17,
+					["Razorgore the Untamed"] = 7,
+					["Vaelastrasz the Corrupt"] = 7,
+					["Broodlord Lashlayer"] = 7,
+					["Firemaw"] = 7,
+					["Ebonroc"] = 7,
+					["Flamegor"] = 7,
+					["Chromaggus"] = 7,
+					["Nefarian"] = 10,
 
 					-- Zul'Gurub --
 					["High Priest Venoxis"] = 0,
@@ -184,7 +184,7 @@ itemsIndex =
 	["Felheart Robes"] = 66,
 	["Felheart Shoulder Pads"] = 66,
 	["Felheart Horns"] = 66,
-	["Felheart Slipper"] = 66,
+	["Felheart Slippers"] = 66,
 	
 	--Giantstalker
 	["Giantstalker's Belt"] = 66,
@@ -504,7 +504,7 @@ itemsIndex =
 	
 	--Lucifron
 	["Choker of Enlightenment"] = 65,
-	["Tome of Tranquilizing Shot"] = 1,
+	["Tome of Tranquilizing Shot"] = 0,
 	
 	--Magmadar
 	["Striker's Mark"] = 69,
@@ -530,7 +530,7 @@ itemsIndex =
 	["Azuresong Mageblade"] = 71,
 	["Staff of Dominance"] = 70,
 	["Blastershot Launcher"] = 70,
-	["Sulfron Ingot"] = 60,
+	["Sulfuron Ingot"] = 60,
 	
 	--Sulfuron Harbinger
 	["Shadowstrike"] = 63,
@@ -1010,6 +1010,8 @@ itemsIndex =
 	["Wartorn Plate Scrap"] = 0,
 	["Resilience of the Scourge"] = 0,
 	["Fortitude of the Scourge"] = 0,
+	["Might of the Scourge"] = 0,
+	["Power of the Scourge"] = 0,
 	
 	--Construct Quarter
 	--Patchwerk

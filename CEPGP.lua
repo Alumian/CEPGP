@@ -1224,6 +1224,7 @@ function calcGP(link)
 				
 		--Exceptions: Items that should not carry GP but still need to be distributed
 		elseif name == "Splinter of Atiesh"
+			or name == "Tome of Tranquilizing Shot"
 			or name == "Resilience of the Scourge"
 			or name == "Fortitude of the Scourge"
 			or name == "Might of the Scourge" 
@@ -1256,17 +1257,18 @@ function calcGP(link)
 			slot = 1.35;
 		elseif slot == "HEAD" then
 			slot = 1.45;
-		elseif slot == "LEG" then
+		elseif slot == "LEGS" then
 			slot = 1.5;
 		elseif slot == "CHEST" or slot == "ROBE" then
 			slot = 1.55;
-		elseif slot == "WEAPONMAINHAND" or slot == "WEAPON" or slot == "WEAPONOFFHAND" or slot == " SHIELD" or slot == "RANGED" then
+		elseif slot == "WEAPONMAINHAND" or slot == "WEAPON" or slot == "WEAPONOFFHAND" or slot == " SHIELD" or slot == "RANGED" or slot == "RANGEDRIGHT" then
 			slot = 1.65;
 		elseif slot == "2HWEAPON" then
 			slot = 2;
 		elseif slot == "EXCEPTION" then
 			slot = 0;
 		else
+			print("Slot for " .. name .. " not found");
 			slot = 1;
 		end
 	else
