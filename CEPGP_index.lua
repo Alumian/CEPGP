@@ -1,6 +1,6 @@
 --The item level of each item
 bossNameIndex = {
-					["Onyxia"] = 7,
+					["Onyxia"] = 5,
 					
 					-- Molten Core --
 					["Lucifron"] = 5,
@@ -43,51 +43,51 @@ bossNameIndex = {
 					["Ossirian the Unscarred"] = 0,
 					
 					-- AQ40 --
-					["The Prophet Skeram"] = 15,
-					["Battleguard Sartura"] = 15,
-					["Fankriss the Unyielding"] = 15,
-					["Princess Huhuran"] = 15,
-					["Princess Yauj"] = 15,
-					["Vem"] = 15,
-					["Lord Kri"] = 15,
-					["Viscidus"] = 15,
-					["Ouro"] = 15,
-					["Emperor Vek'lor"] = 15,
-					["Emperor Vek'nilash"] = 15,
-					["C'Thun"] = 20,
+					["The Prophet Skeram"] = 10,
+					["Battleguard Sartura"] = 10,
+					["Fankriss the Unyielding"] = 10,
+					["Princess Huhuran"] = 10,
+					["Princess Yauj"] = 10,
+					["Vem"] = 10,
+					["Lord Kri"] = 10,
+					["Viscidus"] = 10,
+					["Ouro"] = 10,
+					["Emperor Vek'lor"] = 10,
+					["Emperor Vek'nilash"] = 10,
+					["C'Thun"] = 12,
 					
 					-- Naxxramas --
-					["Anub'Rekhan"] = 17,
-					["Grand Widow Faerlina"] = 17,
-					["Maexxna"] = 25,
+					["Anub'Rekhan"] = 12,
+					["Grand Widow Faerlina"] = 12,
+					["Maexxna"] = 15,
 
-					["Noth the Plaguebringer"] = 17,
-					["Heigan the Unclean"] = 17,
-					["Loatheb"] = 25,
+					["Noth the Plaguebringer"] = 12,
+					["Heigan the Unclean"] = 12,
+					["Loatheb"] = 15,
 
-					["Instructor Razuvious"] = 17,
-					["Gothik the Harvester"] = 17,
-					["Highlord Mograine"] = 25,
-					["Thane Korth'azz"] = 25,
-					["Lady Blaumeux"] = 25,
-					["Sir Zeliek"] = 25,
+					["Instructor Razuvious"] = 12,
+					["Gothik the Harvester"] = 12,
+					["Highlord Mograine"] = 15,
+					["Thane Korth'azz"] = 15,
+					["Lady Blaumeux"] = 15,
+					["Sir Zeliek"] = 15,
 
-					["Patchwerk"] = 17,
-					["Grobbulus"] = 17,
-					["Gluth"] = 17,
-					["Thaddius"] = 25,
+					["Patchwerk"] = 12,
+					["Grobbulus"] = 12,
+					["Gluth"] = 12,
+					["Thaddius"] = 15,
 
-					["Sapphiron"] = 25,
-					["Kel'Thuzad"] = 25,
+					["Sapphiron"] = 15,
+					["Kel'Thuzad"] = 15,
 					
 					-- World Bosses --
-					["Doom Lord Kazzak"] = 10,
-					["Azuregos"] = 10,
-					["Teremus the Devourer"] = 10,
-					["Emeriss"] = 10,
-					["Lethon"] = 10,
-					["Ysondre"] = 10,
-					["Taerar"] = 10
+					["Doom Lord Kazzak"] = 7,
+					["Azuregos"] = 7,
+					["Teremus the Devourer"] = 7,
+					["Emeriss"] = 7,
+					["Lethon"] = 7,
+					["Ysondre"] = 7,
+					["Taerar"] = 7
 				}
 
 itemsIndex = 

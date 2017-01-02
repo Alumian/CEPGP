@@ -811,7 +811,11 @@ function populateFrame(criteria, items, lootNum)
 	else
 		sorting = "group";
 	end
-	cleanTable();
+	if mode == "loot" and CEPGP_loot:IsVisible() == nil then
+		cleanTable();
+	elseif mode ~= "loot" then
+		cleanTable();
+	end
 	local tempItems = {};
 	local total;
 	if mode == "guild" then
