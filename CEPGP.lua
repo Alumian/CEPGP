@@ -18,6 +18,7 @@ LFEvent = LootFrame_OnEvent;
 CFEvent = ChatFrame_OnEvent;
 --
 function CEPGP_OnEvent()
+--Test comment for merge practice
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		local ver2 = string.gsub(VERSION, "%.", ",");
 		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
