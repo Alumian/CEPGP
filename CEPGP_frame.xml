@@ -267,11 +267,7 @@
 				</Anchors>
                 <Scripts>
 					<OnLoad>
-						if not GetGuildRosterInfo(1) then
-							this:Hide();
-						else
-							GuildRoster();
-						end
+						GuildRoster();
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
