@@ -640,30 +640,25 @@ function LootFrame_OnEvent(event)
 			cleanTable();
 		end
 		HideUIPanel(CEPGP_distribute_popup);
-		CEPGP_loot_distributing:Hide();
+		HideUIPanel(CEPGP_loot);
+		if UnitInRaid("player") then
+			ShowUIPanel(CEPGP_raid);
+		elseif GetGuildRosterInfo(1) then
+			ShowUIPanel(CEPGP_guild);
+		else
+			HideUIPanel(CEPGP_frame);
+			CEPGP_loot_distributing:Hide();
+		end
+		
 		if CEPGP_distribute:IsVisible() == 1 then
 			HideUIPanel(CEPGP_distribute);
 			ShowUIPanel(CEPGP_loot);
 			responses = {};
 			CEPGP_UpdateLootScrollBar();
 		end
-	elseif event == "LOOT_OPENED" then
-		if UnitName("target") and UnitInRaid("player") then
---			_G['CEPGP_looting'].text:SetText("Looting " .. UnitName("target"))
---			_G['CEPGP_looting']:SetPoint('TOPLEFT', _G['CEPGP_mode'], 'CENTER', _G['CEPGP_looting'].text:GetStringWidth()/(-2), 0)
-			if tContains(bossNameIndex, UnitName("target"), true) then
-				CEPGP_frame:Show();
-				mode = "loot";
-				CEPGP_guild:Hide();
-				CEPGP_raid:Hide();
-				CEPGP_loot:Show();
-				CEPGP_distribute:Hide();
-				LootFrame_Update();
-			end
-		else
---			_G['EPGP_looting'].text:SetText("Looting Object")
---			_G['EPGP_looting']:SetPoint('TOPLEFT', _G['EPGP_mode'], 'CENTER', _G['EPGP_looting'].text:GetStringWidth()/(-2), 0)
-		end
+		
+	elseif event == "LOOT_OPENED" and UnitInRaid("player") then
+		LootFrame_Update();
 	
 	elseif event == "LOOT_SLOT_CLEARED" then
 		LootFrame_Update();
@@ -701,6 +696,17 @@ function LootFrame_Update()
 					count = count + 1;
 				end
 			end
+		end
+	end
+	for i = 1, table.getn(items) do
+		if items[i][3] == 4 and UnitInRaid("player") then
+			CEPGP_frame:Show();
+			mode = "loot";
+			CEPGP_guild:Hide();
+			CEPGP_raid:Hide();
+			CEPGP_loot:Show();
+			CEPGP_distribute:Hide();
+			break;
 		end
 	end
 	populateFrame(_, items, numLootItems);
@@ -1217,7 +1223,7 @@ function calcGP(link)
 				or (name == "Desecrated Bindings" or name == "Desecrated Wristguards" or name == "Desecrated Bracers") and "INVTYPE_WRIST"
 				or (name == "Desecrated Gloves" or name == "Desecrated Handguards" or name == "Desecrated Gauntlets") and "INVTYPE_HAND"
 				or (name == "Desecrated Belt" or name == "Desecrated Waistguard" or name == "Desecrated Girdle") and "INVTYPE_WAIST"
-				or (name == "Desecrated Leggings" or name == "Desecrated Legguards" or name == "Desecrated Legplates") and "INVTYPE_LEG"
+				or (name == "Desecrated Leggings" or name == "Desecrated Legguards" or name == "Desecrated Legplates") and "INVTYPE_LEGS"
 				or (name == "Desecrated Circlet" or name == "Desecrated Headpiece" or name == "Desecrated Helmet") and "INVTYPE_HEAD"
 				or name == "Desecrated Robe" and "INVTYPE_ROBE" or (name == "Desecrated Tunic" or name == "Desecrated Breastplate") and "INVTYPE_CHEST";
 				
