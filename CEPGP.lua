@@ -119,6 +119,12 @@ function CEPGP_OnEvent()
 				end
 			end
 			if (GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2) then
+			--If the creature killed is one of these specified creatures, then it refers to the respective index in CEPGP_index.lua to assign appropriate EP value
+			--If it's not one of these creatures it defaults to what the combat log returned
+				name = (name == "Vem" or name == "Princess Yauj" or name == "Lord Kri") and "The Bug Trio"
+					or (name == "Emperor Vek'lor" or name == "Emperor Vek'nilash") and "The Twin Emperors"
+					or (name == "Highlord Mograine" or name == "Lady Blaumeux" or name == "Sir Zeliek" or name == "Thane Korth'azz") and "The Four Horsemen"
+					or name;
 				if tContains(bossNameIndex, name, true) then --[[ If the npc is in the boss name index ]]--
 					for k, v in pairs(bossNameIndex) do
 						if name == k then
@@ -126,7 +132,7 @@ function CEPGP_OnEvent()
 						end
 					end
 					
-					if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
+					if name == "The Bug Trio" then
 						this:RegisterEvent("PLAYER_REGEN_ENABLED");
 						kills = kills + 1;
 						if kills == 3 then
@@ -134,7 +140,7 @@ function CEPGP_OnEvent()
 							addRaidEP(EP, "The Bug Trio has been slain! The raid has been awarded " .. EP .. " EP");
 						end
 						
-					elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
+					elseif name == "The Twin Emperors" then
 						this:RegisterEvent("PLAYER_REGEN_ENABLED");
 						kills = kills + 1;
 						if kills == 2 then
@@ -142,7 +148,7 @@ function CEPGP_OnEvent()
 							addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
 						end
 						
-					elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
+					elseif name == "The Four Horsemen" then
 						this:RegisterEvent("PLAYER_REGEN_ENABLED");
 						kills = kills + 1;
 						if kills == 4 then
@@ -437,6 +443,41 @@ function CEPGP_UpdateRaidScrollBar()
     end
 end
 
+function CEPGP_UpdateOptionsScrollBar()
+    local y;
+    local yoffset;
+    local t;
+    local tSize;
+    local name;
+    t = bossNameIndex;
+	local count = 1;
+	tSize = ntgetn(bossNameIndex);
+	--[[for i = 1, table.getn(bossNameIndex) do
+		name = bossNameIndex[i];
+		--ep = bossNameIndex[i][1];
+		print(name);
+		t[count] = {};
+		if not (name == "Vem" or name == "Princess Yauj" or name == "Lord Kri"
+			or name == "Emperor Vek'lor" or name == "Emperor Vek'nilash"
+			or name == "Highlord Mograine" or name == "Lady Blaumeux" or name == "Sir Zeliek" or name == "Thane Korth'azz") then
+			
+			t[count][1] = name;
+			t[count][2] = ep;
+			count = count + 1;
+		end
+	end
+    FauxScrollFrame_Update(OptionsBossScrollFrame, tSize, 18, 240);
+    for y = 1, 18, 1 do
+        yoffset = y + FauxScrollFrame_GetOffset(OptionsBossScrollFrame);
+        if (yoffset <= tSize) then
+			name = t[yoffset][1]
+			value = t[yoffset][2];
+			getglobal("OptionsBossEP" .. y):SetText(name);
+			getglobal("OptionsBossEditBox" .. y):SetText(value);
+		end
+    end]]
+end
+
 function CEPGP_ListButton_OnClick()
 	if CanEditOfficerNote() == nil then
 		print("You don't have access to modify EPGP", 1);
@@ -703,10 +744,7 @@ function LootFrame_Update()
 		if items[i][3] == 4 and UnitInRaid("player") then
 			CEPGP_frame:Show();
 			mode = "loot";
-			CEPGP_guild:Hide();
-			CEPGP_raid:Hide();
-			CEPGP_loot:Show();
-			CEPGP_distribute:Hide();
+			toggleFrame("CEPGP_loot");
 			break;
 		end
 	end
@@ -967,8 +1005,7 @@ function distribute(link, x)
 		SendChatMessage("GP Value: " .. gp, RAID, "Common");
 		SendChatMessage("Whisper me !need for mainspec only", RAID, "Common");
 		SendChatMessage("--------------------------", RAID, "Common");
-		CEPGP_distribute:Show();
-		CEPGP_loot:Hide();
+		toggleFrame("CEPGP_distribute");
 		_G["CEPGP_distribute_item_name"]:SetText(link);
 		_G["CEPGP_distribute_item_name_frame"]:SetScript('OnClick', function() SetItemRef(iString) end);
 		_G["CEPGP_distribute_item_tex"]:SetBackdrop(tex);

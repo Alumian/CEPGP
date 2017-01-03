@@ -1570,7 +1570,7 @@
 					<AbsDimension x="400" y="450" />
 				</Size>
 				<Anchors>
-					<Anchor point="CENTER">
+					<Anchor point="LEFT">
 						<Offset>
 							<AbsDimension x="0" y="-30" />
 						</Offset>
@@ -1579,198 +1579,582 @@
 				<Frames>
 					<Frame name="CEPGP_options_scrollframe">
 						<Size>
-							<AbsDimension x="150" y="350"/>
+							<AbsDimension x="200" y="375"/>
 						</Size>
 						<Anchors>
 							<Anchor point="LEFT">
 								<Offset>
-									<AbsDimension x="0" y="0"/>
+									<AbsDimension x="10" y="5"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 						<Frames>
 							<ScrollFrame name="OptionsBossScrollFrame" inherits="FauxScrollFrameTemplate">
 								<Size>
-									<AbsDimension x="140" y="350"/>
+									<AbsDimension x="200" y="375"/>
 								</Size>
 								<Anchors>
-									<Anchor point="LEFT">
+									<Anchor point="RIGHT">
 										<Offset>
-											<AbsDimension x="10" y="0"/>
+											<AbsDimension x="10" y="5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString name="OptionsBossEP1" inherits="GameFontNormal" id="1">
+											<Anchors>
+												<Anchor point="TOPLEFT">
+													<Offset>
+														<AbsDimension x="5" y="-6"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP2" inherits="GameFontNormal" id="2">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP1" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP3" inherits="GameFontNormal" id="3">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP2" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP4" inherits="GameFontNormal" id="4">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP3" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP5" inherits="GameFontNormal" id="5">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP4" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP6" inherits="GameFontNormal" id="6">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP5" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP7" inherits="GameFontNormal" id="7">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP6" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP8" inherits="GameFontNormal" id="8">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP7" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP9" inherits="GameFontNormal" id="9">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP8" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP10" inherits="GameFontNormal" id="10">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP9" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP11" inherits="GameFontNormal" id="11">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP10" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP12" inherits="GameFontNormal" id="12">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP11" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP13" inherits="GameFontNormal" id="13">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP12" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP14" inherits="GameFontNormal" id="14">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP13" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP15" inherits="GameFontNormal" id="15">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP14" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP16" inherits="GameFontNormal" id="16">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP15" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP17" inherits="GameFontNormal" id="17">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP16" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="OptionsBossEP18" inherits="GameFontNormal" id="18">
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="OptionsBossEP17" relativePoint="BOTTOMLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-20"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
 								<Scripts>
 									<OnVerticalScroll>
-										<!--FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateGuildScrollBar); -->
+										FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateOptionsScrollBar);
 									</OnVerticalScroll>
 									<OnShow>
-										<!--CEPGP_UpdateGuildScrollBar();-->
+										CEPGP_UpdateOptionsScrollBar();
 									</OnShow>
 								</Scripts>
+								<Frames>
+									<EditBox name="OptionsBossEditBox1" id="1" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOPRIGHT">
+												<Offset>
+													<AbsDimension x="-5" y="-6" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox2" id="2" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox1">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox3" id="3" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox2">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox4" id="4" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox3">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox5" id="5" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox4">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox6" id="6" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox5">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox7" id="7" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox6">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox8" id="8" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox7">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox9" id="9" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox8">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox10" id="10" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox9">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox11" id="11" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox10">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox12" id="12" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox11">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox13" id="13" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox12">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox14" id="14" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox13">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox15" id="15" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox14">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox16" id="16" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox15">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox17" id="17" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox16">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+									<EditBox name="OptionsBossEditBox18" id="18" inherits="InputBoxTemplate">
+										<Size>
+											<AbsDimension x="30" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="BOTTOM" relativeTo="OptionsBossEditBox17">
+												<Offset>
+													<AbsDimension x="0" y="-20" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+												this:SetAutoFocus(false);
+												this:SetText("0");
+											</OnLoad>
+											<OnEnterPressed>
+												this:ClearFocus();
+											</OnEnterPressed>
+										</Scripts>
+									</EditBox>
+								</Frames>
 							</ScrollFrame>
-							<Button name="OptionsBossEP1" inherits="OptionsBossEPTemplate" id="1" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT">
-										<Offset>
-											<AbsDimension x="5" y="-6"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP2" inherits="OptionsBossEPTemplate" id="2" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP1" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP3" inherits="OptionsBossEPTemplate" id="3" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP2" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP4" inherits="OptionsBossEPTemplate" id="4" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP3" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP5" inherits="OptionsBossEPTemplate" id="5" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP4" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP6" inherits="OptionsBossEPTemplate" id="6" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP5" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP7" inherits="OptionsBossEPTemplate" id="7" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP6" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP8" inherits="OptionsBossEPTemplate" id="8" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP7" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP9" inherits="OptionsBossEPTemplate" id="9" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP8" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP10" inherits="OptionsBossEPTemplate" id="10" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP9" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP11" inherits="OptionsBossEPTemplate" id="11" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP10" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP12" inherits="OptionsBossEPTemplate" id="12" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP11" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP13" inherits="OptionsBossEPTemplate" id="13" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP12" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP14" inherits="OptionsBossEPTemplate" id="14" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP13" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP15" inherits="OptionsBossEPTemplate" id="15" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP14" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP16" inherits="OptionsBossEPTemplate" id="16" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP15" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP17" inherits="OptionsBossEPTemplate" id="17" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP16" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
-							<Button name="OptionsBossEP18" inherits="OptionsBossEPTemplate" id="18" hidden="true">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP17" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-							</Button>
 							<Scripts>
 								<OnLoad>
 									this:SetBackdropColor(0.1, 0.1, 0.1);
