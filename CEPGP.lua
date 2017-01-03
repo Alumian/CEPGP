@@ -11,6 +11,8 @@ roster = {};
 criteria = 4;
 critReverse = false;
 kills = 0;
+frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_distribute_popup, CEPGP_context_popup};
+
 --
 --[[ Stock function backups ]]--
 LFUpdate = LootFrame_Update;
@@ -1451,4 +1453,14 @@ end
 function isML()
 	local _, isML = GetLootMethod();
 	return isML;
+end
+
+function toggleFrame(frame)
+	for i = 1, table.getn(frames) do
+		if frames[i]:GetName() == frame then
+			frames[i]:Show();
+		else
+			frames[i]:Hide();
+		end
+	end
 end

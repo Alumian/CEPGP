@@ -271,10 +271,7 @@
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-						CEPGP_guild:Show();
-						CEPGP_raid:Hide();
-						CEPGP_loot:Hide();
-						CEPGP_distribute:Hide();
+						toggleFrame("CEPGP_guild");
 						mode = "guild";
 						populateFrame();
                     </OnClick>
@@ -299,10 +296,7 @@
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-						CEPGP_raid:Show();
-						CEPGP_guild:Hide();
-						CEPGP_loot:Hide();
-						CEPGP_distribute:Hide();
+						toggleFrame("CEPGP_raid");
 						mode = "raid";
 						populateFrame();
                     </OnClick>
@@ -327,10 +321,7 @@
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-						CEPGP_guild:Hide();
-						CEPGP_raid:Hide();
-						CEPGP_loot:Show();
-						CEPGP_distribute:Hide();
+						toggleFrame("CEPGP_loot");
 						mode = "loot";
 						cleanTable();
 						if LootFrame:IsVisible() == 1 then
@@ -1161,8 +1152,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								CEPGP_loot:Hide();
-								CEPGP_distribute:Show();
+								toggleFrame("CEPGP_distribute");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1557,7 +1547,6 @@
 				</Scripts>
 			</Frame>
 		</Frames>
-		
 		<Scripts>
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
@@ -1578,7 +1567,6 @@
 				CEPGP_OnEvent();
 			</OnEvent>
 		</Scripts>
-		
 	</Frame>
 
 	<Frame name="CEPGP_distribute_popup" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true">
