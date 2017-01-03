@@ -643,7 +643,9 @@ function LootFrame_OnEvent(event)
 			cleanTable();
 		end
 		HideUIPanel(CEPGP_distribute_popup);
+		HideUIPanel(CEPGP_button_loot_dist);
 		HideUIPanel(CEPGP_loot);
+		HideUIPanel(CEPGP_distribute);
 		if UnitInRaid("player") then
 			ShowUIPanel(CEPGP_raid);
 		elseif GetGuildRosterInfo(1) then
@@ -662,6 +664,7 @@ function LootFrame_OnEvent(event)
 		
 	elseif event == "LOOT_OPENED" and UnitInRaid("player") then
 		LootFrame_Update();
+		ShowUIPanel(CEPGP_button_loot_dist);
 	
 	elseif event == "LOOT_SLOT_CLEARED" then
 		LootFrame_Update();
