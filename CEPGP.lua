@@ -11,15 +11,15 @@ roster = {};
 criteria = 4;
 critReverse = false;
 kills = 0;
---
+frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_distribute_popup, CEPGP_context_popup};
+
 --[[ Stock function backups ]]--
 LFUpdate = LootFrame_Update;
 LFEvent = LootFrame_OnEvent;
 CFEvent = ChatFrame_OnEvent;
 --
 function CEPGP_OnEvent()
-	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name --new comment
---Test comment for merge practice
+	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		local ver2 = string.gsub(VERSION, "%.", ",");
 		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
 		if CHANNEL == nil then
@@ -729,6 +729,7 @@ function SlashCmdList.ARG(msg, editbox)
 	elseif msg == "show" then
 		populateFrame();
 		ShowUIPanel(CEPGP_frame);
+		toggleFrame();
 		
 	elseif strfind(msg, "addgp") then
 		local method = {};
@@ -1445,10 +1446,20 @@ function CEPGP_strSplit(msgStr, c)
 end
 
 
---[[ isML(player) ]]--
+--[[ isML ]]--
 --[[ Returns the index of the loot master in the raid group. 
 	 The main functionality of this method is it returns 0 if the local player is the loot master ]]--
 function isML()
 	local _, isML = GetLootMethod();
 	return isML;
+end
+
+function toggleFrame(frame)
+	for i = 1, table.getn(frames) do
+		if frames[i]:GetName() == frame then
+			frames[i]:Show();
+		else
+			frames[i]:Hide();
+		end
+	end
 end

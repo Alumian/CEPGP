@@ -256,12 +256,12 @@
 		<Frames>
 			<Button name="CEPGP_button_guild" inherits="GameMenuButtonTemplate" text="Guild">
                 <Size>
-                    <AbsDimension x="100" y="21" />
+                    <AbsDimension x="65" y="21" />
                 </Size>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="CEPGP_frame">
                         <Offset>
-                            <AbsDimension x="10" y="-12" />
+                            <AbsDimension x="12" y="-12" />
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -271,10 +271,7 @@
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-						CEPGP_guild:Show();
-						CEPGP_raid:Hide();
-						CEPGP_loot:Hide();
-						CEPGP_distribute:Hide();
+						toggleFrame("CEPGP_guild");
 						mode = "guild";
 						populateFrame();
                     </OnClick>
@@ -282,12 +279,12 @@
             </Button>
 			<Button name="CEPGP_button_raid" inherits="GameMenuButtonTemplate" text="Raid">
                 <Size>
-                    <AbsDimension x="100" y="21" />
+                    <AbsDimension x="65" y="21" />
                 </Size>
                 <Anchors>
                     <Anchor point="RIGHT" relativeTo="CEPGP_button_guild">
                         <Offset>
-                            <AbsDimension x="100" y="0" />
+                            <AbsDimension x="65" y="0" />
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -299,10 +296,7 @@
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-						CEPGP_raid:Show();
-						CEPGP_guild:Hide();
-						CEPGP_loot:Hide();
-						CEPGP_distribute:Hide();
+						toggleFrame("CEPGP_raid");
 						mode = "raid";
 						populateFrame();
                     </OnClick>
@@ -310,12 +304,12 @@
             </Button>
 			<Button name="CEPGP_button_loot_dist" inherits="GameMenuButtonTemplate" text="Loot Distribution">
                 <Size>
-                    <AbsDimension x="125" y="21" />
+                    <AbsDimension x="115" y="21" />
                 </Size>
                 <Anchors>
                     <Anchor point="RIGHT" relativeTo="CEPGP_button_raid">
                         <Offset>
-                            <AbsDimension x="155" y="0" />
+                            <AbsDimension x="114" y="0" />
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -327,15 +321,30 @@
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-						CEPGP_guild:Hide();
-						CEPGP_raid:Hide();
-						CEPGP_loot:Show();
-						CEPGP_distribute:Hide();
+						toggleFrame("CEPGP_loot");
 						mode = "loot";
 						cleanTable();
 						if LootFrame:IsVisible() == 1 then
 							LootFrame_Update();
 						end
+					</OnClick>
+                </Scripts>
+            </Button>
+			<Button name="CEPGP_button_options" inherits="GameMenuButtonTemplate" text="Options">
+                <Size>
+                    <AbsDimension x="65" y="21" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-35" y="-12" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+						toggleFrame("CEPGP_options");
 					</OnClick>
                 </Scripts>
             </Button>
@@ -369,7 +378,7 @@
 					</Anchor>
 				</Anchors>
 				<Frames>
-				<Frame name="CEPGP_guild_scrollframe">
+					<Frame name="CEPGP_guild_scrollframe">
 						<Size>
 							<AbsDimension x="360" y="300"/>
 						</Size>
@@ -564,10 +573,10 @@
 								</Anchors>
 							</Button>
 							<Scripts>
-							<OnLoad>
-								this:SetBackdropColor(0.1, 0.1, 0.1);
-							</OnLoad>
-						</Scripts>
+								<OnLoad>
+									this:SetBackdropColor(0.1, 0.1, 0.1);
+								</OnLoad>
+							</Scripts>
 						</Frames>
 					</Frame>
 					<Button name="CEPGP_guild_name" inherits="CEPGPHeaderButton" text="Name">
@@ -1554,6 +1563,263 @@
 					<OnDragStop>
 						CEPGP_frame:StopMovingOrSizing()
 					</OnDragStop>
+				</Scripts>
+			</Frame>
+			<Frame name="CEPGP_options" enableMouse="true" toplevel="true" hidden="true">
+				<Size>
+					<AbsDimension x="400" y="450" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-30" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<Frame name="CEPGP_options_scrollframe">
+						<Size>
+							<AbsDimension x="150" y="350"/>
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<ScrollFrame name="OptionsBossScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="140" y="350"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT">
+										<Offset>
+											<AbsDimension x="10" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										<!--FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateGuildScrollBar); -->
+									</OnVerticalScroll>
+									<OnShow>
+										<!--CEPGP_UpdateGuildScrollBar();-->
+									</OnShow>
+								</Scripts>
+							</ScrollFrame>
+							<Button name="OptionsBossEP1" inherits="OptionsBossEPTemplate" id="1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="5" y="-6"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP2" inherits="OptionsBossEPTemplate" id="2" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP1" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP3" inherits="OptionsBossEPTemplate" id="3" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP2" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP4" inherits="OptionsBossEPTemplate" id="4" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP3" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP5" inherits="OptionsBossEPTemplate" id="5" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP4" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP6" inherits="OptionsBossEPTemplate" id="6" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP5" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP7" inherits="OptionsBossEPTemplate" id="7" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP6" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP8" inherits="OptionsBossEPTemplate" id="8" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP7" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP9" inherits="OptionsBossEPTemplate" id="9" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP8" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP10" inherits="OptionsBossEPTemplate" id="10" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP9" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP11" inherits="OptionsBossEPTemplate" id="11" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP10" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP12" inherits="OptionsBossEPTemplate" id="12" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP11" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP13" inherits="OptionsBossEPTemplate" id="13" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP12" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP14" inherits="OptionsBossEPTemplate" id="14" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP13" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP15" inherits="OptionsBossEPTemplate" id="15" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP14" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP16" inherits="OptionsBossEPTemplate" id="16" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP15" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP17" inherits="OptionsBossEPTemplate" id="17" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP16" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP18" inherits="OptionsBossEPTemplate" id="18" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="OptionsBossEP17" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Scripts>
+								<OnLoad>
+									this:SetBackdropColor(0.1, 0.1, 0.1);
+								</OnLoad>
+							</Scripts>
+						</Frames>
+					</Frame>
+					<Button name="CEPGP_options_boss_apply" inherits="GameMenuButtonTemplate" text="Apply">
+						<Size>
+							<AbsDimension x="70" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="40" y="30" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_options_title" inherits="GameFontHighlightLarge" text="Classic EPGP Options">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
+						
+						<!-- Raid EP Settings -->
+						<FontString name="CEPGP_options_boss" inherits="GameFontNormal" text="Raid EP Settings">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="80" y="-20" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					
 				</Scripts>
 			</Frame>
 		</Frames>
