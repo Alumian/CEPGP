@@ -2,6 +2,7 @@
 bossNameIndex = {
 					["Onyxia"] = 5,
 					
+					-- Molten Core --
 					["Lucifron"] = 5,
 					["Magmadar"] = 5,
 					["Gehennas"] = 5,
@@ -13,6 +14,7 @@ bossNameIndex = {
 					["Majordomo Executus"] = 5,
 					["Ragnaros"] = 7,
 					
+					-- Blackwing Lair --
 					["Razorgore the Untamed"] = 7,
 					["Vaelastrasz the Corrupt"] = 7,
 					["Broodlord Lashlayer"] = 7,
@@ -22,6 +24,7 @@ bossNameIndex = {
 					["Chromaggus"] = 7,
 					["Nefarian"] = 10,
 
+					-- Zul'Gurub --
 					["High Priest Venoxis"] = 0,
 					["High Priestess Mar'li"] = 0,
 					["High Priest Thekal"] = 0,
@@ -31,6 +34,7 @@ bossNameIndex = {
 					["Gahz'ranka"] = 0,
 					["Hakkar"] = 0,
 					
+					-- AQ20 --
 					["Kurinnaxx"] = 0,
 					["General Rajaxx"] = 0,
 					["Moam"] = 0,
@@ -38,20 +42,21 @@ bossNameIndex = {
 					["Ayamiss the Hunter"] = 0,
 					["Ossirian the Unscarred"] = 0,
 					
+					-- AQ40 --
 					["The Prophet Skeram"] = 10,
 					["Battleguard Sartura"] = 10,
 					["Fankriss the Unyielding"] = 10,
 					["Princess Huhuran"] = 10,
-					["The Bug Trio"] = 10,
-					["Princess Yauj"] = 0,
-					["Vem"] = 0,
-					["Lord Kri"] = 0,
+					["Princess Yauj"] = 10,
+					["Vem"] = 10,
+					["Lord Kri"] = 10,
 					["Viscidus"] = 10,
 					["Ouro"] = 10,
 					["Emperor Vek'lor"] = 10,
 					["Emperor Vek'nilash"] = 10,
 					["C'Thun"] = 12,
 					
+					-- Naxxramas --
 					["Anub'Rekhan"] = 12,
 					["Grand Widow Faerlina"] = 12,
 					["Maexxna"] = 15,
@@ -62,11 +67,10 @@ bossNameIndex = {
 
 					["Instructor Razuvious"] = 12,
 					["Gothik the Harvester"] = 12,
-					["The Four Horsemen"] = 15,
-					["Highlord Mograine"] = nil,
-					["Thane Korth'azz"] = nil,
-					["Lady Blaumeux"] = nil,
-					["Sir Zeliek"] = nil,
+					["Highlord Mograine"] = 15,
+					["Thane Korth'azz"] = 15,
+					["Lady Blaumeux"] = 15,
+					["Sir Zeliek"] = 15,
 
 					["Patchwerk"] = 12,
 					["Grobbulus"] = 12,
@@ -76,6 +80,7 @@ bossNameIndex = {
 					["Sapphiron"] = 15,
 					["Kel'Thuzad"] = 15,
 					
+					-- World Bosses --
 					["Doom Lord Kazzak"] = 7,
 					["Azuregos"] = 7,
 					["Teremus the Devourer"] = 7,

@@ -11,15 +11,15 @@ roster = {};
 criteria = 4;
 critReverse = false;
 kills = 0;
-frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_distribute_popup, CEPGP_context_popup};
-
+--
 --[[ Stock function backups ]]--
 LFUpdate = LootFrame_Update;
 LFEvent = LootFrame_OnEvent;
 CFEvent = ChatFrame_OnEvent;
 --
 function CEPGP_OnEvent()
-	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
+	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name --new comment
+--Test comment for merge practice
 		local ver2 = string.gsub(VERSION, "%.", ",");
 		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
 		if CHANNEL == nil then
@@ -119,12 +119,6 @@ function CEPGP_OnEvent()
 				end
 			end
 			if (GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2) then
-			--If the creature killed is one of these specified creatures, then it refers to the respective index in CEPGP_index.lua to assign appropriate EP value
-			--If it's not one of these creatures it defaults to what the combat log returned
-				name = (name == "Vem" or name == "Princess Yauj" or name == "Lord Kri") and "The Bug Trio"
-					or (name == "Emperor Vek'lor" or name == "Emperor Vek'nilash") and "The Twin Emperors"
-					or (name == "Highlord Mograine" or name == "Lady Blaumeux" or name == "Sir Zeliek" or name == "Thane Korth'azz") and "The Four Horsemen"
-					or name;
 				if tContains(bossNameIndex, name, true) then --[[ If the npc is in the boss name index ]]--
 					for k, v in pairs(bossNameIndex) do
 						if name == k then
@@ -132,7 +126,7 @@ function CEPGP_OnEvent()
 						end
 					end
 					
-					if name == "The Bug Trio" then
+					if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
 						this:RegisterEvent("PLAYER_REGEN_ENABLED");
 						kills = kills + 1;
 						if kills == 3 then
@@ -140,7 +134,7 @@ function CEPGP_OnEvent()
 							addRaidEP(EP, "The Bug Trio has been slain! The raid has been awarded " .. EP .. " EP");
 						end
 						
-					elseif name == "The Twin Emperors" then
+					elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
 						this:RegisterEvent("PLAYER_REGEN_ENABLED");
 						kills = kills + 1;
 						if kills == 2 then
@@ -148,7 +142,7 @@ function CEPGP_OnEvent()
 							addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
 						end
 						
-					elseif name == "The Four Horsemen" then
+					elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
 						this:RegisterEvent("PLAYER_REGEN_ENABLED");
 						kills = kills + 1;
 						if kills == 4 then
@@ -443,41 +437,6 @@ function CEPGP_UpdateRaidScrollBar()
     end
 end
 
-function CEPGP_UpdateOptionsScrollBar()
-    local y;
-    local yoffset;
-    local t;
-    local tSize;
-    local name;
-    t = bossNameIndex;
-	local count = 1;
-	tSize = ntgetn(bossNameIndex);
-	--[[for i = 1, table.getn(bossNameIndex) do
-		name = bossNameIndex[i];
-		--ep = bossNameIndex[i][1];
-		print(name);
-		t[count] = {};
-		if not (name == "Vem" or name == "Princess Yauj" or name == "Lord Kri"
-			or name == "Emperor Vek'lor" or name == "Emperor Vek'nilash"
-			or name == "Highlord Mograine" or name == "Lady Blaumeux" or name == "Sir Zeliek" or name == "Thane Korth'azz") then
-			
-			t[count][1] = name;
-			t[count][2] = ep;
-			count = count + 1;
-		end
-	end
-    FauxScrollFrame_Update(OptionsBossScrollFrame, tSize, 18, 240);
-    for y = 1, 18, 1 do
-        yoffset = y + FauxScrollFrame_GetOffset(OptionsBossScrollFrame);
-        if (yoffset <= tSize) then
-			name = t[yoffset][1]
-			value = t[yoffset][2];
-			getglobal("OptionsBossEP" .. y):SetText(name);
-			getglobal("OptionsBossEditBox" .. y):SetText(value);
-		end
-    end]]
-end
-
 function CEPGP_ListButton_OnClick()
 	if CanEditOfficerNote() == nil then
 		print("You don't have access to modify EPGP", 1);
@@ -744,7 +703,10 @@ function LootFrame_Update()
 		if items[i][3] == 4 and UnitInRaid("player") then
 			CEPGP_frame:Show();
 			mode = "loot";
-			toggleFrame("CEPGP_loot");
+			CEPGP_guild:Hide();
+			CEPGP_raid:Hide();
+			CEPGP_loot:Show();
+			CEPGP_distribute:Hide();
 			break;
 		end
 	end
@@ -767,7 +729,6 @@ function SlashCmdList.ARG(msg, editbox)
 	elseif msg == "show" then
 		populateFrame();
 		ShowUIPanel(CEPGP_frame);
-		toggleFrame();
 		
 	elseif strfind(msg, "addgp") then
 		local method = {};
@@ -1005,7 +966,8 @@ function distribute(link, x)
 		SendChatMessage("GP Value: " .. gp, RAID, "Common");
 		SendChatMessage("Whisper me !need for mainspec only", RAID, "Common");
 		SendChatMessage("--------------------------", RAID, "Common");
-		toggleFrame("CEPGP_distribute");
+		CEPGP_distribute:Show();
+		CEPGP_loot:Hide();
 		_G["CEPGP_distribute_item_name"]:SetText(link);
 		_G["CEPGP_distribute_item_name_frame"]:SetScript('OnClick', function() SetItemRef(iString) end);
 		_G["CEPGP_distribute_item_tex"]:SetBackdrop(tex);
@@ -1483,20 +1445,10 @@ function CEPGP_strSplit(msgStr, c)
 end
 
 
---[[ isML ]]--
+--[[ isML(player) ]]--
 --[[ Returns the index of the loot master in the raid group. 
 	 The main functionality of this method is it returns 0 if the local player is the loot master ]]--
 function isML()
 	local _, isML = GetLootMethod();
 	return isML;
-end
-
-function toggleFrame(frame)
-	for i = 1, table.getn(frames) do
-		if frames[i]:GetName() == frame then
-			frames[i]:Show();
-		else
-			frames[i]:Hide();
-		end
-	end
 end
