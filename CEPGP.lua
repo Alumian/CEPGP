@@ -176,7 +176,7 @@ function CEPGP_OnEvent()
 		end
 	
 	elseif event == "UI_ERROR_MESSAGE" then
-		print(arg1, 1);
+		CEPGP_print(arg1, 1);
 	end
 end
 
@@ -191,11 +191,11 @@ function CEPGP_IncAddonMsg(message, sender)
 		local s5 = (nv1.."."..nv2.."."..nv3)
 		outMessage = "Your addon is out of date. Version " .. s5 .. " is now available for download at https://github.com/Alumian/CEPGP"
 		if v1 > v1 then
-			print(outMessage);
+			CEPGP_print(outMessage);
 		elseif nv1 == v1 and nv2 > v2 then
-			print(outMessage);
+			CEPGP_print(outMessage);
 		elseif nv1 == v1 and nv2 == v2 and nv3 > v3 then
-			print(outMessage);
+			CEPGP_print(outMessage);
 		end
 	end
 end
@@ -440,7 +440,7 @@ end
 
 function CEPGP_ListButton_OnClick()
 	if CanEditOfficerNote() == nil then
-		print("You don't have access to modify EPGP", 1);
+		CEPGP_print("You don't have access to modify EPGP", 1);
 		return;
 	end
 	obj = this:GetName();
@@ -538,7 +538,7 @@ function CEPGP_ListButton_OnClick()
 	elseif strfind(obj, "RaidButton") then --A player from the raid menu is clicked (awards EP)
 		local name = getglobal(this:GetName() .. "Info"):GetText();
 		if not getGuildInfo(name) then
-			print(name .. " is not a guild member - Cannot award EP or GP", true);
+			CEPGP_print(name .. " is not a guild member - Cannot award EP or GP", true);
 			return;
 		end
 		ShowUIPanel(CEPGP_context_popup);
@@ -584,7 +584,7 @@ function CEPGP_ListButton_OnClick()
 															addRaidEP(tonumber(CEPGP_context_amount:GetText()));
 														end);
 	else
-		print(obj);
+		CEPGP_print(obj);
 	end
 end
 
@@ -599,10 +599,10 @@ end
 function CEPGP_distribute_popup_OnEvent(event)
 	local value = CEPGP_distribute_value:GetText();
 	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and value then
-		print(CEPGP_distribute_popup_title:GetText() .. "'s inventory is full", 1);
+		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. "'s inventory is full", 1);
 		CEPGP_distribute_value:SetText("");
 	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and value then
-		print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
+		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
 		CEPGP_distribute_value:SetText("");
 	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() then
 		addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
@@ -725,10 +725,10 @@ SLASH_ARG1 = "/cepgp";
 function SlashCmdList.ARG(msg, editbox)
 	
 	if msg == "" then
-		print("Classic EPGP Usage");
-		print("/cepgp |cFF80FF80show|r - |cFFFF8080Manually shows the CEPGP window|r");
-		print("/cepgp |cFF80FF80debug|r - |cFFFF8080Toggles debug mode|r");
-		print("/cepgp |cFF80FF80setDefaultChannel channel|r - |cFFFF8080Sets the default channel to send confirmation messages. Default is Guild|r");
+		CEPGP_print("Classic EPGP Usage");
+		CEPGP_print("/cepgp |cFF80FF80show|r - |cFFFF8080Manually shows the CEPGP window|r");
+		CEPGP_print("/cepgp |cFF80FF80debug|r - |cFFFF8080Toggles debug mode|r");
+		CEPGP_print("/cepgp |cFF80FF80setDefaultChannel channel|r - |cFFFF8080Sets the default channel to send confirmation messages. Default is Guild|r");
 		
 	elseif msg == "show" then
 		populateFrame();
@@ -744,20 +744,20 @@ function SlashCmdList.ARG(msg, editbox)
 		addGP(player, amount);
 		
 	elseif strfind(msg, "currentchannel") then
-		print("Current channel to report: " .. getCurChannel());
+		CEPGP_print("Current channel to report: " .. getCurChannel());
 		
 	elseif strfind(msg, "debug") then
 		debugMode = not debugMode;
 		if debugMode then
-			print("Debug Mode Enabled");
+			CEPGP_print("Debug Mode Enabled");
 		else
-			print("Debug Mode Disabled");
+			CEPGP_print("Debug Mode Disabled");
 		end
 	
 	elseif strfind(msg, "setdefaultchannel") then
 		if msg == "setdefaultchannel" or msg == "setdefaultchannel " then
-			print("|cFF80FFFFPlease enter a valid  channel. Valid options are:|r");
-			print("|cFF80FFFFsay, yell, party, raid, guild, officer|r");
+			CEPGP_print("|cFF80FFFFPlease enter a valid  channel. Valid options are:|r");
+			CEPGP_print("|cFF80FFFFsay, yell, party, raid, guild, officer|r");
 			return;
 		end
 		local newChannel = getVal(msg);
@@ -774,10 +774,10 @@ function SlashCmdList.ARG(msg, editbox)
 		
 		if valid then
 			CHANNEL = newChannel;
-			print("Default channel set to: " .. CHANNEL);
+			CEPGP_print("Default channel set to: " .. CHANNEL);
 		else
-			print("Please enter a valid chat channel. Valid options are:");
-			print("say, yell, party, raid, guild, officer");
+			CEPGP_print("Please enter a valid chat channel. Valid options are:");
+			CEPGP_print("say, yell, party, raid, guild, officer");
 		end
 	
 	end
@@ -979,7 +979,7 @@ function distribute(link, x)
 		_G["CEPGP_distribute_item_tex"]:SetScript('OnLeave', function() GameTooltip:Hide() end);
 		_G["CEPGP_distribute_GP_value"]:SetText(gp);
 	else
-		print("You are not the Loot Master.", 1);
+		CEPGP_print("You are not the Loot Master.", 1);
 		return;
 	end
 end
@@ -1059,7 +1059,7 @@ end
 ]]
 function addGuildEP(amount)
 	if amount == nil then
-		print("Please enter a valid number", 1);
+		CEPGP_print("Please enter a valid number", 1);
 		return;
 	end
 	local total = ntgetn(roster);
@@ -1095,7 +1095,7 @@ end
 ]]
 function addGP(player, amount)
 	if amount == nil then
-		print("Please enter a valid number", 1);
+		CEPGP_print("Please enter a valid number", 1);
 		return;
 	end
 	local EP, GP = nil;
@@ -1120,7 +1120,7 @@ function addGP(player, amount)
 		CEPGP_SendAddonMsg("update");
 		SendChatMessage(amount .. " GP added to " .. player, CHANNEL, "Common", CHANNEL);
 	else
-		print("Player not found in guild roster.", true);
+		CEPGP_print("Player not found in guild roster.", true);
 	end
 end
 
@@ -1130,7 +1130,7 @@ end
 ]]
 function addEP(player, amount)
 	if amount == nil then
-		print("Please enter a valid number", 1);
+		CEPGP_print("Please enter a valid number", 1);
 		return;
 	end
 	amount = math.floor(amount);
@@ -1155,7 +1155,7 @@ function addEP(player, amount)
 		CEPGP_SendAddonMsg("update");
 		SendChatMessage(amount .. " EP added to " .. player, CHANNEL, "Common", CHANNEL);
 	else
-		print("Player not found in guild roster.", true);
+		CEPGP_print("Player not found in guild roster.", true);
 	end
 end
 
@@ -1164,7 +1164,7 @@ end
 ]]
 function decay(amount)
 	if amount == nil then
-		print("Please enter a valid number", 1);
+		CEPGP_print("Please enter a valid number", 1);
 		return;
 	end
 	local EP, GP = nil;
@@ -1212,13 +1212,13 @@ function calcGP(link)
 			and (slot ~= "Blacksmithing" and slot ~= "Tailoring" and slot ~= "Alchemy" and slot ~= "Leatherworking"
 			and slot ~= "Enchanting" and slot ~= "Engineering" and slot ~= "Mining") then
 			local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
-			print("Warning: " .. name .. " not found in index!");
+			CEPGP_print("Warning: " .. name .. " not found in index!");
 			if slot ~= "" then
 				slot = strsub(slot,strfind(slot,"INVTYPE_")+8,string.len(slot));
-				print("Slot: " .. slot);
+				CEPGP_print("Slot: " .. slot);
 			end
-			print("Item Type: " .. itemType);
-			print("Quality: " .. quality);
+			CEPGP_print("Item Type: " .. itemType);
+			CEPGP_print("Quality: " .. quality);
 		end
 		return 0;
 	end
@@ -1253,9 +1253,9 @@ function calcGP(link)
 	end
 	if debugMode then
 		local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
-		print("Name: " .. name);
-		print("Rarity: " .. quality);
-		print("Slot: " .. slot);
+		CEPGP_print("Name: " .. name);
+		CEPGP_print("Rarity: " .. quality);
+		CEPGP_print("Slot: " .. slot);
 	end
 	if slot ~= "" and slot ~= nil then
 		slot = strsub(slot,strfind(slot,"INVTYPE_")+8,string.len(slot));
@@ -1286,7 +1286,7 @@ function calcGP(link)
 		elseif slot == "EXCEPTION" then
 			slot = 0;
 		else
-			print("Slot for " .. name .. " not found");
+			CEPGP_print("Slot for " .. name .. " not found");
 			slot = 1;
 		end
 	else
@@ -1428,11 +1428,11 @@ function setCriteria(x, disp)
 		CEPGP_UpdateLootScrollBar();
 	end
 end
---[[print(string) - Working as intended
+--[[CEPGP_print(string) - Working as intended
 	Faster way of writing DEFAULT_CHAT_FRAME:AddMessage(string)
 	I'm lazy. Sue me. Wait - Don't sue me.
 ]]
-function print(str, err)
+function CEPGP_print(str, err)
 	if err == nil then
 		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFCEPGP: " .. tostring(str) .. "|r");
 	else
