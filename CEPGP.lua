@@ -13,15 +13,14 @@ critReverse = false;
 kills = 0;
 frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_distribute_popup, CEPGP_context_popup};
 
---
+
 --[[ Stock function backups ]]--
 LFUpdate = LootFrame_Update;
 LFEvent = LootFrame_OnEvent;
 CFEvent = ChatFrame_OnEvent;
---
+
 function CEPGP_OnEvent()
-	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name --new comment
---Test comment for merge practice
+	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		local ver2 = string.gsub(VERSION, "%.", ",");
 		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
 		if CHANNEL == nil then
