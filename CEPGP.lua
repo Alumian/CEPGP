@@ -4,7 +4,7 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.9.0";
+VERSION = "0.9.1";
 debugMode = false;
 responses = {};
 roster = {};
@@ -1209,7 +1209,9 @@ function calcGP(link)
 		end
 	end
 	if not found then
-		if ((slot ~= "" and level == 60 and rarity > 3) or (slot == "" and rarity > 3)) then
+		if ((slot ~= "" and level == 60 and rarity > 3) or (slot == "" and rarity > 3))
+			and (slot ~= "Blacksmithing" and slot ~= "Tailoring" and slot ~= "Alchemy" and slot ~= "Leatherworking"
+			and slot ~= "Enchanting" and slot ~= "Engineering" and slot ~= "Mining") then
 			local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
 			print("Warning: " .. name .. " not found in index!");
 			if slot ~= "" then
@@ -1241,6 +1243,7 @@ function calcGP(link)
 		--Exceptions: Items that should not carry GP but still need to be distributed
 		elseif name == "Splinter of Atiesh"
 			or name == "Tome of Tranquilizing Shot"
+			or name == "Bindings of the Windseeker"
 			or name == "Resilience of the Scourge"
 			or name == "Fortitude of the Scourge"
 			or name == "Might of the Scourge" 
@@ -1277,7 +1280,7 @@ function calcGP(link)
 			slot = 1.5;
 		elseif slot == "CHEST" or slot == "ROBE" then
 			slot = 1.55;
-		elseif slot == "WEAPONMAINHAND" or slot == "WEAPON" or slot == "WEAPONOFFHAND" or slot == " SHIELD" or slot == "RANGED" or slot == "RANGEDRIGHT" then
+		elseif slot == "WEAPONMAINHAND" or slot == "WEAPON" or slot == "WEAPONOFFHAND" or slot == "SHIELD" or slot == "RANGED" or slot == "RANGEDRIGHT" then
 			slot = 1.65;
 		elseif slot == "2HWEAPON" then
 			slot = 2;
