@@ -182,7 +182,7 @@ function CEPGP_OnEvent()
 end
 
 function CEPGP_IncAddonMsg(message, sender)
-	local s1, s2, s3, s4 = strSplit(message, "-");
+	local s1, s2, s3, s4 = CEPGP_strSplit(message, "-");
 	if s1 == "update" then
 		GuildRoster();
 	elseif s1 == "version" then
