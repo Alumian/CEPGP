@@ -4,7 +4,7 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.9.1";
+VERSION = "0.9.2";
 debugMode = false;
 responses = {};
 roster = {};
@@ -605,9 +605,9 @@ function CEPGP_distribute_popup_OnEvent(event)
 		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
 		CEPGP_distribute_value:SetText("");
 	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() then
-		addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
-		if value then
+		if value == "true" then
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, "Common");
+			addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
 		else
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for free", RAID, "Common");
 		end
@@ -645,6 +645,7 @@ function LootFrame_OnEvent(event)
 		HideUIPanel(CEPGP_button_loot_dist);
 		HideUIPanel(CEPGP_loot);
 		HideUIPanel(CEPGP_distribute);
+		HideUIPanel(CEPGP_loot_distributing);
 		if UnitInRaid("player") then
 			ShowUIPanel(CEPGP_raid);
 		elseif GetGuildRosterInfo(1) then
@@ -1209,8 +1210,8 @@ function calcGP(link)
 	end
 	if not found then
 		if ((slot ~= "" and level == 60 and rarity > 3) or (slot == "" and rarity > 3))
-			and (slot ~= "Blacksmithing" and slot ~= "Tailoring" and slot ~= "Alchemy" and slot ~= "Leatherworking"
-			and slot ~= "Enchanting" and slot ~= "Engineering" and slot ~= "Mining") then
+			and (itemType ~= "Blacksmithing" and itemType ~= "Tailoring" and itemType ~= "Alchemy" and itemType ~= "Leatherworking"
+			and itemType ~= "Enchanting" and itemType ~= "Engineering" and itemType ~= "Mining") then
 			local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
 			CEPGP_print("Warning: " .. name .. " not found in index!");
 			if slot ~= "" then
