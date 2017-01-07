@@ -621,6 +621,9 @@ end
 	returns EP and GP
 	]]
 function getEPGP(offNote)
+	if not offNote then
+		return 0, 1;
+	end
 	local EP, GP = nil;
 	local valid = false;
 	if not checkEPGP(offNote) then
@@ -823,7 +826,7 @@ function populateFrame(criteria, items, lootNum)
 	else
 		sorting = "group";
 	end
-	if mode == "loot" and CEPGP_loot:IsVisible() == nil then
+	if mode == "loot" then
 		cleanTable();
 	elseif mode ~= "loot" then
 		cleanTable();
