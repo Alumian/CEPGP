@@ -1345,6 +1345,7 @@ function tContains(t, val, bool)
 end
 
 function tSort(t, index)
+	if not t then return; end
 	local t2 = {};
 	table.insert(t2, t[1]);
 	table.remove(t, 1);
