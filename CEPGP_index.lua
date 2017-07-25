@@ -1,1143 +1,1143 @@
 --The item level of each item
 bossNameIndex = {
-					["Onyxia"] = 5,
+					["onyxia"] = 5,
 					
-					-- Molten Core --
-					["Lucifron"] = 5,
-					["Magmadar"] = 5,
-					["Gehennas"] = 5,
-					["Garr"] = 5,
-					["Baron Geddon"] = 5,
-					["Shazzrah"] = 5,
-					["Sulfuron Harbinger"] = 5,
-					["Golemagg the Incinerator"] = 5,
-					["Majordomo Executus"] = 5,
-					["Ragnaros"] = 7,
+					-- molten core --
+					["lucifron"] = 5,
+					["magmadar"] = 5,
+					["gehennas"] = 5,
+					["garr"] = 5,
+					["baron geddon"] = 5,
+					["shazzrah"] = 5,
+					["sulfuron harbinger"] = 5,
+					["golemagg the incinerator"] = 5,
+					["majordomo executus"] = 5,
+					["ragnaros"] = 7,
 					
-					-- Blackwing Lair --
-					["Razorgore the Untamed"] = 7,
-					["Vaelastrasz the Corrupt"] = 7,
-					["Broodlord Lashlayer"] = 7,
-					["Firemaw"] = 7,
-					["Ebonroc"] = 7,
-					["Flamegor"] = 7,
-					["Chromaggus"] = 7,
-					["Nefarian"] = 10,
+					-- blackwing lair --
+					["razorgore the untamed"] = 7,
+					["vaelastrasz the corrupt"] = 7,
+					["broodlord lashlayer"] = 7,
+					["firemaw"] = 7,
+					["ebonroc"] = 7,
+					["flamegor"] = 7,
+					["chromaggus"] = 7,
+					["nefarian"] = 10,
 
-					-- Zul'Gurub --
-					["High Priest Venoxis"] = 0,
-					["High Priestess Mar'li"] = 0,
-					["High Priest Thekal"] = 0,
-					["High Priestess Arlokk"] = 0,
-					["Bloodlord Mandokir"] = 0,
-					["Jin'do the Hexxer"] = 0,
-					["Gahz'ranka"] = 0,
-					["Hakkar"] = 0,
+					-- zul'gurub --
+					["high priest venoxis"] = 0,
+					["high priestess mar'li"] = 0,
+					["high priest thekal"] = 0,
+					["high priestess arlokk"] = 0,
+					["bloodlord mandokir"] = 0,
+					["jin'do the hexxer"] = 0,
+					["gahz'ranka"] = 0,
+					["hakkar"] = 0,
 					
-					-- AQ20 --
-					["Kurinnaxx"] = 0,
-					["General Rajaxx"] = 0,
-					["Moam"] = 0,
-					["Buru the Gorger"] = 0,
-					["Ayamiss the Hunter"] = 0,
-					["Ossirian the Unscarred"] = 0,
+					-- aq20 --
+					["kurinnaxx"] = 0,
+					["general rajaxx"] = 0,
+					["moam"] = 0,
+					["buru the gorger"] = 0,
+					["ayamiss the hunter"] = 0,
+					["ossirian the unscarred"] = 0,
 					
-					-- AQ40 --
-					["The Prophet Skeram"] = 10,
-					["Battleguard Sartura"] = 10,
-					["Fankriss the Unyielding"] = 10,
-					["Princess Huhuran"] = 10,
-					["Princess Yauj"] = 10,
-					["Vem"] = 10,
-					["Lord Kri"] = 10,
-					["Viscidus"] = 10,
-					["Ouro"] = 10,
-					["Emperor Vek'lor"] = 10,
-					["Emperor Vek'nilash"] = 10,
-					["C'Thun"] = 12,
+					-- aq40 --
+					["the prophet skeram"] = 10,
+					["battleguard sartura"] = 10,
+					["fankriss the unyielding"] = 10,
+					["princess huhuran"] = 10,
+					["princess yauj"] = 10,
+					["vem"] = 10,
+					["lord kri"] = 10,
+					["viscidus"] = 10,
+					["ouro"] = 10,
+					["emperor vek'lor"] = 10,
+					["emperor vek'nilash"] = 10,
+					["c'thun"] = 12,
 					
-					-- Naxxramas --
-					["Anub'Rekhan"] = 12,
-					["Grand Widow Faerlina"] = 12,
-					["Maexxna"] = 15,
+					-- naxxramas --
+					["anub'rekhan"] = 12,
+					["grand widow faerlina"] = 12,
+					["maexxna"] = 15,
 
-					["Noth the Plaguebringer"] = 12,
-					["Heigan the Unclean"] = 12,
-					["Loatheb"] = 15,
+					["noth the plaguebringer"] = 12,
+					["heigan the unclean"] = 12,
+					["loatheb"] = 15,
 
-					["Instructor Razuvious"] = 12,
-					["Gothik the Harvester"] = 12,
-					["Highlord Mograine"] = 15,
-					["Thane Korth'azz"] = 15,
-					["Lady Blaumeux"] = 15,
-					["Sir Zeliek"] = 15,
+					["instructor razuvious"] = 12,
+					["gothik the harvester"] = 12,
+					["highlord mograine"] = 15,
+					["thane korth'azz"] = 15,
+					["lady blaumeux"] = 15,
+					["sir zeliek"] = 15,
 
-					["Patchwerk"] = 12,
-					["Grobbulus"] = 12,
-					["Gluth"] = 12,
-					["Thaddius"] = 15,
+					["patchwerk"] = 12,
+					["grobbulus"] = 12,
+					["gluth"] = 12,
+					["thaddius"] = 15,
 
-					["Sapphiron"] = 15,
-					["Kel'Thuzad"] = 15,
+					["sapphiron"] = 15,
+					["kel'thuzad"] = 15,
 					
-					-- World Bosses --
-					["Doom Lord Kazzak"] = 7,
-					["Azuregos"] = 7,
-					["Teremus the Devourer"] = 7,
-					["Emeriss"] = 7,
-					["Lethon"] = 7,
-					["Ysondre"] = 7,
-					["Taerar"] = 7
+					-- world bosses --
+					["doom lord kazzak"] = 7,
+					["azuregos"] = 7,
+					["teremus the devourer"] = 7,
+					["emeriss"] = 7,
+					["lethon"] = 7,
+					["ysondre"] = 7,
+					["taerar"] = 7
 				}
 
 itemsIndex = 
 {
 	--World BoE Epics
-	["Teebu's Blazing Longsword"] = 65,
-	["Cloak of Flames"] = 65,
-	["Blade of Hanna"] = 64,
-	["Lady Maye's Pendant"] = 64,
-	["Alcor's Sunrazor"] = 63,
-	["Hand of Edward the Odd"] = 62,
-	["Cloudkeeper Legplates"] = 62,
-	["Elemental Mage Staff"] = 61,
-	["Sash of Mercy"] = 61,
-	["Brain Hacker"] = 60,
-	["Jeweled Amulet of Cainwyn"] = 60,
-	["Skullflame Shield"] = 59,
-	["Helm of Narv"] = 59,
-	["Dwarven Hand Cannon"] = 58,
-	["Myrmidon's Signet"] = 58,
-	["Destiny"] = 57,
-	["Axe of the Deep Woods"] = 57,
-	["Lifestone"] = 56,
-	["Krol Blade"] = 56,
-	["Eye of Flame"] = 55,
-	["Stockade Pauldrons"] = 55,
-	["Hammer of the Northern Wind"] = 54,
-	["Glowing Brightwood Staff"] = 54,
-	["Hurricane"] = 53,
-	["Shadowblade"] = 53,
-	["Freezing Band"] = 52,
-	["Taran Icebreaker"] = 52,
-	["Lei of Lilies"] = 51,
-	["Stonerender Gauntlets"] = 51,
-	["Bloodrazor"] = 50,
-	["Wall of the Dead"] = 50,
-	["Edgemaster's Handguards"] = 49,
-	["Kang the Decapitator"] = 49,
-	["Warden Staff"] = 48,
-	["Precisely Calibrated Boomstick"] = 48,
-	["Flurry Axe"] = 47,
-	["Robes of Insight"] = 47,
-	["Blackskull Shield"] = 46,
-	["Ring of Saviors"] = 46,
-	["Gut Ripper"] = 45,
-	["Boots of Avoidance"] = 45,
-	["Icemail Jerkin"] = 44,
-	["Nightblade"] = 44,
-	["Ardent Custodian"] = 43,
-	["Underworld Band"] = 43,
-	["Bow of Searing Arrows"] = 42,
-	["Gloves of Holy Might"] = 42,
-	["Dazzling Longsword"] = 41,
-	["The Green Tower"] = 41,
-	["Staff of Jordan"] = 40,
-	["Fiery War Axe"] = 40,
+	["teebu's blazing longsword"] = 65,
+	["cloak of flames"] = 65,
+	["blade of hanna"] = 64,
+	["lady maye's pendant"] = 64,
+	["alcor's sunrazor"] = 63,
+	["hand of edward the odd"] = 62,
+	["cloudkeeper legplates"] = 62,
+	["elemental mage staff"] = 61,
+	["sash of mercy"] = 61,
+	["brain hacker"] = 60,
+	["jeweled amulet of cainwyn"] = 60,
+	["skullflame shield"] = 59,
+	["helm of narv"] = 59,
+	["dwarven hand cannon"] = 58,
+	["myrmidon's signet"] = 58,
+	["destiny"] = 57,
+	["axe of the deep woods"] = 57,
+	["lifestone"] = 56,
+	["krol blade"] = 56,
+	["eye of flame"] = 55,
+	["stockade pauldrons"] = 55,
+	["hammer of the northern wind"] = 54,
+	["glowing brightwood staff"] = 54,
+	["hurricane"] = 53,
+	["shadowblade"] = 53,
+	["freezing band"] = 52,
+	["taran icebreaker"] = 52,
+	["lei of lilies"] = 51,
+	["stonerender gauntlets"] = 51,
+	["bloodrazor"] = 50,
+	["wall of the dead"] = 50,
+	["edgemaster's handguards"] = 49,
+	["kang the decapitator"] = 49,
+	["warden staff"] = 48,
+	["precisely calibrated boomstick"] = 48,
+	["flurry axe"] = 47,
+	["robes of insight"] = 47,
+	["blackskull shield"] = 46,
+	["ring of saviors"] = 46,
+	["gut ripper"] = 45,
+	["boots of avoidance"] = 45,
+	["icemail jerkin"] = 44,
+	["nightblade"] = 44,
+	["ardent custodian"] = 43,
+	["underworld band"] = 43,
+	["bow of searing arrows"] = 42,
+	["gloves of holy might"] = 42,
+	["dazzling longsword"] = 41,
+	["the green tower"] = 41,
+	["staff of jordan"] = 40,
+	["fiery war axe"] = 40,
 
-	--Tier 1
-	--Arcanist
-	["Arcanist Boots"] = 66,
-	["Arcanist Belt"] = 66,
-	["Arcanist Bindings"] = 66,
-	["Arcanist Crown"] = 66,
-	["Arcanist Gloves"] = 66,
-	["Arcanist Leggings"] = 66,
-	["Arcanist Mantle"] = 66,
-	["Arcanist Robes"] = 66,
+	--tier 1
+	--arcanist
+	["arcanist boots"] = 66,
+	["arcanist belt"] = 66,
+	["arcanist bindings"] = 66,
+	["arcanist crown"] = 66,
+	["arcanist gloves"] = 66,
+	["arcanist leggings"] = 66,
+	["arcanist mantle"] = 66,
+	["arcanist robes"] = 66,
 	
-	--Cenarion
-	["Cenarion Belt"] = 66,
-	["Cenarion Boots"] = 66,
-	["Cenarion Bracers"] = 66,
-	["Cenarion Vestments"] = 66,
-	["Cenarion Gloves"] = 66,
-	["Cenarion Helm"] = 66,
-	["Cenarion Leggings"] = 66,
-	["Cenarion Spaulders"] = 66,
+	--cenarion
+	["cenarion belt"] = 66,
+	["cenarion boots"] = 66,
+	["cenarion bracers"] = 66,
+	["cenarion vestments"] = 66,
+	["cenarion gloves"] = 66,
+	["cenarion helm"] = 66,
+	["cenarion leggings"] = 66,
+	["cenarion spaulders"] = 66,
 	
-	--Earthfury
-	["Earthfury Belt"] = 66,
-	["Earthfury Boots"] = 66,
-	["Earthfury Bracers"] = 66,
-	["Earthfury Vestments"] = 66,
-	["Earthfury Epaulets"] = 66,
-	["Earthfury Gauntlets"] = 66,
-	["Earthfury Helmet"] = 66,
-	["Earthfury Legguards"] = 66,
+	--earthfury
+	["earthfury belt"] = 66,
+	["earthfury boots"] = 66,
+	["earthfury bracers"] = 66,
+	["earthfury vestments"] = 66,
+	["earthfury epaulets"] = 66,
+	["earthfury gauntlets"] = 66,
+	["earthfury helmet"] = 66,
+	["earthfury legguards"] = 66,
 	
-	--Felheart
-	["Felheart Belt"] = 66,
-	["Felheart Bracers"] = 66,
-	["Felheart Gloves"] = 66,
-	["Felheart Pants"] = 66,
-	["Felheart Robes"] = 66,
-	["Felheart Shoulder Pads"] = 66,
-	["Felheart Horns"] = 66,
-	["Felheart Slippers"] = 66,
+	--felheart
+	["felheart belt"] = 66,
+	["felheart bracers"] = 66,
+	["felheart gloves"] = 66,
+	["felheart pants"] = 66,
+	["felheart robes"] = 66,
+	["felheart shoulder pads"] = 66,
+	["felheart horns"] = 66,
+	["felheart slippers"] = 66,
 	
-	--Giantstalker
-	["Giantstalker's Belt"] = 66,
-	["Giantstalker's Boots"] = 66,
-	["Giantstalker's Bracers"] = 66,
-	["Giantstalker's Breastplate"] = 66,
-	["Giantstalker's Epaulets"] = 66,
-	["Giantstalker's Gloves"] = 66,
-	["Giantstalker's Helmet"] = 66,
-	["Giantstalker's Leggings"] = 66,
+	--giantstalker
+	["giantstalker's belt"] = 66,
+	["giantstalker's boots"] = 66,
+	["giantstalker's bracers"] = 66,
+	["giantstalker's breastplate"] = 66,
+	["giantstalker's epaulets"] = 66,
+	["giantstalker's gloves"] = 66,
+	["giantstalker's helmet"] = 66,
+	["giantstalker's leggings"] = 66,
 	
-	--Lawbringer
-	["Lawbringer Belt"] = 66,
-	["Lawbringer Boots"] = 66,
-	["Lawbringer Bracers"] = 66,
-	["Lawbringer Chestguard"] = 66,
-	["Lawbringer Gauntlets"] = 66,
-	["Lawbringer Helm"] = 66,
-	["Lawbringer Legplates"] = 66,
-	["Lawbringer Spaulders"] = 66,
+	--lawbringer
+	["lawbringer belt"] = 66,
+	["lawbringer boots"] = 66,
+	["lawbringer bracers"] = 66,
+	["lawbringer chestguard"] = 66,
+	["lawbringer gauntlets"] = 66,
+	["lawbringer helm"] = 66,
+	["lawbringer legplates"] = 66,
+	["lawbringer spaulders"] = 66,
 	
-	--Might
-	["Belt of Might"] = 66,
-	["Bracers of Might"] = 66,
-	["Breastplate of Might"] = 66,
-	["Gauntlets of Might"] = 66,
-	["Helm of Might"] = 66,
-	["Legplates of Might"] = 66,
-	["Pauldrons of Might"] = 66,
-	["Sabatons of Might"] = 66,
+	--might
+	["belt of might"] = 66,
+	["bracers of might"] = 66,
+	["breastplate of might"] = 66,
+	["gauntlets of might"] = 66,
+	["helm of might"] = 66,
+	["legplates of might"] = 66,
+	["pauldrons of might"] = 66,
+	["sabatons of might"] = 66,
 	
-	--Nightslayer
-	["Nightslayer Belt"] = 66,
-	["Nightslayer Boots"] = 66,
-	["Nightslayer Bracers"] = 66,
-	["Nightslayer Chestpiece"] = 66,
-	["Nightslayer Cover"] = 66,
-	["Nightslayer Gloves"] = 66,
-	["Nightslayer Pants"] = 66,
-	["Nightslayer Shoulder Pads"] = 66,
+	--nightslayer
+	["nightslayer belt"] = 66,
+	["nightslayer boots"] = 66,
+	["nightslayer bracers"] = 66,
+	["nightslayer chestpiece"] = 66,
+	["nightslayer cover"] = 66,
+	["nightslayer gloves"] = 66,
+	["nightslayer pants"] = 66,
+	["nightslayer shoulder pads"] = 66,
 	
-	--Prophecy
-	["Boots of Prophecy"] = 66,
-	["Circlet of Prophecy"] = 66,
-	["Girdle of Prophecy"] = 66,
-	["Gloves of Prophecy"] = 66,
-	["Pants of Prophecy"] = 66,
-	["Mantle of Prophecy"] = 66,
-	["Robes of Prophecy"] = 66,
-	["Vambraces of Prophecy"] = 66,
+	--prophecy
+	["boots of prophecy"] = 66,
+	["circlet of prophecy"] = 66,
+	["girdle of prophecy"] = 66,
+	["gloves of prophecy"] = 66,
+	["pants of prophecy"] = 66,
+	["mantle of prophecy"] = 66,
+	["robes of prophecy"] = 66,
+	["vambraces of prophecy"] = 66,
 	
-	--Tier 2
-	--Bloodfang
-	["Bloodfang Belt"] = 76,
-	["Bloodfang Boots"] = 76,
-	["Bloodfang Bracers"] = 76,
-	["Bloodfang Chestpiece"] = 76,
-	["Bloodfang Gloves"] = 76,
-	["Bloodfang Hood"] = 76,
-	["Bloodfang Pants"] = 76,
-	["Bloodfang Spaulders"] = 76,
+	--tier 2
+	--bloodfang
+	["bloodfang belt"] = 76,
+	["bloodfang boots"] = 76,
+	["bloodfang bracers"] = 76,
+	["bloodfang chestpiece"] = 76,
+	["bloodfang gloves"] = 76,
+	["bloodfang hood"] = 76,
+	["bloodfang pants"] = 76,
+	["bloodfang spaulders"] = 76,
 	
-	--Dragonstalker
-	["Dragonstalker's Belt"] = 76,
-	["Dragonstalker's Bracers"] = 76,
-	["Dragonstalker's Breastplate"] = 76,
-	["Dragonstalker's Gauntlets"] = 76,
-	["Dragonstalker's Greaves"] = 76,
-	["Dragonstalker's Helm"] = 76,
-	["Dragonstalker's Legguards"] = 76,
-	["Dragonstalker's Spaulders"] = 76,
+	--dragonstalker
+	["dragonstalker's belt"] = 76,
+	["dragonstalker's bracers"] = 76,
+	["dragonstalker's breastplate"] = 76,
+	["dragonstalker's gauntlets"] = 76,
+	["dragonstalker's greaves"] = 76,
+	["dragonstalker's helm"] = 76,
+	["dragonstalker's legguards"] = 76,
+	["dragonstalker's spaulders"] = 76,
 	
-	--Judgement
-	["Judgement Belt"] = 76,
-	["Judgement Bindings"] = 76,
-	["Judgement Breastplate"] = 76,
-	["Judgement Crown"] = 76,
-	["Judgement Gauntlets"] = 76,
-	["Judgement Legguards"] = 76,
-	["Judgement Sabatons"] = 76,
-	["Judgement Spaulders"] = 76,
+	--judgement
+	["judgement belt"] = 76,
+	["judgement bindings"] = 76,
+	["judgement breastplate"] = 76,
+	["judgement crown"] = 76,
+	["judgement gauntlets"] = 76,
+	["judgement legguards"] = 76,
+	["judgement sabatons"] = 76,
+	["judgement spaulders"] = 76,
 	
-	--Nemesis
-	["Nemesis Belt"] = 76,
-	["Nemesis Boots"] = 76,
-	["Nemesis Bracers"] = 76,
-	["Nemesis Gloves"] = 76,
-	["Nemesis Leggings"] = 76,
-	["Nemesis Robes"] = 76,
-	["Nemesis Skullcap"] = 76,
-	["Nemesis Spaulders"] = 76,
+	--nemesis
+	["nemesis belt"] = 76,
+	["nemesis boots"] = 76,
+	["nemesis bracers"] = 76,
+	["nemesis gloves"] = 76,
+	["nemesis leggings"] = 76,
+	["nemesis robes"] = 76,
+	["nemesis skullcap"] = 76,
+	["nemesis spaulders"] = 76,
 	
-	--Netherwind
-	["Netherwind Belt"] = 76,
-	["Netherwind Bindings"] = 76,
-	["Netherwind Boots"] = 76,
-	["Netherwind Crown"] = 76,
-	["Netherwind Mantle"] = 76,
-	["Netherwind Gloves"] = 76,
-	["Netherwind Pants"] = 76,
-	["Netherwind Robes"] = 76,
+	--netherwind
+	["netherwind belt"] = 76,
+	["netherwind bindings"] = 76,
+	["netherwind boots"] = 76,
+	["netherwind crown"] = 76,
+	["netherwind mantle"] = 76,
+	["netherwind gloves"] = 76,
+	["netherwind pants"] = 76,
+	["netherwind robes"] = 76,
 	
-	--Stormrage
-	["Stormrage Belt"] = 76,
-	["Stormrage Boots"] = 76,
-	["Stormrage Bracers"] = 76,
-	["Stormrage Chestguard"] = 76,
-	["Stormrage Cover"] = 76,
-	["Stormrage Handguards"] = 76,
-	["Stormrage Legguards"] = 76,
-	["Stormrage Pauldrons"] = 76,
+	--stormrage
+	["stormrage belt"] = 76,
+	["stormrage boots"] = 76,
+	["stormrage bracers"] = 76,
+	["stormrage chestguard"] = 76,
+	["stormrage cover"] = 76,
+	["stormrage handguards"] = 76,
+	["stormrage legguards"] = 76,
+	["stormrage pauldrons"] = 76,
 	
-	--Ten Storms
-	["Belt of Ten Storms"] = 76,
-	["Bracers of Ten Storms"] = 76,
-	["Breastplate of Ten Storms"] = 76,
-	["Epaulets of Ten Storms"] = 76,
-	["Gauntlets of Ten Storms"] = 76,
-	["Greaves of Ten Storms"] = 76,
-	["Helmet of Ten Storms"] = 76,
-	["Legplates of Ten Storms"] = 76,
+	--ten storms
+	["belt of ten storms"] = 76,
+	["bracers of ten storms"] = 76,
+	["breastplate of ten storms"] = 76,
+	["epaulets of ten storms"] = 76,
+	["gauntlets of ten storms"] = 76,
+	["greaves of ten storms"] = 76,
+	["helmet of ten storms"] = 76,
+	["legplates of ten storms"] = 76,
 	
-	--Transcendence
-	["Belt of Transcendence"] = 76,
-	["Bindings of Transcendence"] = 76,
-	["Boots of Transcendence"] = 76,
-	["Halo of Transcendence"] = 76,
-	["Handguards of Transcendence"] = 76,
-	["Leggings of Transcendence"] = 76,
-	["Pauldrons of Transcendence"] = 76,
-	["Robes of Transcendence"] = 76,
+	--transcendence
+	["belt of transcendence"] = 76,
+	["bindings of transcendence"] = 76,
+	["boots of transcendence"] = 76,
+	["halo of transcendence"] = 76,
+	["handguards of transcendence"] = 76,
+	["leggings of transcendence"] = 76,
+	["pauldrons of transcendence"] = 76,
+	["robes of transcendence"] = 76,
 	
-	--Wrath
-	["Bracelets of Wrath"] = 76,
-	["Breastplate of Wrath"] = 76,
-	["Gauntlets of Wrath"] = 76,
-	["Helm of Wrath"] = 76,
-	["Legplates of Wrath"] = 76,
-	["Pauldrons of Wrath"] = 76,
-	["Sabatons of Wrath"] = 76,
-	["Waistband of Wrath"] = 76,
+	--wrath
+	["bracelets of wrath"] = 76,
+	["breastplate of wrath"] = 76,
+	["gauntlets of wrath"] = 76,
+	["helm of wrath"] = 76,
+	["legplates of wrath"] = 76,
+	["pauldrons of wrath"] = 76,
+	["sabatons of wrath"] = 76,
+	["waistband of wrath"] = 76,
 	
-	--ZG Tokens
-	["Primal Hakkari Bindings"] = 61,
-	["Primal Hakkari Armsplint"] = 61,
-	["Primal Hakkari Stanchion"] = 61,
-	["Primal Hakkari Girdle"] = 61,
-	["Primal Hakkari Sash"] = 61,
-	["Primal Hakkari Shawl"] = 61,
-	["Primal Hakkari Tabard"] = 65,
-	["Primal Hakkari Kossack"] = 65,
-	["Primal Hakkari Aegis"] = 65,
+	--zg tokens
+	["primal hakkari bindings"] = 61,
+	["primal hakkari armsplint"] = 61,
+	["primal hakkari stanchion"] = 61,
+	["primal hakkari girdle"] = 61,
+	["primal hakkari sash"] = 61,
+	["primal hakkari shawl"] = 61,
+	["primal hakkari tabard"] = 65,
+	["primal hakkari kossack"] = 65,
+	["primal hakkari aegis"] = 65,
 	
-	--Tier 3 Tokens - Listed in order of lowest to highest item level, based on the item level of the tier, not the token (as the token is ilvl 60)
-	--Shoulders
-	["Desecrated Shoulderpads"] = 86,
-	["Desecrated Spaulders"] = 86,
-	["Desecrated Pauldrons"] = 86,
+	--tier 3 tokens - listed in order of lowest to highest item level, based on the item level of the tier, not the token (as the token is ilvl 60)
+	--shoulders
+	["desecrated shoulderpads"] = 86,
+	["desecrated spaulders"] = 86,
+	["desecrated pauldrons"] = 86,
 	
-	--Boots
-	["Desecrated Sandals"] = 86,
-	["Desecrated Boots"] = 86,
-	["Desecrated Sabatons"] = 86,
+	--boots
+	["desecrated sandals"] = 86,
+	["desecrated boots"] = 86,
+	["desecrated sabatons"] = 86,
 	
-	--Bracers
-	["Desecrated Bindings"] = 88,
-	["Desecrated Wristguards"] = 88,
-	["Desecrated Bracers"] = 88,
+	--bracers
+	["desecrated bindings"] = 88,
+	["desecrated wristguards"] = 88,
+	["desecrated bracers"] = 88,
 	
-	--Gloves
-	["Desecrated Gloves"] = 88,
-	["Desecrated Handguards"] = 88,
-	["Desecrated Gauntlets"] = 88,
+	--gloves
+	["desecrated gloves"] = 88,
+	["desecrated handguards"] = 88,
+	["desecrated gauntlets"] = 88,
 	
-	--Belt
-	["Desecrated Belt"] = 88,
-	["Desecrated Waistguard"] = 88,
-	["Desecrated Girdle"] = 88,
+	--belt
+	["desecrated belt"] = 88,
+	["desecrated waistguard"] = 88,
+	["desecrated girdle"] = 88,
 	
-	--Helmet
-	["Desecrated Circlet"] = 88,
-	["Desecrated Headpiece"] = 88,
-	["Desecrated Helmet"] = 88,
+	--helmet
+	["desecrated circlet"] = 88,
+	["desecrated headpiece"] = 88,
+	["desecrated helmet"] = 88,
 	
-	--Legs
-	["Desecrated Leggings"] = 88,
-	["Desecrated Legguards"] = 88,
-	["Desecrated Legplates"] = 88,
+	--legs
+	["desecrated leggings"] = 88,
+	["desecrated legguards"] = 88,
+	["desecrated legplates"] = 88,
 	
-	--Chest
-	["Desecrated Robe"] = 92,
-	["Desecrated Tunic"] = 92,
-	["Desecrated Breastplate"] = 92,
+	--chest
+	["desecrated robe"] = 92,
+	["desecrated tunic"] = 92,
+	["desecrated breastplate"] = 92,
 	
-	--Ring
-	["Ring of the Dreadnaught"] = 92,
-	["Bonescythe Ring"] = 92,
-	["Ring of Faith"] = 92,
-	["Frostfire Ring"] = 92,
-	["Plagueheart Ring"] = 92,
-	["Ring of the Dreamwalker"] = 92,
-	["Ring of the Cryptstalker"] = 92,
-	["Ring of Redemption"] = 92,
-	["Ring of the Earthshatterer"] = 92,
+	--ring
+	["ring of the dreadnaught"] = 92,
+	["bonescythe ring"] = 92,
+	["ring of faith"] = 92,
+	["frostfire ring"] = 92,
+	["plagueheart ring"] = 92,
+	["ring of the dreamwalker"] = 92,
+	["ring of the cryptstalker"] = 92,
+	["ring of redemption"] = 92,
+	["ring of the earthshatterer"] = 92,
 	
-	--World Bosses
-	--Azuregos
-	["Mature Blue Dragon Sinew"] = 71,
-	["Unmelting Ice Girdle"] = 71,
-	["Fang of the Mystics"] = 70,
-	["Puissant Cape"] = 70,
-	["Cold Snap"] = 70,
-	["Leggings of Arcane Supremacy"] = 69,
-	["Snowblind Shoes"] = 69,
-	["Typhoon"] = 68,
-	["Crystal Adorned Crown"] = 68,
-	["Drape of Benediction"] = 67,
-	["Eskhandar's Left Claw"] = 66,
+	--world bosses
+	--azuregos
+	["mature blue dragon sinew"] = 71,
+	["unmelting ice girdle"] = 71,
+	["fang of the mystics"] = 70,
+	["puissant cape"] = 70,
+	["cold snap"] = 70,
+	["leggings of arcane supremacy"] = 69,
+	["snowblind shoes"] = 69,
+	["typhoon"] = 68,
+	["crystal adorned crown"] = 68,
+	["drape of benediction"] = 67,
+	["eskhandar's left claw"] = 66,
 	
-	--Dragons of Nightmare
-	--Shared Loot
-	["Nightmare Engulfed Object"] = 63,
-	["Ancient Corroded Leggings"] = 72,
-	["Gloves of Delusional Power"] = 72,
-	["Acid Inscribed Greaves"] = 72,
-	["Green Dragonskin Cloak"] = 71,
-	["Hammer of Bestial Fury"] = 71,
-	["Staff of Rampant Growth"] = 71,
-	["Trance Stone"] = 71,
-	["Dragonspur Wraps"] = 71,
+	--dragons of nightmare
+	--shared loot
+	["nightmare engulfed object"] = 63,
+	["ancient corroded leggings"] = 72,
+	["gloves of delusional power"] = 72,
+	["acid inscribed greaves"] = 72,
+	["green dragonskin cloak"] = 71,
+	["hammer of bestial fury"] = 71,
+	["staff of rampant growth"] = 71,
+	["trance stone"] = 71,
+	["dragonspur wraps"] = 71,
 	
-	--Lethon
-	["Deviate Growth Cap"] = 72,
-	["Malignant Footguards"] = 72,
-	["Gauntlets of the Shining Light"] = 72,
-	["Belt of the Dark Bog"] = 71,
-	["Black Bard Wristbands"] = 71,
-	["Dark Heart Pants"] = 71,
+	--lethon
+	["deviate growth cap"] = 72,
+	["malignant footguards"] = 72,
+	["gauntlets of the shining light"] = 72,
+	["belt of the dark bog"] = 71,
+	["black bard wristbands"] = 71,
+	["dark heart pants"] = 71,
 	
-	--Taerar
-	["Unnatural Leather Spaulders"] = 72,
-	["Boots of Fright"] = 72,
-	["Nightmare Blade"] = 71,
-	["Dragonbone Wristguards"] = 71,
-	["Mendicant's Slippers"] = 71,
-	["Mindtear Band"] = 71,
+	--taerar
+	["unnatural leather spaulders"] = 72,
+	["boots of fright"] = 72,
+	["nightmare blade"] = 71,
+	["dragonbone wristguards"] = 71,
+	["mendicant's slippers"] = 71,
+	["mindtear band"] = 71,
 	
-	--Ysondre
-	["Leggings of the Demented Mind"] = 72,
-	["Strangely Glyphed Legplates"] = 72,
-	["Emerald Dragonfang"] = 71,
-	["Jade Inlaid Vestments"] = 71,
-	["Hibernation Crystal"] = 71,
+	--ysondre
+	["leggings of the demented mind"] = 72,
+	["strangely glyphed legplates"] = 72,
+	["emerald dragonfang"] = 71,
+	["jade inlaid vestments"] = 71,
+	["hibernation crystal"] = 71,
 	
-	--Emeriss
-	["Circlet of Restless Dreams"] = 72,
-	["Ring of the Unliving"] = 72,
-	["Polished Ironwood Crossbow"] = 71,
-	["Boots of the Endless Moor"] = 71,
-	["Dragonheart Necklace"] = 71,
+	--emeriss
+	["circlet of restless dreams"] = 72,
+	["ring of the unliving"] = 72,
+	["polished ironwood crossbow"] = 71,
+	["boots of the endless moor"] = 71,
+	["dragonheart necklace"] = 71,
 		
-	--Lord Kazzak
-	["The Eye of Shadow"] = 71,
-	["Fel Infused Leggings"] = 71,
-	["Doomhide Gauntlets"] = 71,
-	["Infernal Headcage"] = 69,
-	["Flayed Doomguard Belt"] = 68,
-	["Blazefury Medallion"] = 68,
-	["Amberseal Keeper"] = 67,
-	["Empyrean Demolisher"] = 66,
-	["Eskhandar's Pelt"] = 66,
-	["Ring of Entropy"] = 66,
-	["Blacklight Bracer"] = 66,
-	
-	--Legendary Items
-	["Bindings of the Windseeker"] = 60,
-	["Talisman of Binding Shard"] = 80,
-	["Eye of Sulfuras"] = 60,
-	["Essence of the Firelord"] = 1,
-	["Splinter of Atiesh"] = 60,
-	
-	--Bosses
-	--Onyxia
-	["Ancient Cornerstone Grimoire"] = 76,
-	["Deathbringer"] = 75,
-	["Vis'kag the Bloodletter"] = 74,
-	["Ring of Binding"] = 73,
-	["Sapphiron Drape"] = 72,
-	["Mature Black Dragon Sinew"] = 71,
-	["Eskhandar's Collar"] = 71,
-	["Shard of the Scale"] = 71,
-	["Head of Onyxia"] = 60,
-	
-	
-	--Molten Core
-	--Shared Boss Loot
-	["Mana Igniting Cord"] = 71,
-	["Deep Earth Spaulders"] = 71,
-	["Magma Tempered Boots"] = 70,
-	["Fire Runed Grimoire"] = 70,
-	["Aged Core Leather Gloves"] = 69,
-	["Flameguard Gauntlets"] = 69,
-	["Obsidian Edged Blade"] = 68,
-	["Sabatons of the Flamewalker"] = 68,
-	["Quick Strike Ring"] = 67,
-	["Talisman of Ephemeral Power"] = 66,
-	["Heavy Dark Iron Ring"] = 66,
-	["Robe of Volatile Power"] = 66,
-	["Ring of Spell Power"] = 66,
-	["Sorcerous Dagger"] = 65,
-	["Wristguards of Stability"] = 65,
-	["Salamander Scale Pants"] = 64,
-	["Crimson Shocker"] = 63,
-	["Manastorm Leggings"] = 63,
-	["Helm of the Lifegiver"] = 62,
-	["Flamewaker Legplates"] = 61,
-	
-	--Lucifron
-	["Choker of Enlightenment"] = 65,
-	["Tome of Tranquilizing Shot"] = 0,
-	
-	--Magmadar
-	["Striker's Mark"] = 69,
-	["Medallion of Steadfast Might"] = 68,
-	["Earthshaker"] = 66,
-	["Eskhandar's Right Claw"] = 66,
-	["Eskhandar's Left Claw"] = 66,
-	
-	--Gehennas has no boss specific loot
-	
-	--Garr
-	["Brutality Blade"] = 70,
-	["Aurastone Hammer"] = 69,
-	["Gutgore Ripper"] = 69,
-	["Drillborer Disk"] = 67,
-	
-	--Shazzrah has no boss specific loot
-	
-	--Baron Geddon
-	["Seal of the Archmagus"] = 70,
-	
-	--Golemagg the Incinerator
-	["Azuresong Mageblade"] = 71,
-	["Staff of Dominance"] = 70,
-	["Blastershot Launcher"] = 70,
-	["Sulfuron Ingot"] = 60,
-	
-	--Sulfuron Harbinger
-	["Shadowstrike"] = 63,
-	
-	--Majordomo
-	["Fireproof Cloak"] = 71,
-	["Sash of Whispered Secrets"] = 71,
-	["Wild Growth Spaulders"] = 71,
-	["Wristguards of True Flight"] = 71,
-	["Cauterizing Band"] = 71,
-	["Fireguard Shoulders"] = 71,
-	["Eye of Divinity"] = 71,
-	["Ancient Petrified Leaf"] = 71,
-	["Core Forged Greaves"] = 70,
-	["Core Hound Tooth"] = 70,
-	["Finkle's Lava Dredger"] = 70,
-	["Gloves of the Hypnotic Flame"] = 70,
-	
-	--Ragnaros
-	["Band of Accuria"] = 78,
-	["Band of Sulfuras"] = 78,
-	["Choker of the Fire Lord"] = 78,
-	["Onslaught Girdle"] = 78,
-	["Perdition's Blade"] = 77,
-	["Bonereaver's Edge"] = 77,
-	["Crown of Destruction"] = 76,
-	["Spinal Reaper"] = 76,
-	["Essence of the Pure Flame"] = 75,
-	["Malistar's Defender"] = 75,
-	["Cloak of the Shrouded Mists"] = 74,
-	["Shard of the Flame"] = 74,
-	["Dragon's Blood Cape"] = 73,
-	
-	--Blackwing Lair
-	--Shared Boss Loot
-	["Drake Talon Pauldrons"] = 75,
-	["Drake Talon Cleaver"] = 75,
-	["Taut Dragonhide Belt"] = 75,
-	["Rejuvenating Gem"] = 75,
-	["Ring of Blackrock"] = 75,
-	["Shadow Wing Focus Staff"] = 75,
-	
-	--Razorgore
-	["Arcane Infused Gem"] = 76,
-	["The Black Book"] = 76,
-	["Gloves of Rapid Evolution"] = 73,
-	["Mantle of the Blackwing Cabal"] = 73,
-	["Spineshatter"] = 73,
-	["The Untamed Blade"] = 73,
-	
-	--Vaelastrasz
-	["Mind Quickening Gem"] = 76,
-	["Rune of Metamorphosis"] = 76,
-	["Pendant of the Fallen Dragon"] = 74,
-	["Helm of Endless Rage"] = 74,
-	["Dragonfang Blade"] = 74,
-	["Red Dragonscale Protector"] = 74,
-	
-	--Broodlord
-	["Lifegiving Gem"] = 76,
-	["Venomous Totem"] = 76,
-	["Black Brood Pauldrons"] = 75,
-	["Bracers of Arcane Accuracy"] = 75,
-	["Heartstriker"] = 75,
-	["Maladath, Runed Blade of the Black Flight"] = 75,
-	
-	--Firemaw
-	["Natural Alignment Crystal"] = 76,
-	["Scrolls of Blinding Light"] = 76,
-	["Primalist's Linked Legguards"] = 75,
-	["Legguards of the Fallen Crusader"] = 75,
-	["Black Ash Robe"] = 75,
-	["Claw of the Black Drake"] = 75,
-	["Cloak of Firemaw"] = 75,
-	["Firemaw's Clutch"] = 75,
-	
-	--Ebonroc
-	["Aegis of Preservation"] = 76,
-	["Ebony Flame Gloves"] = 75,
-	["Malfurion's Blessed Bulwark"] = 75,
-	["Band of Forced Concentration"] = 75,
-	["Drake Fang Talisman"] = 75,
-	["Dragonbreath Hand Cannon"] = 75,
-	
-	--Flamegor
-	["Emberweave Leggings"] = 75,
-	["Circle of Applied Force"] = 75,
-	["Shroud of Pure Thought"] = 75,
-	["Styleen's Impeding Scarab"] = 75,
-	["Dragon's Touch"] = 75,
-	["Herald of Woe"] = 75,
-	
-	--Chromaggus
-	["Angelista's Grasp"] = 77,
-	["Chromatic Boots"] = 77,
-	["Empowered Leggings"] = 77,
-	["Taut Dragonhide Shoulderpads"] = 77,
-	["Primalist's Linked Waistguard"] = 77,
-	["Shimmering Geta"] = 77,
-	["Taut Dragonhide Gloves"] = 77,
-	["Elementium Threaded Cloak"] = 77,
-	["Girdle of the Fallen Crusader"] = 77,
-	["Elementium Reinforced Bulwark"] = 77,
-	["Chromatically Tempered Sword"] = 77,
-	["Ashjre'thul, Crossbow of Smiting"] = 77,
-	["Claw of Chromaggus"] = 77,
-	
-	--Nefarian
-	["Boots of the Shadow Flame"] = 83,
-	["Cloak of the Brood Lord"] = 83,
-	["Prestor's Talisman of Connivery"] = 73,
-	["Pure Elementium Band"] = 83,
-	["Therazane's Link"] = 83,
-	["Archimtiros' Ring of Reckoning"] = 83,
-	["Mish'undare, Circlet of the Mind Flayer"] = 83,
-	["Neltharion's Tear"] = 83,
-	["Head of Nefarian"] = 83,
-	["Crul'shorukh, Edge of Chaos"] = 81,
-	["Ashkandi, Greatsword of the Brotherhood"] = 81,
-	["Lok'amir il Romathis"] = 81,
-	["Staff of the Shadow Flame"] = 81,
-	
-	--Zul'Gurub
-	--Shared Loot
-	["Zulian Scepter of Rites"] = 68,
-	["Belt of Untapped Power"] = 68,
-	["Zulian Headdress"] = 68,
-	["Blooddrenched Mask"] = 68,
-	["Gloves of the Tormented"] = 68,
-	["Sacrificial Gauntlets"] = 68,
-	["Zulian Scepter of Rites"] = 68,
-	["Cloak of the Hakkari Worshipers"] = 68,
-	["Might of the Tribe"] = 68,
-	["Band of Servitude"] = 65,
-	["Seal of the Gurubashi Berserker"] = 65,
-	["Primal Hakkari Idol"] = 60,
-	
-	--Jeklik
-	["Zulian Defender"] = 68,
-	["Primalist's Band"] = 68,
-	["Jeklik's Opaline Talisman"] = 68,
-	["Animist's Spaulders"] = 68,
-	["Seafury Boots"] = 68,
-	["Peacekeeper Boots"] = 68,
-	["Jeklik's Crusher"] = 65,
-	
-	--Venoxis
-	["Zulian Stone Axe"] = 68,
-	["Zanzil's Band"] = 68,
-	["Blooddrenched Footpads"] = 68,
-	["Zulian Tigerhide Cloak"] = 68,
-	["Fang of Venoxis"] = 65,
-	["Runed Bloodstained Hauberk"] = 65,
-	
-	--Mar'li
-	["Talisman of Protection"] = 68,
-	["Bloodstained Greaves"] = 68,
-	["Band of Jin"] = 68,
-	["Mar'li's Eye"] = 68,
-	["Mar'li's Touch"] = 65,
-	["Flowing Ritual Robes"] = 65,
-	
-	--Thekal
-	["Seal of Jin"] = 68,
-	["Ritualistic Legguards"] = 68,
-	["Zulian Slicer"] = 68,
-	["Seafury Leggings"] = 68,
-	["Peacekeeper Leggings"] = 68,
-	["Thekal's Grasp"] = 65,
-	["Betrayer's Boots"] = 65,
-	
-	--Arlokk
-	["Overlord's Onyx Band"] = 68,
-	["Bloodsoaked Greaves"] = 68,
-	["Arlokk's Hoodoo Stick"] = 68,
-	["Will of Arlokk"] = 65,
-	["Arlokk's Grasp"] = 65,
-	
-	--Bloodlord Mandokir
-	["Primalist's Seal"] = 71,
-	["Blooddrenched Grips"] = 71,
-	["Hakkari Loa Cloak"] = 71,
-	["Overlord's Crimson Band"] = 71,
-	["Animist's Leggings"] = 71,
-	["Bloodsoaked Pauldrons"] = 71,
-	["Zanzil's Seal"] = 71,
-	["Bloodtinged Kilt"] = 71,
-	["Warblade of the Hakkari"] = 66,
-	["Bloodlord's Defender"] = 66,
-	["Halberd of Smiting"] = 66,
-	["Mandokir's Sting"] = 66,
-	
-	--Jin'do
-	["The Hexxer's Cover"] = 71,
-	["Bloodstained Legplates"] = 71,
-	["Overlord's Embrace"] = 71,
-	["Blooddrenched Leggings"] = 71,
-	["Animist's Boots"] = 71,
-	["Bloodsoaked Gauntlets"] = 71,
-	["Bloodtinged Gloves"] = 71,
-	["Jin'do's Judgement"] = 66,
-	["Jin'do's Evil Eye"] = 66,
-	["Jin'do's Hexxer"] = 66,
-	["Jin'do's Bag of Whammies"] = 66,
-	
-	--The Edge of Madness
-	--Gri'lek
-	["Gri'lek's Grinder"] = 68,
-	["Gri'lek's Carver"] = 68,
-	
-	--Hazza'rah
-	["Giery Retributer"] = 68,
-	["Thoughtblighter"] = 68,
-	
-	--Renataki
-	["Pitchfork of Madness"] = 68,
-	["Renataki's Soul Conduit"] = 68,
-	
-	--Wushoolay
-	["Hoodoo Hunting Bow"] = 68,
-	["Wushoolay's Poker"] = 68,
-	
-	--Hakkar
-	["Ancient Hakkari Manslayer"] = 68,
-	["Gurubashi Dwarf Destroyer"] = 68,
-	["Zin'rokh, Destroyer of Worlds"] = 68,
-	["Bloodsoaked Legplates"] = 68,
-	["The Eye of Hakkar"] = 68,
-	["Cloak of Consumption"] = 68,
-	["Fang of the Faceless"] = 68,
-	["Touch of Chaos"] = 68,
-	["Aegis of the Blood God"] = 68,
-	["Bloodcaller"] = 68,
-	["Warblade of the Hakkari"] = 68,
-	["Soul Corrupter's Necklace"] = 68,
-	["Seafury Gauntlets"] = 68,
-	["Peacekeeper Gauntlets"] = 68,
-	["Heart of Hakkar"] = 68,
-	
-	
-	--AQ20
-	--Shared Boss Loot
-	["Qiraji Ornate Hilt"] = 70,
-	["Qiraji Spiked Hilt"] = 70,
-	["Qiraji Martial Drape"] = 67,
-	["Qiraji Regal Drape"] = 67,
-	["Qiraji Ceremonial Ring"] = 65,
-	["Qiraji Magisterial Ring"] = 65,
-	
-	--Kurinnaxx
-	["Belt of the Inquisition"] = 71,
-	["Belt of the Sand Reaver"] = 71,
-	["Sand Reaver Wristguards"] = 71,
-	["Toughened Silithid Hide Gloves"] = 71,
-	["Qiraji Sacrificial Dagger"] = 66,
-	["Vestments of the Shifting Sands"] = 66,
-	
-	--General Rajaxx
-	["Bracers of Qiraji Command"] = 71,
-	["Legplates of the Qiraji Command"] = 71,
-	["Boots of the Qiraji Command"] = 71,
-	["Southwind's Grasp"] = 71,
-	["Boots of the Vanguard"] = 66,
-	["Manslayer of the Qiraji"] = 66,
-	
-	--General Rajaxx's Captains
-	["Gavel of Qiraji Authority"] = 71,
-	["Fury of the Forgotten Swarm"] = 71,
-	["Treads of the Wandering Nomad"] = 71,
-	["Helm of the Holy Avenger"] = 68,
-	["The Lost Kris of Zedd"] = 68,
-	["Coif of Elemental Fury"] = 68,
-	["Silithid Husked Launcher"] = 68,
-	["Antenna of Invigoration"] = 68,
-	["Polished Obsidian Pauldrons"] = 68,
-	
-	--Moam
-	["Gauntlets of Southwind"] = 74,
-	["Cloak of the Savior"] = 74,
-	["Mantle of Maz'Nadir"] = 74,
-	["Southwind Helm"] = 74,
-	["Chitinous Shoulderguards"] = 74,
-	["Ring of Fury"] = 74,
-	["Eye of Moam"] = 74,
-	["Legplates of the Destroyer"] = 74,
-	["Obsidian Scaled Leggings"] = 74,
-	["Thick Silithid Chestguard"] = 69,
-	["Dustwind Turban"] = 69,
-	["Talon of Furious Concentration"] = 69,
-	["Gauntlets of the Immovable"] = 68,
-	
-	--Buru
-	["Fetish of Chitinous Spikes"] = 73,
-	["Scaled Bracers of the Gorger"] = 73,
-	["Slime Kickers"] = 73,
-	["Quicksand Waders"] = 73,
-	["Slimy Scaled Gauntlets"] = 68,
-	["Buru's Skull Fragment"] = 68,
-	["Gloves of the Swarm"] = 68,
-	
-	--Ayamiss
-	["Helm of Regrowth"] = 73,
-	["Scaled Silithid Gauntlets"] = 73,
-	["Ring of the Desert Winds"] = 73,
-	["Boots of the Desert Protector"] = 73,
-	["Stinger of Ayamiss"] = 69,
-	["Bow of Taut Sinew"] = 68,
-	["Gauntlets of the Immovable"] = 68,
-	
-	--Ossirian
-	["Gloves of Dark Wisdom"] = 72,
-	["Leggings of the Black Blizzard"] = 72,
-	["Ossirian's Binding"] = 72,
-	["Shackles of the Unscarred"] = 72,
-	["Helm of Domination"] = 72,
-	["Mantle of the Horusath"] = 72,
-	["Runic Stone Shoulders"] = 72,
-	["Gauntlets of New Life"] = 72,
-	["Sandstorm Cloak"] = 72,
-	["Bracers of Brutality"] = 72,
-	["Staff of the Ruins"] = 72,
-	["Crossbow of Imminent Doom"] = 72,
-	["Sand Polished Hammer"] = 72,
-	
-	
-	--AQ40
-	--Shared Boss Loot
-	["Imperial Qiraji Regalia"] = 79,
-	["Imperial Qiraji Armaments"] = 79,
-	["Qiraji Bindings of Command"] = 78,
-	["Qiraji Bindings of Dominance"] = 78,
-	
-	--Prophet
-	["Staff of the Qiraji Prophets"] = 75,
-	["Cloak of Concentrated Hatred"] = 73,
-	["Pendant of the Qiraji Guardian"] = 73,
-	["Amulet of Foul Warding"] = 73,
-	["Barrage Shoulders"] = 73,
-	["Leggings of Immersion"] = 73,
-	["Breastplate of Annihilation"] = 73,
-	["Beetle Scaled Wristguards"] = 73,
-	["Boots of the Redeemed Prophecy"] = 73,
-	["Boots of the Fallen Prophet"] = 73,
-	["Boots of the Unwavering Will"] = 73,
-	["Ring of Swarming Thought"] = 73,
-	["Hammer of Ji'zhi"] = 73,
-	
-	--Bug Trio
-	["Bile-Covered Gauntlets"] = 78,
-	["Ring of the Devoured"] = 78,
-	["Vest of Swift Execution"] = 78,
-	["Wand of Qiraji Nobility"] = 78,
-	["Mantle of Phrenic Power"] = 76,
-	["Mantle of the Desert Crusade"] = 76,
-	["Mantle of the Desert's Fury"] = 76,
-	["Ukko's Ring of Darkness"] = 76,
-	["Petrified Scarab"] = 76,
-	["Angelista's Touch"] = 75,
-	["Robes of the Triumvirate"] = 75,
-	["Guise of the Devourer"] = 75,
-	["Cape of the Trinity"] = 75,
-	["Ternary Mantle"] = 75,
-	["Triad Girdle"] = 75,
-	["Angelista's Charm"] = 75,
-	["Boots of the Fallen Hero"] = 75,
-	["Gloves of Ebru"] = 75,
-	["Oooze-Ridden Gauntlets"] = 75,
-	
-	--Battleguard Sartura
-	["Leggings of the Festering Swarm"] = 76,
-	["Necklace of Purity"] = 76,
-	["Recomposed Boots"] = 76,
-	["Thick Qirajihide Belt"] = 76,
-	["Gauntlets of Steadfast Determination"] = 76,
-	["Badge of the Swarmguard"] = 76,
-	["Creeping Vine Helm"] = 76,
-	["Gloves of Enforcement"] = 76,
-	["Legplates of Blazing Light"] = 76,
-	["Robes of the Battleguard"] = 76,
-	["Scaled Leggings of Qiraji Fury"] = 76,
-	["Silithid Claw"] = 76,
-	["Sartura's Might"] = 76,
-	
-	--Fankriss
-	["Fetish of the Sand Reaver"] = 77,
-	["Hive Tunneler's Boots"] = 77,
-	["Barbed Choker"] = 77,
-	["Cloak of Untold Secrets"] = 77,
-	["Pauldrons of the Unrelenting"] = 77,
-	["Robes of the Guardian Saint"] = 77,
-	["Silithid Carapace Chestguard"] = 77,
-	["Mantle of Wicked Revenge"] = 77,
-	["Scaled Sand Reaver Leggings"] = 77,
-	["Barb of the Sand Reaver"] = 77,
-	["Ancient Qiraji Ripper"] = 77,
-	
-	--Viscidus
-	["Slime-Coated Leggings"] = 78,
-	["Gauntlets of the Righteous Champion"] = 78,
-	["Ring of the Qiraji Fury"] = 78,
-	["Gauntlets of Kalimdor"] = 78,
-	["Scarab Brooch"] = 78,
-	["Sharpened Silithid Femur"] = 78,
-	
-	--Huhuran
-	["Cloak of the Golen Hive"] = 78,
-	["Ring of the Martyr"] = 78,
-	["Gloves of the Messiah"] = 78,
-	["Wasphide Gauntlets"] = 78,
-	["Hive Defiler Wristguards"] = 78,
-	["Huhuran's Stinger"] = 78,
-	
-	--Twin Emperors
-	["Boots of Epiphany"] = 81,
-	["Royal Qiraji Belt"] = 81,
-	["Vek'lor's Gloves of Devastation"] = 81,
-	["Qiraji Execution Bracers"] = 81,
-	["Ring of Emperor Vek'lor"] = 81,
-	["Royal Scepter of Vek'lor"] = 81,
-	["Amulet of Vek'nilash"] = 81,
-	["Belt of the Fallen Emperor"] = 81,
-	["Bracelets of Royal Redemption"] = 81,
-	["Gloves of the Hidden Temple"] = 81,
-	["Grasp of the Fallen Emperor"] = 81,
-	["Kalimdor's Revenge"] = 81,
-	["Regenerating Belt of Vek'nilash"] = 81,
-	["Vek'lor's Diadem"] = 81,
-	["Vek'nilash's Circlet"] = 81,
-	
-	--Ouro
-	["Don Rigoberto's Lost Hat"] = 81,
-	["Jom Gabbar"] = 81,
-	["Burrower Bracers"] = 81,
-	["Larvae of the Great Worm"] = 81,
-	["Wormscale Blocker"] = 81,
-	["The Burrower's Shell"] = 81,
-	["Ouro's Intact Hide"] = 81,
-	["Skin of the Great Sandworm"] = 81,
-	
-	--C'thun
-	["Ring of the Godslayer"] = 88,
-	["Cloak of Clarity"] = 88,
-	["Mark of C'thun"] = 88,
-	["Grasp of the Old God"] = 88,
-	["Belt of Never-Ending Agony"] = 88,
-	["Eyestalk Waist Cord"] = 88,
-	["Gauntlets of Annihilation"] = 88,
-	["Cloak of the Devoured"] = 88,
-	["Vanquished Tentacle of C'Thun"] = 88,
-	["Dark Storm Gauntlets"] = 88,
-	["Death's Sting"] = 84,
-	["Scepter of the False Prophet"] = 84,
-	["Dark Edge of Insanity"] = 84,
-	["Husk of the Old God"] = 88,
-	["Carapace of the Old God"] = 88,
-	["Eye of C'Thun"] = 88,
-	
-	
-	--Naxxramas
-	--Trash Drops
-	["Life Channeling Necklace"] = 92,
-	["Necro-Knight's Garb"] = 85,
-	["Leggings of the Grand Crusader"] = 85,
-	["Spaulders of the Grand Crusader"] = 85,
-	["Belt of the Grand Crusader"] = 85,
-	["Girdle of Elemental Fury"] = 85,
-	["Leggings of Elemental Fury"] = 85,
-	["Pauldrons of Elemental Fury"] = 85,
-	["Harbinger of Doom"] = 83,
-	["Misplaced Servo Arm"] = 83,
-	["Stygian Buckler"] = 83,
-	["Ring of the Eternal Flame"] = 83,
-	["Ghoul Skin Tunic"] = 83,
-	["Wartorn Cloth Scrap"] = 0,
-	["Wartorn Leather Scrap"] = 0,
-	["Wartorn Chain Scrap"] = 0,
-	["Wartorn Plate Scrap"] = 0,
-	["Resilience of the Scourge"] = 0,
-	["Fortitude of the Scourge"] = 0,
-	["Might of the Scourge"] = 0,
-	["Power of the Scourge"] = 0,
-	
-	--Construct Quarter
-	--Patchwerk
-	["The Plague Bearer"] = 83,
-	["Wand of Fates"] = 83,
-	["Cloak of Suturing"] = 83,
-	["Band of Reanimation"] = 83,
-	["Severance"] = 81,
-	
-	--Grobbulus
-	["Icy Scale Spaulders"] = 83,
-	["Glacial Mantle"] = 83,
-	["The End of Dreams"] = 83,
-	["Midnight Haze"] = 81,
-	["Toxin Injector"] = 81,
-	
-	--Gluth
-	["Gluth's Missing Collar"] = 83,
-	["Rime Covered Mantle"] = 83,
-	["Digested Hand of Power"] = 83,
-	["Death's Bargain"] = 83,
-	["Claymore of Unholy Might"] = 81,
-	
-	--Thaddius
-	["Plated Abomination Ribcage"] = 85,
-	["Eye of Diminution"] = 85,
-	["Leggings of Polarity"] = 85,
-	["Spire of Twilight"] = 83,
-	["The Castigator"] = 83,
-	
-	--Arachnid
-	--Anub'Rekhan
-	["Touch of Frost"] = 83,
-	["Wristguards of Vengeance"] = 83,
-	["Gem of Nerubis"] = 83,
-	["Cryptfiend Silk Cloak"] = 83,
-	["Band of Unanswered Prayers"] = 83,
-	
-	--Grand Widow
-	["Icebane Pauldrons"] = 83,
-	["Polar Shoulder Pads"] = 83,
-	["Malice Stone Pendant"] = 83,
-	["Widow's Remorse"] = 81,
-	["The Widow's Embrace"] = 81,
-	
-	--Maexxna
-	["Pendant of Forgotten Names"] = 85,
-	["Kiss of the Spider"] = 85,
-	["Crystal Webbed Robe"] = 85,
-	["Maexxna's Fang"] = 83,
-	["Wraith Blade"] = 83,
-	
-	--Military
-	--Instructor
-	["Girdle of the Mentor"] = 85,
-	["Idol of Longevity"] = 83,
-	["Wand of the Whispering Dead"] = 83,
-	["Veil of Eclipse"] = 83,
-	["Signet of the Fallen Defender"] = 83,
-	["Iblis, Blade of the Fallen Seraph"] = 81,
-	
-	--Gothik
-	["Polar Helmet"] = 83,
-	["The Soul Harvester's Bindings"] = 83,
-	["Sadist's Collar"] = 83,
-	["Glacial Headdress"] = 83,
-	["Boots of Displacement"] = 83,
-	
-	--Four Horsemen
-	["Corrupted Ashbringer"] = 86,
-	["Seal of the Damned"] = 85,
-	["Warmth of Forgiveness"] = 85,
-	["Warmnth of Forgiveness"] = 85,
-	["Maul of the Redeemed Crusader"] = 83,
-	["Soulstring"] = 83,
-	["Leggings of Apocalypse"] = 83,
-	
-	--Plague
-	--Noth
-	["Hatchet of Sundered Bone"] = 83,
-	["Totem of Flowing Water"] = 83,
-	["Libram of Light"] = 83,
-	["Hailstone Band"] = 83,
-	["Noth's Frigid Heart"] = 83,
-	["Cloak of the Scourge"] = 83,
-	["Band of the Inevitable"] = 83,
-	
-	--Heigan
-	["Icebane Helmet"] = 83,
-	["Icy Scale Coif"] = 83,
-	["Preceptor's Hat"] = 83,
-	["Necklace of Necropsy"] = 83,
-	["Legplates of Carnage"] = 83,
-	
-	--Loatheb
-	["Ring of Spiritual Fervor"] = 85,
-	["Band of Unnatural Forces"] = 85,
-	["Loatheb's Reflection"] = 85,
-	["Brimstone Staff"] = 83,
-	["The Eye of Nerub"] = 83,
-	
-	--Frostwyrm Lair
-	--Sapphiron
-	["Eye of the Dead"] = 90,
-	["Sapphiron's Left Eye"] = 90,
-	["Sapphiron's Right Eye"] = 90,
-	["Shroud of Dominion"] = 90,
-	["The Face of Death"] = 90,
-	["The Restrained Essence of Sapphiron"] = 90,
-	["Cloak of the Necropolis"] = 90,
-	["Glyph of Deflection"] = 90,
-	["Slayer's Crest"] = 90,
-	["Fists of the Unrelenting"] = 90,
-	["Claw of the Frost Wyrm"] = 88,
-	
-	--Kel'Thuzad
-	["Shield of Condemnation"] = 92,
-	["Doomfinger"] = 92,
-	["Stormrage's Talisman of Seething"] = 92,
-	["Gem of Trapped Innocents"] = 92,
-	["The Phylactery of Kel'Thuzad"] = 90,
-	["Might of Menethil"] = 89,
-	["Soulseeker"] = 89,
-	["Kingsfall"] = 89,
-	["Nerubian Slavemaker"] = 89,
-	["Gressil, Dawn of Ruin"] = 89,
-	["Hammer of the Twisting Nether"] = 89,
-	["The Hungering Cold"] = 89
+	--lord kazzak
+	["the eye of shadow"] = 71,
+	["fel infused leggings"] = 71,
+	["doomhide gauntlets"] = 71,
+	["infernal headcage"] = 69,
+	["flayed doomguard belt"] = 68,
+	["blazefury medallion"] = 68,
+	["amberseal keeper"] = 67,
+	["empyrean demolisher"] = 66,
+	["eskhandar's pelt"] = 66,
+	["ring of entropy"] = 66,
+	["blacklight bracer"] = 66,
+	
+	--legendary items
+	["bindings of the windseeker"] = 60,
+	["talisman of binding shard"] = 80,
+	["eye of sulfuras"] = 60,
+	["essence of the firelord"] = 1,
+	["splinter of atiesh"] = 60,
+	
+	--bosses
+	--onyxia
+	["ancient cornerstone grimoire"] = 76,
+	["deathbringer"] = 75,
+	["vis'kag the bloodletter"] = 74,
+	["ring of binding"] = 73,
+	["sapphiron drape"] = 72,
+	["mature black dragon sinew"] = 71,
+	["eskhandar's collar"] = 71,
+	["shard of the scale"] = 71,
+	["head of onyxia"] = 60,
+	
+	
+	--molten core
+	--shared boss loot
+	["mana igniting cord"] = 71,
+	["deep earth spaulders"] = 71,
+	["magma tempered boots"] = 70,
+	["fire runed grimoire"] = 70,
+	["aged core leather gloves"] = 69,
+	["flameguard gauntlets"] = 69,
+	["obsidian edged blade"] = 68,
+	["sabatons of the flamewalker"] = 68,
+	["quick strike ring"] = 67,
+	["talisman of ephemeral power"] = 66,
+	["heavy dark iron ring"] = 66,
+	["robe of volatile power"] = 66,
+	["ring of spell power"] = 66,
+	["sorcerous dagger"] = 65,
+	["wristguards of stability"] = 65,
+	["salamander scale pants"] = 64,
+	["crimson shocker"] = 63,
+	["manastorm leggings"] = 63,
+	["helm of the lifegiver"] = 62,
+	["flamewaker legplates"] = 61,
+	
+	--lucifron
+	["choker of enlightenment"] = 65,
+	["tome of tranquilizing shot"] = 0,
+	
+	--magmadar
+	["striker's mark"] = 69,
+	["medallion of steadfast might"] = 68,
+	["earthshaker"] = 66,
+	["eskhandar's right claw"] = 66,
+	["eskhandar's left claw"] = 66,
+	
+	--gehennas has no boss specific loot
+	
+	--garr
+	["brutality blade"] = 70,
+	["aurastone hammer"] = 69,
+	["gutgore ripper"] = 69,
+	["drillborer disk"] = 67,
+	
+	--shazzrah has no boss specific loot
+	
+	--baron geddon
+	["seal of the archmagus"] = 70,
+	
+	--golemagg the incinerator
+	["azuresong mageblade"] = 71,
+	["staff of dominance"] = 70,
+	["blastershot launcher"] = 70,
+	["sulfuron ingot"] = 60,
+	
+	--sulfuron harbinger
+	["shadowstrike"] = 63,
+	
+	--majordomo
+	["fireproof cloak"] = 71,
+	["sash of whispered secrets"] = 71,
+	["wild growth spaulders"] = 71,
+	["wristguards of true flight"] = 71,
+	["cauterizing band"] = 71,
+	["fireguard shoulders"] = 71,
+	["eye of divinity"] = 71,
+	["ancient petrified leaf"] = 71,
+	["core forged greaves"] = 70,
+	["core hound tooth"] = 70,
+	["finkle's lava dredger"] = 70,
+	["gloves of the hypnotic flame"] = 70,
+	
+	--ragnaros
+	["band of accuria"] = 78,
+	["band of sulfuras"] = 78,
+	["choker of the fire lord"] = 78,
+	["onslaught girdle"] = 78,
+	["perdition's blade"] = 77,
+	["bonereaver's edge"] = 77,
+	["crown of destruction"] = 76,
+	["spinal reaper"] = 76,
+	["essence of the pure flame"] = 75,
+	["malistar's defender"] = 75,
+	["cloak of the shrouded mists"] = 74,
+	["shard of the flame"] = 74,
+	["dragon's blood cape"] = 73,
+	
+	--blackwing lair
+	--shared boss loot
+	["drake talon pauldrons"] = 75,
+	["drake talon cleaver"] = 75,
+	["taut dragonhide belt"] = 75,
+	["rejuvenating gem"] = 75,
+	["ring of blackrock"] = 75,
+	["shadow wing focus staff"] = 75,
+	
+	--razorgore
+	["arcane infused gem"] = 76,
+	["the black book"] = 76,
+	["gloves of rapid evolution"] = 73,
+	["mantle of the blackwing cabal"] = 73,
+	["spineshatter"] = 73,
+	["the untamed blade"] = 73,
+	
+	--vaelastrasz
+	["mind quickening gem"] = 76,
+	["rune of metamorphosis"] = 76,
+	["pendant of the fallen dragon"] = 74,
+	["helm of endless rage"] = 74,
+	["dragonfang blade"] = 74,
+	["red dragonscale protector"] = 74,
+	
+	--broodlord
+	["lifegiving gem"] = 76,
+	["venomous totem"] = 76,
+	["black brood pauldrons"] = 75,
+	["bracers of arcane accuracy"] = 75,
+	["heartstriker"] = 75,
+	["maladath, runed blade of the black flight"] = 75,
+	
+	--firemaw
+	["natural alignment crystal"] = 76,
+	["scrolls of blinding light"] = 76,
+	["primalist's linked legguards"] = 75,
+	["legguards of the fallen crusader"] = 75,
+	["black ash robe"] = 75,
+	["claw of the black drake"] = 75,
+	["cloak of firemaw"] = 75,
+	["firemaw's clutch"] = 75,
+	
+	--ebonroc
+	["aegis of preservation"] = 76,
+	["ebony flame gloves"] = 75,
+	["malfurion's blessed bulwark"] = 75,
+	["band of forced concentration"] = 75,
+	["drake fang talisman"] = 75,
+	["dragonbreath hand cannon"] = 75,
+	
+	--flamegor
+	["emberweave leggings"] = 75,
+	["circle of applied force"] = 75,
+	["shroud of pure thought"] = 75,
+	["styleen's impeding scarab"] = 75,
+	["dragon's touch"] = 75,
+	["herald of woe"] = 75,
+	
+	--chromaggus
+	["angelista's grasp"] = 77,
+	["chromatic boots"] = 77,
+	["empowered leggings"] = 77,
+	["taut dragonhide shoulderpads"] = 77,
+	["primalist's linked waistguard"] = 77,
+	["shimmering geta"] = 77,
+	["taut dragonhide gloves"] = 77,
+	["elementium threaded cloak"] = 77,
+	["girdle of the fallen crusader"] = 77,
+	["elementium reinforced bulwark"] = 77,
+	["chromatically tempered sword"] = 77,
+	["ashjre'thul, crossbow of smiting"] = 77,
+	["claw of chromaggus"] = 77,
+	
+	--nefarian
+	["boots of the shadow flame"] = 83,
+	["cloak of the brood lord"] = 83,
+	["prestor's talisman of connivery"] = 73,
+	["pure elementium band"] = 83,
+	["therazane's link"] = 83,
+	["archimtiros' ring of reckoning"] = 83,
+	["mish'undare, circlet of the mind flayer"] = 83,
+	["neltharion's tear"] = 83,
+	["head of nefarian"] = 83,
+	["crul'shorukh, edge of chaos"] = 81,
+	["ashkandi, greatsword of the brotherhood"] = 81,
+	["lok'amir il romathis"] = 81,
+	["staff of the shadow flame"] = 81,
+	
+	--zul'gurub
+	--shared loot
+	["zulian scepter of rites"] = 68,
+	["belt of untapped power"] = 68,
+	["zulian headdress"] = 68,
+	["blooddrenched mask"] = 68,
+	["gloves of the tormented"] = 68,
+	["sacrificial gauntlets"] = 68,
+	["zulian scepter of rites"] = 68,
+	["cloak of the hakkari worshipers"] = 68,
+	["might of the tribe"] = 68,
+	["band of servitude"] = 65,
+	["seal of the gurubashi berserker"] = 65,
+	["primal hakkari idol"] = 60,
+	
+	--jeklik
+	["zulian defender"] = 68,
+	["primalist's band"] = 68,
+	["jeklik's opaline talisman"] = 68,
+	["animist's spaulders"] = 68,
+	["seafury boots"] = 68,
+	["peacekeeper boots"] = 68,
+	["jeklik's crusher"] = 65,
+	
+	--venoxis
+	["zulian stone axe"] = 68,
+	["zanzil's band"] = 68,
+	["blooddrenched footpads"] = 68,
+	["zulian tigerhide cloak"] = 68,
+	["fang of venoxis"] = 65,
+	["runed bloodstained hauberk"] = 65,
+	
+	--mar'li
+	["talisman of protection"] = 68,
+	["bloodstained greaves"] = 68,
+	["band of jin"] = 68,
+	["mar'li's eye"] = 68,
+	["mar'li's touch"] = 65,
+	["flowing ritual robes"] = 65,
+	
+	--thekal
+	["seal of jin"] = 68,
+	["ritualistic legguards"] = 68,
+	["zulian slicer"] = 68,
+	["seafury leggings"] = 68,
+	["peacekeeper leggings"] = 68,
+	["thekal's grasp"] = 65,
+	["betrayer's boots"] = 65,
+	
+	--arlokk
+	["overlord's onyx band"] = 68,
+	["bloodsoaked greaves"] = 68,
+	["arlokk's hoodoo stick"] = 68,
+	["will of arlokk"] = 65,
+	["arlokk's grasp"] = 65,
+	
+	--bloodlord mandokir
+	["primalist's seal"] = 71,
+	["blooddrenched grips"] = 71,
+	["hakkari loa cloak"] = 71,
+	["overlord's crimson band"] = 71,
+	["animist's leggings"] = 71,
+	["bloodsoaked pauldrons"] = 71,
+	["zanzil's seal"] = 71,
+	["bloodtinged kilt"] = 71,
+	["warblade of the hakkari"] = 66,
+	["bloodlord's defender"] = 66,
+	["halberd of smiting"] = 66,
+	["mandokir's sting"] = 66,
+	
+	--jin'do
+	["the hexxer's cover"] = 71,
+	["bloodstained legplates"] = 71,
+	["overlord's embrace"] = 71,
+	["blooddrenched leggings"] = 71,
+	["animist's boots"] = 71,
+	["bloodsoaked gauntlets"] = 71,
+	["bloodtinged gloves"] = 71,
+	["jin'do's judgement"] = 66,
+	["jin'do's evil eye"] = 66,
+	["jin'do's hexxer"] = 66,
+	["jin'do's bag of whammies"] = 66,
+	
+	--the edge of madness
+	--gri'lek
+	["gri'lek's grinder"] = 68,
+	["gri'lek's carver"] = 68,
+	
+	--hazza'rah
+	["giery retributer"] = 68,
+	["thoughtblighter"] = 68,
+	
+	--renataki
+	["pitchfork of madness"] = 68,
+	["renataki's soul conduit"] = 68,
+	
+	--wushoolay
+	["hoodoo hunting bow"] = 68,
+	["wushoolay's poker"] = 68,
+	
+	--hakkar
+	["ancient hakkari manslayer"] = 68,
+	["gurubashi dwarf destroyer"] = 68,
+	["zin'rokh, destroyer of worlds"] = 68,
+	["bloodsoaked legplates"] = 68,
+	["the eye of hakkar"] = 68,
+	["cloak of consumption"] = 68,
+	["fang of the faceless"] = 68,
+	["touch of chaos"] = 68,
+	["aegis of the blood god"] = 68,
+	["bloodcaller"] = 68,
+	["warblade of the hakkari"] = 68,
+	["soul corrupter's necklace"] = 68,
+	["seafury gauntlets"] = 68,
+	["peacekeeper gauntlets"] = 68,
+	["heart of hakkar"] = 68,
+	
+	
+	--aq20
+	--shared boss loot
+	["qiraji ornate hilt"] = 70,
+	["qiraji spiked hilt"] = 70,
+	["qiraji martial drape"] = 67,
+	["qiraji regal drape"] = 67,
+	["qiraji ceremonial ring"] = 65,
+	["qiraji magisterial ring"] = 65,
+	
+	--kurinnaxx
+	["belt of the inquisition"] = 71,
+	["belt of the sand reaver"] = 71,
+	["sand reaver wristguards"] = 71,
+	["toughened silithid hide gloves"] = 71,
+	["qiraji sacrificial dagger"] = 66,
+	["vestments of the shifting sands"] = 66,
+	
+	--general rajaxx
+	["bracers of qiraji command"] = 71,
+	["legplates of the qiraji command"] = 71,
+	["boots of the qiraji command"] = 71,
+	["southwind's grasp"] = 71,
+	["boots of the vanguard"] = 66,
+	["manslayer of the qiraji"] = 66,
+	
+	--general rajaxx's captains
+	["gavel of qiraji authority"] = 71,
+	["fury of the forgotten swarm"] = 71,
+	["treads of the wandering nomad"] = 71,
+	["helm of the holy avenger"] = 68,
+	["the lost kris of zedd"] = 68,
+	["coif of elemental fury"] = 68,
+	["silithid husked launcher"] = 68,
+	["antenna of invigoration"] = 68,
+	["polished obsidian pauldrons"] = 68,
+	
+	--moam
+	["gauntlets of southwind"] = 74,
+	["cloak of the savior"] = 74,
+	["mantle of maz'nadir"] = 74,
+	["southwind helm"] = 74,
+	["chitinous shoulderguards"] = 74,
+	["ring of fury"] = 74,
+	["eye of moam"] = 74,
+	["legplates of the destroyer"] = 74,
+	["obsidian scaled leggings"] = 74,
+	["thick silithid chestguard"] = 69,
+	["dustwind turban"] = 69,
+	["talon of furious concentration"] = 69,
+	["gauntlets of the immovable"] = 68,
+	
+	--buru
+	["fetish of chitinous spikes"] = 73,
+	["scaled bracers of the gorger"] = 73,
+	["slime kickers"] = 73,
+	["quicksand waders"] = 73,
+	["slimy scaled gauntlets"] = 68,
+	["buru's skull fragment"] = 68,
+	["gloves of the swarm"] = 68,
+	
+	--ayamiss
+	["helm of regrowth"] = 73,
+	["scaled silithid gauntlets"] = 73,
+	["ring of the desert winds"] = 73,
+	["boots of the desert protector"] = 73,
+	["stinger of ayamiss"] = 69,
+	["bow of taut sinew"] = 68,
+	["gauntlets of the immovable"] = 68,
+	
+	--ossirian
+	["gloves of dark wisdom"] = 72,
+	["leggings of the black blizzard"] = 72,
+	["ossirian's binding"] = 72,
+	["shackles of the unscarred"] = 72,
+	["helm of domination"] = 72,
+	["mantle of the horusath"] = 72,
+	["runic stone shoulders"] = 72,
+	["gauntlets of new life"] = 72,
+	["sandstorm cloak"] = 72,
+	["bracers of brutality"] = 72,
+	["staff of the ruins"] = 72,
+	["crossbow of imminent doom"] = 72,
+	["sand polished hammer"] = 72,
+	
+	
+	--aq40
+	--shared boss loot
+	["imperial qiraji regalia"] = 79,
+	["imperial qiraji armaments"] = 79,
+	["qiraji bindings of command"] = 78,
+	["qiraji bindings of dominance"] = 78,
+	
+	--prophet
+	["staff of the qiraji prophets"] = 75,
+	["cloak of concentrated hatred"] = 73,
+	["pendant of the qiraji guardian"] = 73,
+	["amulet of foul warding"] = 73,
+	["barrage shoulders"] = 73,
+	["leggings of immersion"] = 73,
+	["breastplate of annihilation"] = 73,
+	["beetle scaled wristguards"] = 73,
+	["boots of the redeemed prophecy"] = 73,
+	["boots of the fallen prophet"] = 73,
+	["boots of the unwavering will"] = 73,
+	["ring of swarming thought"] = 73,
+	["hammer of ji'zhi"] = 73,
+	
+	--bug trio
+	["bile-covered gauntlets"] = 78,
+	["ring of the devoured"] = 78,
+	["vest of swift execution"] = 78,
+	["wand of qiraji nobility"] = 78,
+	["mantle of phrenic power"] = 76,
+	["mantle of the desert crusade"] = 76,
+	["mantle of the desert's fury"] = 76,
+	["ukko's ring of darkness"] = 76,
+	["petrified scarab"] = 76,
+	["angelista's touch"] = 75,
+	["robes of the triumvirate"] = 75,
+	["guise of the devourer"] = 75,
+	["cape of the trinity"] = 75,
+	["ternary mantle"] = 75,
+	["triad girdle"] = 75,
+	["angelista's charm"] = 75,
+	["boots of the fallen hero"] = 75,
+	["gloves of ebru"] = 75,
+	["oooze-ridden gauntlets"] = 75,
+	
+	--battleguard sartura
+	["leggings of the festering swarm"] = 76,
+	["necklace of purity"] = 76,
+	["recomposed boots"] = 76,
+	["thick qirajihide belt"] = 76,
+	["gauntlets of steadfast determination"] = 76,
+	["badge of the swarmguard"] = 76,
+	["creeping vine helm"] = 76,
+	["gloves of enforcement"] = 76,
+	["legplates of blazing light"] = 76,
+	["robes of the battleguard"] = 76,
+	["scaled leggings of qiraji fury"] = 76,
+	["silithid claw"] = 76,
+	["sartura's might"] = 76,
+	
+	--fankriss
+	["fetish of the sand reaver"] = 77,
+	["hive tunneler's boots"] = 77,
+	["barbed choker"] = 77,
+	["cloak of untold secrets"] = 77,
+	["pauldrons of the unrelenting"] = 77,
+	["robes of the guardian saint"] = 77,
+	["silithid carapace chestguard"] = 77,
+	["mantle of wicked revenge"] = 77,
+	["scaled sand reaver leggings"] = 77,
+	["barb of the sand reaver"] = 77,
+	["ancient qiraji ripper"] = 77,
+	
+	--viscidus
+	["slime-coated leggings"] = 78,
+	["gauntlets of the righteous champion"] = 78,
+	["ring of the qiraji fury"] = 78,
+	["gauntlets of kalimdor"] = 78,
+	["scarab brooch"] = 78,
+	["sharpened silithid femur"] = 78,
+	
+	--huhuran
+	["cloak of the golen hive"] = 78,
+	["ring of the martyr"] = 78,
+	["gloves of the messiah"] = 78,
+	["wasphide gauntlets"] = 78,
+	["hive defiler wristguards"] = 78,
+	["huhuran's stinger"] = 78,
+	
+	--twin emperors
+	["boots of epiphany"] = 81,
+	["royal qiraji belt"] = 81,
+	["vek'lor's gloves of devastation"] = 81,
+	["qiraji execution bracers"] = 81,
+	["ring of emperor vek'lor"] = 81,
+	["royal scepter of vek'lor"] = 81,
+	["amulet of vek'nilash"] = 81,
+	["belt of the fallen emperor"] = 81,
+	["bracelets of royal redemption"] = 81,
+	["gloves of the hidden temple"] = 81,
+	["grasp of the fallen emperor"] = 81,
+	["kalimdor's revenge"] = 81,
+	["regenerating belt of vek'nilash"] = 81,
+	["vek'lor's diadem"] = 81,
+	["vek'nilash's circlet"] = 81,
+	
+	--ouro
+	["don rigoberto's lost hat"] = 81,
+	["jom gabbar"] = 81,
+	["burrower bracers"] = 81,
+	["larvae of the great worm"] = 81,
+	["wormscale blocker"] = 81,
+	["the burrower's shell"] = 81,
+	["ouro's intact hide"] = 81,
+	["skin of the great sandworm"] = 81,
+	
+	--c'thun
+	["ring of the godslayer"] = 88,
+	["cloak of clarity"] = 88,
+	["mark of c'thun"] = 88,
+	["grasp of the old god"] = 88,
+	["belt of never-ending agony"] = 88,
+	["eyestalk waist cord"] = 88,
+	["gauntlets of annihilation"] = 88,
+	["cloak of the devoured"] = 88,
+	["vanquished tentacle of c'thun"] = 88,
+	["dark storm gauntlets"] = 88,
+	["death's sting"] = 84,
+	["scepter of the false prophet"] = 84,
+	["dark edge of insanity"] = 84,
+	["husk of the old god"] = 88,
+	["carapace of the old god"] = 88,
+	["eye of c'thun"] = 88,
+	
+	
+	--naxxramas
+	--trash drops
+	["life channeling necklace"] = 92,
+	["necro-knight's garb"] = 85,
+	["leggings of the grand crusader"] = 85,
+	["spaulders of the grand crusader"] = 85,
+	["belt of the grand crusader"] = 85,
+	["girdle of elemental fury"] = 85,
+	["leggings of elemental fury"] = 85,
+	["pauldrons of elemental fury"] = 85,
+	["harbinger of doom"] = 83,
+	["misplaced servo arm"] = 83,
+	["stygian buckler"] = 83,
+	["ring of the eternal flame"] = 83,
+	["ghoul skin tunic"] = 83,
+	["wartorn cloth scrap"] = 0,
+	["wartorn leather scrap"] = 0,
+	["wartorn chain scrap"] = 0,
+	["wartorn plate scrap"] = 0,
+	["resilience of the scourge"] = 0,
+	["fortitude of the scourge"] = 0,
+	["might of the scourge"] = 0,
+	["power of the scourge"] = 0,
+	
+	--construct quarter
+	--patchwerk
+	["the plague bearer"] = 83,
+	["wand of fates"] = 83,
+	["cloak of suturing"] = 83,
+	["band of reanimation"] = 83,
+	["severance"] = 81,
+	
+	--grobbulus
+	["icy scale spaulders"] = 83,
+	["glacial mantle"] = 83,
+	["the end of dreams"] = 83,
+	["midnight haze"] = 81,
+	["toxin injector"] = 81,
+	
+	--gluth
+	["gluth's missing collar"] = 83,
+	["rime covered mantle"] = 83,
+	["digested hand of power"] = 83,
+	["death's bargain"] = 83,
+	["claymore of unholy might"] = 81,
+	
+	--thaddius
+	["plated abomination ribcage"] = 85,
+	["eye of diminution"] = 85,
+	["leggings of polarity"] = 85,
+	["spire of twilight"] = 83,
+	["the castigator"] = 83,
+	
+	--arachnid
+	--anub'rekhan
+	["touch of frost"] = 83,
+	["wristguards of vengeance"] = 83,
+	["gem of nerubis"] = 83,
+	["cryptfiend silk cloak"] = 83,
+	["band of unanswered prayers"] = 83,
+	
+	--grand widow
+	["icebane pauldrons"] = 83,
+	["polar shoulder pads"] = 83,
+	["malice stone pendant"] = 83,
+	["widow's remorse"] = 81,
+	["the widow's embrace"] = 81,
+	
+	--maexxna
+	["pendant of forgotten names"] = 85,
+	["kiss of the spider"] = 85,
+	["crystal webbed robe"] = 85,
+	["maexxna's fang"] = 83,
+	["wraith blade"] = 83,
+	
+	--military
+	--instructor
+	["girdle of the mentor"] = 85,
+	["idol of longevity"] = 83,
+	["wand of the whispering dead"] = 83,
+	["veil of eclipse"] = 83,
+	["signet of the fallen defender"] = 83,
+	["iblis, blade of the fallen seraph"] = 81,
+	
+	--gothik
+	["polar helmet"] = 83,
+	["the soul harvester's bindings"] = 83,
+	["sadist's collar"] = 83,
+	["glacial headdress"] = 83,
+	["boots of displacement"] = 83,
+	
+	--four horsemen
+	["corrupted ashbringer"] = 86,
+	["seal of the damned"] = 85,
+	["warmth of forgiveness"] = 85,
+	["warmnth of forgiveness"] = 85,
+	["maul of the redeemed crusader"] = 83,
+	["soulstring"] = 83,
+	["leggings of apocalypse"] = 83,
+	
+	--plague
+	--noth
+	["hatchet of sundered bone"] = 83,
+	["totem of flowing water"] = 83,
+	["libram of light"] = 83,
+	["hailstone band"] = 83,
+	["noth's frigid heart"] = 83,
+	["cloak of the scourge"] = 83,
+	["band of the inevitable"] = 83,
+	
+	--heigan
+	["icebane helmet"] = 83,
+	["icy scale coif"] = 83,
+	["preceptor's hat"] = 83,
+	["necklace of necropsy"] = 83,
+	["legplates of carnage"] = 83,
+	
+	--loatheb
+	["ring of spiritual fervor"] = 85,
+	["band of unnatural forces"] = 85,
+	["loatheb's reflection"] = 85,
+	["brimstone staff"] = 83,
+	["the eye of nerub"] = 83,
+	
+	--frostwyrm lair
+	--sapphiron
+	["eye of the dead"] = 90,
+	["sapphiron's left eye"] = 90,
+	["sapphiron's right eye"] = 90,
+	["shroud of dominion"] = 90,
+	["the face of death"] = 90,
+	["the restrained essence of sapphiron"] = 90,
+	["cloak of the necropolis"] = 90,
+	["glyph of deflection"] = 90,
+	["slayer's crest"] = 90,
+	["fists of the unrelenting"] = 90,
+	["claw of the frost wyrm"] = 88,
+	
+	--kel'thuzad
+	["shield of condemnation"] = 92,
+	["doomfinger"] = 92,
+	["stormrage's talisman of seething"] = 92,
+	["gem of trapped innocents"] = 92,
+	["the phylactery of kel'thuzad"] = 90,
+	["might of menethil"] = 89,
+	["soulseeker"] = 89,
+	["kingsfall"] = 89,
+	["nerubian slavemaker"] = 89,
+	["gressil, dawn of ruin"] = 89,
+	["hammer of the twisting nether"] = 89,
+	["the hungering cold"] = 89
 }
