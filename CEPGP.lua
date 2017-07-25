@@ -78,13 +78,15 @@ function CEPGP_OnEvent()
 		end
 		for i = 1, GetNumGuildMembers() do
 			local name, rank, rankIndex, _, class, _, _, officerNote = GetGuildRosterInfo(i);
-			roster[name] = {
-			[1] = i,
-			[2] = class,
-			[3] = rank,
-			[4] = rankIndex,
-			[5] = officerNote
-			};
+			if name then
+				roster[name] = {
+				[1] = i,
+				[2] = class,
+				[3] = rank,
+				[4] = rankIndex,
+				[5] = officerNote
+				};
+			end
 		end
 		if mode == "guild" then
 			CEPGP_UpdateGuildScrollBar();
@@ -1202,6 +1204,7 @@ end
 ]]
 function calcGP(link)
 	local name, _, rarity, level, _, itemType, _, slot = GetItemInfo(link);
+	name = string.lower(name);
 	local GP;
 	local ilvl;
 	local found = false;
