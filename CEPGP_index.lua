@@ -92,7 +92,7 @@ bossNameIndex = {
 
 itemsIndex = 
 {
-	--World BoE Epics
+	--world BoE epics
 	["teebu's blazing longsword"] = 65,
 	["cloak of flames"] = 65,
 	["blade of hanna"] = 64,
