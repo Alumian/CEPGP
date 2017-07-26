@@ -14,3 +14,6 @@ To install:
   1. Download this addon 
   2. Extract it to ../Interface/AddOns/ 
   3. Rename the extracted folder from CEPGP-master to CEPGP
+
+**Please note:**
+This addon was written by my colleague Reed and myself. It was designed for use by our guild and as such, we have adjusted the GP formula to suit the needs of our guild. If you need assistance in adjusting the formula for your own guild, contact me on the Crestfall private server forums.
