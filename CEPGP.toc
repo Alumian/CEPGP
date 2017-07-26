@@ -1,6 +1,6 @@
 ## Interface:11200
 ## Title: Classic EPGP
-## Author: Alumian <Ascension> - Elysium
+## Author: Alumian
 ## Notes: CEPGP handles your guild's EPGP and master loot distribution
 ## SavedVariables: CHANNEL
 
