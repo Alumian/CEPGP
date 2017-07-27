@@ -17,3 +17,7 @@ To install:
 
 **Please note:**
 This addon was written by my colleague Reed and myself. It was designed for use by our guild and as such, we have adjusted the GP formula to suit the needs of our guild. If you need assistance in adjusting the formula for your own guild, contact me on the Crestfall private server forums.
+
+Patch Version: 1.12.1
+Build Number: 5875
+Author: Alumian on Crestfall
