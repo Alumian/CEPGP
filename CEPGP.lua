@@ -4,7 +4,7 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.9.3";
+VERSION = "0.9.4";
 debugMode = false;
 responses = {};
 roster = {};
@@ -12,6 +12,7 @@ criteria = 4;
 critReverse = false;
 kills = 0;
 frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_distribute_popup, CEPGP_context_popup};
+LANGUAGE = GetDefaultLanguage("player");
 
 
 --[[ Stock function backups ]]--
@@ -46,7 +47,7 @@ function CEPGP_OnEvent()
 				inGuild = true;
 			end
 			if inGuild then
-				SendChatMessage(arg2 .. " (" .. class .. ") needs. (" .. math.floor((EP/GP)*100)/100 .. " PR)", RAID, "COMMON");
+				SendChatMessage(arg2 .. " (" .. class .. ") needs. (" .. math.floor((EP/GP)*100)/100 .. " PR)", RAID, LANGUAGE);
 			else
 				local total = GetNumRaidMembers();
 				for i = 1, total do
@@ -54,14 +55,14 @@ function CEPGP_OnEvent()
 						_, _, _, _, class = GetRaidRosterInfo(i);
 					end
 				end
-				SendChatMessage(arg2 .. " (" .. class .. ") needs. (Non-guild member)", RAID, "COMMON");
+				SendChatMessage(arg2 .. " (" .. class .. ") needs. (Non-guild member)", RAID, LANGUAGE);
 			end
 			CEPGP_UpdateLootScrollBar();
 		end
 	elseif event == "CHAT_MSG_WHISPER" and arg1 == "!info" then
 		if getGuildInfo(arg2) ~= nil then
 			local EP, GP = getEPGP(roster[arg2][5]);
-			SendChatMessage("EPGP Standings - EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100, "WHISPER", "COMMON", arg2);
+			SendChatMessage("EPGP Standings - EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100, "WHISPER", LANGUAGE, arg2);
 		end
 	elseif event == "GUILD_ROSTER_UPDATE" then
 		SetGuildRosterShowOffline(true);
@@ -608,10 +609,10 @@ function CEPGP_distribute_popup_OnEvent(event)
 		CEPGP_distribute_value:SetText("");
 	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() then
 		if value == "true" then
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, "Common");
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, LANGUAGE);
 			addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
 		else
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for free", RAID, "Common");
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for free", RAID, LANGUAGE);
 		end
 		CEPGP_distribute_value:SetText("");
 		CEPGP_distribute:Hide();
@@ -967,15 +968,15 @@ function distribute(link, x)
 				_, rank = GetRaidRosterInfo(i);
 			end
 		end
-		SendChatMessage("--------------------------", RAID, "Common");
+		SendChatMessage("--------------------------", RAID, LANGUAGE);
 		if rank > 0 then
-			SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID_WARNING", "Common");
+			SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID_WARNING", LANGUAGE);
 		else
-			SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID", "Common");
+			SendChatMessage("NOW DISTRIBUTING: " .. link, "RAID", LANGUAGE);
 		end
-		SendChatMessage("GP Value: " .. gp, RAID, "Common");
-		SendChatMessage("Whisper me !need for mainspec only", RAID, "Common");
-		SendChatMessage("--------------------------", RAID, "Common");
+		SendChatMessage("GP Value: " .. gp, RAID, LANGUAGE);
+		SendChatMessage("Whisper me !need for mainspec only", RAID, LANGUAGE);
+		SendChatMessage("--------------------------", RAID, LANGUAGE);
 		CEPGP_distribute:Show();
 		CEPGP_loot:Hide();
 		_G["CEPGP_distribute_item_name"]:SetText(link);
@@ -1018,7 +1019,7 @@ function resetAll()
 		end
 	end
 	CEPGP_SendAddonMsg("update");
-	SendChatMessage("All EPGP standings have been cleared!", "GUILD", "COMMON");
+	SendChatMessage("All EPGP standings have been cleared!", "GUILD", LANGUAGE);
 end
 
 --[[addRaidEP(amount) - Working as intended
@@ -1053,10 +1054,10 @@ function addRaidEP(amount, msg)
 	end
 	if msg then
 		CEPGP_SendAddonMsg("update");
-		SendChatMessage(msg, "RAID", "Common");
+		SendChatMessage(msg, "RAID", LANGUAGE);
 	else
 		CEPGP_SendAddonMsg("update");
-		SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, "Common");
+		SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, LANGUAGE);
 	end
 end
 
@@ -1092,7 +1093,7 @@ function addGuildEP(amount)
 		end
 	end
 	CEPGP_SendAddonMsg("update");
-	SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, "COMMON");
+	SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, LANGUAGE);
 end
 
 --[[addGP(player, amount) - Working as intended
@@ -1124,7 +1125,7 @@ function addGP(player, amount)
 		end
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		CEPGP_SendAddonMsg("update");
-		SendChatMessage(amount .. " GP added to " .. player, CHANNEL, "Common", CHANNEL);
+		SendChatMessage(amount .. " GP added to " .. player, CHANNEL, LANGUAGE, CHANNEL);
 	else
 		CEPGP_print("Player not found in guild roster.", true);
 	end
@@ -1159,7 +1160,7 @@ function addEP(player, amount)
 		end
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		CEPGP_SendAddonMsg("update");
-		SendChatMessage(amount .. " EP added to " .. player, CHANNEL, "Common", CHANNEL);
+		SendChatMessage(amount .. " EP added to " .. player, CHANNEL, LANGUAGE, CHANNEL);
 	else
 		CEPGP_print("Player not found in guild roster.", true);
 	end
@@ -1194,7 +1195,7 @@ function decay(amount)
 		end
 	end
 	CEPGP_SendAddonMsg("update");
-	SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, "Common", CHANNEL);
+	SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, LANGUAGE, CHANNEL);
 end
 
 --[[calcGP(link) - Working as intended
@@ -1218,7 +1219,7 @@ function calcGP(link)
 		if ((slot ~= "" and level == 60 and rarity > 3) or (slot == "" and rarity > 3))
 			and (itemType ~= "Blacksmithing" and itemType ~= "Tailoring" and itemType ~= "Alchemy" and itemType ~= "Leatherworking"
 			and itemType ~= "Enchanting" and itemType ~= "Engineering" and itemType ~= "Mining") then
-			local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
+			local quality = rarity == 0 and "Poor" or rarity == 1 and LANGUAGE or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
 			CEPGP_print("Warning: " .. name .. " not found in index!");
 			if slot ~= "" then
 				slot = strsub(slot,strfind(slot,"INVTYPE_")+8,string.len(slot));
@@ -1259,7 +1260,7 @@ function calcGP(link)
 		end
 	end
 	if debugMode then
-		local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
+		local quality = rarity == 0 and "Poor" or rarity == 1 and LANGUAGE or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
 		CEPGP_print("Name: " .. name);
 		CEPGP_print("Rarity: " .. quality);
 		CEPGP_print("Slot: " .. slot);
