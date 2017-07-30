@@ -1931,6 +1931,7 @@
 								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
 								CEPGP_options_formula:SetText(FORMULA);
 								CEPGP_options_mod_edit:ClearFocus();
+								CEPGP_options_coef_edit:ClearFocus();
 							</OnClick>
 						</Scripts>
 					</Button>

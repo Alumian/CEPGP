@@ -1346,7 +1346,7 @@ function calcGP(link)
 	--local mod = {0.5, 0.75, 1, 1.5, 2} --Wrist, Neck, Back, Finger, Off-Hand, Shield, Wand, Ranged Weapon / Shoulder, Hands, Waist, Feet, Trinket / Head, Chest, Legs, / 1H weapon / 2H weapon
 	--local rarity = {0, 1, 2, 3, 4, 5} --Green, Blue, Purple, Orange
 	if ilvl and rarity and slot then
-		return (math.floor((0.483 * (2^((ilvl/26) + (rarity-4))) * slot)*MOD));
+		return (math.floor((COEF * (2^((ilvl/26) + (rarity-4))) * slot)*MOD));
 	else
 		return 0;
 	end
