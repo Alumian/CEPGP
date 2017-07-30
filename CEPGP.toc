@@ -1,8 +1,8 @@
 ## Interface:11200
 ## Title: Classic EPGP
-## Author: Alumian
+## Author: Alumian <Eidolon> on Crestfall
 ## Notes: CEPGP handles your guild's EPGP and master loot distribution
-## SavedVariables: CHANNEL
+## SavedVariables: CHANNEL, MOD
 
 CEPGP_frame.xml
 CEPGP.lua

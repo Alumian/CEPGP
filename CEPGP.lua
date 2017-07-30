@@ -4,7 +4,10 @@ _G = getfenv(0);
 mode = "guild";
 target = nil;
 CHANNEL = nil;
-VERSION = "0.9.4";
+MOD = nil;
+COEF = nil;
+FORMULA = nil;
+VERSION = "0.9.5";
 debugMode = false;
 responses = {};
 roster = {};
@@ -26,6 +29,12 @@ function CEPGP_OnEvent()
 		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
 		if CHANNEL == nil then
 			CHANNEL = "GUILD";
+		end
+		if MOD == nil then
+			MOD = 1;
+		end
+		if COEF == nil then
+			COEF = 0.483;
 		end
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
@@ -441,6 +450,39 @@ function CEPGP_UpdateRaidScrollBar()
     end
 end
 
+function CEPGP_UpdateOptionsScrollBar()
+    local x, y;
+    local yoffset;
+    local t;
+    local tSize;
+    local name;
+	local count = 1;
+    t = {};
+	for k, v in pairs(bossNameIndex) do
+		t[count] = {
+			[1] = k,
+			[2] = v
+		}
+		count = count + 1;
+	end
+	tSize = count;
+    FauxScrollFrame_Update(OptionsScrollFrame, tSize, 18, 240);
+    for y = 1, 18, 1 do
+        yoffset = y + FauxScrollFrame_GetOffset(OptionsScrollFrame);
+        if (yoffset <= tSize) then
+		    if not tContains(t, yoffset, true) then
+                getglobal("OptionsBossEP" .. name):Hide();
+            else
+				name = t[yoffset][1]
+				if name == "garr" then
+					getglobal("OptionsBossEP" .. name):SetText(name);
+					getglobal("OptionsBossEP" .. name):Show();
+				end
+			end
+		end
+    end
+end
+
 function CEPGP_ListButton_OnClick()
 	if CanEditOfficerNote() == nil then
 		CEPGP_print("You don't have access to modify EPGP", 1);
@@ -587,7 +629,7 @@ function CEPGP_ListButton_OnClick()
 															addRaidEP(tonumber(CEPGP_context_amount:GetText()));
 														end);
 	else
-		CEPGP_print(obj);
+		--CEPGP_print(obj);
 	end
 end
 
@@ -653,9 +695,9 @@ function LootFrame_OnEvent(event)
 		HideUIPanel(CEPGP_distribute);
 		HideUIPanel(CEPGP_loot_distributing);
 		if UnitInRaid("player") then
-			ShowUIPanel(CEPGP_raid);
+			toggleFrame(CEPGP_raid);
 		elseif GetGuildRosterInfo(1) then
-			ShowUIPanel(CEPGP_guild);
+			toggleFrame(CEPGP_guild);
 		else
 			HideUIPanel(CEPGP_frame);
 			CEPGP_loot_distributing:Hide();
@@ -718,6 +760,7 @@ function LootFrame_Update()
 			CEPGP_raid:Hide();
 			CEPGP_loot:Show();
 			CEPGP_distribute:Hide();
+			CEPGP_options:Hide();
 			break;
 		end
 	end
@@ -1303,7 +1346,7 @@ function calcGP(link)
 	--local mod = {0.5, 0.75, 1, 1.5, 2} --Wrist, Neck, Back, Finger, Off-Hand, Shield, Wand, Ranged Weapon / Shoulder, Hands, Waist, Feet, Trinket / Head, Chest, Legs, / 1H weapon / 2H weapon
 	--local rarity = {0, 1, 2, 3, 4, 5} --Green, Blue, Purple, Orange
 	if ilvl and rarity and slot then
-		return (math.floor((0.483 * (2^((ilvl/26) + (rarity-4))) * slot)*15));
+		return (math.floor((0.483 * (2^((ilvl/26) + (rarity-4))) * slot)*MOD));
 	else
 		return 0;
 	end

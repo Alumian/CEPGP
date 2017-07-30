@@ -277,6 +277,33 @@
                     </OnClick>
                 </Scripts>
             </Button>
+			<Button name="CEPGP_button_options" inherits="GameMenuButtonTemplate" text="Options">
+                <Size>
+                    <AbsDimension x="100" y="21" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativeTo="CEPGP_frame">
+                        <Offset>
+                            <AbsDimension x="-12.5" y="-35"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+					<OnLoad>
+						GuildRoster();
+					</OnLoad>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+						toggleFrame("CEPGP_options");
+						mode = "options";
+						CEPGP_options_mod_edit:SetText(tostring(MOD));
+						CEPGP_options_coef_edit:SetText(tostring(COEF));
+						FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
+						CEPGP_options_formula:SetText(FORMULA);
+						populateFrame();
+                    </OnClick>
+                </Scripts>
+            </Button>
 			<Button name="CEPGP_button_raid" inherits="GameMenuButtonTemplate" text="Raid">
                 <Size>
                     <AbsDimension x="100" y="21" />
@@ -360,7 +387,7 @@
 					</Anchor>
 				</Anchors>
 				<Frames>
-				<Frame name="CEPGP_guild_scrollframe">
+					<Frame name="CEPGP_guild_scrollframe">
 						<Size>
 							<AbsDimension x="360" y="300"/>
 						</Size>
@@ -1535,6 +1562,390 @@
 					<OnShow>
 						CEPGP_loot_distributing:Show();
 					</OnShow>
+					<OnLoad>
+						this:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnDragStart>
+						CEPGP_frame:StartMoving()
+					</OnDragStart>
+					<OnDragStop>
+						CEPGP_frame:StopMovingOrSizing()
+					</OnDragStop>
+				</Scripts>
+			</Frame>
+			<Frame name="CEPGP_options" enableMouse="true" toplevel="true" hidden="true">
+				<Size>
+					<AbsDimension x="400" y="450" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-30" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_options_formula" inherits="GameFontNormal">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="15" y="-30" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_formula_coef" inherits="GameFontNormal" text="Base Coefficient: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_formula">
+									<Offset>
+										<AbsDimension x="0" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_formula_mod" inherits="GameFontNormal" text="Modifier:">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_coef">
+									<Offset>
+										<AbsDimension x="120" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Frame name="CEPGP_options_scrollframe">
+						<Size>
+							<AbsDimension x="360" y="300"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_options" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-75"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<ScrollFrame name="OptionsScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="360" y="350"/>
+								</Size>
+								<Anchors>
+									<Anchor point="RIGHT">
+										<Offset>
+											<AbsDimension x="-7" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateOptionsScrollFrame); 
+									</OnVerticalScroll>
+									<OnShow>
+										CEPGP_UpdateOptionsScrollBar();
+									</OnShow>
+								</Scripts>
+							</ScrollFrame>
+							<Button name="OptionsBossEPonyxia" inherits="GuildButtonTemplate" id="1" text="Onyxia">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="5" y="-6"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPlucifron" inherits="GuildButtonTemplate" id="2" text="Lucifron">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton1" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPmagmadar" inherits="GuildButtonTemplate" id="3" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton2" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPgehennas" inherits="GuildButtonTemplate" id="4" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton3" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPgarr" inherits="GuildButtonTemplate" id="5" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton4" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPshazzrah" inherits="GuildButtonTemplate" id="6" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton5" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPbaron geddon" inherits="GuildButtonTemplate" id="7" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton6" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPgolemagg the incinerator" inherits="GuildButtonTemplate" id="8" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton7" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPsulfuron harbinger" inherits="GuildButtonTemplate" id="9" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton8" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPmajordomo executus" inherits="GuildButtonTemplate" id="10" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton9" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEPragnaros" inherits="GuildButtonTemplate" id="11" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton10" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP2" inherits="GuildButtonTemplate" id="12" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton11" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP3" inherits="GuildButtonTemplate" id="13" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton12" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP4" inherits="GuildButtonTemplate" id="14" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton13" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP5" inherits="GuildButtonTemplate" id="15" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton14" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP6" inherits="GuildButtonTemplate" id="16" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton15" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP7" inherits="GuildButtonTemplate" id="17" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton16" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="OptionsBossEP8" inherits="GuildButtonTemplate" id="18" >
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GuildButton17" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Scripts>
+							<OnLoad>
+								this:SetBackdropColor(0.1, 0.1, 0.1);
+							</OnLoad>
+						</Scripts>
+						</Frames>
+					</Frame>
+					<EditBox name="CEPGP_options_coef_edit" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="40" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_coef">
+								<Offset>
+									<AbsDimension x="20" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_mod_edit" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="40" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_mod">
+								<Offset>
+									<AbsDimension x="20" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<Button name="CEPGP_options_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
+						<Size>
+							<AbsDimension x="100" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="10" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								CEPGP_options_mod_edit:SetText(tostring(MOD));
+								CEPGP_options_coef_edit:SetText(tostring(COEF));
+								toggleFrame("guild");
+								CEPGP_print("Options reverted");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_options_default" inherits="GameMenuButtonTemplate" text="Default">
+						<Size>
+							<AbsDimension x="100" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								CEPGP_options_coef_edit:SetText("0.483");
+								CEPGP_options_mod_edit:SetText("1");
+								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
+								CEPGP_options_formula:SetText(FORMULA);
+								CEPGP_print("Settings have been reset to default");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_options_apply" inherits="GameMenuButtonTemplate" text="Apply">
+						<Size>
+							<AbsDimension x="100" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="-9" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								if 0 >= tonumber(CEPGP_options_mod_edit:GetText()) then
+									CEPGP_print("Invalid number entered for GP modifier. Please enter a positive number", true);
+								else
+									MOD = tonumber(CEPGP_options_mod_edit:GetText());
+									CEPGP_print("Options applied");
+								end
+								if 0 >= tonumber(CEPGP_options_coef_edit:GetText()) then
+									CEPGP_print("Invalid number entered for base coefficient. Please enter a positive number", true);
+								else
+									COEF = tonumber(CEPGP_options_coef_edit:GetText());
+								end
+								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
+								CEPGP_options_formula:SetText(FORMULA);
+								CEPGP_options_mod_edit:ClearFocus();
+							</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_options_mode" inherits="GameFontNormal" text="Current View: Options">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
 					</OnLoad>
