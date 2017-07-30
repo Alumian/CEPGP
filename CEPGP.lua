@@ -450,39 +450,6 @@ function CEPGP_UpdateRaidScrollBar()
     end
 end
 
-function CEPGP_UpdateOptionsScrollBar()
-    local x, y;
-    local yoffset;
-    local t;
-    local tSize;
-    local name;
-	local count = 1;
-    t = {};
-	for k, v in pairs(bossNameIndex) do
-		t[count] = {
-			[1] = k,
-			[2] = v
-		}
-		count = count + 1;
-	end
-	tSize = count;
-    FauxScrollFrame_Update(OptionsScrollFrame, tSize, 18, 240);
-    for y = 1, 18, 1 do
-        yoffset = y + FauxScrollFrame_GetOffset(OptionsScrollFrame);
-        if (yoffset <= tSize) then
-		    if not tContains(t, yoffset, true) then
-                getglobal("OptionsBossEP" .. name):Hide();
-            else
-				name = t[yoffset][1]
-				if name == "garr" then
-					getglobal("OptionsBossEP" .. name):SetText(name);
-					getglobal("OptionsBossEP" .. name):Show();
-				end
-			end
-		end
-    end
-end
-
 function CEPGP_ListButton_OnClick()
 	if CanEditOfficerNote() == nil then
 		CEPGP_print("You don't have access to modify EPGP", 1);
