@@ -26,9 +26,14 @@ bossNameIndex = {
 
 					-- zul'gurub --
 					["high priest venoxis"] = 0,
+					["high priestess jeklik"] = 0,
 					["high priestess mar'li"] = 0,
 					["high priest thekal"] = 0,
 					["high priestess arlokk"] = 0,
+					["gri'lek"] = 0,
+					["hazza'rah"] = 0,
+					["renataki"] = 0,
+					["wushoolay"] = 0,
 					["bloodlord mandokir"] = 0,
 					["jin'do the hexxer"] = 0,
 					["gahz'ranka"] = 0,

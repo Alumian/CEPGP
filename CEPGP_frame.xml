@@ -299,6 +299,37 @@
 						CEPGP_options_mod_edit:SetText(tostring(MOD));
 						CEPGP_options_coef_edit:SetText(tostring(COEF));
 						FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
+						for k, v in pairs(AUTOEP) do
+							if k == "lord kri" or k == "vem" or k == "princess yauj" then
+								getglobal("CEPGP_options_the bug trio_auto_check"):SetChecked(v);
+							elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
+								getglobal("CEPGP_options_twin emps_auto_check"):SetChecked(v);
+							elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
+								getglobal("CEPGP_options_four horsemen_auto_check"):SetChecked(v);
+							elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
+								getglobal("CEPGP_options_dragons of nightmare_auto_check"):SetChecked(v);
+							elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
+								getglobal("CEPGP_options_edge of madness_auto_check"):SetChecked(v);
+							else
+								getglobal("CEPGP_options_"..k.."_auto_check"):SetChecked(v);
+							end
+
+						end
+						for k, v in pairs(EPVALS) do
+							if k == "lord kri" or k == "vem" or k == "princess yauj" then
+								getglobal("CEPGP_options_the bug trio_EP_value"):SetText(v);
+							elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
+								getglobal("CEPGP_options_twin emps_EP_value"):SetText(v);
+							elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
+								getglobal("CEPGP_options_four horsemen_EP_value"):SetText(v);
+							elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
+								getglobal("CEPGP_options_dragons of nightmare_EP_value"):SetText(v);
+							elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
+								getglobal("CEPGP_options_edge of madness_EP_value"):SetText(v);
+							else
+								getglobal("CEPGP_options_"..k.."_EP_value"):SetText(v);
+							end
+						end
 						CEPGP_options_formula:SetText(FORMULA);
 						populateFrame();
                     </OnClick>
@@ -1591,7 +1622,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT">
 									<Offset>
-										<AbsDimension x="15" y="-30" />
+										<AbsDimension x="15" y="-10" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1611,26 +1642,2557 @@
 							<Anchors>
 								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_coef">
 									<Offset>
-										<AbsDimension x="120" y="0" />
+										<AbsDimension x="175" y="0" />
 									</Offset>
 								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_auto_1" inherits="GameFontNormal" text="Auto Award | EP">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="32.5" y="-50" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ony_val" inherits="GameFontNormal" text="Onyxia: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="10" y="150" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_auto_2" inherits="GameFontNormal" text="Auto Award | EP">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="150" y="-50" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ony_val" inherits="GameFontNormal" text="Onyxia: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="10" y="150" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_auto_3" inherits="GameFontNormal" text="Auto Award | EP">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="290" y="-50" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ony_val" inherits="GameFontNormal" text="Onyxia: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="10" y="150" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_luci_val" inherits="GameFontNormal" text="Lucifron: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_ony_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_magmadar_val" inherits="GameFontNormal" text="Magmadar: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_luci_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_gehennas_val" inherits="GameFontNormal" text="Gehennas: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_magmadar_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_garr_val" inherits="GameFontNormal" text="Garr: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_gehennas_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_bg_val" inherits="GameFontNormal" text="Geddon: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_garr_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_shazz_val" inherits="GameFontNormal" text="Shazzrah: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_bg_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_sh_val" inherits="GameFontNormal" text="Harbinger: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_shazz_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_golemagg_val" inherits="GameFontNormal" text="Golemagg: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_sh_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_majordomo_val" inherits="GameFontNormal" text="Majordomo: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_golemagg_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ragnaros_val" inherits="GameFontNormal" text="Ragnaros: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_majordomo_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_razorgore_val" inherits="GameFontNormal" text="Razorgore: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_ragnaros_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_vaelastrasz_val" inherits="GameFontNormal" text="Vaelastrasz: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_razorgore_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_broodlord_val" inherits="GameFontNormal" text="Broodlord: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_vaelastrasz_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_firemaw_val" inherits="GameFontNormal" text="Firemaw: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_broodlord_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ebonroc_val" inherits="GameFontNormal" text="Ebonroc: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_firemaw_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_flamegor_val" inherits="GameFontNormal" text="Flamegor: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_ebonroc_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_chromaggus_val" inherits="GameFontNormal" text="Chromaggus: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_flamegor_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_nefarian_val" inherits="GameFontNormal" text="Nefarian: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_chromaggus_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_high priest venoxis_val" inherits="GameFontNormal" text="Venoxis: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_ony_val">
+									<Offset>
+										<AbsDimension x="75" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_high priestess jeklik_val" inherits="GameFontNormal" text="Jeklik: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_high priest venoxis_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_high priestess mar'li_val" inherits="GameFontNormal" text="Mar'li: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_high priestess jeklik_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_high priest thekal_val" inherits="GameFontNormal" text="Thekal: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_high priestess mar'li_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_high priestess arlokk_val" inherits="GameFontNormal" text="Arlokk: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_high priest thekal_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_edge_val" inherits="GameFontNormal" text="The Edge: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_high priestess arlokk_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_bloodlord mandokir_val" inherits="GameFontNormal" text="Mandokir: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_edge_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_jin'do the hexxer_val" inherits="GameFontNormal" text="Jin'do: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_bloodlord mandokir_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_gahz'ranka_val" inherits="GameFontNormal" text="Gahz'ranka: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_jin'do the hexxer_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_hakkar_val" inherits="GameFontNormal" text="Hakkar: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_gahz'ranka_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_kurinnaxx_val" inherits="GameFontNormal" text="Kurinnaxx: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_hakkar_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_general rajaxx_val" inherits="GameFontNormal" text="Rajaxx: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_kurinnaxx_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_moam_val" inherits="GameFontNormal" text="Moam: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_general rajaxx_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_buru the gorger_val" inherits="GameFontNormal" text="Buru: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_moam_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ayamiss the hunter_val" inherits="GameFontNormal" text="Ayamiss: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_buru the gorger_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ossirian the unscarred_val" inherits="GameFontNormal" text="Ossirian: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_ayamiss the hunter_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_the prophet skeram_val" inherits="GameFontNormal" text="Skeram: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_ossirian the unscarred_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_battleguard sartura_val" inherits="GameFontNormal" text="Sartura: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_the prophet skeram_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_fankriss the unyielding_val" inherits="GameFontNormal" text="Fankriss: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_battleguard sartura_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_princess huhuran_val" inherits="GameFontNormal" text="Huhuran: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_fankriss the unyielding_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_bug trio_val" inherits="GameFontNormal" text="The Bug Trio: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_princess huhuran_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_viscidus_val" inherits="GameFontNormal" text="Viscidus: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_high priest venoxis_val">
+									<Offset>
+										<AbsDimension x="70" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ouro_val" inherits="GameFontNormal" text="Ouro: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_viscidus_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_twin emps_val" inherits="GameFontNormal" text="Twin Emperors: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_ouro_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_c'thun_val" inherits="GameFontNormal" text="C'thun: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_twin emps_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_anub_val" inherits="GameFontNormal" text="Anub'rekhan: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_c'thun_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_faerlina_val" inherits="GameFontNormal" text="Faerlina: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_anub_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_maexxna_val" inherits="GameFontNormal" text="Maexxna: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_faerlina_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_noth_val" inherits="GameFontNormal" text="Noth: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_maexxna_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_heigan_val" inherits="GameFontNormal" text="Heigan: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_noth_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_loatheb_val" inherits="GameFontNormal" text="Loatheb: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_heigan_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_razu_val" inherits="GameFontNormal" text="Razuvious: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_loatheb_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_gothik_val" inherits="GameFontNormal" text="Gothik: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_razu_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_four horsemen_val" inherits="GameFontNormal" text="Four Hoursemen: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_gothik_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_patch_val" inherits="GameFontNormal" text="Patchwerk: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_four horsemen_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_grobbulus_val" inherits="GameFontNormal" text="Grobbulus: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_patch_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_gluth_val" inherits="GameFontNormal" text="Gluth: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_grobbulus_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_thaddius_val" inherits="GameFontNormal" text="Thaddius: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_gluth_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_sapphiron_val" inherits="GameFontNormal" text="Sapphiron: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_thaddius_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_kelthuzad_val" inherits="GameFontNormal" text="Kel'thuzad: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_sapphiron_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_kazzak_val" inherits="GameFontNormal" text="Kazzak: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_nefarian_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_azuregos_val" inherits="GameFontNormal" text="Azuregos: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_kazzak_val" />
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_teremus_val" inherits="GameFontNormal" text="Teremus: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_kelthuzad_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_dragons of nightmare_val" inherits="GameFontNormal" text="Dragons: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_teremus_val" />
 							</Anchors>
 						</FontString>
 					</Layer>
 				</Layers>
 				<Frames>
-					<Frame name="CEPGP_options_scrollframe">
-						<Size>
-							<AbsDimension x="360" y="300"/>
-						</Size>
+					<CheckButton name="CEPGP_options_onyxia_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="CEPGP_options" relativePoint="TOPLEFT">
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_ony_val">
 								<Offset>
-									<AbsDimension x="10" y="-75"/>
+									<AbsDimension x="25" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
-					</Frame>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_lucifron_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_onyxia_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_magmadar_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_lucifron_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_gehennas_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_magmadar_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_garr_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_gehennas_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_baron geddon_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_garr_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_shazzrah_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_baron geddon_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_sulfuron harbinger_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_shazzrah_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_golemagg the incinerator_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_sulfuron harbinger_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_majordomo executus_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_golemagg the incinerator_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_ragnaros_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_majordomo executus_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_razorgore the untamed_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_ragnaros_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_vaelastrasz the corrupt_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_razorgore the untamed_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_broodlord lashlayer_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_vaelastrasz the corrupt_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_firemaw_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_broodlord lashlayer_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_ebonroc_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_firemaw_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_flamegor_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_ebonroc_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_chromaggus_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_flamegor_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_nefarian_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_chromaggus_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_high priest venoxis_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_high priest venoxis_val">
+								<Offset>
+									<AbsDimension x="20" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_high priestess jeklik_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_high priest venoxis_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>					
+					<CheckButton name="CEPGP_options_high priestess mar'li_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_high priestess jeklik_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_high priest thekal_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_high priestess mar'li_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_high priestess arlokk_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_high priest thekal_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_edge of madness_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_high priestess arlokk_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>			
+					<CheckButton name="CEPGP_options_bloodlord mandokir_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_edge of madness_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_jin'do the hexxer_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_bloodlord mandokir_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_gahz'ranka_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_jin'do the hexxer_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_hakkar_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_gahz'ranka_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_kurinnaxx_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_hakkar_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_general rajaxx_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_kurinnaxx_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_moam_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_general rajaxx_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_buru the gorger_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_moam_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_ayamiss the hunter_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_buru the gorger_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_ossirian the unscarred_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_ayamiss the hunter_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_the prophet skeram_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_ossirian the unscarred_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_battleguard sartura_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_the prophet skeram_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_fankriss the unyielding_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_battleguard sartura_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_princess huhuran_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_fankriss the unyielding_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_the bug trio_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_princess huhuran_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_viscidus_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_viscidus_val">
+								<Offset>
+									<AbsDimension x="40" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_ouro_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_viscidus_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_twin emps_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_ouro_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_c'thun_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_twin emps_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_anub'rekhan_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_c'thun_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_grand widow faerlina_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_anub'rekhan_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_maexxna_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_grand widow faerlina_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_noth the plaguebringer_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_maexxna_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_heigan the unclean_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_noth the plaguebringer_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_loatheb_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_heigan the unclean_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_instructor razuvious_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_loatheb_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_gothik the harvester_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_instructor razuvious_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_four horsemen_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_gothik the harvester_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_patchwerk_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_four horsemen_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_grobbulus_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_patchwerk_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_gluth_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_grobbulus_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_thaddius_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_gluth_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_sapphiron_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_thaddius_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_kel'thuzad_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_sapphiron_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_doom lord kazzak_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_nefarian_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_azuregos_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_doom lord kazzak_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_teremus the devourer_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_kel'thuzad_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_dragons of nightmare_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_teremus the devourer_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<EditBox name="CEPGP_options_onyxia_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_onyxia_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_lucifron_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_lucifron_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_magmadar_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_magmadar_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_gehennas_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_gehennas_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_garr_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_garr_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_baron geddon_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_baron geddon_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_shazzrah_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_shazzrah_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_sulfuron harbinger_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_sulfuron harbinger_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_golemagg the incinerator_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_golemagg the incinerator_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_majordomo executus_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_majordomo executus_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_ragnaros_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_ragnaros_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_razorgore the untamed_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_razorgore the untamed_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_vaelastrasz the corrupt_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_vaelastrasz the corrupt_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_broodlord lashlayer_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_broodlord lashlayer_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_firemaw_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_firemaw_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_ebonroc_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_ebonroc_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_flamegor_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_flamegor_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_chromaggus_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_chromaggus_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_nefarian_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_nefarian_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_high priest venoxis_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_high priest venoxis_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_high priestess jeklik_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_high priestess jeklik_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_high priestess mar'li_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_high priestess mar'li_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_high priest thekal_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_high priest thekal_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_high priestess arlokk_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_high priestess arlokk_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_edge of madness_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_edge of madness_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_bloodlord mandokir_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_bloodlord mandokir_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_jin'do the hexxer_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_jin'do the hexxer_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_gahz'ranka_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_gahz'ranka_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_hakkar_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_hakkar_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_kurinnaxx_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_kurinnaxx_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_general rajaxx_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_general rajaxx_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_moam_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_moam_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_buru the gorger_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_buru the gorger_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_ayamiss the hunter_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_ayamiss the hunter_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_ossirian the unscarred_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_ossirian the unscarred_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_the prophet skeram_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_the prophet skeram_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_battleguard sartura_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_battleguard sartura_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_fankriss the unyielding_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_fankriss the unyielding_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_princess huhuran_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_princess huhuran_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_the bug trio_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_the bug trio_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
 					<EditBox name="CEPGP_options_coef_edit" inherits="InputBoxTemplate">
 						<Size>
 							<AbsDimension x="40" y="20" />
@@ -1638,7 +4200,7 @@
 						<Anchors>
 							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_coef">
 								<Offset>
-									<AbsDimension x="20" y="0" />
+									<AbsDimension x="5" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1658,7 +4220,7 @@
 						<Anchors>
 							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_mod">
 								<Offset>
-									<AbsDimension x="20" y="0" />
+									<AbsDimension x="5" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1688,13 +4250,34 @@
 								CEPGP_options_mod_edit:SetText(tostring(MOD));
 								CEPGP_options_coef_edit:SetText(tostring(COEF));
 								toggleFrame("guild");
-								CEPGP_print("Options reverted");
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="CEPGP_options_default" inherits="GameMenuButtonTemplate" text="Default">
+					<Button name="CEPGP_options_GP_default" inherits="GameMenuButtonTemplate" text="Default GP Settings">
 						<Size>
-							<AbsDimension x="100" y="21" />
+							<AbsDimension x="125" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_coef_edit">
+								<Offset>
+									<AbsDimension x="5" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								CEPGP_options_coef_edit:SetText("0.483");
+								CEPGP_options_mod_edit:SetText("1");
+								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
+								CEPGP_options_formula:SetText(FORMULA);
+								CEPGP_print("GP settings have been reset to default");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_options_default" inherits="GameMenuButtonTemplate" text="Default Boss Settings">
+						<Size>
+							<AbsDimension x="145" y="21" />
 						</Size>
 						<Anchors>
 							<Anchor point="BOTTOM">
@@ -1706,11 +4289,37 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
-								CEPGP_options_coef_edit:SetText("0.483");
-								CEPGP_options_mod_edit:SetText("1");
-								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
-								CEPGP_options_formula:SetText(FORMULA);
-								CEPGP_print("Settings have been reset to default");
+								for k, v in pairs(AUTOEP) do
+									if k == "lord kri" or k == "vem" or k == "princess yauj" then
+										getglobal("CEPGP_options_the bug trio_auto_check"):SetChecked(v);
+									elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
+										getglobal("CEPGP_options_twin emps_auto_check"):SetChecked(v);
+									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
+										getglobal("CEPGP_options_four horsemen_auto_check"):SetChecked(v);
+									elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
+										getglobal("CEPGP_options_dragons of nightmare_auto_check"):SetChecked(v);
+									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
+										getglobal("CEPGP_options_edge of madness_auto_check"):SetChecked(v);
+									else
+										getglobal("CEPGP_options_"..k.."_auto_check"):SetChecked(v);
+									end
+
+								end
+								for k, v in pairs(EPVALS) do
+									if k == "lord kri" or k == "vem" or k == "princess yauj" then
+										getglobal("CEPGP_options_the bug trio_EP_value"):SetText(v);
+									elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
+										getglobal("CEPGP_options_twin emps_EP_value"):SetText(v);
+									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
+										getglobal("CEPGP_options_four horsemen_EP_value"):SetText(v);
+									elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
+										getglobal("CEPGP_options_dragons of nightmare_EP_value"):SetText(v);
+									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
+										getglobal("CEPGP_options_edge of madness_EP_value"):SetText(v);
+									else
+										getglobal("CEPGP_options_"..k.."_EP_value"):SetText(v);
+									end
+								end
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1732,7 +4341,6 @@
 									CEPGP_print("Invalid number entered for GP modifier. Please enter a positive number", true);
 								else
 									MOD = tonumber(CEPGP_options_mod_edit:GetText());
-									CEPGP_print("Options applied");
 								end
 								if 0 >= tonumber(CEPGP_options_coef_edit:GetText()) then
 									CEPGP_print("Invalid number entered for base coefficient. Please enter a positive number", true);
@@ -1743,9 +4351,530 @@
 								CEPGP_options_formula:SetText(FORMULA);
 								CEPGP_options_mod_edit:ClearFocus();
 								CEPGP_options_coef_edit:ClearFocus();
+								
+								for k, v in pairs(EPVALS) do
+									if k == "lord kri" or k == "vem" or k == "princess yauj" then
+										EPVALS[k] = getglobal("CEPGP_options_the bug trio_EP_value"):GetText();
+										getglobal("CEPGP_options_the bug trio_EP_value"):ClearFocus();
+									elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
+										EPVALS[k] = getglobal("CEPGP_options_twin emps_EP_value"):GetText();
+										getglobal("CEPGP_options_twin emps_EP_value"):ClearFocus();
+									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
+										EPVALS[k] = getglobal("CEPGP_options_four horsemen_EP_value"):GetText();
+										getglobal("CEPGP_options_four horsemen_EP_value"):ClearFocus();
+									elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
+										EPVALS[k] = getglobal("CEPGP_options_dragons of nightmare_EP_value"):GetText();
+										getglobal("CEPGP_options_dragons of nightmare_EP_value"):ClearFocus();
+									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
+										EPVALS[k] = getglobal("CEPGP_options_edge of madness_auto_check"):GetText();
+									else
+										EPVALS[k] = getglobal("CEPGP_options_"..k.."_EP_value"):GetText();
+										getglobal("CEPGP_options_"..k.."_EP_value"):ClearFocus();
+									end
+								end
+								
+								for k, v in pairs(AUTOEP) do
+									if k == "lord kri" or k == "vem" or k == "princess yauj" then
+										if getglobal("CEPGP_options_the bug trio_auto_check"):GetChecked() then
+											AUTOEP[k] = true;
+										else
+											AUTOEP[k] = false;
+										end
+									elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
+										if getglobal("CEPGP_options_twin emps_auto_check"):GetChecked() then
+											AUTOEP[k] = true;
+										else
+											AUTOEP[k] = false;
+										end
+									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
+										if getglobal("CEPGP_options_four horsemen_auto_check"):GetChecked() then
+											AUTOEP[k] = true;
+										else
+											AUTOEP[k] = false;
+										end
+									elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
+										if getglobal("CEPGP_options_dragons of nightmare_auto_check"):GetChecked() then
+											AUTOEP[k] = true;
+										else
+											AUTOEP[k] = false;
+										end
+									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
+										if getglobal("CEPGP_options_edge of madness_auto_check"):GetChecked() then
+											AUTOEP[k] = true;
+										else
+											AUTOEP[k] = false;
+										end
+									else
+										if getglobal("CEPGP_options_"..k.."_auto_check"):GetChecked() then
+											AUTOEP[k] = true;
+										else
+											AUTOEP[k] = false;
+										end
+									end
+								end
 							</OnClick>
 						</Scripts>
 					</Button>
+					<EditBox name="CEPGP_options_viscidus_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_viscidus_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_ouro_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_ouro_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_twin emps_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_twin emps_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_c'thun_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_c'thun_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_anub'rekhan_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_anub'rekhan_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_grand widow faerlina_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_grand widow faerlina_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_maexxna_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_maexxna_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_noth the plaguebringer_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_noth the plaguebringer_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_heigan the unclean_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_heigan the unclean_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_loatheb_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_loatheb_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_instructor razuvious_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_instructor razuvious_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_gothik the harvester_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_gothik the harvester_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_four horsemen_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_four horsemen_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_patchwerk_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_patchwerk_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_grobbulus_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_grobbulus_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_gluth_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_gluth_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_thaddius_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_thaddius_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_sapphiron_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_sapphiron_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_kel'thuzad_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_kel'thuzad_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_doom lord kazzak_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_doom lord kazzak_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_azuregos_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_azuregos_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_teremus the devourer_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_teremus the devourer_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_dragons of nightmare_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_dragons of nightmare_auto_check">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">

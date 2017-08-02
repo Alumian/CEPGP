@@ -7,7 +7,9 @@ CHANNEL = nil;
 MOD = nil;
 COEF = nil;
 FORMULA = nil;
-VERSION = "0.9.5";
+VERSION = "1.0.0";
+AUTOEP = {};
+EPVALS = {};
 debugMode = false;
 responses = {};
 roster = {};
@@ -35,6 +37,16 @@ function CEPGP_OnEvent()
 		end
 		if COEF == nil then
 			COEF = 0.483;
+		end
+		if AUTOEP.length == nil then
+			for k, v in pairs(bossNameIndex) do
+				AUTOEP[k] = true;
+			end
+		end
+		if EPVALS.length == nil then
+			for k, v in pairs(bossNameIndex) do
+				EPVALS[k] = v;
+			end
 		end
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
@@ -131,39 +143,36 @@ function CEPGP_OnEvent()
 					_, isLead = GetRaidRosterInfo(i);
 				end
 			end
-			if (GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2) then
-				if tContains(bossNameIndex, name, true) then --[[ If the npc is in the boss name index ]]--
-					for k, v in pairs(bossNameIndex) do
-						if name == k then
-							EP = v;
+			--if (GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2) then
+				if tContains(bossNameIndex, string.lower(name), true) then --[[ If the npc is in the boss name index ]]--
+					EP = EPVALS[string.lower(name)]
+					if AUTOEP[string.lower(name)] then
+						if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
+							this:RegisterEvent("PLAYER_REGEN_ENABLED");
+							kills = kills + 1;
+							if kills == 3 then
+								kills = 0;
+								
+								addRaidEP(EP, "The Bug Trio have been slain! The raid has been awarded " .. EP .. " EP");
+							end
+						elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
+							this:RegisterEvent("PLAYER_REGEN_ENABLED");
+							kills = kills + 1;
+							if kills == 2 then
+								kills = 0;
+								addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
+							end
+							
+						elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
+							this:RegisterEvent("PLAYER_REGEN_ENABLED");
+							kills = kills + 1;
+							if kills == 4 then
+								kills = 0;
+								addRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP");
+							end
+						else
+							addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
 						end
-					end
-					
-					if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
-						this:RegisterEvent("PLAYER_REGEN_ENABLED");
-						kills = kills + 1;
-						if kills == 3 then
-							kills = 0;
-							addRaidEP(EP, "The Bug Trio has been slain! The raid has been awarded " .. EP .. " EP");
-						end
-						
-					elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
-						this:RegisterEvent("PLAYER_REGEN_ENABLED");
-						kills = kills + 1;
-						if kills == 2 then
-							kills = 0;
-							addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
-						end
-						
-					elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
-						this:RegisterEvent("PLAYER_REGEN_ENABLED");
-						kills = kills + 1;
-						if kills == 4 then
-							kills = 0;
-							addRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP");
-						end
-					else
-						addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
 					end
 				end
 				
@@ -175,7 +184,7 @@ function CEPGP_OnEvent()
 						addRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP");
 					end
 				end
-			end
+			--end
 		end
 		
 	elseif event == "PLAYER_REGEN_ENABLED" then
