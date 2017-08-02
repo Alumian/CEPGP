@@ -143,7 +143,7 @@ function CEPGP_OnEvent()
 					_, isLead = GetRaidRosterInfo(i);
 				end
 			end
-			--if (GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2) then
+			if (GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2) then
 				if tContains(bossNameIndex, string.lower(name), true) then --[[ If the npc is in the boss name index ]]--
 					EP = EPVALS[string.lower(name)]
 					if AUTOEP[string.lower(name)] then
@@ -184,7 +184,7 @@ function CEPGP_OnEvent()
 						addRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP");
 					end
 				end
-			--end
+			end
 		end
 		
 	elseif event == "PLAYER_REGEN_ENABLED" then
