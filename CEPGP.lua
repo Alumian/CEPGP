@@ -7,17 +7,19 @@ CHANNEL = nil;
 MOD = nil;
 COEF = nil;
 FORMULA = nil;
-VERSION = "1.0.0";
+VERSION = "1.1.0";
 AUTOEP = {};
 EPVALS = {};
 debugMode = false;
 responses = {};
+itemsTable = {};
 roster = {};
 criteria = 4;
 critReverse = false;
 kills = 0;
 frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_distribute_popup, CEPGP_context_popup};
 LANGUAGE = GetDefaultLanguage("player");
+distributing = nil;
 
 
 --[[ Stock function backups ]]--
@@ -60,6 +62,7 @@ function CEPGP_OnEvent()
 		end
 		if not duplicate then
 			table.insert(responses, arg2);
+			CEPGP_SendAddonMsg(arg2.."-distributing-"..distributing);
 			local EP, GP = nil;
 			local inGuild = false;
 			if tContains(roster, arg2, true) then
@@ -78,7 +81,7 @@ function CEPGP_OnEvent()
 				end
 				SendChatMessage(arg2 .. " (" .. class .. ") needs. (Non-guild member)", RAID, LANGUAGE);
 			end
-			CEPGP_UpdateLootScrollBar();
+			--CEPGP_UpdateLootScrollBar();
 		end
 	elseif event == "CHAT_MSG_WHISPER" and arg1 == "!info" then
 		if getGuildInfo(arg2) ~= nil then
@@ -202,27 +205,74 @@ function CEPGP_OnEvent()
 end
 
 function CEPGP_IncAddonMsg(message, sender)
-	local s1, s2, s3, s4 = CEPGP_strSplit(message, "-");
-	if s1 == "update" then
-		GuildRoster();
-	elseif s1 == "version" then
-		local ver2 = string.gsub(VERSION, "%.", ",");
-		local v1, v2, v3 = CEPGP_strSplit(ver2..",", ",");
-		local nv1, nv2, nv3 = CEPGP_strSplit(s2, ",");
-		local s5 = (nv1.."."..nv2.."."..nv3)
-		outMessage = "Your addon is out of date. Version " .. s5 .. " is now available for download at https://github.com/Alumian/CEPGP"
-		if v1 > v1 then
-			CEPGP_print(outMessage);
-		elseif nv1 == v1 and nv2 > v2 then
-			CEPGP_print(outMessage);
-		elseif nv1 == v1 and nv2 == v2 and nv3 > v3 then
-			CEPGP_print(outMessage);
+	if string.find(message, "distributing") and string.find(message, UnitName("player")) then
+		local name = UnitName("player");
+		local id = string.sub(message, string.find(message, name)+string.len(name)+14);
+		_, _, _, _, _, _, _, slot = GetItemInfo(id);
+		local slotName = string.sub(slot, 9);
+		local slotid, slotid2 = slotNameToId(slotName);
+		local currentItem = GetInventoryItemLink("player", slotid);
+		local currentItem2;
+		if slotid2 then
+			currentItem2 = GetInventoryItemLink("player", slotid2);
+		end
+		local itemID;
+		local itemID2;
+		if currentItem then
+			itemID = getItemId(getItemString(currentItem));
+			itemID2 = getItemId(getItemString(currentItem2));
+		else
+			itemID = "noitem";
+		end
+		if itemID2 then
+			CEPGP_SendAddonMsg(sender.."-receiving-"..itemID.." "..itemID2);
+		else
+			CEPGP_SendAddonMsg(sender.."-receiving-"..itemID);
+		end
+	elseif string.find(message, "receiving") and string.find(message, UnitName("player")) then
+		local itemID;
+		local itemID2;
+		if string.find(message, " ") then
+			itemID = string.sub(message, string.find(message, "receiving")+10, string.find(message, " "));
+			itemID2 = string.sub(message, string.find(message, " ")+1);
+		else
+			itemID = string.sub(message, string.find(message, "receiving")+10);
+		end
+		if itemID == "noitem" then
+			CEPGP_UpdateLootScrollBar();
+		else
+			local name, iString = GetItemInfo(itemID);
+			if itemID2 then
+				local name2, iString2 = GetItemInfo(itemID2);
+				itemsTable[table.getn(itemsTable)+1] = {sender, iString .. "[" .. name .. "]", iString2 .. "[" .. name2 .. "]"};
+			else
+				itemsTable[table.getn(itemsTable)+1] = {sender, iString .. "[" .. name .. "]"};
+			end
+			CEPGP_UpdateLootScrollBar();
+		end
+	else
+		local s1, s2, s3, s4 = CEPGP_strSplit(message, "-");
+		if s1 == "update" then
+			GuildRoster();
+		elseif s1 == "version" then
+			local ver2 = string.gsub(VERSION, "%.", ",");
+			local v1, v2, v3 = CEPGP_strSplit(ver2..",", ",");
+			local nv1, nv2, nv3 = CEPGP_strSplit(s2, ",");
+			local s5 = (nv1.."."..nv2.."."..nv3)
+			outMessage = "Your addon is out of date. Version " .. s5 .. " is now available for download at https://github.com/Alumian/CEPGP"
+			if v1 > v1 then
+				CEPGP_print(outMessage);
+			elseif nv1 == v1 and nv2 > v2 then
+				CEPGP_print(outMessage);
+			elseif nv1 == v1 and nv2 == v2 and nv3 > v3 then
+				CEPGP_print(outMessage);
+			end
 		end
 	end
 end
 
 function CEPGP_SendAddonMsg(message)
-	SendAddonMessage("CEPGP", message, "GUILD");
+	SendAddonMessage("CEPGP", message, "RAID");
 end
 
 function CEPGP_UpdateLootScrollBar()
@@ -239,6 +289,7 @@ function CEPGP_UpdateLootScrollBar()
 	local colour;
     t = {};
     tSize = table.getn(responses);
+	GuildRoster();
 	for x = 1, tSize do
 		name = responses[x]
 		for i = 1, GetNumRaidMembers() do
@@ -269,6 +320,7 @@ function CEPGP_UpdateLootScrollBar()
 			[6] = GP,
 			[7] = PR
 			}
+		rank = nil;
 	end
 	t = tSort(t, criteria)
     FauxScrollFrame_Update(DistributeScrollFrame, tSize, 10, 120);
@@ -284,11 +336,27 @@ function CEPGP_UpdateLootScrollBar()
 				EP = t[yoffset][5];
 				GP = t[yoffset][6];
 				PR = t[yoffset][7];
+				local iString;
+				local iString2;
+				local tex;
+				local tex2;
+				for i = 1, table.getn(itemsTable), 1 do
+					if itemsTable[i][1] == name then
+						iString = itemsTable[i][2].."|r";
+						_, _, _, _, _, _, _, _, tex = GetItemInfo(iString);
+						if itemsTable[i][3] then
+							iString2 = itemsTable[i][3].."|r";
+							_, _, _, _, _, _, _, _, tex2 = GetItemInfo(iString2);
+						end
+					end
+				end
 				if class then
 					colour = RAID_CLASS_COLORS[string.upper(class)];
 				else
 					colour = RAID_CLASS_COLORS["WARRIOR"];
 				end
+				tex = {bgFile = tex,};
+				tex2 = {bgFile = tex2,};
                 getglobal("LootDistButton" .. y .. "Info"):SetText(name);
                 getglobal("LootDistButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "Class"):SetText(class);
@@ -302,6 +370,28 @@ function CEPGP_UpdateLootScrollBar()
 				getglobal("LootDistButton" .. y .. "PR"):SetText(math.floor((EP/GP)*100)/100);
                 getglobal("LootDistButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y):Show();
+				if iString then
+					getglobal("LootDistButton" .. y .. "Tex"):SetBackdrop(tex);
+					getglobal("LootDistButton" .. y .. "Tex"):SetScript('OnEnter', function()	
+																			GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT")
+																			GameTooltip:SetHyperlink(iString)
+																			GameTooltip:Show()
+																		end);
+					getglobal("LootDistButton" .. y .. "Tex"):SetScript('OnLeave', function()
+																			GameTooltip:Hide()
+																		end);
+				end
+				if iString2 then
+					getglobal("LootDistButton" .. y .. "Tex2"):SetBackdrop(tex2);
+					getglobal("LootDistButton" .. y .. "Tex2"):SetScript('OnEnter', function()	
+																			GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT")
+																			GameTooltip:SetHyperlink(iString2)
+																			GameTooltip:Show()
+																		end);
+					getglobal("LootDistButton" .. y .. "Tex2"):SetScript('OnLeave', function()
+																			GameTooltip:Hide()
+																		end);				
+				end
 			end
         else
             getglobal("LootDistButton" .. y):Hide();
@@ -743,10 +833,6 @@ function LootFrame_Update()
 	populateFrame(_, items, numLootItems);
 end
 
-CEPGPSettings = {"CHANNEL"};
-
-local frame = CEPGP_frame
-
 SLASH_ARG1 = "/cepgp";
 function SlashCmdList.ARG(msg, editbox)
 	
@@ -967,6 +1053,7 @@ end
 	Calls for raid members to whisper for items
 ]]
 function distribute(link, x)
+	itemsTable = {};
 	local leader = false;
 	local player = GetUnitName("player");
 	if tContains(roster, player, true) then
@@ -977,11 +1064,14 @@ function distribute(link, x)
 	if isML() == 0 then
 		local iString = getItemString(link);
 		local name, _, _, _, _, _, _, _, tex = GetItemInfo(iString);
+		local id = getItemId(iString);
+		distributing = id;
 		tex = {bgFile = tex,};
+		
 		gp = _G[mode..'itemGP'..x]:GetText();
 		responses = {};
 		CEPGP_UpdateLootScrollBar();
-		local rank;
+		local rank = 0;
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("player") == GetRaidRosterInfo(i) then
 				_, rank = GetRaidRosterInfo(i);
@@ -1019,9 +1109,59 @@ function checkEPGP(note)
 end
 
 function getItemString(link)
+	if not link then
+		return nil;
+	end
 	local itemString = string.find(link, "item[%-?%d:]+");
 	itemString = strsub(link, itemString, string.len(link)-(string.len(link)-2)-6);
 	return itemString;
+end
+
+function getItemId(iString)
+	if not iString then
+		return nil;
+	end
+	local itemString = string.sub(iString, 6, string.len(iString)-1)--"^[%-?%d:]+");
+	return string.sub(itemString, 1, string.find(itemString, ":")-1);
+end
+
+function slotNameToId(name)
+	if name == nil then
+		return nil
+	end
+	if name == "HEAD" then
+		return 1;
+	elseif name == "NECK" then
+		return 2;
+	elseif name == "SHOULDER" then
+		return 3;
+	elseif name == "CHEST" or name == "ROBE" then
+		return 5;
+	elseif name == "WAIST" then
+		return 6;
+	elseif name == "LEGS" then
+		return 7;
+	elseif name == "FEET" then
+		return 8;
+	elseif name == "WRIST" then
+		return 9;
+	elseif name == "HAND" then
+		return 10;
+	elseif name == "FINGER" then
+		return 11, 12;
+	elseif name == "TRINKET" then
+		return 13, 14;
+	elseif name == "CLOAK" then
+		return 15;
+	elseif name == "WEAPONMAINHAND" then
+		return 16;
+	elseif name == "WEAPONOFFHAND" or name == "SHIELD" or name == "HOLDABLE" then
+		return 17;
+	elseif name == "RANGED" or name == "RANGEDRIGHT" then
+		return 18;
+	else
+		CEPGP_print(name);
+	end
 end
 
 --[[resetAll()

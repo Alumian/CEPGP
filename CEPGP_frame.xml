@@ -13,6 +13,30 @@
 			<AbsDimension x="360" y="15"/>
 		</Size>
 		<Frames>
+			<Button name="$parentTex">
+				<Size>
+					<AbsDimension x="15" y="15" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="340" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentTex2">
+				<Size>
+					<AbsDimension x="15" y="15" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="357.5" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
 		</Frames>
 		<Layers>
 			<Layer level="BORDER">
@@ -56,7 +80,7 @@
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 							<Offset>
-								<AbsDimension x="289" y="0"/>
+								<AbsDimension x="295" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -65,7 +89,7 @@
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 							<Offset>
-								<AbsDimension x="329" y="0"/>
+								<AbsDimension x="320" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
