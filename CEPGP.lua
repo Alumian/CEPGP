@@ -62,6 +62,10 @@ function CEPGP_OnEvent()
 		end
 		if not duplicate then
 			table.insert(responses, arg2);
+			local _, _, _, _, _, _, _, slot = GetItemInfo(distributing);
+			if not GetItemInfo(distributing) then
+				CEPGP_print("Unable to retrieve item information from the server. You will not see what the recipients are currently using", true);
+			end
 			CEPGP_SendAddonMsg(arg2.."-distributing-"..distributing);
 			local EP, GP = nil;
 			local inGuild = false;
@@ -207,26 +211,34 @@ end
 function CEPGP_IncAddonMsg(message, sender)
 	if string.find(message, "distributing") and string.find(message, UnitName("player")) then
 		local name = UnitName("player");
-		local id = string.sub(message, string.find(message, name)+string.len(name)+14);
-		_, _, _, _, _, _, _, slot = GetItemInfo(id);
-		local slotName = string.sub(slot, 9);
-		local slotid, slotid2 = slotNameToId(slotName);
-		local currentItem = GetInventoryItemLink("player", slotid);
-		local currentItem2;
-		if slotid2 then
-			currentItem2 = GetInventoryItemLink("player", slotid2);
-		end
-		local itemID;
-		local itemID2;
-		if currentItem then
-			itemID = getItemId(getItemString(currentItem));
-			itemID2 = getItemId(getItemString(currentItem2));
+		local id = string.sub(message, string.find(message, "distributing")+13);
+		local _, _, _, _, _, _, _, slot = GetItemInfo(id);
+		if slot then
+			local slotName = string.sub(slot, 9);
+			local slotid, slotid2 = slotNameToId(slotName);
+			local currentItem;
+			if slotid then
+				currentItem = GetInventoryItemLink("player", slotid);
+			end
+			local currentItem2;
+			if slotid2 then
+				currentItem2 = GetInventoryItemLink("player", slotid2);
+			end
+			local itemID;
+			local itemID2;
+			if currentItem then
+				itemID = getItemId(getItemString(currentItem));
+				itemID2 = getItemId(getItemString(currentItem2));
+			else
+				itemID = "noitem";
+			end
+			if itemID2 then
+				CEPGP_SendAddonMsg(sender.."-receiving-"..itemID.." "..itemID2);
+			else
+				CEPGP_SendAddonMsg(sender.."-receiving-"..itemID);
+			end
 		else
 			itemID = "noitem";
-		end
-		if itemID2 then
-			CEPGP_SendAddonMsg(sender.."-receiving-"..itemID.." "..itemID2);
-		else
 			CEPGP_SendAddonMsg(sender.."-receiving-"..itemID);
 		end
 	elseif string.find(message, "receiving") and string.find(message, UnitName("player")) then
@@ -239,14 +251,29 @@ function CEPGP_IncAddonMsg(message, sender)
 			itemID = string.sub(message, string.find(message, "receiving")+10);
 		end
 		if itemID == "noitem" then
+			--itemsTable[table.getn(itemsTable)+1] = {sender};
+			CEPGP_print("Unable to retrieve the item in slot for " .. sender);
 			CEPGP_UpdateLootScrollBar();
 		else
 			local name, iString = GetItemInfo(itemID);
 			if itemID2 then
 				local name2, iString2 = GetItemInfo(itemID2);
-				itemsTable[table.getn(itemsTable)+1] = {sender, iString .. "[" .. name .. "]", iString2 .. "[" .. name2 .. "]"};
+				if name == nil then
+					CEPGP_print("Could not retrieve item information from the server for item " .. itemID .. " from player " .. sender, true);
+					if name2 == nil then
+						CEPGP_print("Could not retrieve item information from the server for item " .. itemID2 .. " from player " .. sender, true);
+					else
+						itemsTable[table.getn(itemsTable)+1] = {sender, iString2 .. "[" .. name2 .. "]"};
+					end
+				else
+					itemsTable[table.getn(itemsTable)+1] = {sender, iString .. "[" .. name .. "]", iString2 .. "[" .. name2 .. "]"};
+				end
 			else
-				itemsTable[table.getn(itemsTable)+1] = {sender, iString .. "[" .. name .. "]"};
+				if name == nil then
+					CEPGP_print("Could not retrieve item information from the server for item " .. itemID .. " from player " .. sender, true);
+				else
+					itemsTable[table.getn(itemsTable)+1] = {sender, iString .. "[" .. name .. "]"};
+				end
 			end
 			CEPGP_UpdateLootScrollBar();
 		end
@@ -341,7 +368,7 @@ function CEPGP_UpdateLootScrollBar()
 				local tex;
 				local tex2;
 				for i = 1, table.getn(itemsTable), 1 do
-					if itemsTable[i][1] == name then
+					if itemsTable[i][1] == name and itemsTable[i][2] ~= nil then
 						iString = itemsTable[i][2].."|r";
 						_, _, _, _, _, _, _, _, tex = GetItemInfo(iString);
 						if itemsTable[i][3] then

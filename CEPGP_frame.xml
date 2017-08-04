@@ -80,7 +80,7 @@
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 							<Offset>
-								<AbsDimension x="295" y="0"/>
+								<AbsDimension x="285" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -89,7 +89,7 @@
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 							<Offset>
-								<AbsDimension x="320" y="0"/>
+								<AbsDimension x="315" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -306,9 +306,9 @@
                     <AbsDimension x="100" y="21" />
                 </Size>
                 <Anchors>
-                    <Anchor point="TOPRIGHT" relativeTo="CEPGP_frame">
+                    <Anchor point="TOPLEFT" relativeTo="CEPGP_frame">
                         <Offset>
-                            <AbsDimension x="-12.5" y="-35"/>
+                            <AbsDimension x="10" y="-35"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -1228,7 +1228,7 @@
 						<Anchors>
 							<Anchor point="TOPRIGHT">
 								<Offset>
-									<AbsDimension x="-15" y="10" />
+									<AbsDimension x="-10" y="10" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1585,7 +1585,7 @@
 						<Anchors>
 							<Anchor point="RIGHT" relativeTo="CEPGP_distribute_raid_EP">
 								<Offset>
-									<AbsDimension x="45" y="0" />
+									<AbsDimension x="35" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
