@@ -239,7 +239,7 @@ function CEPGP_IncAddonMsg(message, sender)
 			end
 		elseif slot == "" then
 			CEPGP_SendAddonMsg(sender.."-receiving-noslot");
-		else
+		elseif itemID == "noitem" then
 			CEPGP_SendAddonMsg(sender.."-receiving-noitem");
 		end
 	elseif string.find(message, "receiving") and string.find(message, UnitName("player")) then
@@ -282,7 +282,6 @@ function CEPGP_IncAddonMsg(message, sender)
 			CEPGP_UpdateLootScrollBar();
 		end
 	elseif message == "version-check" then
-		--CEPGP_print(sender .. "_version-check " .. VERSION);
 		CEPGP_SendAddonMsg(sender .. "_version-check " .. VERSION);
 	elseif string.find(message, UnitName("player").."_version-check") then
 		CEPGP_print(sender .. " is running version " .. string.sub(message, string.find(message, " ")+1));
@@ -900,7 +899,10 @@ function SlashCmdList.ARG(msg, editbox)
 	elseif msg == "check" then
 		CEPGP_print("Retrieving client information...");
 		CEPGP_SendAddonMsg("version-check");
-		
+	
+	elseif msg == "version" then
+		CEPGP_print("Version: " .. VERSION);
+	
 	elseif strfind(msg, "currentchannel") then
 		CEPGP_print("Current channel to report: " .. getCurChannel());
 		
@@ -1200,7 +1202,7 @@ function slotNameToId(name)
 		return 13, 14;
 	elseif name == "CLOAK" then
 		return 15;
-	elseif name == "2HWEAPON" or name == "WEAPONMAINHAND" or name == "WEAPONOFFHAND" or name == "SHIELD" or name == "HOLDABLE" then
+	elseif name == "2HWEAPON" or name == "WEAPON" or name == "WEAPONMAINHAND" or name == "WEAPONOFFHAND" or name == "SHIELD" or name == "HOLDABLE" then
 		return 16, 17;
 	elseif name == "RANGED" or name == "RANGEDRIGHT" then
 		return 18;
