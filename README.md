@@ -1,4 +1,7 @@
 # Classic-EPGP
+**Do not redistribute this addon. Only share a link to this github page**
+
+
 An addon designed to handle your guild's EPGP standings by storing the respective values in your Officer Notes. Another primary function of the addon is to handle loot moderation which you must be the master looter to utilise.
 
 For this addon to work, anyone using the addon must be able to at the very least view Officer Notes. To adjust EP and GP values you must be able to edit Officer Notes.
@@ -15,9 +18,11 @@ To install:
   2. Extract it to ../Interface/AddOns/ 
   3. Rename the extracted folder from CEPGP-master to CEPGP
 
-**Please note:**
-This addon was written by my colleague Reed and myself. It was designed for use by our guild and as such, we have adjusted the GP formula to suit the needs of our guild. If you need assistance in adjusting the formula for your own guild, contact me on the Crestfall private server forums.
+**Note:**
+Automatic retrieval of a recipient's item they currently have in slot when they whisper you !need has been added. This is only possible **if the recipient has the item in their game cache**. This is a restriction enforced by the 1.12.1 API.
 
 Patch Version: 1.12.1
+
 Build Number: 5875
-Author: Alumian on Crestfall
+
+Author: Alumian \<Eidolon> on Crestfall
