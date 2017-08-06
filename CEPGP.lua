@@ -7,7 +7,7 @@ CHANNEL = nil;
 MOD = nil;
 COEF = nil;
 FORMULA = nil;
-VERSION = "1.1.3";
+VERSION = "1.1.4";
 AUTOEP = {};
 EPVALS = {};
 debugMode = false;
@@ -21,6 +21,7 @@ frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, 
 LANGUAGE = GetDefaultLanguage("player");
 distID = nil;
 distSlot = nil;
+vInfo = {};
 
 
 --[[ Stock function backups ]]--
@@ -30,6 +31,7 @@ CFEvent = ChatFrame_OnEvent;
 
 function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
+		getglobal("CEPGP_version_number"):SetText("Running Version: " .. VERSION);
 		local ver2 = string.gsub(VERSION, "%.", ",");
 		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
 		if CHANNEL == nil then
@@ -138,6 +140,8 @@ function CEPGP_OnEvent()
 			ShowUIPanel(CEPGP_guild);
 			populateFrame();
 		end
+		vInfo = {};
+		CEPGP_UpdateVersionScrollBar();
 		CEPGP_UpdateRaidScrollBar();
 	elseif event == "CHAT_MSG_COMBAT_HOSTILE_DEATH" then
 		if not strfind(arg1, " dies") then
@@ -281,10 +285,11 @@ function CEPGP_IncAddonMsg(message, sender)
 			end
 			CEPGP_UpdateLootScrollBar();
 		end
+	elseif string.find(message, UnitName("player").."versioncheck") then
+		vInfo[sender] = string.sub(message, string.find(message, " ")+1);
+		CEPGP_UpdateVersionScrollBar();
 	elseif message == "version-check" then
-		CEPGP_SendAddonMsg(sender .. "_version-check " .. VERSION);
-	elseif string.find(message, UnitName("player").."_version-check") then
-		CEPGP_print(sender .. " is running version " .. string.sub(message, string.find(message, " ")+1));
+		CEPGP_SendAddonMsg(sender .. "versioncheck " .. VERSION);
 	elseif string.find(message, "version") then
 		local s1, s2, s3, s4 = CEPGP_strSplit(message, "-");
 		if s1 == "update" then
@@ -303,6 +308,8 @@ function CEPGP_IncAddonMsg(message, sender)
 				CEPGP_print(outMessage);
 			end
 		end
+	else
+		CEPGP_print(message);
 	end
 end
 
@@ -585,6 +592,65 @@ function CEPGP_UpdateRaidScrollBar()
 			end
         else
             getglobal("RaidButton" .. y):Hide();
+        end
+    end
+end
+
+function CEPGP_UpdateVersionScrollBar()
+    local x, y;
+    local yoffset;
+    local t;
+    local tSize;
+    local name;
+	local colour;
+	local version;
+	local online;
+	t = {};
+    tSize = GetNumRaidMembers();
+	if tSize == 0 then
+		for y = 1, 18, 1 do
+			getglobal("versionButton" .. y):Hide();
+		end
+	end
+	for x = 1, tSize do
+		name, _, group, _, class, _, _, online = GetRaidRosterInfo(x);
+		t[x] = {
+			[1] = name,
+			[2] = class,
+			[3] = online
+		}
+	end
+    FauxScrollFrame_Update(RaidScrollFrame, tSize, 18, 240);
+    for y = 1, 18, 1 do
+        yoffset = y + FauxScrollFrame_GetOffset(RaidScrollFrame);
+        if (yoffset <= tSize) then
+            if not tContains(t, yoffset, true) then
+                getglobal("RaidButton" .. y):Hide();
+            else
+				t2 = t[yoffset];
+				name = t2[1];
+				class = t2[2];
+				online = t2[3];
+				if vInfo[name] then
+					version = vInfo[name];
+				elseif online == 1 then
+					version = "Addon not running";
+				else
+					version = "Offline";
+				end
+				if class then
+					colour = RAID_CLASS_COLORS[string.upper(class)];
+				else
+					colour = RAID_CLASS_COLORS["WARRIOR"];
+				end
+				getglobal("versionButton" .. y .. "name"):SetText(name);
+				getglobal("versionButton" .. y .. "name"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("versionButton" .. y .. "version"):SetText(version);
+				getglobal("versionButton" .. y .. "version"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("versionButton" .. y):Show();
+			end
+        else
+            getglobal("versionButton" .. y):Hide();
         end
     end
 end
@@ -881,27 +947,16 @@ function SlashCmdList.ARG(msg, editbox)
 		CEPGP_print("/cepgp |cFF80FF80show|r - |cFFFF8080Manually shows the CEPGP window|r");
 		CEPGP_print("/cepgp |cFF80FF80debug|r - |cFFFF8080Toggles debug mode|r");
 		CEPGP_print("/cepgp |cFF80FF80setDefaultChannel channel|r - |cFFFF8080Sets the default channel to send confirmation messages. Default is Guild|r");
-		CEPGP_print("/cepgp |cFF80FF80check|r - |cFFFF8080Checks the version of the addon everyone in your raid is running|r");
+		CEPGP_print("/cepgp |cFF80FF80version|r - |cFFFF8080Checks the version of the addon everyone in your raid is running|r");
 		
 	elseif msg == "show" then
 		populateFrame();
 		ShowUIPanel(CEPGP_frame);
-		
-	--[[elseif strfind(msg, "addgp") then
-		local method = {};
-		local player = string.gsub(msg, "addgp", "");
-		player = string.gsub(player, " ", "", 1);
-		local amount = tonumber(strsub(player, strfind(player, " ")+1, string.len(player)));
-		player = strsub(player, 1, strfind(player, " "));
-		player = string.gsub(player, " ", "");
-		addGP(player, amount);]]
-		
-	elseif msg == "check" then
-		CEPGP_print("Retrieving client information...");
-		CEPGP_SendAddonMsg("version-check");
 	
 	elseif msg == "version" then
-		CEPGP_print("Version: " .. VERSION);
+		vInfo = {};
+		CEPGP_SendAddonMsg("version-check");
+		ShowUIPanel(CEPGP_version);
 	
 	elseif strfind(msg, "currentchannel") then
 		CEPGP_print("Current channel to report: " .. getCurChannel());

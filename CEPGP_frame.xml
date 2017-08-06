@@ -257,6 +257,44 @@
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
 	</Button>
+	<Button name="versionButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="360" y="15"/>
+		</Size>
+		<Frames>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentname" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="45" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentversion" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="-120" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
 	
 	<Frame name="CEPGP_frame" parent="UIParent" hidden="true" enableMouse="true" toplevel="true" movable="true">
 		<Size>
@@ -4944,7 +4982,332 @@
 			</OnEvent>
 		</Scripts>
 	</Frame>
-
+	
+	<Frame name="CEPGP_version" enableMouse="true" toplevel="true" hidden="true">
+		<Size>
+			<AbsDimension x="400" y="450" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="-30" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<Color r="0" g="0" b="0" />
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Frames>
+			<Frame name="CEPGP_version_scrollframe">
+				<Size>
+					<AbsDimension x="360" y="300"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CEPGP_version" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="10" y="-75"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<ScrollFrame name="versionScrollFrame" inherits="FauxScrollFrameTemplate">
+						<Size>
+							<AbsDimension x="360" y="350"/>
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT">
+								<Offset>
+									<AbsDimension x="-7" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnVerticalScroll>
+								FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateversionScrollBar); 
+							</OnVerticalScroll>
+							<OnShow>
+								CEPGP_UpdateVersionScrollBar();
+							</OnShow>
+						</Scripts>
+					</ScrollFrame>
+					<Button name="versionButton1" inherits="versionButtonTemplate" id="1" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="5" y="-6"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton2" inherits="versionButtonTemplate" id="2" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton3" inherits="versionButtonTemplate" id="3" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton4" inherits="versionButtonTemplate" id="4" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton5" inherits="versionButtonTemplate" id="5" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton6" inherits="versionButtonTemplate" id="6" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton5" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton7" inherits="versionButtonTemplate" id="7" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton6" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton8" inherits="versionButtonTemplate" id="8" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton7" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton9" inherits="versionButtonTemplate" id="9" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton8" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton10" inherits="versionButtonTemplate" id="10" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton9" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton11" inherits="versionButtonTemplate" id="11" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton10" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton12" inherits="versionButtonTemplate" id="12" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton11" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton13" inherits="versionButtonTemplate" id="13" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton12" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton14" inherits="versionButtonTemplate" id="14" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton13" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton15" inherits="versionButtonTemplate" id="15" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton14" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton16" inherits="versionButtonTemplate" id="16" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton15" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton17" inherits="versionButtonTemplate" id="17" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton16" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="versionButton18" inherits="versionButtonTemplate" id="18" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="versionButton17" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Scripts>
+					<OnLoad>
+						this:SetBackdropColor(0.1, 0.1, 0.1);
+					</OnLoad>
+				</Scripts>
+				</Frames>
+			</Frame>
+			<Button name="CEPGP_version_name" inherits="CEPGPHeaderButton" text="Name">
+				<Size>
+					<AbsDimension x="35" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="60" y="-50" />
+							<!--<AbsDimension x="40" y="0" />-->
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CEPGP_version_version" inherits="CEPGPHeaderButton" text="Version">
+				<Size>
+					<AbsDimension x="50" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="CEPGP_version_name">
+						<Offset>
+							<AbsDimension x="200" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="CEPGP_version_close" inherits="GameMenuButtonTemplate" text="Close">
+				<Size>
+					<AbsDimension x="100" y="21" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="10" y="10" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_version);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CEPGP_version_check" inherits="GameMenuButtonTemplate" text="Get Raid Addon Status">
+				<Size>
+					<AbsDimension x="160" y="21" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-9" y="10" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						vInfo = {};
+						CEPGP_SendAddonMsg("version-check");
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="CEPGP_version_mode" inherits="GameFontNormal" text="Current View: Version">
+					<Color r="1" g="1" b="1"/>
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-30" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_version_number" inherits="GameFontNormal">
+					<Color r="1" g="1" b="1"/>
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_version_mode">
+							<Offset>
+								<AbsDimension x="0" y="0" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				CEPGP_frame:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				CEPGP_frame:StopMovingOrSizing()
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	
 	<Frame name="CEPGP_distribute_popup" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true">
 		<Size>
 			<AbsDimension x="300" y="100"/>
