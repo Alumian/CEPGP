@@ -7,7 +7,7 @@ CHANNEL = nil;
 MOD = nil;
 COEF = nil;
 FORMULA = nil;
-VERSION = "1.1.4";
+VERSION = "1.1.5";
 AUTOEP = {};
 EPVALS = {};
 debugMode = false;
@@ -308,8 +308,6 @@ function CEPGP_IncAddonMsg(message, sender)
 				CEPGP_print(outMessage);
 			end
 		end
-	else
-		CEPGP_print(message);
 	end
 end
 
@@ -1259,10 +1257,8 @@ function slotNameToId(name)
 		return 15;
 	elseif name == "2HWEAPON" or name == "WEAPON" or name == "WEAPONMAINHAND" or name == "WEAPONOFFHAND" or name == "SHIELD" or name == "HOLDABLE" then
 		return 16, 17;
-	elseif name == "RANGED" or name == "RANGEDRIGHT" then
+	elseif name == "RANGED" or name == "RANGEDRIGHT" or name == "RELIC" then
 		return 18;
-	else
-		CEPGP_print(name);
 	end
 end
 
@@ -1548,7 +1544,7 @@ function calcGP(link)
 			slot = 1.5;
 		elseif slot == "CHEST" or slot == "ROBE" then
 			slot = 1.55;
-		elseif slot == "WEAPONMAINHAND" or slot == "WEAPON" or slot == "WEAPONOFFHAND" or slot == "SHIELD" or slot == "RANGED" or slot == "RANGEDRIGHT" then
+		elseif slot == "WEAPONMAINHAND" or slot == "WEAPON" or slot == "WEAPONOFFHAND" or slot == "SHIELD" or slot == "RANGED" or slot == "RANGEDRIGHT" or slot == "RELIC" then
 			slot = 1.65;
 		elseif slot == "2HWEAPON" then
 			slot = 2;
