@@ -20,7 +20,7 @@ To install:
   3. Rename the extracted folder from CEPGP-master to CEPGP
 
 **Note:**
-Automatic retrieval of a recipient's item they currently have in slot when they whisper you !need has been added. This is only possible **if the recipient has the item in their game cache**. This is a restriction enforced by the 1.12.1 API.
+Automatic retrieval of a recipient's item they currently have in slot when they whisper you !need has been added. This is only possible **if the loot master has the item that the recipient is wearing, in their game cache**. This is a restriction enforced by the 1.12.1 API.
 
 Patch Version: 1.12.1
 
