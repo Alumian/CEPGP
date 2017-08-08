@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.1.6";
+VERSION = "1.2.0";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -56,7 +56,7 @@ function CEPGP_OnEvent()
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
-	elseif event == "CHAT_MSG_WHISPER" and arg1 == "!need" and CEPGP_distribute:IsVisible() == 1 then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and CEPGP_distribute:IsVisible() == 1 then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -64,6 +64,7 @@ function CEPGP_OnEvent()
 			end
 		end
 		if not duplicate then
+			CEPGP_SendAddonMsg("!need,"..arg2);
 			table.insert(responses, arg2);
 			local _, _, _, _, _, _, _, slot = GetItemInfo(distID);
 			if not slot then
@@ -88,7 +89,6 @@ function CEPGP_OnEvent()
 				end
 				SendChatMessage(arg2 .. " (" .. class .. ") needs. (Non-guild member)", RAID, LANGUAGE);
 			end
-			--CEPGP_UpdateLootScrollBar();
 		end
 	elseif event == "CHAT_MSG_WHISPER" and arg1 == "!info" then
 		if getGuildInfo(arg2) ~= nil then
@@ -97,12 +97,12 @@ function CEPGP_OnEvent()
 		end
 	elseif event == "GUILD_ROSTER_UPDATE" then
 		SetGuildRosterShowOffline(true);
-		if CanEditOfficerNote() == 1 then --[[ Hides context sensitive options if player cannot edit officer notes ]]--
+		if CanEditOfficerNote() == 1 then
 			ShowUIPanel(CEPGP_guild_add_EP);
 			ShowUIPanel(CEPGP_guild_decay);
 			ShowUIPanel(CEPGP_guild_reset);
 			ShowUIPanel(CEPGP_raid_add_EP);
-		else
+		else --[[ Hides context sensitive options if player cannot edit officer notes ]]--
 			HideUIPanel(CEPGP_guild_add_EP);
 			HideUIPanel(CEPGP_guild_decay);
 			HideUIPanel(CEPGP_guild_reset);
@@ -126,6 +126,7 @@ function CEPGP_OnEvent()
 			CEPGP_UpdateRaidScrollBar();
 		end
 	elseif event == "RAID_ROSTER_UPDATE" then
+		GuildRoster();
 		if UnitInRaid("player") then
 			ShowUIPanel(CEPGP_button_raid);
 			ShowUIPanel(CEPGP_button_loot_dist);
@@ -217,7 +218,7 @@ function CEPGP_IncAddonMsg(message, sender)
 	if string.find(message, "distributing") and string.find(message, UnitName("player")) then
 		local name = UnitName("player");
 		local slot = string.sub(message, string.find(message, "~")+1);
-		if string.len(slot) > 0 then
+		if string.len(slot) > 0 and slot ~= nil then
 			local slotName = string.sub(slot, 9);
 			local slotid, slotid2 = slotNameToId(slotName);
 			local currentItem;
@@ -256,7 +257,7 @@ function CEPGP_IncAddonMsg(message, sender)
 			itemID = string.sub(message, string.find(message, "receiving")+10);
 		end
 		if itemID == "noitem" then
-			CEPGP_print("Unable to retrieve the item in slot for " .. sender .. " or they don't have an item in that slot");
+			--CEPGP_print("Unable to retrieve the item in slot for " .. sender .. " or they don't have an item in that slot");
 			itemsTable[sender] = {};
 			CEPGP_UpdateLootScrollBar();
 		elseif itemID == "noslot" then
@@ -267,9 +268,9 @@ function CEPGP_IncAddonMsg(message, sender)
 			if itemID2 then
 				local name2, iString2 = GetItemInfo(itemID2);
 				if name == nil then
-					CEPGP_print("Could not retrieve item information from the server for item " .. itemID .. " from player " .. sender, true);
+					--CEPGP_print("Could not retrieve item information from the server for item " .. itemID .. " from player " .. sender, true);
 					if name2 == nil then
-						CEPGP_print("Could not retrieve item information from the server for item " .. itemID2 .. " from player " .. sender, true);
+						--CEPGP_print("Could not retrieve item information from the server for item " .. itemID2 .. " from player " .. sender, true);
 					else
 						itemsTable[sender] = {iString2 .. "[" .. name2 .. "]"};
 					end
@@ -278,7 +279,7 @@ function CEPGP_IncAddonMsg(message, sender)
 				end
 			else
 				if name == nil then
-					CEPGP_print("Could not retrieve item information from the server for item " .. itemID .. " from player " .. sender, true);
+					--CEPGP_print("Could not retrieve item information from the server for item " .. itemID .. " from player " .. sender, true);
 				else
 					itemsTable[sender] = {iString .. "[" .. name .. "]"};
 				end
@@ -307,6 +308,27 @@ function CEPGP_IncAddonMsg(message, sender)
 			elseif nv1 == v1 and nv2 == v2 and nv3 > v3 then
 				CEPGP_print(outMessage);
 			end
+		end
+	elseif string.find(message, "RaidAssistLoot") and sender ~= UnitName("player") then
+		if string.find(message, "RaidAssistLootDist") then
+			local link = string.sub(message, 19, string.find(message, ",")-1);
+			local gp = string.sub(message, string.find(message, ",")+1, string.find(message, "\\")-1);
+			RaidAssistLootDist(link, gp);
+		else
+			RaidAssistLootClosed();
+		end
+	elseif string.find(message, "!need") and IsRaidOfficer() and sender ~= UnitName("player") then
+		local arg2 = string.sub(message, string.find(message, ",")+1);
+		table.insert(responses, arg2);
+		local slot = nil;
+		if distID then
+			_, _, _, _, _, _, _, slot = GetItemInfo(distID);
+		end
+		GuildRoster();
+		if slot then
+			CEPGP_SendAddonMsg(arg2.."-distributing-"..distID.."~"..distSlot);
+		else
+			CEPGP_SendAddonMsg(arg2.."-distributing-nil~nil");
 		end
 	end
 end
@@ -397,6 +419,7 @@ function CEPGP_UpdateLootScrollBar()
 				end
 				tex = {bgFile = tex,};
 				tex2 = {bgFile = tex2,};
+				getglobal("LootDistButton" .. y):Show();
                 getglobal("LootDistButton" .. y .. "Info"):SetText(name);
                 getglobal("LootDistButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "Class"):SetText(class);
@@ -409,7 +432,6 @@ function CEPGP_UpdateLootScrollBar()
                 getglobal("LootDistButton" .. y .. "GP"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "PR"):SetText(math.floor((EP/GP)*100)/100);
                 getglobal("LootDistButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
-				getglobal("LootDistButton" .. y):Show();
 				getglobal("LootDistButton" .. y .. "Tex"):SetBackdrop(tex);
 				getglobal("LootDistButton" .. y .. "Tex2"):SetBackdrop(tex2);
 				getglobal("LootDistButton" .. y .. "Tex"):SetScript('OnLeave', function()
@@ -528,6 +550,7 @@ function CEPGP_UpdateRaidScrollBar()
     tSize = GetNumRaidMembers();
 	for x = 1, tSize do
 		name, _, group, _, class = GetRaidRosterInfo(x);
+		local a = getGuildInfo(name);
 		if tContains(roster, name, true) then
 			rank = roster[name][3];
 			rankIndex = roster[name][4];
@@ -535,7 +558,7 @@ function CEPGP_UpdateRaidScrollBar()
 			EP, GP = getEPGP(offNote);
 			PR = math.floor((EP/GP)*100)/100;
 		end
-		if not rank then
+		if not roster[name] then
 			rank = "Not in Guild";
 			rankIndex = 10;
 			EP = 0;
@@ -858,8 +881,14 @@ function LootFrame_OnEvent(event)
 	if event == "LOOT_CLOSED" then
 		if mode == "loot" then
 			cleanTable();
+			if isML() == 0 then
+				CEPGP_SendAddonMsg("RaidAssistLootClosed");
+			end
 		end
 		HideUIPanel(CEPGP_distribute_popup);
+		if isML() == 0 then
+			HideUIPanel(CEPGP_loot_distributing);
+		end
 		HideUIPanel(CEPGP_button_loot_dist);
 		HideUIPanel(CEPGP_loot);
 		HideUIPanel(CEPGP_distribute);
@@ -870,7 +899,9 @@ function LootFrame_OnEvent(event)
 			toggleFrame(CEPGP_guild);
 		else
 			HideUIPanel(CEPGP_frame);
-			CEPGP_loot_distributing:Hide();
+			if isML() == 0 then
+				CEPGP_loot_distributing:Hide();
+			end
 		end
 		
 		if CEPGP_distribute:IsVisible() == 1 then
@@ -885,7 +916,73 @@ function LootFrame_OnEvent(event)
 		ShowUIPanel(CEPGP_button_loot_dist);
 	
 	elseif event == "LOOT_SLOT_CLEARED" then
+		if isML() == 0 then
+			CEPGP_SendAddonMsg("RaidAssistLootClosed");
+		end
 		LootFrame_Update();
+	end
+end
+
+function RaidAssistLootClosed()
+	if IsRaidOfficer() then
+		HideUIPanel(CEPGP_distribute_popup);
+		HideUIPanel(CEPGP_distribute);
+		HideUIPanel(CEPGP_loot_distributing);
+		local y = 1;
+		while _G["LootDistButton"..y] ~= nil do
+			_G["LootDistButton"..y]:Hide();
+			getglobal("LootDistButton" .. y):Show();
+			getglobal("LootDistButton" .. y .. "Info"):SetText("");
+			getglobal("LootDistButton" .. y .. "Class"):SetText("");
+			getglobal("LootDistButton" .. y .. "Rank"):SetText("");
+			getglobal("LootDistButton" .. y .. "EP"):SetText("");
+			getglobal("LootDistButton" .. y .. "GP"):SetText("");
+			getglobal("LootDistButton" .. y .. "PR"):SetText("");
+			getglobal("LootDistButton" .. y .. "Tex"):SetBackdrop(nil);
+			getglobal("LootDistButton" .. y .. "Tex2"):SetBackdrop(nil);
+			y = y + 1;
+		end
+	end
+end
+
+function RaidAssistLootDist(link, gp)
+	if IsRaidOfficer() then
+		local y = 1;
+		while _G["LootDistButton"..y] ~= nil do
+			_G["LootDistButton"..y]:Hide();
+			getglobal("LootDistButton" .. y):Show();
+			getglobal("LootDistButton" .. y .. "Info"):SetText("");
+			getglobal("LootDistButton" .. y .. "Class"):SetText("");
+			getglobal("LootDistButton" .. y .. "Rank"):SetText("");
+			getglobal("LootDistButton" .. y .. "EP"):SetText("");
+			getglobal("LootDistButton" .. y .. "GP"):SetText("");
+			getglobal("LootDistButton" .. y .. "PR"):SetText("");
+			getglobal("LootDistButton" .. y .. "Tex"):SetBackdrop(nil);
+			getglobal("LootDistButton" .. y .. "Tex2"):SetBackdrop(nil);
+			y = y + 1;
+		end
+		itemsTable = {};
+		local name, iString, _, _, _, _, _, slot, tex = GetItemInfo(getItemString(link));
+		distID = getItemId(iString);
+		distSlot = slot;
+		if not distID then
+			CEPGP_print("Item not found in game cache. You must see the item in-game before item info can be retrieved and CEPGP will not be able to retrieve what items recipients are wearing in that slot", true);
+		end
+		tex = {bgFile = tex,};
+		
+
+		responses = {};
+		ShowUIPanel(CEPGP_loot_distributing);
+		_G["CEPGP_distribute_item_name"]:SetText(link);
+		if iString then
+			_G["CEPGP_distribute_item_tex"]:SetScript('OnEnter', function() GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT") GameTooltip:SetHyperlink(iString) GameTooltip:Show() end);
+			_G["CEPGP_distribute_item_tex"]:SetBackdrop(tex);
+			_G["CEPGP_distribute_item_name_frame"]:SetScript('OnClick', function() SetItemRef(iString) end);
+		else
+			_G["CEPGP_distribute_item_tex"]:SetScript('OnEnter', function() end);
+		end
+		_G["CEPGP_distribute_item_tex"]:SetScript('OnLeave', function() GameTooltip:Hide() end);
+		_G["CEPGP_distribute_GP_value"]:SetText(gp);
 	end
 end
 
@@ -1155,13 +1252,6 @@ end
 ]]
 function distribute(link, x)
 	itemsTable = {};
-	local leader = false;
-	local player = GetUnitName("player");
-	if tContains(roster, player, true) then
-		if roster[player][4] == 0 then
-			leader = true;
-		end
-	end
 	if isML() == 0 then
 		local iString = getItemString(link);
 		local name, _, _, _, _, _, _, slot, tex = GetItemInfo(iString);
@@ -1173,6 +1263,7 @@ function distribute(link, x)
 		gp = _G[mode..'itemGP'..x]:GetText();
 		responses = {};
 		CEPGP_UpdateLootScrollBar();
+		CEPGP_SendAddonMsg("RaidAssistLootDist"..link..","..gp.."\\"..UnitName("player"));
 		local rank = 0;
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("player") == GetRaidRosterInfo(i) then

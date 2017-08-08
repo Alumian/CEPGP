@@ -89,7 +89,7 @@
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 							<Offset>
-								<AbsDimension x="315" y="0"/>
+								<AbsDimension x="307.5" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -102,7 +102,9 @@
 			</OnLoad>
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
-				CEPGP_ListButton_OnClick();
+				if isML() == 0 then
+					CEPGP_ListButton_OnClick();
+				end
 			</OnClick>
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
@@ -422,7 +424,7 @@
                     </OnClick>
                 </Scripts>
             </Button>
-			<Button name="CEPGP_button_loot_dist" inherits="GameMenuButtonTemplate" text="Loot Distribution">
+			<Button name="CEPGP_button_loot_dist" inherits="GameMenuButtonTemplate" text="Loot Distribution" hidden="true">
                 <Size>
                     <AbsDimension x="125" y="21" />
                 </Size>
@@ -468,6 +470,23 @@
                     </OnClick>
                 </Scripts>
             </Button>
+			<Button name="CEPGP_loot_distributing" inherits="GameMenuButtonTemplate" text="Distributing" hidden="true">
+				<Size>
+					<AbsDimension x="100" y="22" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="CEPGP_frame">
+						<Offset>
+							<AbsDimension x="-10" y="-35" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						toggleFrame("CEPGP_distribute");
+					</OnClick>
+				</Scripts>
+			</Button>
 			<Frame name="CEPGP_guild" enableMouse="true" toplevel="true" hidden="true">
 				<Size>
 					<AbsDimension x="400" y="450" />
@@ -1259,23 +1278,6 @@
 					</Layer>
 				</Layers>
 				<Frames>
-					<Button name="CEPGP_loot_distributing" inherits="GameMenuButtonTemplate" text="Distributing" hidden="true">
-						<Size>
-							<AbsDimension x="100" y="22" />
-						</Size>
-						<Anchors>
-							<Anchor point="TOPRIGHT">
-								<Offset>
-									<AbsDimension x="-10" y="10" />
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnClick>
-								toggleFrame("CEPGP_distribute");
-							</OnClick>
-						</Scripts>
-					</Button>
 					<Button name="CEPGP_loot_announce" inherits="CEPGPHeaderButton" text="Announce">
 						<Size>
 							<AbsDimension x="50" y="20" />
@@ -1640,7 +1642,7 @@
 						<Anchors>
 							<Anchor point="RIGHT" relativeTo="CEPGP_distribute_raid_GP">
 								<Offset>
-									<AbsDimension x="32" y="0" />
+									<AbsDimension x="27.5" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
