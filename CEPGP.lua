@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.2.0";
+VERSION = "1.2.1";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -156,7 +156,7 @@ function CEPGP_OnEvent()
 					_, isLead = GetRaidRosterInfo(i);
 				end
 			end
-			if ((GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2)) and table.getn(roster) > 0 then
+			if ((GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2)) and ntgetn(roster) > 0 then
 				if tContains(bossNameIndex, string.lower(name), true) then --[[ If the npc is in the boss name index ]]--
 					EP = EPVALS[string.lower(name)]
 					if AUTOEP[string.lower(name)] then
