@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.2.1";
+VERSION = "1.2.2";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -889,7 +889,7 @@ function LootFrame_OnEvent(event)
 		if isML() == 0 then
 			HideUIPanel(CEPGP_loot_distributing);
 		end
-		HideUIPanel(CEPGP_button_loot_dist);
+		--HideUIPanel(CEPGP_button_loot_dist);
 		HideUIPanel(CEPGP_loot);
 		HideUIPanel(CEPGP_distribute);
 		HideUIPanel(CEPGP_loot_distributing);

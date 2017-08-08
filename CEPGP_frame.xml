@@ -424,7 +424,7 @@
                     </OnClick>
                 </Scripts>
             </Button>
-			<Button name="CEPGP_button_loot_dist" inherits="GameMenuButtonTemplate" text="Loot Distribution" hidden="true">
+			<Button name="CEPGP_button_loot_dist" inherits="GameMenuButtonTemplate" text="Loot Distribution">
                 <Size>
                     <AbsDimension x="125" y="21" />
                 </Size>
