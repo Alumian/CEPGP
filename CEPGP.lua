@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.2.2";
+VERSION = "1.2.3";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -842,7 +842,7 @@ function CEPGP_distribute_popup_OnEvent(event)
 	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and value then
 		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
 		CEPGP_distribute_value:SetText("");
-	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() then
+	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() and CEPGP_distribute_value:GetText() then
 		if value == "true" then
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, LANGUAGE);
 			addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());

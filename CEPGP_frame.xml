@@ -80,7 +80,7 @@
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 							<Offset>
-								<AbsDimension x="285" y="0"/>
+								<AbsDimension x="280" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -2364,7 +2364,11 @@
 						<FontString name="CEPGP_options_azuregos_val" inherits="GameFontNormal" text="Azuregos: ">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_kazzak_val" />
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_kazzak_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
 							</Anchors>
 						</FontString>
 						<FontString name="CEPGP_options_teremus_val" inherits="GameFontNormal" text="Teremus: ">
@@ -2380,7 +2384,11 @@
 						<FontString name="CEPGP_options_dragons of nightmare_val" inherits="GameFontNormal" text="Dragons: ">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_teremus_val" />
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_teremus_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
 							</Anchors>
 						</FontString>
 					</Layer>
