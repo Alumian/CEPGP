@@ -11,7 +11,8 @@ The addon is entirely GUI based and the frame is designed to only appear automat
 Functionality:
 * /cepgp show - Shows the CEPGP window
 * /cepgp debug - Enables debug mode
-* /cepgp setdefaultchannel - Changes the default reporting channel. This is set to Guild by default.
+* /cepgp setdefaultchannel - Changes the default reporting channel. This is set to Guild by default
+* /cepgp check - Allows you to check if each raid member is running the addon - and if so, what version of the addon they are using
 
 To install:
   1. Download this addon 
