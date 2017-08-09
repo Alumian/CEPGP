@@ -1708,7 +1708,7 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="CEPGP_options_gp_base" inherits="GameFontNormal" text="Initial Player GP:">
+						<FontString name="CEPGP_options_gp_base" inherits="GameFontNormal" text="Initial/Minimum Player GP:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_formula_mod">

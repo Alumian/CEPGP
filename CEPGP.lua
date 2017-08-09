@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.3.0";
+VERSION = "1.3.1";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
