@@ -362,6 +362,7 @@
 						mode = "options";
 						CEPGP_options_mod_edit:SetText(tostring(MOD));
 						CEPGP_options_coef_edit:SetText(tostring(COEF));
+						CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
 						FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
 						for k, v in pairs(AUTOEP) do
 							if k == "lord kri" or k == "vem" or k == "princess yauj" then
@@ -370,8 +371,6 @@
 								getglobal("CEPGP_options_twin emps_auto_check"):SetChecked(v);
 							elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
 								getglobal("CEPGP_options_four horsemen_auto_check"):SetChecked(v);
-							elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
-								getglobal("CEPGP_options_dragons of nightmare_auto_check"):SetChecked(v);
 							elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
 								getglobal("CEPGP_options_edge of madness_auto_check"):SetChecked(v);
 							else
@@ -386,8 +385,6 @@
 								getglobal("CEPGP_options_twin emps_EP_value"):SetText(v);
 							elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
 								getglobal("CEPGP_options_four horsemen_EP_value"):SetText(v);
-							elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
-								getglobal("CEPGP_options_dragons of nightmare_EP_value"):SetText(v);
 							elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
 								getglobal("CEPGP_options_edge of madness_EP_value"):SetText(v);
 							else
@@ -1686,7 +1683,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT">
 									<Offset>
-										<AbsDimension x="15" y="-10" />
+										<AbsDimension x="15" y="-50" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1704,29 +1701,291 @@
 						<FontString name="CEPGP_options_formula_mod" inherits="GameFontNormal" text="Modifier:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_coef">
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_formula_coef">
 									<Offset>
-										<AbsDimension x="175" y="0" />
+										<AbsDimension x="0" y="-10" />
 									</Offset>
 								</Anchor>
 							</Anchors>
 						</FontString>
+						<FontString name="CEPGP_options_gp_base" inherits="GameFontNormal" text="Initial Player GP:">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_formula_mod">
+									<Offset>
+										<AbsDimension x="0" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<EditBox name="CEPGP_options_coef_edit" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="40" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_coef">
+								<Offset>
+									<AbsDimension x="5" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_mod_edit" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="40" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_mod">
+								<Offset>
+									<AbsDimension x="10" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_gp_base_edit" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="40" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_gp_base">
+								<Offset>
+									<AbsDimension x="10" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<Button name="CEPGP_options_button_prev">
+						<Size>
+							<AbsDimension x="40" y="27.5"/>
+						</Size>
+						<Anchors>
+							<Anchor point="CENTER" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="-75" y="35"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("igMainMenuOptionCheckBoxOn");
+								if CEPGP_options:IsVisible() then
+									CEPGP_options:Hide();
+									CEPGP_options_page_2:Show();
+								else
+									CEPGP_options:Show();
+									CEPGP_options_page_2:Hide();
+								end
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Down"/>
+						<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Disabled"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+					<Button name="CEPGP_options_button_next">
+						<Size>
+							<AbsDimension x="40" y="27.5"/>
+						</Size>
+						<Anchors>
+							<Anchor point="CENTER" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="75" y="35"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("igMainMenuOptionCheckBoxOn");
+								if CEPGP_options:IsVisible() then
+									CEPGP_options:Hide();
+									CEPGP_options_page_2:Show();
+								else
+									CEPGP_options:Show();
+									CEPGP_options_page_2:Hide();
+								end
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+						<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Disabled"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+					<Button name="CEPGP_options_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
+						<Size>
+							<AbsDimension x="100" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="10" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								CEPGP_options_mod_edit:SetText(tostring(MOD));
+								CEPGP_options_coef_edit:SetText(tostring(COEF));
+								CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
+								toggleFrame("guild");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_options_GP_default" inherits="GameMenuButtonTemplate" text="Default GP Settings">
+						<Size>
+							<AbsDimension x="125" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								CEPGP_options_coef_edit:SetText("0.483");
+								CEPGP_options_mod_edit:SetText("1");
+								CEPGP_options_gp_base_edit:SetText("1");
+								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
+								CEPGP_options_formula:SetText(FORMULA);
+								CEPGP_print("GP settings have been reset to default");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_options_apply" inherits="GameMenuButtonTemplate" text="Apply">
+						<Size>
+							<AbsDimension x="100" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="-9" y="25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								if 0 >= tonumber(CEPGP_options_mod_edit:GetText()) then
+									CEPGP_print("Invalid number entered for GP modifier. Please enter a positive number", true);
+								else
+									MOD = tonumber(CEPGP_options_mod_edit:GetText());
+								end
+								if 0 >= tonumber(CEPGP_options_coef_edit:GetText()) then
+									CEPGP_print("Invalid number entered for base coefficient. Please enter a positive number", true);
+								else
+									COEF = tonumber(CEPGP_options_coef_edit:GetText());
+								end
+								if 0 >= tonumber(CEPGP_options_gp_base_edit:GetText()) then
+									if tonumber(CEPGP_options_gp_base_edit:GetText()) == 0 then
+										CEPGP_print("Base GP cannot be 0!", true);
+									else
+										CEPGP_print("Base GP must be a positive number", true);
+									end
+								else
+									BASEGP = tonumber(CEPGP_options_gp_base_edit:GetText());
+								end
+								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
+								CEPGP_options_formula:SetText(FORMULA);
+								CEPGP_options_mod_edit:ClearFocus();
+								CEPGP_options_coef_edit:ClearFocus();
+								CEPGP_options_gp_base_edit:ClearFocus();
+								SetGuildRosterShowOffline(true);
+								GuildRoster();
+								if CanEditOfficerNote() == 1 then
+									for i = 1, GetNumGuildMembers() do
+										local name, rank, rankIndex, _, class, _, _, officerNote = GetGuildRosterInfo(i);
+										if officerNote then
+											local EP, GP = getEPGP(officerNote);
+											if BASEGP > GP then
+												GuildRosterSetOfficerNote(i, EP .. "," .. BASEGP);
+											end
+										end
+										if name then
+											roster[name] = {
+											[1] = i,
+											[2] = class,
+											[3] = rank,
+											[4] = rankIndex,
+											[5] = officerNote
+											};
+										end
+									end
+								end
+							</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_options_mode" inherits="GameFontNormal" text="Current View: Options">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnDragStart>
+						CEPGP_frame:StartMoving()
+					</OnDragStart>
+					<OnDragStop>
+						CEPGP_frame:StopMovingOrSizing()
+					</OnDragStop>
+				</Scripts>
+			</Frame>
+			<Frame name="CEPGP_options_page_2" enableMouse="true" toplevel="true" hidden="true">
+				<Size>
+					<AbsDimension x="400" y="450" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-30" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
 						<FontString name="CEPGP_options_auto_1" inherits="GameFontNormal" text="Auto Award | EP">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="32.5" y="-50" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_ony_val" inherits="GameFontNormal" text="Onyxia: ">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="LEFT" relativePoint="LEFT">
-									<Offset>
-										<AbsDimension x="10" y="150" />
+										<AbsDimension x="32.5" y="-20" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1734,19 +1993,9 @@
 						<FontString name="CEPGP_options_auto_2" inherits="GameFontNormal" text="Auto Award | EP">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_auto_1">
 									<Offset>
-										<AbsDimension x="150" y="-50" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_ony_val" inherits="GameFontNormal" text="Onyxia: ">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="LEFT" relativePoint="LEFT">
-									<Offset>
-										<AbsDimension x="10" y="150" />
+										<AbsDimension x="25" y="0" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1754,9 +2003,9 @@
 						<FontString name="CEPGP_options_auto_3" inherits="GameFontNormal" text="Auto Award | EP">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_auto_2">
 									<Offset>
-										<AbsDimension x="290" y="-50" />
+										<AbsDimension x="52.5" y="0" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1766,7 +2015,7 @@
 							<Anchors>
 								<Anchor point="LEFT" relativePoint="LEFT">
 									<Offset>
-										<AbsDimension x="10" y="150" />
+										<AbsDimension x="10" y="180" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -2361,16 +2610,6 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="CEPGP_options_azuregos_val" inherits="GameFontNormal" text="Azuregos: ">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_kazzak_val">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
 						<FontString name="CEPGP_options_teremus_val" inherits="GameFontNormal" text="Teremus: ">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
@@ -2381,12 +2620,52 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="CEPGP_options_dragons of nightmare_val" inherits="GameFontNormal" text="Dragons: ">
+						<FontString name="CEPGP_options_lethon_val" inherits="GameFontNormal" text="Lethon: ">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_teremus_val">
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_kazzak_val">
+									<Offset>
+										<AbsDimension x="50" y="-20" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_taerar_val" inherits="GameFontNormal" text="Taerar: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_lethon_val">
 									<Offset>
 										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_ysondre_val" inherits="GameFontNormal" text="Ysondre: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_lethon_val">
+									<Offset>
+										<AbsDimension x="150" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_emeriss_val" inherits="GameFontNormal" text="Emeriss: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_ysondre_val">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_azuregos_val" inherits="GameFontNormal" text="Azuregos: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_lethon_val">
+									<Offset>
+										<AbsDimension x="40" y="-6" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -3414,14 +3693,82 @@
 							</OnLoad>
 						</Scripts>
 					</CheckButton>
-					<CheckButton name="CEPGP_options_azuregos_auto_check" inherits="UIOptionsCheckButtonTemplate">
+					<CheckButton name="CEPGP_options_lethon_auto_check" inherits="UIOptionsCheckButtonTemplate">
 						<HitRectInsets>
 							<AbsInset left="0" right="0" top="0" bottom="0" />
 						</HitRectInsets>
 						<Anchors>
 							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_doom lord kazzak_auto_check">
 								<Offset>
+									<AbsDimension x="20" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_taerar_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_lethon_auto_check">
+								<Offset>
 									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_ysondre_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_lethon_auto_check">
+								<Offset>
+									<AbsDimension x="175" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_emeriss_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_ysondre_auto_check">
+								<Offset>
+									<AbsDimension x="0" y="10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_azuregos_auto_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_lethon_auto_check">
+								<Offset>
+									<AbsDimension x="72.5" y="-7" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -3437,23 +3784,6 @@
 						</HitRectInsets>
 						<Anchors>
 							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_kel'thuzad_auto_check">
-								<Offset>
-									<AbsDimension x="0" y="10" />
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								this:RegisterForClicks('LeftButtonDown');
-							</OnLoad>
-						</Scripts>
-					</CheckButton>
-					<CheckButton name="CEPGP_options_dragons of nightmare_auto_check" inherits="UIOptionsCheckButtonTemplate">
-						<HitRectInsets>
-							<AbsInset left="0" right="0" top="0" bottom="0" />
-						</HitRectInsets>
-						<Anchors>
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_teremus the devourer_auto_check">
 								<Offset>
 									<AbsDimension x="0" y="10" />
 								</Offset>
@@ -4265,46 +4595,6 @@
 							</OnEnterPressed>
 						</Scripts>
 					</EditBox>
-					<EditBox name="CEPGP_options_coef_edit" inherits="InputBoxTemplate">
-						<Size>
-							<AbsDimension x="40" y="20" />
-						</Size>
-						<Anchors>
-							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_coef">
-								<Offset>
-									<AbsDimension x="5" y="0" />
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								this:SetAutoFocus(false);
-							</OnLoad>
-							<OnEnterPressed>
-								this:ClearFocus();
-							</OnEnterPressed>
-						</Scripts>
-					</EditBox>
-					<EditBox name="CEPGP_options_mod_edit" inherits="InputBoxTemplate">
-						<Size>
-							<AbsDimension x="40" y="20" />
-						</Size>
-						<Anchors>
-							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_mod">
-								<Offset>
-									<AbsDimension x="5" y="0" />
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								this:SetAutoFocus(false);
-							</OnLoad>
-							<OnEnterPressed>
-								this:ClearFocus();
-							</OnEnterPressed>
-						</Scripts>
-					</EditBox>
 					<EditBox name="CEPGP_options_viscidus_EP_value" inherits="InputBoxTemplate">
 						<Size>
 							<AbsDimension x="15" y="10" />
@@ -4745,14 +5035,14 @@
 							</OnEnterPressed>
 						</Scripts>
 					</EditBox>
-					<EditBox name="CEPGP_options_dragons of nightmare_EP_value" inherits="InputBoxTemplate">
+					<EditBox name="CEPGP_options_lethon_EP_value" inherits="InputBoxTemplate">
 						<Size>
 							<AbsDimension x="15" y="10" />
 						</Size>
 						<Anchors>
-							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_dragons of nightmare_auto_check">
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_lethon_auto_check">
 								<Offset>
-									<AbsDimension x="45" y="0" />
+									<AbsDimension x="40" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -4765,6 +5055,122 @@
 							</OnEnterPressed>
 						</Scripts>
 					</EditBox>
+					<EditBox name="CEPGP_options_taerar_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_taerar_auto_check">
+								<Offset>
+									<AbsDimension x="40" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_ysondre_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_ysondre_auto_check">
+								<Offset>
+									<AbsDimension x="40" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="CEPGP_options_emeriss_EP_value" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="15" y="10" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_emeriss_auto_check">
+								<Offset>
+									<AbsDimension x="40" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<Button name="CEPGP_options_button_prev">
+						<Size>
+							<AbsDimension x="32" y="27.5"/>
+						</Size>
+						<Anchors>
+							<Anchor point="CENTER" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="-80" y="35"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("igMainMenuOptionCheckBoxOn");
+								if CEPGP_options:IsVisible() then
+									CEPGP_options:Hide();
+									CEPGP_options_page_2:Show();
+								else
+									CEPGP_options:Show();
+									CEPGP_options_page_2:Hide();
+								end
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Down"/>
+						<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Disabled"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+					<Button name="CEPGP_options_button_next">
+						<Size>
+							<AbsDimension x="32" y="27.5"/>
+						</Size>
+						<Anchors>
+							<Anchor point="CENTER" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="80" y="35"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("igMainMenuOptionCheckBoxOn");
+								if CEPGP_options:IsVisible() then
+									CEPGP_options:Hide();
+									CEPGP_options_page_2:Show();
+								else
+									CEPGP_options:Show();
+									CEPGP_options_page_2:Hide();
+								end
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+						<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Disabled"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
 					<Button name="CEPGP_options_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
 						<Size>
 							<AbsDimension x="100" y="21" />
@@ -4782,28 +5188,6 @@
 								CEPGP_options_mod_edit:SetText(tostring(MOD));
 								CEPGP_options_coef_edit:SetText(tostring(COEF));
 								toggleFrame("guild");
-							</OnClick>
-						</Scripts>
-					</Button>
-					<Button name="CEPGP_options_GP_default" inherits="GameMenuButtonTemplate" text="Default GP Settings">
-						<Size>
-							<AbsDimension x="125" y="21" />
-						</Size>
-						<Anchors>
-							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_coef_edit">
-								<Offset>
-									<AbsDimension x="5" y="0" />
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnClick>
-								PlaySound("gsTitleOptionExit");
-								CEPGP_options_coef_edit:SetText("0.483");
-								CEPGP_options_mod_edit:SetText("1");
-								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
-								CEPGP_options_formula:SetText(FORMULA);
-								CEPGP_print("GP settings have been reset to default");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -4828,8 +5212,6 @@
 										getglobal("CEPGP_options_twin emps_auto_check"):SetChecked(true);
 									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
 										getglobal("CEPGP_options_four horsemen_auto_check"):SetChecked(true);
-									elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
-										getglobal("CEPGP_options_dragons of nightmare_auto_check"):SetChecked(true);
 									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
 										getglobal("CEPGP_options_edge of madness_auto_check"):SetChecked(true);
 									else
@@ -4844,8 +5226,6 @@
 										getglobal("CEPGP_options_twin emps_EP_value"):SetText(bossNameIndex[k]);
 									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
 										getglobal("CEPGP_options_four horsemen_EP_value"):SetText(bossNameIndex[k]);
-									elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
-										getglobal("CEPGP_options_dragons of nightmare_EP_value"):SetText(bossNameIndex[k]);
 									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
 										getglobal("CEPGP_options_edge of madness_EP_value"):SetText(bossNameIndex[k]);
 									else
@@ -4894,9 +5274,6 @@
 									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
 										EPVALS[k] = getglobal("CEPGP_options_four horsemen_EP_value"):GetText();
 										getglobal("CEPGP_options_four horsemen_EP_value"):ClearFocus();
-									elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
-										EPVALS[k] = getglobal("CEPGP_options_dragons of nightmare_EP_value"):GetText();
-										getglobal("CEPGP_options_dragons of nightmare_EP_value"):ClearFocus();
 									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
 										EPVALS[k] = getglobal("CEPGP_options_edge of madness_auto_check"):GetText();
 									else
@@ -4920,12 +5297,6 @@
 										end
 									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
 										if getglobal("CEPGP_options_four horsemen_auto_check"):GetChecked() then
-											AUTOEP[k] = true;
-										else
-											AUTOEP[k] = false;
-										end
-									elseif k == "lethon" or k == "taerar" or k == "ysondre" or k == "emeriss" then
-										if getglobal("CEPGP_options_dragons of nightmare_auto_check"):GetChecked() then
 											AUTOEP[k] = true;
 										else
 											AUTOEP[k] = false;
@@ -4970,7 +5341,7 @@
 					</OnDragStop>
 				</Scripts>
 			</Frame>
-		</Frames>
+			</Frames>
 		<Scripts>
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");

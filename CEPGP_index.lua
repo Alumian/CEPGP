@@ -426,7 +426,7 @@ itemsIndex =
 	["malignant footguards"] = 72,
 	["gauntlets of the shining light"] = 72,
 	["belt of the dark bog"] = 71,
-	["black bard wristbands"] = 71,
+	["black bark wristbands"] = 71,
 	["dark heart pants"] = 71,
 	
 	--taerar

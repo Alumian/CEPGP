@@ -1,12 +1,13 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.2.3";
+VERSION = "1.3.0";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
 MOD = nil;
 COEF = nil;
+BASEGP = nil;
 FORMULA = nil;
 distID = nil;
 distSlot = nil;
@@ -14,7 +15,7 @@ debugMode = false;
 critReverse = false;
 criteria = 4;
 kills = 0;
-frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_distribute_popup, CEPGP_context_popup};
+frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_options_page_2, CEPGP_distribute_popup, CEPGP_context_popup};
 LANGUAGE = GetDefaultLanguage("player");
 AUTOEP = {};
 EPVALS = {};
@@ -42,6 +43,9 @@ function CEPGP_OnEvent()
 		end
 		if COEF == nil then
 			COEF = 0.483;
+		end
+		if BASEGP == nil then
+			BASEGP = 1;
 		end
 		if AUTOEP.length == nil then
 			for k, v in pairs(bossNameIndex) do
@@ -370,7 +374,7 @@ function CEPGP_UpdateLootScrollBar()
 			rank = "Not in Guild";
 			rankIndex = 10;
 			EP = 0;
-			GP = 1;
+			GP = BASEGP;
 			PR = 0;
 		end
 		t[x] = {
@@ -562,7 +566,7 @@ function CEPGP_UpdateRaidScrollBar()
 			rank = "Not in Guild";
 			rankIndex = 10;
 			EP = 0;
-			GP = 1;
+			GP = BASEGP;
 			PR = 0;
 		end
 		t[x] = {
@@ -860,12 +864,12 @@ end
 	]]
 function getEPGP(offNote)
 	if not offNote then
-		return 0, 1;
+		return 0, BASEGP;
 	end
 	local EP, GP = nil;
 	local valid = false;
 	if not checkEPGP(offNote) then
-		return 0, 1;
+		return 0, BASEGP;
 	end
 	EP = tonumber(strsub(offNote, 1, strfind(offNote, ",")-1));
 	GP = tonumber(strsub(offNote, strfind(offNote, ",")+1, string.len(offNote)));
@@ -1363,7 +1367,7 @@ function resetAll()
 	local total = ntgetn(roster);
 	if total > 0 then
 		for i = 1, total, 1 do
-			GuildRosterSetOfficerNote(i, "0,1");
+			GuildRosterSetOfficerNote(i, "0,"..BASEGP);
 		end
 	end
 	CEPGP_SendAddonMsg("update");
@@ -1383,14 +1387,14 @@ function addRaidEP(amount, msg)
 			if tContains(roster, name, true) then
 				local index = getGuildInfo(name);
 				if not checkEPGP(roster[name][5]) then
-					GuildRosterSetOfficerNote(index, amount .. ",1");
+					GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
 				else
 					EP,GP = getEPGP(roster[name][5]);
 					EP = tonumber(EP);
 					GP = tonumber(GP);
 					EP = EP + amount;
-					if GP < 1 then
-						GP = 1;
+					if GP < BASEGP then
+						GP = BASEGP;
 					end
 					if EP < 0 then
 						EP = 0;
@@ -1425,13 +1429,13 @@ function addGuildEP(amount)
 			offNote = roster[name][5];
 			index = roster[name][1];
 			if offNote == "" or offNote == "Click here to set an Officer's Note" then
-				GuildRosterSetOfficerNote(index, amount .. ",1");
+				GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
 			else
 				EP,GP = getEPGP(roster[name][5]);
 				EP = tonumber(EP) + amount;
 				GP = tonumber(GP);
-				if GP < 1 then
-					GP = 1;
+				if GP < BASEGP then
+					GP = BASEGP;
 				end
 				if EP < 0 then
 					EP = 0;
@@ -1459,14 +1463,14 @@ function addGP(player, amount)
 		offNote = roster[player][5];
 		index = roster[player][1];
 		if offNote == "" or offNote == "Click here to set an Officer's Note" then
-			GuildRosterSetOfficerNote(index, "0,1");
+			GuildRosterSetOfficerNote(index, "0," .. BASEGP);
 			offNote = "0,1";
 		end
 		EP,GP = getEPGP(offNote);
 		GP = tonumber(GP) + amount;
 		EP = tonumber(EP);
-		if GP < 1 then
-			GP = 1;
+		if GP < BASEGP then
+			GP = BASEGP;
 		end
 		if EP < 0 then
 			EP = 0;
@@ -1494,14 +1498,14 @@ function addEP(player, amount)
 		offNote = roster[player][5];
 		index = roster[player][1];
 		if offNote == "" or offNote == "Click here to set an Officer's Note" then
-			GuildRosterSetOfficerNote(index, "0,1");
+			GuildRosterSetOfficerNote(index, "0," .. BASEGP);
 			offNote = "0,1";
 		end
 		EP,GP = getEPGP(offNote);
 		EP = tonumber(EP) + amount;
 		GP = tonumber(GP);
-		if GP < 1 then
-			GP = 1;
+		if GP < BASEGP then
+			GP = BASEGP;
 		end
 		if EP < 0 then
 			EP = 0;
@@ -1527,14 +1531,14 @@ function decay(amount)
 		offNote = roster[name][5];
 		index = roster[name][1];
 		if offNote == "" then
-			GuildRosterSetOfficerNote(index, amount .. ",1");
+			GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
 			offNote = amount .. ",1";
 		else
 			EP,GP = getEPGP(offNote);
 			EP = math.floor(tonumber(EP)*(1-(amount/100)));
 			GP = math.floor(tonumber(GP)*(1-(amount/100)));
-			if GP < 1 then
-				GP = 1;
+			if GP < BASEGP then
+				GP = BASEGP;
 			end
 			if EP < 0 then
 				EP = 0;
@@ -1568,7 +1572,7 @@ function calcGP(link)
 			and (itemType ~= "Blacksmithing" and itemType ~= "Tailoring" and itemType ~= "Alchemy" and itemType ~= "Leatherworking"
 			and itemType ~= "Enchanting" and itemType ~= "Engineering" and itemType ~= "Mining") then
 			local quality = rarity == 0 and "Poor" or rarity == 1 and LANGUAGE or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
-			CEPGP_print("Warning: " .. name .. " not found in index!");
+			CEPGP_print("Warning: " .. name .. " not found in index! Please report this to the addon developer");
 			if slot ~= "" then
 				slot = strsub(slot,strfind(slot,"INVTYPE_")+8,string.len(slot));
 				CEPGP_print("Slot: " .. slot);
