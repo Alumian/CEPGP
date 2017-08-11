@@ -866,6 +866,7 @@ itemsIndex =
 	["staff of the ruins"] = 72,
 	["crossbow of imminent doom"] = 72,
 	["sand polished hammer"] = 72,
+	["head of ossirian the unscarred"] = 60,
 	
 	
 	--aq40
