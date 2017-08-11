@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.3.1";
+VERSION = "1.4.0";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -9,6 +9,9 @@ MOD = nil;
 COEF = nil;
 BASEGP = nil;
 FORMULA = nil;
+STANDBYEP = false;
+STANDBYPERCENT = nil;
+STANDBYRANKS = {};
 distID = nil;
 distSlot = nil;
 debugMode = false;
@@ -22,6 +25,7 @@ EPVALS = {};
 responses = {};
 itemsTable = {};
 roster = {};
+raidRoster = {};
 vInfo = {};
 
 
@@ -47,14 +51,30 @@ function CEPGP_OnEvent()
 		if BASEGP == nil then
 			BASEGP = 1;
 		end
-		if AUTOEP.length == nil then
+		if table.getn(AUTOEP) == 0 then
 			for k, v in pairs(bossNameIndex) do
 				AUTOEP[k] = true;
 			end
 		end
-		if EPVALS.length == nil then
+		if table.getn(EPVALS) == 0 then
 			for k, v in pairs(bossNameIndex) do
 				EPVALS[k] = v;
+			end
+		end
+		if STANDBYPERCENT ==  nil then
+			STANDBYPERCENT = 0;
+		end
+		if table.getn(STANDBYRANKS) == 0 then
+			for i = 1, 10 do
+				STANDBYRANKS[i] = {};
+				STANDBYRANKS[i][1] = GuildControlGetRankName(i);
+				STANDBYRANKS[i][2] = false;
+			end
+		end
+		if UnitInRaid("player") then
+			for i = 1, GetNumRaidMembers() do
+				name = GetRaidRosterInfo(i);
+				raidRoster[name] = name;
 			end
 		end
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
@@ -131,6 +151,11 @@ function CEPGP_OnEvent()
 		end
 	elseif event == "RAID_ROSTER_UPDATE" then
 		GuildRoster();
+		raidRoster = {};
+		for i = 1, GetNumRaidMembers() do
+			local name = GetRaidRosterInfo(i);
+			raidRoster[name] = name;
+		end
 		if UnitInRaid("player") then
 			ShowUIPanel(CEPGP_button_raid);
 			ShowUIPanel(CEPGP_button_loot_dist);
@@ -169,8 +194,23 @@ function CEPGP_OnEvent()
 							kills = kills + 1;
 							if kills == 3 then
 								kills = 0;
-								
 								addRaidEP(EP, "The Bug Trio have been slain! The raid has been awarded " .. EP .. " EP");
+								if STANDBYEP then
+								for k, v in pairs(roster) do
+									if not tContains(raidRoster, k, true) then
+										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+										if online == 1 then
+											for i = 1, table.getn(STANDBYRANKS) do
+												if STANDBYRANKS[i][1] == rank then
+													if STANDBYRANKS[i][2] == true then
+														addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Bug Trio");
+													end
+												end
+											end
+										end
+									end
+								end
+							end
 							end
 						elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
@@ -178,6 +218,22 @@ function CEPGP_OnEvent()
 							if kills == 2 then
 								kills = 0;
 								addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
+								if STANDBYEP then
+								for k, v in pairs(roster) do
+									if not tContains(raidRoster, k, true) then
+										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+										if online == 1 then
+											for i = 1, table.getn(STANDBYRANKS) do
+												if STANDBYRANKS[i][1] == rank then
+													if STANDBYRANKS[i][2] == true then
+														addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Twin Emperors");
+													end
+												end
+											end
+										end
+									end
+								end
+							end
 							end
 							
 						elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
@@ -186,9 +242,41 @@ function CEPGP_OnEvent()
 							if kills == 4 then
 								kills = 0;
 								addRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP");
+								if STANDBYEP then
+								for k, v in pairs(roster) do
+									if not tContains(raidRoster, k, true) then
+										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+										if online == 1 then
+											for i = 1, table.getn(STANDBYRANKS) do
+												if STANDBYRANKS[i][1] == rank then
+													if STANDBYRANKS[i][2] == true then
+														addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Four Horsemen");
+													end
+												end
+											end
+										end
+									end
+								end
+							end
 							end
 						else
 							addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
+							if STANDBYEP then
+								for k, v in pairs(roster) do
+									if not tContains(raidRoster, k, true) then
+										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+										if online == 1 then
+											for i = 1, table.getn(STANDBYRANKS) do
+												if STANDBYRANKS[i][1] == rank then
+													if STANDBYRANKS[i][2] == true then
+														addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
+													end
+												end
+											end
+										end
+									end
+								end
+							end
 						end
 					end
 				end
@@ -334,11 +422,17 @@ function CEPGP_IncAddonMsg(message, sender)
 		else
 			CEPGP_SendAddonMsg(arg2.."-distributing-nil~nil");
 		end
+	elseif string.find(message, "STANDBYEP"..UnitName("player")) then
+		CEPGP_print(string.sub(message, string.find(message, ",")+1));
 	end
 end
 
-function CEPGP_SendAddonMsg(message)
-	SendAddonMessage("CEPGP", message, "RAID");
+function CEPGP_SendAddonMsg(message, channel)
+	if channel ~= nil then
+		SendAddonMessage("CEPGP", message, string.upper(channel));
+	else
+		SendAddonMessage("CEPGP", message, "RAID");
+	end
 end
 
 function CEPGP_UpdateLootScrollBar()
@@ -1051,6 +1145,7 @@ function SlashCmdList.ARG(msg, editbox)
 	elseif msg == "show" then
 		populateFrame();
 		ShowUIPanel(CEPGP_frame);
+		toggleFrame("CEPGP_guild");
 	
 	elseif msg == "version" then
 		vInfo = {};
@@ -1446,6 +1541,32 @@ function addGuildEP(amount)
 	end
 	CEPGP_SendAddonMsg("update");
 	SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, LANGUAGE);
+end
+
+function addStandbyEP(player, amount, boss)
+	if amount == nil then
+		CEPGP_print("Please enter a valid number", 1);
+		return;
+	end
+	local EP, GP = nil;
+	amount = (math.floor(amount*100))/100;
+	local name = getGuildInfo(player);
+	EP,GP = getEPGP(roster[player][5]);
+	EP = tonumber(EP) + amount;
+	GP = tonumber(GP);
+	if GP < BASEGP then
+		GP = BASEGP;
+	end
+	if EP < 0 then
+		EP = 0;
+	end
+	if offNote == "" or offNote == "Click here to set an Officer's Note" then
+		GuildRosterSetOfficerNote(roster[player][1], EP .. "," .. BASEGP);
+	else
+		GuildRosterSetOfficerNote(roster[player][1], EP .. "," .. GP);
+	end
+	CEPGP_SendAddonMsg("update");
+	CEPGP_SendAddonMsg("STANDBYEP"..player..",You have been awarded "..amount.." standby EP for encounter " .. boss, "GUILD");
 end
 
 --[[addGP(player, amount) - Working as intended

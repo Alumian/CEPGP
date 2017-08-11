@@ -357,6 +357,7 @@
 						GuildRoster();
 					</OnLoad>
                     <OnClick>
+						GuildRoster();
                         PlaySound("gsTitleOptionExit");
 						toggleFrame("CEPGP_options");
 						mode = "options";
@@ -391,6 +392,42 @@
 								getglobal("CEPGP_options_"..k.."_EP_value"):SetText(v);
 							end
 						end
+						if STANDBYEP then
+							CEPGP_options_standby_ep_check:SetChecked(true);
+						else
+							CEPGP_options_standby_ep_check:SetChecked(false);
+						end
+						CEPGP_options_standby_ep_val:SetText(tostring(STANDBYPERCENT));
+						for i = 1, 10 do
+							if not GuildControlGetRankName(i) then
+								STANDBYRANKS[i][1] = nil;
+							else
+								STANDBYRANKS[i][1] = GuildControlGetRankName(i);
+							end
+						end
+						for i = 1, 10 do
+							if STANDBYRANKS[i][1] ~= nil then
+								getglobal("CEPGP_options_standby_ep_rank_"..i):Show();
+								getglobal("CEPGP_options_standby_ep_rank_"..i):SetText(tostring(STANDBYRANKS[i][1]));
+								getglobal("CEPGP_options_standby_ep_check_rank_"..i):Show();
+								if STANDBYRANKS[i][2] == true then
+									getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(true);
+								else
+									getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
+								end
+							end
+							if GuildControlGetRankName(i) == nil then
+								getglobal("CEPGP_options_standby_ep_rank_"..i):Hide();
+								getglobal("CEPGP_options_standby_ep_check_rank_"..i):Hide();
+								getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
+							end
+						end
+						if STANDBYEP then
+							getglobal("CEPGP_options_standby_ep_check"):SetChecked(true);
+						else
+							getglobal("CEPGP_options_standby_ep_check"):SetChecked(false);
+						end
+						CEPGP_options_standby_ep_val:SetText(tostring(STANDBYPERCENT));
 						CEPGP_options_formula:SetText(FORMULA);
 						populateFrame();
                     </OnClick>
@@ -1781,6 +1818,213 @@
 							</OnEnterPressed>
 						</Scripts>
 					</EditBox>
+					<CheckButton name="CEPGP_options_standby_ep_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT">
+								<Offset>
+									<AbsDimension x="142.5" y="60" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_1" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="LEFT">
+								<Offset>
+									<AbsDimension x="150" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_2" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_check_rank_1">
+								<Offset>
+									<AbsDimension x="0" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_3" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_check_rank_2">
+								<Offset>
+									<AbsDimension x="0" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_4" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_check_rank_3">
+								<Offset>
+									<AbsDimension x="0" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_5" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_check_rank_4">
+								<Offset>
+									<AbsDimension x="0" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_6" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_standby_ep_check_rank_1">
+								<Offset>
+									<AbsDimension x="125" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_7" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_check_rank_6">
+								<Offset>
+									<AbsDimension x="0" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_8" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_check_rank_7">
+								<Offset>
+									<AbsDimension x="0" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_9" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_check_rank_8">
+								<Offset>
+									<AbsDimension x="0" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_check_rank_10" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_check_rank_9">
+								<Offset>
+									<AbsDimension x="0" y="-4" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<EditBox name="CEPGP_options_standby_ep_val" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="40" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_check">
+								<Offset>
+									<AbsDimension x="15" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+						</Scripts>
+					</EditBox>
 					<Button name="CEPGP_options_button_prev">
 						<Size>
 							<AbsDimension x="40" y="27.5"/>
@@ -1854,7 +2098,7 @@
 								CEPGP_options_mod_edit:SetText(tostring(MOD));
 								CEPGP_options_coef_edit:SetText(tostring(COEF));
 								CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
-								toggleFrame("guild");
+								toggleFrame("CEPGP_guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1919,6 +2163,7 @@
 								CEPGP_options_mod_edit:ClearFocus();
 								CEPGP_options_coef_edit:ClearFocus();
 								CEPGP_options_gp_base_edit:ClearFocus();
+								CEPGP_options_standby_ep_val:ClearFocus();
 								SetGuildRosterShowOffline(true);
 								GuildRoster();
 								if CanEditOfficerNote() == 1 then
@@ -1941,6 +2186,26 @@
 										end
 									end
 								end
+								for i = 1, 10 do
+									if GuildControlGetRankName(i) then
+										if getglobal("CEPGP_options_standby_ep_check_rank_"..i):GetChecked() then
+											STANDBYRANKS[i][2] = true;
+										else
+											STANDBYRANKS[i][2] = false;
+										end
+									end
+								end
+								if getglobal("CEPGP_options_standby_ep_check"):GetChecked() then
+									STANDBYEP = true;
+								else
+									STANDBYEP = false;
+								end
+								if string.find(CEPGP_options_standby_ep_val:GetText(), "%%") then
+									CEPGP_options_standby_ep_val:SetText(string.sub(CEPGP_options_standby_ep_val:GetText(), 0, string.find(CEPGP_options_standby_ep_val:GetText(), "%%")-1));
+								end
+								STANDBYPERCENT = tonumber(CEPGP_options_standby_ep_val:GetText());
+								CEPGP_print("Settings Applied");
+								toggleFrame("CEPGP_guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1951,6 +2216,126 @@
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep" inherits="GameFontNormal" text="Award Standby EP:">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="15" y="60" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_val_percent" inherits="GameFontNormal" text="Standby EP Percent: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep">
+									<Offset>
+										<AbsDimension x="0" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_1" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="15" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_2" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_1">
+									<Offset>
+										<AbsDimension x="0" y="-16" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_3" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_2">
+									<Offset>
+										<AbsDimension x="0" y="-20" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_4" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_3">
+									<Offset>
+										<AbsDimension x="0" y="-17" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_5" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_4">
+									<Offset>
+										<AbsDimension x="0" y="-18" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_6" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_standby_ep_rank_1">
+									<Offset>
+										<AbsDimension x="80" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_7" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_6">
+									<Offset>
+										<AbsDimension x="0" y="-16" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_8" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_7">
+									<Offset>
+										<AbsDimension x="0" y="-20" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_9" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_8">
+									<Offset>
+										<AbsDimension x="0" y="-17" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_10" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_9">
+									<Offset>
+										<AbsDimension x="0" y="-18" />
+									</Offset>
+								</Anchor>
 							</Anchors>
 						</FontString>
 					</Layer>

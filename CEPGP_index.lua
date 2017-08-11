@@ -741,6 +741,13 @@ itemsIndex =
 	["jin'do's hexxer"] = 66,
 	["jin'do's bag of whammies"] = 66,
 	
+	--gahz'ranka
+	["tigule's harpoon"] = 68,
+	["nat pagle's broken reel"] = 68,
+	["nat pagle's fish terminator"] = 65,
+	["foror's eyepatch"] = 65,
+	["tome of polymorph: turtle"] = 60,
+	
 	--the edge of madness
 	--gri'lek
 	["gri'lek's grinder"] = 68,

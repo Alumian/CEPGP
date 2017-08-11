@@ -14,6 +14,18 @@ Functionality:
 * /cepgp setdefaultchannel - Changes the default reporting channel. This is set to Guild by default
 * /cepgp check - Allows you to check if each raid member is running the addon - and if so, what version of the addon they are using
 
+Definitions:
+* EP: Effort points. Points gained from what ever criteria.
+* GP: Gear points. Points gained from being awarded gear.
+* PR: Priority. Calculated by EP / GP.
+* Decay: Reduces the EP and GP of every guild member by a given percent.
+* Initial/Minimum GP: The GP that all new guild members start at. This also defines the minimum amount of GP any guild member can have.
+
+__**IMPORTANT**__ - The initial/minimum GP should NEVER be exactly 0.
+
+* Standby EP: EP awarded to guild members that are not in the raid.
+* Standby EP Percent: The percent of standard EP allocation should awarded to standby members.
+
 To install:
   1. Download this addon 
   2. Extract it to ../Interface/AddOns/ 
