@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.4.0";
+VERSION = "1.4.1";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -1121,11 +1121,7 @@ function LootFrame_Update()
 		if items[i][3] == 4 and UnitInRaid("player") then
 			CEPGP_frame:Show();
 			mode = "loot";
-			CEPGP_guild:Hide();
-			CEPGP_raid:Hide();
-			CEPGP_loot:Show();
-			CEPGP_distribute:Hide();
-			CEPGP_options:Hide();
+			toggleFrame("CEPGP_loot");
 			break;
 		end
 	end
