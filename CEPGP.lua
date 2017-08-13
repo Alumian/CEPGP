@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.4.1";
+VERSION = "1.4.2";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -16,6 +16,7 @@ distID = nil;
 distSlot = nil;
 debugMode = false;
 critReverse = false;
+distributing = false;
 criteria = 4;
 kills = 0;
 frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_options_page_2, CEPGP_distribute_popup, CEPGP_context_popup};
@@ -80,7 +81,7 @@ function CEPGP_OnEvent()
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and CEPGP_distribute:IsVisible() == 1 then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -102,16 +103,18 @@ function CEPGP_OnEvent()
 				class = roster[arg2][2];
 				inGuild = true;
 			end
-			if inGuild then
-				SendChatMessage(arg2 .. " (" .. class .. ") needs. (" .. math.floor((EP/GP)*100)/100 .. " PR)", RAID, LANGUAGE);
-			else
-				local total = GetNumRaidMembers();
-				for i = 1, total do
-					if arg2 == GetRaidRosterInfo(i) then
-						_, _, _, _, class = GetRaidRosterInfo(i);
+			if distributing then
+				if inGuild then
+					SendChatMessage(arg2 .. " (" .. class .. ") needs. (" .. math.floor((EP/GP)*100)/100 .. " PR)", RAID, LANGUAGE);
+				else
+					local total = GetNumRaidMembers();
+					for i = 1, total do
+						if arg2 == GetRaidRosterInfo(i) then
+							_, _, _, _, class = GetRaidRosterInfo(i);
+						end
 					end
+					SendChatMessage(arg2 .. " (" .. class .. ") needs. (Non-guild member)", RAID, LANGUAGE);
 				end
-				SendChatMessage(arg2 .. " (" .. class .. ") needs. (Non-guild member)", RAID, LANGUAGE);
 			end
 		end
 	elseif event == "CHAT_MSG_WHISPER" and arg1 == "!info" then
@@ -941,6 +944,7 @@ function CEPGP_distribute_popup_OnEvent(event)
 		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
 		CEPGP_distribute_value:SetText("");
 	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() and CEPGP_distribute_value:GetText() then
+		distributing = false;
 		if value == "true" then
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, LANGUAGE);
 			addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
@@ -979,6 +983,7 @@ function LootFrame_OnEvent(event)
 	if event == "LOOT_CLOSED" then
 		if mode == "loot" then
 			cleanTable();
+			distributing = false;
 			if isML() == 0 then
 				CEPGP_SendAddonMsg("RaidAssistLootClosed");
 			end
@@ -1022,7 +1027,7 @@ function LootFrame_OnEvent(event)
 end
 
 function RaidAssistLootClosed()
-	if IsRaidOfficer() then
+	if IsRaidOfficer() and isML() == 1 then
 		HideUIPanel(CEPGP_distribute_popup);
 		HideUIPanel(CEPGP_distribute);
 		HideUIPanel(CEPGP_loot_distributing);
@@ -1044,7 +1049,7 @@ function RaidAssistLootClosed()
 end
 
 function RaidAssistLootDist(link, gp)
-	if IsRaidOfficer() then
+	if IsRaidOfficer() and isML() == 1 then
 		local y = 1;
 		while _G["LootDistButton"..y] ~= nil do
 			_G["LootDistButton"..y]:Hide();
@@ -1382,6 +1387,7 @@ function distribute(link, x)
 		_G["CEPGP_distribute_item_tex"]:SetScript('OnEnter', function() GameTooltip:SetOwner(this, "ANCHOR_TOPLEFT") GameTooltip:SetHyperlink(iString) GameTooltip:Show() end);
 		_G["CEPGP_distribute_item_tex"]:SetScript('OnLeave', function() GameTooltip:Hide() end);
 		_G["CEPGP_distribute_GP_value"]:SetText(gp);
+		distributing = true;
 	else
 		CEPGP_print("You are not the Loot Master.", 1);
 		return;
