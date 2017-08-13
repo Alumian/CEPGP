@@ -86,11 +86,17 @@ function CEPGP_OnEvent()
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
 				duplicate = true;
+				if debugMode then
+					CEPGP_print("Duplicate entry. " .. arg2 .. " not registered (!need)");
+				end
 			end
 		end
 		if not duplicate then
 			CEPGP_SendAddonMsg("!need,"..arg2);
 			table.insert(responses, arg2);
+			if debugMode then
+				CEPGP_print(arg2 .. " registered (!need)");
+			end
 			local _, _, _, _, _, _, _, slot = GetItemInfo(distID);
 			if not slot then
 				CEPGP_print("Unable to retrieve item information from the server. You will not see what the recipients are currently using", true);
