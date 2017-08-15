@@ -14,6 +14,12 @@ Functionality:
 * /cepgp setdefaultchannel - Changes the default reporting channel. This is set to Guild by default
 * /cepgp check - Allows you to check if each raid member is running the addon - and if so, what version of the addon they are using
 
+The following commands can be used to get EPGP reports. **The player you whisper must be able to at least view officer notes**
+* /w <player> !info - Gets your current EPGP standings
+* /w <player> !infoguild - Gets your current EPGP standings and PR rank within your guild
+* /w <player> !inforaid - Gets your current EPGP standings and PR rank within the raid
+* /w <player> !infoclass - Gets your current EPGP standings and PR rank among your class within the raid
+
 Definitions:
 * EP: Effort points. Points gained from what ever criteria.
 * GP: Gear points. Points gained from being awarded gear.

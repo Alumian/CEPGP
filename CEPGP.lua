@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.4.2";
+VERSION = "1.4.3";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -123,10 +123,104 @@ function CEPGP_OnEvent()
 				end
 			end
 		end
-	elseif event == "CHAT_MSG_WHISPER" and arg1 == "!info" then
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!info" then
 		if getGuildInfo(arg2) ~= nil then
 			local EP, GP = getEPGP(roster[arg2][5]);
-			SendChatMessage("EPGP Standings - EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100, "WHISPER", LANGUAGE, arg2);
+			CEPGP_SendAddonMsg("!info" .. arg2 .. "EPGP Standings - EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100, "GUILD");
+		end
+	elseif event == "CHAT_MSG_WHISPER" and (string.lower(arg1) == "!infoguild" or string.lower(arg1) == "!inforaid" or string.lower(arg1) == "!infoclass") then
+		if getGuildInfo(arg2) ~= nil then
+			sRoster = {};
+			GuildRoster();
+			local gRoster = {};
+			local rRoster = {};
+			local name, unitClass, class, oNote, EP, GP;
+			unitClass = roster[arg2][2];
+			for i = 1, GetNumGuildMembers() do
+				gRoster[i] = {};
+				name , _, _, _, class, _, _, oNote = GetGuildRosterInfo(i);
+				EP, GP = getEPGP(oNote);
+				gRoster[i][1] = name;
+				gRoster[i][2] = math.floor((EP/GP)*100)/100;
+				gRoster[i][3] = class;
+			end
+			if string.lower(arg1) == "!infoguild" then
+				if critReverse then
+					gRoster = tSort(gRoster, 2);
+					for i = 1, table.getn(gRoster) do
+						if gRoster[i][1] == arg2 then
+							CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in guild: #" .. i, "GUILD");
+						end
+					end
+				else
+					critReverse = true;
+					gRoster = tSort(gRoster, 2);
+					for i = 1, table.getn(gRoster) do
+						if gRoster[i][1] == arg2 then
+							CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in guild: #" .. i, "GUILD");
+						end
+					end
+					critReverse = false;
+				end
+			else
+				local count = 1;
+				if string.lower(arg1) == "!infoclass" then
+					for i = 1, GetNumRaidMembers() do
+						local name = GetRaidRosterInfo(i);
+						for x = 1, table.getn(gRoster) do
+							if gRoster[x][1] == name and gRoster[x][3] == unitClass then
+								rRoster[count] = {};
+								rRoster[count][1] = name;
+								_, _ ,_, class, oNote = getGuildInfo(name);
+								EP, GP = getEPGP(oNote);
+								rRoster[count][2] = math.floor((EP/GP)*100)/100;
+								count = count + 1;
+							end
+						end
+					end
+				else --Raid
+					for i = 1, GetNumRaidMembers() do
+						local name = GetRaidRosterInfo(i);
+						for x = 1, ntgetn(gRoster) do
+							if gRoster[x][1] == name then
+								rRoster[count] = {};
+								rRoster[count][1] = name;
+								_, _ ,_, class, oNote = getGuildInfo(name);
+								EP, GP = getEPGP(oNote);
+								rRoster[count][2] = math.floor((EP/GP)*100)/100;
+								count = count + 1;
+							end
+						end
+					end
+				end
+				if count > 1 then
+					if critReverse then
+						rRoster = tSort(rRoster, 2);
+						for i = 1, table.getn(rRoster) do
+							if rRoster[i][1] == arg2 then
+								if string.lower(arg1) == "!infoclass" then
+									CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank among " .. unitClass .. "s in raid: #" .. i, "GUILD");
+								else
+									CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in raid: #" .. i, "GUILD");
+								end
+							end
+						end
+					else
+						critReverse = true;
+						rRoster = tSort(rRoster, 2);
+						for i = 1, table.getn(rRoster) do
+							if rRoster[i][1] == arg2 then
+								if string.lower(arg1) == "!infoclass" then
+									CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank among " .. unitClass .. "s in raid: #" .. i, "GUILD");
+								else
+									CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in raid: #" .. i, "GUILD");
+								end
+							end
+						end
+						critReverse = false;
+					end
+				end
+			end
 		end
 	elseif event == "GUILD_ROSTER_UPDATE" then
 		SetGuildRosterShowOffline(true);
@@ -144,12 +238,15 @@ function CEPGP_OnEvent()
 		for i = 1, GetNumGuildMembers() do
 			local name, rank, rankIndex, _, class, _, _, officerNote = GetGuildRosterInfo(i);
 			if name then
+				local EP, GP = getEPGP(officerNote);
+				local PR = math.floor((EP/GP)*100)/100;
 				roster[name] = {
 				[1] = i,
 				[2] = class,
 				[3] = rank,
 				[4] = rankIndex,
-				[5] = officerNote
+				[5] = officerNote,
+				[6] = PR
 				};
 			end
 		end
@@ -433,6 +530,8 @@ function CEPGP_IncAddonMsg(message, sender)
 		end
 	elseif string.find(message, "STANDBYEP"..UnitName("player")) then
 		CEPGP_print(string.sub(message, string.find(message, ",")+1));
+	elseif string.find(message, "!info"..UnitName("player")) then
+		CEPGP_print(string.sub(message, 5+string.len(UnitName("player"))+1));
 	end
 end
 
@@ -471,7 +570,7 @@ function CEPGP_UpdateLootScrollBar()
 			rankIndex = roster[name][4];
 			offNote = roster[name][5];
 			EP, GP = getEPGP(offNote);
-			PR = math.floor((EP/GP)*100)/100;
+			PR = roster[name][6];
 		end
 		if not rank then
 			rank = "Not in Guild";
@@ -663,7 +762,7 @@ function CEPGP_UpdateRaidScrollBar()
 			rankIndex = roster[name][4];
 			offNote = roster[name][5];
 			EP, GP = getEPGP(offNote);
-			PR = math.floor((EP/GP)*100)/100;
+			PR = roster[name][6];
 		end
 		if not roster[name] then
 			rank = "Not in Guild";
@@ -1803,7 +1902,7 @@ end
 
 function getGuildInfo(name)
 	if tContains(roster, name, true) then
-		return roster[name][1], roster[name][2], roster[name][3], roster[name][4], roster[name][5];  -- index, Rank, RankIndex, Class, OfficerNote
+		return roster[name][1], roster[name][2], roster[name][3], roster[name][4], roster[name][5], roster[name][6];  -- index, Rank, RankIndex, Class, OfficerNote, PR
 	else
 		return nil;
 	end
