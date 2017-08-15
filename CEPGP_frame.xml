@@ -1555,6 +1555,78 @@
 									</Anchor>
 								</Anchors>
 							</Button>
+							<Button name="LootDistButton11" inherits="LootDistButtonTemplate" id="11" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton10" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton12" inherits="LootDistButtonTemplate" id="12" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton11" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton13" inherits="LootDistButtonTemplate" id="13" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton12" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton14" inherits="LootDistButtonTemplate" id="14" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton13" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton15" inherits="LootDistButtonTemplate" id="15" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton14" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton16" inherits="LootDistButtonTemplate" id="16" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton15" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton17" inherits="LootDistButtonTemplate" id="17" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton16" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="LootDistButton18" inherits="LootDistButtonTemplate" id="18" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="LootDistButton17" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
 							<Scripts>
 							<OnLoad>
 								this:SetBackdropColor(0.1, 0.1, 0.1);

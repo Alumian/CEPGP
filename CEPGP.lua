@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.4.3";
+VERSION = "1.4.4";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -121,6 +121,9 @@ function CEPGP_OnEvent()
 					end
 					SendChatMessage(arg2 .. " (" .. class .. ") needs. (Non-guild member)", RAID, LANGUAGE);
 				end
+			end
+			if not vInfo[arg2] then
+				CEPGP_UpdateLootScrollBar();
 			end
 		end
 	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!info" then
@@ -591,8 +594,8 @@ function CEPGP_UpdateLootScrollBar()
 		rank = nil;
 	end
 	t = tSort(t, criteria)
-    FauxScrollFrame_Update(DistributeScrollFrame, tSize, 10, 120);
-    for y = 1, 10, 1 do
+    FauxScrollFrame_Update(DistributeScrollFrame, tSize, 18, 120);
+    for y = 1, 18, 1 do
         yoffset = y + FauxScrollFrame_GetOffset(DistributeScrollFrame);
         if (yoffset <= tSize) then
             if not tContains(t, yoffset, true) then
