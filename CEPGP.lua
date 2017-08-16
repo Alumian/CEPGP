@@ -1695,7 +1695,7 @@ function addGP(player, amount)
 		index = roster[player][1];
 		if offNote == "" or offNote == "Click here to set an Officer's Note" then
 			GuildRosterSetOfficerNote(index, "0," .. BASEGP);
-			offNote = "0,1";
+			offNote = "0," .. BASEGP;
 		end
 		EP,GP = getEPGP(offNote);
 		GP = tonumber(GP) + amount;
@@ -1730,7 +1730,7 @@ function addEP(player, amount)
 		index = roster[player][1];
 		if offNote == "" or offNote == "Click here to set an Officer's Note" then
 			GuildRosterSetOfficerNote(index, "0," .. BASEGP);
-			offNote = "0,1";
+			offNote = "0," .. BASEGP;
 		end
 		EP,GP = getEPGP(offNote);
 		EP = tonumber(EP) + amount;
