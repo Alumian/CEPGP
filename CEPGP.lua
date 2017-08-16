@@ -1762,8 +1762,7 @@ function decay(amount)
 		offNote = roster[name][5];
 		index = roster[name][1];
 		if offNote == "" then
-			GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
-			offNote = amount .. ",1";
+			GuildRosterSetOfficerNote(index, 0 .. "," .. BASEGP);
 		else
 			EP,GP = getEPGP(offNote);
 			EP = math.floor(tonumber(EP)*(1-(amount/100)));
