@@ -5723,18 +5723,18 @@
 								
 								for k, v in pairs(EPVALS) do
 									if k == "lord kri" or k == "vem" or k == "princess yauj" then
-										EPVALS[k] = getglobal("CEPGP_options_the bug trio_EP_value"):GetText();
+										EPVALS[k] = tonumber(getglobal("CEPGP_options_the bug trio_EP_value"):GetText());
 										getglobal("CEPGP_options_the bug trio_EP_value"):ClearFocus();
 									elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
-										EPVALS[k] = getglobal("CEPGP_options_twin emps_EP_value"):GetText();
+										EPVALS[k] = tonumber(getglobal("CEPGP_options_twin emps_EP_value"):GetText());
 										getglobal("CEPGP_options_twin emps_EP_value"):ClearFocus();
 									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
-										EPVALS[k] = getglobal("CEPGP_options_four horsemen_EP_value"):GetText();
+										EPVALS[k] = tonumber(getglobal("CEPGP_options_four horsemen_EP_value"):GetText());
 										getglobal("CEPGP_options_four horsemen_EP_value"):ClearFocus();
 									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
-										EPVALS[k] = getglobal("CEPGP_options_edge of madness_auto_check"):GetText();
+										EPVALS[k] = tonumber(getglobal("CEPGP_options_edge of madness_EP_value"):GetText());
 									else
-										EPVALS[k] = getglobal("CEPGP_options_"..k.."_EP_value"):GetText();
+										EPVALS[k] = tonumber(getglobal("CEPGP_options_"..k.."_EP_value"):GetText());
 										getglobal("CEPGP_options_"..k.."_EP_value"):ClearFocus();
 									end
 								end

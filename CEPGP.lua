@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.4.4";
+VERSION = "1.4.5";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -52,12 +52,12 @@ function CEPGP_OnEvent()
 		if BASEGP == nil then
 			BASEGP = 1;
 		end
-		if table.getn(AUTOEP) == 0 then
+		if ntgetn(AUTOEP) == 0 then
 			for k, v in pairs(bossNameIndex) do
 				AUTOEP[k] = true;
 			end
 		end
-		if table.getn(EPVALS) == 0 then
+		if ntgetn(EPVALS) == 0 then
 			for k, v in pairs(bossNameIndex) do
 				EPVALS[k] = v;
 			end
@@ -1990,9 +1990,9 @@ end
 --[[ntgetn(table) - Working as intended
 	table.getn clone that can handle tables which do not have numerical indexes.
 ]]
-function ntgetn(table)
+function ntgetn(tbl)
 	local n = 0;
-	for _,_ in pairs(roster) do
+	for _,_ in pairs(tbl) do
 		n = n + 1;
 	end
 	return n;
