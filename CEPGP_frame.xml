@@ -6491,7 +6491,7 @@
 					</Anchor>
 				</Anchors>
 				<Frames>
-					<ScrollFrame name="versionScrollFrame" inherits="FauxScrollFrameTemplate">
+					<ScrollFrame name="VersionScrollFrame" inherits="FauxScrollFrameTemplate">
 						<Size>
 							<AbsDimension x="360" y="350"/>
 						</Size>
@@ -6504,7 +6504,7 @@
 						</Anchors>
 						<Scripts>
 							<OnVerticalScroll>
-								FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateversionScrollBar); 
+								FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateVersionScrollBar); 
 							</OnVerticalScroll>
 							<OnShow>
 								CEPGP_UpdateVersionScrollBar();

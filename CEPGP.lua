@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.5.0";
+VERSION = "1.5.1";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -93,7 +93,7 @@ function CEPGP_OnEvent()
 		if STANDBYPERCENT ==  nil then
 			STANDBYPERCENT = 0;
 		end
-		if table.getn(STANDBYRANKS) == 0 then
+		if ntgetn(STANDBYRANKS) == 0 then
 			for i = 1, 10 do
 				STANDBYRANKS[i] = {};
 				STANDBYRANKS[i][1] = GuildControlGetRankName(i);
@@ -106,6 +106,8 @@ function CEPGP_OnEvent()
 				raidRoster[name] = name;
 			end
 		end
+		vInfo = {};
+		CEPGP_SendAddonMsg("version-check");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
@@ -157,7 +159,11 @@ function CEPGP_OnEvent()
 	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!info" then
 		if getGuildInfo(arg2) ~= nil then
 			local EP, GP = getEPGP(roster[arg2][5]);
-			CEPGP_SendAddonMsg("!info" .. arg2 .. "EPGP Standings - EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100, "GUILD");
+			if not vInfo[arg2] then
+				SendChatMessage("EPGP Standings - EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100, "WHISPER", LANGUAGE, arg2);
+			else
+				CEPGP_SendAddonMsg("!info" .. arg2 .. "EPGP Standings - EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100, "GUILD");
+			end
 		end
 	elseif event == "CHAT_MSG_WHISPER" and (string.lower(arg1) == "!infoguild" or string.lower(arg1) == "!inforaid" or string.lower(arg1) == "!infoclass") then
 		if getGuildInfo(arg2) ~= nil then
@@ -180,7 +186,11 @@ function CEPGP_OnEvent()
 					gRoster = tSort(gRoster, 2);
 					for i = 1, table.getn(gRoster) do
 						if gRoster[i][1] == arg2 then
-							CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in guild: #" .. i, "GUILD");
+							if not vInfo[arg2] then
+								SendChatMessage("EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in guild: #" .. i, "WHISPER", LANGUAGE, arg2);
+							else
+								CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in guild: #" .. i, "GUILD");
+							end
 						end
 					end
 				else
@@ -188,7 +198,11 @@ function CEPGP_OnEvent()
 					gRoster = tSort(gRoster, 2);
 					for i = 1, table.getn(gRoster) do
 						if gRoster[i][1] == arg2 then
-							CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in guild: #" .. i, "GUILD");
+							if not vInfo[arg2] then
+								SendChatMessage("EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in guild: #" .. i, "WHISPER", LANGUAGE, arg2);
+							else
+								CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in guild: #" .. i, "GUILD");
+							end
 						end
 					end
 					critReverse = false;
@@ -230,9 +244,17 @@ function CEPGP_OnEvent()
 						for i = 1, table.getn(rRoster) do
 							if rRoster[i][1] == arg2 then
 								if string.lower(arg1) == "!infoclass" then
-									CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank among " .. unitClass .. "s in raid: #" .. i, "GUILD");
+									if not vInfo[arg2] then
+										SendChatMessage("EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank among " .. unitClass .. "s in raid: #" .. i, "WHISPER", LANGUAGE, arg2);
+									else
+										CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank among " .. unitClass .. "s in raid: #" .. i, "GUILD");
+									end
 								else
-									CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in raid: #" .. i, "GUILD");
+									if not vInfo[arg2] then
+										SendChatMessage("EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in raid: #" .. i, "WHISPER", LANGUAGE, arg2);
+									else
+										CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in raid: #" .. i, "GUILD");
+									end
 								end
 							end
 						end
@@ -242,9 +264,17 @@ function CEPGP_OnEvent()
 						for i = 1, table.getn(rRoster) do
 							if rRoster[i][1] == arg2 then
 								if string.lower(arg1) == "!infoclass" then
-									CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank among " .. unitClass .. "s in raid: #" .. i, "GUILD");
+									if not vInfo[arg2] then
+										SendChatMessage("EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank among " .. unitClass .. "s in raid: #" .. i, "WHISPER", LANGUAGE, arg2);
+									else
+										CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank among " .. unitClass .. "s in raid: #" .. i, "GUILD");
+									end
 								else
-									CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in raid: #" .. i, "GUILD");
+									if not vInfo[arg2] then
+										SendChatMessage("EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in raid: #" .. i, "WHISPER", LANGUAGE, arg2);
+									else
+										CEPGP_SendAddonMsg("!info" .. arg2 .. "EP: " .. EP .. " / GP: " .. GP .. " / PR: " .. math.floor((EP/GP)*100)/100 .. " / PR rank in raid: #" .. i, "GUILD");
+									end
 								end
 							end
 						end
@@ -287,6 +317,8 @@ function CEPGP_OnEvent()
 			CEPGP_UpdateRaidScrollBar();
 		end
 	elseif event == "RAID_ROSTER_UPDATE" then
+		vInfo = {};
+		CEPGP_SendAddonMsg("version-check");
 		GuildRoster();
 		raidRoster = {};
 		for i = 1, GetNumRaidMembers() do
@@ -878,12 +910,12 @@ function CEPGP_UpdateVersionScrollBar()
 			[3] = online
 		}
 	end
-    FauxScrollFrame_Update(RaidScrollFrame, tSize, 18, 240);
+    FauxScrollFrame_Update(VersionScrollFrame, tSize, 18, 240);
     for y = 1, 18, 1 do
-        yoffset = y + FauxScrollFrame_GetOffset(RaidScrollFrame);
+        yoffset = y + FauxScrollFrame_GetOffset(VersionScrollFrame);
         if (yoffset <= tSize) then
             if not tContains(t, yoffset, true) then
-                getglobal("RaidButton" .. y):Hide();
+                getglobal("versionButton" .. y):Hide();
             else
 				t2 = t[yoffset];
 				name = t2[1];
@@ -1994,6 +2026,9 @@ end
 	table.getn clone that can handle tables which do not have numerical indexes.
 ]]
 function ntgetn(tbl)
+	if tbl == nil then
+		return 0;
+	end
 	local n = 0;
 	for _,_ in pairs(tbl) do
 		n = n + 1;
