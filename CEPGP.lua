@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.4.5";
+VERSION = "1.5.0";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -12,6 +12,8 @@ FORMULA = nil;
 STANDBYEP = false;
 STANDBYPERCENT = nil;
 STANDBYRANKS = {};
+SLOTWEIGHTS = {};
+DEFSLOTWEIGHTS = {["2HWEAPON"] = 2,["WEAPONMAINHAND"] = 1.5,["WEAPON"] = 1.5,["WEAPONOFFHAND"] = 0.5,["HOLDABLE"] = 0.5,["SHIELD"] = 0.5,["RANGED"] = 0.5,["RANGEDRIGHT"] = 0.5,["RELIC"] = 0.5,["HEAD"] = 1,["NECK"] = 0.5,["SHOULDER"] = 0.75,["CLOAK"] = 0.5,["CHEST"] = 1,["ROBE"] = 1,["WRIST"] = 0.5,["HAND"] = 0.75,["WAIST"] = 0.75,["LEGS"] = 1,["FEET"] = 0.75,["FINGER"] = 0.5,["TRINKET"] = 0.75};
 distID = nil;
 distSlot = nil;
 debugMode = false;
@@ -61,6 +63,32 @@ function CEPGP_OnEvent()
 			for k, v in pairs(bossNameIndex) do
 				EPVALS[k] = v;
 			end
+		end
+		if ntgetn(SLOTWEIGHTS) == 0 then
+			SLOTWEIGHTS = {
+				["2HWEAPON"] = 2,
+				["WEAPONMAINHAND"] = 1.5,
+				["WEAPON"] = 1.5,
+				["WEAPONOFFHAND"] = 0.5,
+				["HOLDABLE"] = 0.5,
+				["SHIELD"] = 0.5,
+				["RANGED"] = 0.5,
+				["RANGEDRIGHT"] = 0.5,
+				["RELIC"] = 0.5,
+				["HEAD"] = 1,
+				["NECK"] = 0.5,
+				["SHOULDER"] = 0.75,
+				["CLOAK"] = 0.5,
+				["CHEST"] = 1,
+				["ROBE"] = 1,
+				["WRIST"] = 0.5,
+				["HAND"] = 0.75,
+				["WAIST"] = 0.75,
+				["LEGS"] = 1,
+				["FEET"] = 0.75,
+				["FINGER"] = 0.5,
+				["TRINKET"] = 0.75
+			}
 		end
 		if STANDBYPERCENT ==  nil then
 			STANDBYPERCENT = 0;
@@ -1069,7 +1097,7 @@ end
 	returns EP and GP
 	]]
 function getEPGP(offNote)
-	if not offNote then
+	if not offNote or not checkEPGP then
 		return 0, BASEGP;
 	end
 	local EP, GP = nil;
@@ -1503,7 +1531,7 @@ function distribute(link, x)
 end
 
 function checkEPGP(note)
-	if string.find(note, '[$%d+],[%d+$]') then
+	if string.find(note, '^[0-9]+,[0-9]+$') then
 		return true;
 	else
 		return false;
@@ -1634,6 +1662,7 @@ function addGuildEP(amount)
 			offNote = roster[name][5];
 			index = roster[name][1];
 			if offNote == "" or offNote == "Click here to set an Officer's Note" then
+				CEPGP_print("Initialising EPGP values for " .. name);
 				GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
 			else
 				EP,GP = getEPGP(roster[name][5]);
@@ -1671,6 +1700,7 @@ function addStandbyEP(player, amount, boss)
 		EP = 0;
 	end
 	if offNote == "" or offNote == "Click here to set an Officer's Note" then
+		CEPGP_print("Initialising EPGP values for " .. roster[player][1]);
 		GuildRosterSetOfficerNote(roster[player][1], EP .. "," .. BASEGP);
 	else
 		GuildRosterSetOfficerNote(roster[player][1], EP .. "," .. GP);
@@ -1694,6 +1724,7 @@ function addGP(player, amount)
 		offNote = roster[player][5];
 		index = roster[player][1];
 		if offNote == "" or offNote == "Click here to set an Officer's Note" then
+			CEPGP_print("Initialising EPGP values for " .. player);
 			GuildRosterSetOfficerNote(index, "0," .. BASEGP);
 			offNote = "0," .. BASEGP;
 		end
@@ -1729,6 +1760,7 @@ function addEP(player, amount)
 		offNote = roster[player][5];
 		index = roster[player][1];
 		if offNote == "" or offNote == "Click here to set an Officer's Note" then
+			CEPGP_print("Initialising EPGP values for " .. player);
 			GuildRosterSetOfficerNote(index, "0," .. BASEGP);
 			offNote = "0," .. BASEGP;
 		end
@@ -1759,12 +1791,12 @@ function decay(amount)
 	end
 	local EP, GP = nil;
 	for name,_ in pairs(roster)do
-		offNote = roster[name][5];
+		EP, GP = getEPGP(roster[name][5]);
 		index = roster[name][1];
-		if offNote == "" then
+		--[[if offNote == "" then
 			GuildRosterSetOfficerNote(index, 0 .. "," .. BASEGP);
-		else
-			EP,GP = getEPGP(offNote);
+		else]]
+			--EP,GP = getEPGP(offNote);
 			EP = math.floor(tonumber(EP)*(1-(amount/100)));
 			GP = math.floor(tonumber(GP)*(1-(amount/100)));
 			if GP < BASEGP then
@@ -1774,7 +1806,7 @@ function decay(amount)
 				EP = 0;
 			end
 			GuildRosterSetOfficerNote(index, EP .. "," .. GP);
-		end
+		--end
 	end
 	CEPGP_SendAddonMsg("update");
 	SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, LANGUAGE, CHANNEL);
@@ -1849,36 +1881,7 @@ function calcGP(link)
 	end
 	if slot ~= "" and slot ~= nil then
 		slot = strsub(slot,strfind(slot,"INVTYPE_")+8,string.len(slot));
-		if slot == "WRIST" then
-			slot = 1;
-		elseif slot == "CLOAK" then
-			slot = 1.1;
-		elseif slot == "HAND" or slot == "WAIST" then
-			slot = 1.15;
-		elseif slot == "FINGER" then
-			slot = 1.2;
-		elseif slot == "SHOULDER" or slot == "FEET" then
-			slot = 1.25;
-		elseif slot == "HOLDABLE" or slot == "NECK" then
-			slot = 1.3;
-		elseif slot == "WAND" or slot == "TRINKET" then
-			slot = 1.35;
-		elseif slot == "HEAD" then
-			slot = 1.45;
-		elseif slot == "LEGS" then
-			slot = 1.5;
-		elseif slot == "CHEST" or slot == "ROBE" then
-			slot = 1.55;
-		elseif slot == "WEAPONMAINHAND" or slot == "WEAPON" or slot == "WEAPONOFFHAND" or slot == "SHIELD" or slot == "RANGED" or slot == "RANGEDRIGHT" or slot == "RELIC" then
-			slot = 1.65;
-		elseif slot == "2HWEAPON" then
-			slot = 2;
-		elseif slot == "EXCEPTION" then
-			slot = 0;
-		else
-			CEPGP_print("Slot for " .. name .. " not found");
-			slot = 1;
-		end
+		slot = SLOTWEIGHTS[slot];
 	else
 		slot = 1;
 	end
