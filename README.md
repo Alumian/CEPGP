@@ -1,6 +1,37 @@
 # Classic-EPGP
 **Do not redistribute this addon. Post a link to this github page instead**
 
+__**IMPORTANT NOTE TO CURRENT USERS**__
+
+Please be aware that I am currently working on an option which will allow you to set the slot weights for the GP formula. Once you update your addon to this new version, your GP values will default to the standard GP weights which are **very** different.
+The current stat weights (which were established to suit the needs of my own guild) are:
+
+Bracers: 1
+
+Cloak: 1.1
+
+Gloves and Belt: 1.15
+
+Rings: 1.2
+
+Shoulders and Feet: 1.25
+
+Neck and Holdable Off-Hand: 1.3
+
+Wands and Trinkets: 1.35
+
+Head: 1.45
+
+Legs: 1.5
+
+Chest: 1.55
+
+Main-Hand Weapon, Off-Hand Weapon, Shield, Ranged, Wands and Relics: 1.65
+
+2-Handed Weapons: 2
+
+Alternatively you may leave the values as default if that suits you. This is just for the current users of this addon.
+
 
 An addon designed to handle your guild's EPGP standings by storing the respective values in your Officer Notes. Another primary function of the addon is to handle loot moderation which you must be the master looter to utilise.
 
