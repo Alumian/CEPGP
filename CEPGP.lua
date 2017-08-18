@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.5.2";
+VERSION = "1.5.3";
 mode = "guild";
 target = nil;
 CHANNEL = nil;
@@ -284,7 +284,8 @@ function CEPGP_OnEvent()
 			end
 		end
 	elseif event == "GUILD_ROSTER_UPDATE" then
-		SetGuildRosterShowOffline(true);
+		--SetGuildRosterShowOffline(true);
+		roster = {};
 		if CanEditOfficerNote() == 1 then
 			ShowUIPanel(CEPGP_guild_add_EP);
 			ShowUIPanel(CEPGP_guild_decay);
@@ -1629,10 +1630,21 @@ end
 	Function Status: Working as intended
 ]]
 function resetAll()
-	local total = ntgetn(roster);
-	if total > 0 then
-		for i = 1, total, 1 do
-			GuildRosterSetOfficerNote(i, "0,"..BASEGP);
+	if GetGuildRosterShowOffline() == nil then
+		SetGuildRosterShowOffline(true);
+		local total = ntgetn(roster);
+		if total > 0 then
+			for i = 1, total, 1 do
+				GuildRosterSetOfficerNote(i, "0,"..BASEGP);
+			end
+		end
+		SetGuildRosterShowOffline(false);
+	else
+		local total = ntgetn(roster);
+		if total > 0 then
+			for i = 1, total, 1 do
+				GuildRosterSetOfficerNote(i, "0,"..BASEGP);
+			end
 		end
 	end
 	CEPGP_SendAddonMsg("update");
@@ -1686,27 +1698,56 @@ function addGuildEP(amount)
 		CEPGP_print("Please enter a valid number", 1);
 		return;
 	end
-	local total = ntgetn(roster);
-	local EP, GP = nil;
-	amount = math.floor(amount);
-	if total > 0 then
-		for name,_ in pairs(roster)do
-			offNote = roster[name][5];
-			index = roster[name][1];
-			if offNote == "" or offNote == "Click here to set an Officer's Note" then
-				CEPGP_print("Initialising EPGP values for " .. name);
-				GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
-			else
-				EP,GP = getEPGP(roster[name][5]);
-				EP = tonumber(EP) + amount;
-				GP = tonumber(GP);
-				if GP < BASEGP then
-					GP = BASEGP;
+	if GetGuildRosterShowOffline() == nil then
+		SetGuildRosterShowOffline(true);
+		local total = ntgetn(roster);
+		local EP, GP = nil;
+		amount = math.floor(amount);
+		if total > 0 then
+			for name,_ in pairs(roster)do
+				offNote = roster[name][5];
+				index = roster[name][1];
+				if offNote == "" or offNote == "Click here to set an Officer's Note" then
+					CEPGP_print("Initialising EPGP values for " .. name);
+					GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
+				else
+					EP,GP = getEPGP(roster[name][5]);
+					EP = tonumber(EP) + amount;
+					GP = tonumber(GP);
+					if GP < BASEGP then
+						GP = BASEGP;
+					end
+					if EP < 0 then
+						EP = 0;
+					end
+					GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 				end
-				if EP < 0 then
-					EP = 0;
+			end
+		end
+		SetGuildRosterShowOffline(false);
+	else
+		local total = ntgetn(roster);
+		local EP, GP = nil;
+		amount = math.floor(amount);
+		if total > 0 then
+			for name,_ in pairs(roster)do
+				offNote = roster[name][5];
+				index = roster[name][1];
+				if offNote == "" or offNote == "Click here to set an Officer's Note" then
+					CEPGP_print("Initialising EPGP values for " .. name);
+					GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
+				else
+					EP,GP = getEPGP(roster[name][5]);
+					EP = tonumber(EP) + amount;
+					GP = tonumber(GP);
+					if GP < BASEGP then
+						GP = BASEGP;
+					end
+					if EP < 0 then
+						EP = 0;
+					end
+					GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 				end
-				GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 			end
 		end
 	end
@@ -1821,27 +1862,54 @@ function decay(amount)
 		CEPGP_print("Please enter a valid number", 1);
 		return;
 	end
-	local EP, GP = nil;
-	for name,_ in pairs(roster)do
-		EP, GP = getEPGP(roster[name][5]);
-		index = roster[name][1];
-		--[[if offNote == "" then
-			GuildRosterSetOfficerNote(index, 0 .. "," .. BASEGP);
-		else]]
-			--EP,GP = getEPGP(offNote);
-			EP = math.floor(tonumber(EP)*(1-(amount/100)));
-			GP = math.floor(tonumber(GP)*(1-(amount/100)));
-			if GP < BASEGP then
-				GP = BASEGP;
-			end
-			if EP < 0 then
-				EP = 0;
-			end
-			GuildRosterSetOfficerNote(index, EP .. "," .. GP);
-		--end
+	if GetGuildRosterShowOffline() == nil then
+		SetGuildRosterShowOffline(true);
+		GuildRoster();
+		local EP, GP = nil;
+		for name,_ in pairs(roster)do
+			EP, GP = getEPGP(roster[name][5]);
+			index = roster[name][1];
+			--[[if offNote == "" then
+				GuildRosterSetOfficerNote(index, 0 .. "," .. BASEGP);
+			else]]
+				--EP,GP = getEPGP(offNote);
+				EP = math.floor(tonumber(EP)*(1-(amount/100)));
+				GP = math.floor(tonumber(GP)*(1-(amount/100)));
+				if GP < BASEGP then
+					GP = BASEGP;
+				end
+				if EP < 0 then
+					EP = 0;
+				end
+				GuildRosterSetOfficerNote(index, EP .. "," .. GP);
+			--end
+		end
+		SetGuildRosterShowOffline(false);
+	else
+		GuildRoster();
+		local EP, GP = nil;
+		for name,_ in pairs(roster)do
+			EP, GP = getEPGP(roster[name][5]);
+			index = roster[name][1];
+			--[[if offNote == "" then
+				GuildRosterSetOfficerNote(index, 0 .. "," .. BASEGP);
+			else]]
+				--EP,GP = getEPGP(offNote);
+				EP = math.floor(tonumber(EP)*(1-(amount/100)));
+				GP = math.floor(tonumber(GP)*(1-(amount/100)));
+				if GP < BASEGP then
+					GP = BASEGP;
+				end
+				if EP < 0 then
+					EP = 0;
+				end
+				GuildRosterSetOfficerNote(index, EP .. "," .. GP);
+			--end
+		end
 	end
 	CEPGP_SendAddonMsg("update");
 	SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, LANGUAGE, CHANNEL);
+	
 end
 
 --[[calcGP(link) - Working as intended
@@ -1975,7 +2043,7 @@ function tSort(t, index)
 		for x = 1, tSize do
 			local t2Size = table.getn(t2);
 			for y = 1, t2Size do
-				if y < t2Size then
+				if y < t2Size and t[1][index] ~= nil then
 					if critReverse then
 						if (t[1][index] >= t2[y][index]) then
 							table.insert(t2, y, t[1]);
@@ -1997,7 +2065,7 @@ function tSort(t, index)
 							break;
 						end
 					end
-				elseif y == t2Size then
+				elseif y == t2Size and t[1][index] ~= nil then
 					if critReverse then
 						if t[1][index] > t2[y][index] then
 							table.insert(t2, y, t[1]);
