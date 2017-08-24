@@ -52,4 +52,4 @@ Patch Version: 1.12.1
 
 Build Number: 5875
 
-Author: Alumian \<Eidolon> on Crestfall
+Author: Alumian
