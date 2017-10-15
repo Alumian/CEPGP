@@ -342,7 +342,10 @@
                 </Scripts>
             </Button>
 			<Button name="CEPGP_button_options" inherits="GameMenuButtonTemplate" text="Options">
-                <Size>
+                <HitRectInsets>
+					<AbsInset left="0" right="0" top="0" bottom="0" />
+				</HitRectInsets>
+				<Size>
                     <AbsDimension x="100" y="21" />
                 </Size>
                 <Anchors>
@@ -426,6 +429,11 @@
 							getglobal("CEPGP_options_standby_ep_check"):SetChecked(true);
 						else
 							getglobal("CEPGP_options_standby_ep_check"):SetChecked(false);
+						end
+						if STANDBYOFFLINE then
+							getglobal("CEPGP_options_standby_ep_offline_check"):SetChecked(true);
+						else
+							getglobal("CEPGP_options_standby_ep_offline_check"):SetChecked(false);
 						end
 						CEPGP_options_standby_ep_val:SetText(tostring(STANDBYPERCENT));
 						CEPGP_options_formula:SetText(FORMULA);
@@ -538,6 +546,42 @@
 					</Anchor>
 				</Anchors>
 				<Frames>
+					<Button name="CEPGP_button_guild_dump" inherits="GameMenuButtonTemplate" text="Save Standings">
+						<Size>
+							<AbsDimension x="125" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="CEPGP_frame">
+								<Offset>
+									<AbsDimension x="10" y="-65" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								CEPGP_save_guild_logs:Show();
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_button_guild_restore" inherits="GameMenuButtonTemplate" text="Restore Standings">
+						<Size>
+							<AbsDimension x="125" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="CEPGP_frame">
+								<Offset>
+									<AbsDimension x="-10" y="-65" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								CEPGP_restore_guild_logs:Show();
+							</OnClick>
+						</Scripts>
+					</Button>
 					<Frame name="CEPGP_guild_scrollframe">
 						<Size>
 							<AbsDimension x="360" y="300"/>
@@ -1792,12 +1836,18 @@
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
+						<FontString name="CEPGP_options_mode" inherits="GameFontNormal" text="Current View: Options">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
 						<FontString name="CEPGP_options_formula" inherits="GameFontNormal">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="TOPLEFT">
 									<Offset>
-										<AbsDimension x="15" y="-50" />
+										<AbsDimension x="15" y="-20" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1847,7 +1897,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_slot_weight_head">
 									<Offset>
-										<AbsDimension x="0" y="-10" />
+										<AbsDimension x="0" y="-5" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1895,9 +1945,9 @@
 						<FontString name="CEPGP_options_slot_WRIST" inherits="GameFontNormal" text="Wrist:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_slot_HEAD">
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_slot_CHEST">
 									<Offset>
-										<AbsDimension x="50" y="0" />
+										<AbsDimension x="0" y="-4" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1915,9 +1965,9 @@
 						<FontString name="CEPGP_options_slot_WAIST" inherits="GameFontNormal" text="Waist:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_slot_HAND">
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_slot_HEAD">
 									<Offset>
-										<AbsDimension x="0" y="-4" />
+										<AbsDimension x="75" y="0" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1945,9 +1995,9 @@
 						<FontString name="CEPGP_options_slot_FINGER" inherits="GameFontNormal" text="Ring:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_slot_WRIST">
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_slot_FEET">
 									<Offset>
-										<AbsDimension x="40" y="0" />
+										<AbsDimension x="0" y="-4" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1985,9 +2035,9 @@
 						<FontString name="CEPGP_options_slot_HOLDABLE" inherits="GameFontNormal" text="Holdable OH:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_slot_WEAPONOFFHAND">
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_slot_WAIST">
 									<Offset>
-										<AbsDimension x="0" y="-4" />
+										<AbsDimension x="95" y="0" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1995,9 +2045,9 @@
 						<FontString name="CEPGP_options_slot_SHIELD" inherits="GameFontNormal" text="Shield:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_slot_FINGER">
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_slot_HOLDABLE">
 									<Offset>
-										<AbsDimension x="80" y="0" />
+										<AbsDimension x="0" y="-4" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -2036,6 +2086,146 @@
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_slot_RELIC">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_head" inherits="GameFontNormal" text="Standby EP">
+							<Color r="0.95" g="0.75" b="0.26"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="15" y="-20" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep" inherits="GameFontNormal" text="Award Standby EP:">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="15" y="-35" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_val_percent" inherits="GameFontNormal" text="Standby EP Percent: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep">
+									<Offset>
+										<AbsDimension x="0" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_offline" inherits="GameFontNormal" text="Award Standby EP to Offline Players: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_val_percent">
+									<Offset>
+										<AbsDimension x="0" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_1" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="15" y="-100" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_2" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_1">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_3" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_2">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_4" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_3">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_5" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_4">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_6" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_standby_ep_rank_1">
+									<Offset>
+										<AbsDimension x="80" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_7" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_6">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_8" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_7">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_9" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_8">
+									<Offset>
+										<AbsDimension x="0" y="-4" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_rank_10" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_9">
 									<Offset>
 										<AbsDimension x="0" y="-4" />
 									</Offset>
@@ -2107,12 +2297,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_HEAD_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="LEFT" relativePoint="LEFT">
 								<Offset>
-									<AbsDimension x="72.5" y="60" />
+									<AbsDimension x="80" y="95" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2127,12 +2317,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_NECK_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_HEAD_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2147,12 +2337,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_SHOULDER_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_NECK_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2167,12 +2357,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_CLOAK_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_SHOULDER_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2187,12 +2377,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_CHEST_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_CLOAK_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2207,12 +2397,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_WRIST_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
-							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_HEAD_weight">
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_CHEST_weight">
 								<Offset>
-									<AbsDimension x="47.5" y="0" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2227,12 +2417,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_HAND_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_WRIST_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2247,12 +2437,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_WAIST_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_HAND_weight">
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_HEAD_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="95" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2267,12 +2457,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_LEGS_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_WAIST_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2287,12 +2477,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_FEET_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_LEGS_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2307,12 +2497,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_FINGER_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
-							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_WRIST_weight">
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_FEET_weight">
 								<Offset>
-									<AbsDimension x="80" y="0" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2327,12 +2517,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_TRINKET_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_FINGER_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2347,12 +2537,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_WEAPONMAINHAND_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_TRINKET_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2367,12 +2557,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_WEAPONOFFHAND_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_WEAPONMAINHAND_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2387,12 +2577,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_HOLDABLE_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_WEAPONOFFHAND_weight">
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_WAIST_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="92.5" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2407,12 +2597,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_SHIELD_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
-							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_FINGER_weight">
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_HOLDABLE_weight">
 								<Offset>
-									<AbsDimension x="80" y="0" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2427,12 +2617,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_RANGED_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_SHIELD_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2447,12 +2637,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_RANGEDRIGHT_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_RANGED_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2467,12 +2657,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_RELIC_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_RANGEDRIGHT_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2487,12 +2677,12 @@
 					</EditBox>
 					<EditBox name="CEPGP_options_2HWEAPON_weight" inherits="InputBoxTemplate">
 						<Size>
-							<AbsDimension x="25" y="5" />
+							<AbsDimension x="40" y="5" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_RELIC_weight">
 								<Offset>
-									<AbsDimension x="0" y="-10" />
+									<AbsDimension x="0" y="-11" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2512,7 +2702,7 @@
 						<Anchors>
 							<Anchor point="RIGHT" relativePoint="LEFT">
 								<Offset>
-									<AbsDimension x="142.5" y="-30" />
+									<AbsDimension x="155" y="-35" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2542,6 +2732,23 @@
 							</OnEnterPressed>
 						</Scripts>
 					</EditBox>
+					<CheckButton name="CEPGP_options_standby_ep_offline_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_val">
+								<Offset>
+									<AbsDimension x="85" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+						</Scripts>
+					</CheckButton>
 					<CheckButton name="CEPGP_options_standby_ep_check_rank_1" inherits="UIOptionsCheckButtonTemplate">
 						<HitRectInsets>
 							<AbsInset left="0" right="0" top="0" bottom="0" />
@@ -2549,7 +2756,7 @@
 						<Anchors>
 							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_val">
 								<Offset>
-									<AbsDimension x="0" y="0" />
+									<AbsDimension x="-25" y="-20" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2818,7 +3025,7 @@
 									end
 								end
 								CEPGP_options_formula:SetText(FORMULA);
-								CEPGP_print("GP settings have been reset to default");
+								CEPGP_print("GP settings have been reset to default - click Apply to confirm");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -2897,6 +3104,11 @@
 								else
 									STANDBYEP = false;
 								end
+								if getglobal("CEPGP_options_standby_ep_offline_check"):GetChecked() then
+									STANDBYOFFLINE = true;
+								else
+									STANDBYOFFLINE = false;
+								end
 								if string.find(CEPGP_options_standby_ep_val:GetText(), "%%") then
 									CEPGP_options_standby_ep_val:SetText(string.sub(CEPGP_options_standby_ep_val:GetText(), 0, string.find(CEPGP_options_standby_ep_val:GetText(), "%%")-1));
 								end
@@ -2910,142 +3122,12 @@
 										SLOTWEIGHTS[k] = tonumber(getglobal("CEPGP_options_" .. k .. "_weight"):GetText());
 									end
 								end
-								CEPGP_print("Settings Applied");
+								CEPGP_print("Settings saved");
 								toggleFrame("CEPGP_guild");
 							</OnClick>
 						</Scripts>
 					</Button>
 				</Frames>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString name="CEPGP_options_mode" inherits="GameFontNormal" text="Current View: Options">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="CENTER" relativePoint="TOP" />
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep" inherits="GameFontNormal" text="Award Standby EP:">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="LEFT" relativePoint="LEFT">
-									<Offset>
-										<AbsDimension x="15" y="-30" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_val_percent" inherits="GameFontNormal" text="Standby EP Percent: ">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep">
-									<Offset>
-										<AbsDimension x="0" y="-10" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_1" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="LEFT" relativePoint="LEFT">
-									<Offset>
-										<AbsDimension x="15" y="-75" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_2" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_1">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_3" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_2">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_4" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_3">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_5" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_4">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_6" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_standby_ep_rank_1">
-									<Offset>
-										<AbsDimension x="80" y="0" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_7" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_6">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_8" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_7">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_9" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_8">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_standby_ep_rank_10" inherits="GameFontNormal" text="">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_rank_9">
-									<Offset>
-										<AbsDimension x="0" y="-4" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
 				<Scripts>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
@@ -6323,6 +6405,7 @@
 										getglobal("CEPGP_options_"..k.."_EP_value"):SetText(bossNameIndex[k]);
 									end
 								end
+								CEPGP_print("Boss settings have been reset to default - click Apply to confirm");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -6406,6 +6489,8 @@
 										end
 									end
 								end
+								CEPGP_print("Settings saved");
+								toggleFrame("CEPGP_guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -6442,6 +6527,7 @@
 				this:RegisterEvent("RAID_ROSTER_UPDATE");
 				this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
 				this:RegisterEvent("CHAT_MSG_ADDON");
+				this:RegisterAllEvents();
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();
@@ -6944,6 +7030,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
 				<FontString name="CEPGP_context_popup_EP_check_text" inherits="GameFontNormal" text="EP">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="CEPGP_context_popup">
@@ -7091,6 +7179,333 @@
 		<Scripts>
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CEPGP_save_guild_logs" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="300" y="175"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="CEPGP_guild_log_save_header" inherits="GameFontNormal" text="Save Guild Standings">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_guild_log_save_desc" inherits="GameFontNormal" text="">
+                    <Anchors>
+                        <Anchor point="CENTER">
+                            <Offset>
+                                <AbsDimension x="0" y="35"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="CEPGP_guild_log_save_name" inherits="InputBoxTemplate">
+				<Size>
+					<AbsDimension x="250" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:SetAutoFocus(false);
+					</OnLoad>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+				</Scripts>
+			</EditBox>
+			<Button name="CEPGP_guild_log_save_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
+				<Size>
+					<AbsDimension x="75" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_save_guild_logs);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CEPGP_guild_log_save_confirm" inherits="GameMenuButtonTemplate" text="Confirm">
+				<Size>
+					<AbsDimension x="75" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						local name = CEPGP_guild_log_save_name:GetText();
+						GuildRoster();
+						if RECORDS[name] == nil or (overwritelog and name == recordholder) then
+							if GetGuildRosterShowOffline() == nil then
+								SetGuildRosterShowOffline(true);
+								RECORDS[name] = {};
+								SortGuildRoster(name);
+								for i = 1, GetNumGuildMembers(), 1 do
+									local _, _, _, _, _, _, _, oNote = GetGuildRosterInfo(i);
+									RECORDS[name][GetGuildRosterInfo(i)] = oNote;
+								end
+								if overwritelog then
+									CEPGP_print("Record overwritten [" .. name .. "]");
+									overwritelog = false;
+								else
+									CEPGP_print("Record saved [" .. name .. "]");
+								end
+								SetGuildRosterShowOffline(false);
+							else
+								RECORDS[name] = {};
+								for i = 1, GetNumGuildMembers(), 1 do
+									local _, _, _, _, _, _, _, oNote = GetGuildRosterInfo(i);
+									RECORDS[name][GetGuildRosterInfo(i)] = oNote;
+								end
+								if overwritelog and name == recordholder then
+									CEPGP_print("Record overwritten [" .. name .. "]");
+									overwritelog = false;
+								else
+									CEPGP_print("Record saved [" .. name .. "]");
+								end
+								HideUIPanel(CEPGP_save_guild_logs);
+							end
+						else
+							CEPGP_print("Record [" .. name .. "] already exists. Click confirm again to overwrite");
+							recordholder = name;
+							overwritelog = true;
+						end
+					</OnClick>
+					<OnHide>
+						overwritelog = false;
+						recordholder = nil;
+					</OnHide>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+				CEPGP_guild_log_save_desc:SetText("Name your log\n\nIf you choose a name already in use,\nit will overwrite the existing log.");
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CEPGP_restore_guild_logs" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="300" y="175"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="CEPGP_guild_log_restore_header" inherits="GameFontNormal" text="Restore Standings">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_guild_log_restore_desc" inherits="GameFontNormal" text="">
+                    <Anchors>
+                        <Anchor point="CENTER">
+                            <Offset>
+                                <AbsDimension x="0" y="35"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="CEPGP_guild_log_restore_name" inherits="InputBoxTemplate">
+				<Size>
+					<AbsDimension x="250" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:SetAutoFocus(false);
+					</OnLoad>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+				</Scripts>
+			</EditBox>
+			<Button name="CEPGP_guild_log_restore_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
+				<Size>
+					<AbsDimension x="75" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_restore_guild_logs);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CEPGP_guild_log_restore_confirm" inherits="GameMenuButtonTemplate" text="Confirm">
+				<Size>
+					<AbsDimension x="75" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						local name = CEPGP_guild_log_restore_name:GetText();
+						GuildRoster();
+						if RECORDS[name] ~= nil and confirmrestore then
+							if GetGuildRosterShowOffline() == nil then
+								SetGuildRosterShowOffline(true);
+								for i = 1, GetNumGuildMembers(), 1 do
+									if RECORDS[name][GetGuildRosterInfo(i)] == nil then
+										GuildRosterSetOfficerNote(i, "0,"..BASEGP);
+									else
+										GuildRosterSetOfficerNote(i, RECORDS[name][GetGuildRosterInfo(i)]);
+									end
+								end
+								SetGuildRosterShowOffline(false);
+								CEPGP_print("Guild EPGP standings have been restored from record [" .. name .. "]");
+								confirmrestore = false;
+								HideUIPanel(CEPGP_restore_guild_logs);
+							else
+								for i = 1, GetNumGuildMembers(), 1 do
+									if RECORDS[name][GetGuildRosterInfo(i)] == nil then
+										GuildRosterSetOfficerNote(i, "0,"..BASEGP);
+									else
+										GuildRosterSetOfficerNote(i, RECORDS[name][GetGuildRosterInfo(i)]);
+									end
+								end
+								CEPGP_print("Guild EPGP standings have been restored from record [" .. name .. "]");
+								confirmrestore = false;
+								HideUIPanel(CEPGP_restore_guild_logs);
+							end
+						elseif RECORDS[name] ~= nil then
+							CEPGP_print("Are you sure you would like to restore guild EPGP standings from record [" .. name .. "]?");
+							CEPGP_print("This action CANNOT be undone. Press confirm again to restore.");
+							confirmrestore = true;
+						else
+							CEPGP_print("Record [" .. name .. "] could not be found", true);
+						end
+					</OnClick>
+					<OnHide>
+						confirmrestore = false;
+					</OnHide>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+				CEPGP_guild_log_restore_desc:SetText("Enter the name of the record\nyou want to restore\n|c00FF0000Make sure this is what you want to do.\nThis will overwrite ALL current guild EPGP\nstandings with the record.");
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();

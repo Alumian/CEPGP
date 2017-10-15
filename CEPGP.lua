@@ -1,8 +1,9 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.5.3";
+VERSION = "1.6.0";
 mode = "guild";
+recordholder = "";
 target = nil;
 CHANNEL = nil;
 MOD = nil;
@@ -10,6 +11,7 @@ COEF = nil;
 BASEGP = nil;
 FORMULA = nil;
 STANDBYEP = false;
+STANDBYOFFLINE = false;
 STANDBYPERCENT = nil;
 STANDBYRANKS = {};
 SLOTWEIGHTS = {};
@@ -17,8 +19,11 @@ DEFSLOTWEIGHTS = {["2HWEAPON"] = 2,["WEAPONMAINHAND"] = 1.5,["WEAPON"] = 1.5,["W
 distID = nil;
 distSlot = nil;
 debugMode = false;
-critReverse = false;
+critReverse = false; --Criteria reverse
 distributing = false;
+overwritelog = false;
+confirmrestore = false;
+RAZORGORE_EGG_COUNT = 0;
 criteria = 4;
 kills = 0;
 frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_options_page_2, CEPGP_distribute_popup, CEPGP_context_popup};
@@ -30,6 +35,7 @@ itemsTable = {};
 roster = {};
 raidRoster = {};
 vInfo = {};
+RECORDS = {};
 
 
 --[[ Stock function backups ]]--
@@ -104,7 +110,7 @@ function CEPGP_OnEvent()
 			for i = 1, GetNumRaidMembers() do
 				name = GetRaidRosterInfo(i);
 				raidRoster[name] = name;
-			end
+			end 
 		end
 		vInfo = {};
 		CEPGP_SendAddonMsg("version-check");
@@ -284,18 +290,21 @@ function CEPGP_OnEvent()
 			end
 		end
 	elseif event == "GUILD_ROSTER_UPDATE" then
-		--SetGuildRosterShowOffline(true);
 		roster = {};
 		if CanEditOfficerNote() == 1 then
 			ShowUIPanel(CEPGP_guild_add_EP);
 			ShowUIPanel(CEPGP_guild_decay);
 			ShowUIPanel(CEPGP_guild_reset);
 			ShowUIPanel(CEPGP_raid_add_EP);
+			ShowUIPanel(CEPGP_button_guild_dump);
+			ShowUIPanel(CEPGP_button_guild_restore);
 		else --[[ Hides context sensitive options if player cannot edit officer notes ]]--
 			HideUIPanel(CEPGP_guild_add_EP);
 			HideUIPanel(CEPGP_guild_decay);
 			HideUIPanel(CEPGP_guild_reset);
 			HideUIPanel(CEPGP_raid_add_EP);
+			HideUIPanel(CEPGP_button_guild_dump);
+			HideUIPanel(CEPGP_button_guild_restore);
 		end
 		for i = 1, GetNumGuildMembers() do
 			local name, rank, rankIndex, _, class, _, _, officerNote = GetGuildRosterInfo(i);
@@ -343,6 +352,12 @@ function CEPGP_OnEvent()
 		vInfo = {};
 		CEPGP_UpdateVersionScrollBar();
 		CEPGP_UpdateRaidScrollBar();
+	elseif event == "CHAT_MSG_MONSTER_EMOTE" then
+		if arg1 == "%s casts Destroy Egg" then
+			RAZORGORE_EGG_COUNT = RAZORGORE_EGG_COUNT + 1;
+			CEPGP_print(RAZORGORE_EGG_COUNT);
+			this:RegisterEvent("PLAYER_REGEN_ENABLED");
+		end
 	elseif event == "CHAT_MSG_COMBAT_HOSTILE_DEATH" then
 		if not strfind(arg1, " dies") then
 			return;
@@ -369,7 +384,7 @@ function CEPGP_OnEvent()
 								for k, v in pairs(roster) do
 									if not tContains(raidRoster, k, true) then
 										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
-										if online == 1 then
+										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
 											for i = 1, table.getn(STANDBYRANKS) do
 												if STANDBYRANKS[i][1] == rank then
 													if STANDBYRANKS[i][2] == true then
@@ -392,7 +407,7 @@ function CEPGP_OnEvent()
 								for k, v in pairs(roster) do
 									if not tContains(raidRoster, k, true) then
 										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
-										if online == 1 then
+										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
 											for i = 1, table.getn(STANDBYRANKS) do
 												if STANDBYRANKS[i][1] == rank then
 													if STANDBYRANKS[i][2] == true then
@@ -416,7 +431,7 @@ function CEPGP_OnEvent()
 								for k, v in pairs(roster) do
 									if not tContains(raidRoster, k, true) then
 										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
-										if online == 1 then
+										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
 											for i = 1, table.getn(STANDBYRANKS) do
 												if STANDBYRANKS[i][1] == rank then
 													if STANDBYRANKS[i][2] == true then
@@ -429,13 +444,13 @@ function CEPGP_OnEvent()
 								end
 							end
 							end
-						else
+						elseif (name ~= "Majordomo Executus" and name ~= "Razorgore the Untamed") or (name == "Razorgore the Untamed" and RAZORGORE_EGG_COUNT == 30) then
 							addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
 							if STANDBYEP then
 								for k, v in pairs(roster) do
 									if not tContains(raidRoster, k, true) then
 										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
-										if online == 1 then
+										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
 											for i = 1, table.getn(STANDBYRANKS) do
 												if STANDBYRANKS[i][1] == rank then
 													if STANDBYRANKS[i][2] == true then
@@ -451,12 +466,28 @@ function CEPGP_OnEvent()
 					end
 				end
 				
-				if name == "Flamewalker Healer" or name == "Flamewalker Elite" then
+				if name == "Flamewaker Healer" or name == "Flamewaker Elite" then
 					this:RegisterEvent("PLAYER_REGEN_ENABLED");
 					kills = kills + 1;
 					if kills == 8 then
 						kills = 0;
 						addRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP");
+						if STANDBYEP then
+							for k, v in pairs(roster) do
+								if not tContains(raidRoster, k, true) then
+									local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+									if (STANDBYOFFLINE and online == 1) or online == 1 then
+										for i = 1, table.getn(STANDBYRANKS) do
+											if STANDBYRANKS[i][1] == rank then
+												if STANDBYRANKS[i][2] == true then
+													addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
+												end
+											end
+										end
+									end
+								end
+							end
+						end
 					end
 				end
 			end
@@ -464,6 +495,7 @@ function CEPGP_OnEvent()
 		
 	elseif event == "PLAYER_REGEN_ENABLED" then
 		kills = 0;
+		RAZORGORE_EGG_COUNT = 0;
 		this:UnregisterEvent("PLAYER_REGEN_ENABLED");
 		
 	elseif (event == "CHAT_MSG_ADDON") then
@@ -471,8 +503,8 @@ function CEPGP_OnEvent()
 			CEPGP_IncAddonMsg(arg2, arg4);
 		end
 	
-	elseif event == "UI_ERROR_MESSAGE" then
-		CEPGP_print(arg1, 1);
+	--elseif event == "UI_ERROR_MESSAGE" then
+		--CEPGP_print(arg1, 1);
 	end
 end
 
@@ -1134,7 +1166,6 @@ function getEPGP(offNote)
 		return 0, BASEGP;
 	end
 	local EP, GP = nil;
-	local valid = false;
 	if not checkEPGP(offNote) then
 		return 0, BASEGP;
 	end
@@ -1564,7 +1595,7 @@ function distribute(link, x)
 end
 
 function checkEPGP(note)
-	if string.find(note, '^[0-9]+,[0-9]+$') then
+	if string.find(note, '[0-9]+,[0-9]+') then
 		return true;
 	else
 		return false;
