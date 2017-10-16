@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.6.0";
+VERSION = "1.6.1";
 mode = "guild";
 recordholder = "";
 target = nil;
@@ -2198,5 +2198,13 @@ function toggleFrame(frame)
 		else
 			frames[i]:Hide();
 		end
+	end
+end
+
+function isNumber(num)
+	if string.find(tostring(num), '[0-9]+') then
+		return true;
+	else
+		return false;
 	end
 end

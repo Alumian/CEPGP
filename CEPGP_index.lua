@@ -25,27 +25,27 @@ bossNameIndex = {
 					["nefarian"] = 10,
 
 					-- zul'gurub --
-					["high priest venoxis"] = 0,
-					["high priestess jeklik"] = 0,
-					["high priestess mar'li"] = 0,
-					["high priest thekal"] = 0,
-					["high priestess arlokk"] = 0,
-					["gri'lek"] = 0,
-					["hazza'rah"] = 0,
-					["renataki"] = 0,
-					["wushoolay"] = 0,
-					["bloodlord mandokir"] = 0,
-					["jin'do the hexxer"] = 0,
-					["gahz'ranka"] = 0,
-					["hakkar"] = 0,
+					["high priest venoxis"] = 2,
+					["high priestess jeklik"] = 2,
+					["high priestess mar'li"] = 2,
+					["high priest thekal"] = 2,
+					["high priestess arlokk"] = 2,
+					["gri'lek"] = 2,
+					["hazza'rah"] = 2,
+					["renataki"] = 2,
+					["wushoolay"] = 2,
+					["bloodlord mandokir"] = 2,
+					["jin'do the hexxer"] = 2,
+					["gahz'ranka"] = 2,
+					["hakkar"] = 3,
 					
 					-- aq20 --
-					["kurinnaxx"] = 0,
-					["general rajaxx"] = 0,
-					["moam"] = 0,
-					["buru the gorger"] = 0,
-					["ayamiss the hunter"] = 0,
-					["ossirian the unscarred"] = 0,
+					["kurinnaxx"] = 3,
+					["general rajaxx"] = 3,
+					["moam"] = 3,
+					["buru the gorger"] = 3,
+					["ayamiss the hunter"] = 3,
+					["ossirian the unscarred"] = 4,
 					
 					-- aq40 --
 					["the prophet skeram"] = 10,
@@ -509,7 +509,7 @@ itemsIndex =
 	
 	--lucifron
 	["choker of enlightenment"] = 65,
-	["tome of tranquilizing shot"] = 0,
+	["tome of tranquilizing shot"] = 60,
 	
 	--magmadar
 	["striker's mark"] = 69,
@@ -570,7 +570,17 @@ itemsIndex =
 	["dragon's blood cape"] = 73,
 	
 	--blackwing lair
-	--shared boss loot
+	--shared boss loot and trash drops
+	["elementium ore"] = 60,
+	["cloak of draconic might"] = 70,
+	["boots of pure thought"] = 70,
+	["band of dark dominion"] = 70,
+	["essence gatherer"] = 70,
+	["doom's edge"] = 70,
+	["draconic maul"] = 70,
+	["draconic avenger"] = 71,
+	["interlaced shadow jerkin"] = 71,
+	["ringo's blizzard boots"] = 71,
 	["drake talon pauldrons"] = 75,
 	["drake talon cleaver"] = 75,
 	["taut dragonhide belt"] = 75,
@@ -784,6 +794,24 @@ itemsIndex =
 	
 	
 	--aq20
+	--trash loot
+	["coif of elemental fury"] = 68,
+	["helm of the holy avenger"] = 68,
+	["polished obsidian pauldrons"] = 68,
+	["antenna of invigoration"] = 68,
+	["silithid husked launcher"] = 68,
+	["the lost kris of zedd"] = 68,
+	
+	--idols
+	["alabaster idol"] = 61,
+	["amber idol"] = 61,
+	["azure idol"] = 61,
+	["jasper idol"] = 61,
+	["lambent idol"] = 61,
+	["obsidian idol"] = 61,
+	["onyx idol"] = 61,
+	["vermillion idol"] = 61,
+	
 	--shared boss loot
 	["qiraji ornate hilt"] = 70,
 	["qiraji spiked hilt"] = 70,
@@ -875,6 +903,15 @@ itemsIndex =
 	["imperial qiraji armaments"] = 79,
 	["qiraji bindings of command"] = 78,
 	["qiraji bindings of dominance"] = 78,
+	
+	--trash loot
+	["garb of royal ascension"] = 71,
+	["gloves of the immortal"] = 71,
+	["neretzek, the blood drinker"] = 71,
+	["anubisath warhammer"] = 71,
+	["ritssyn's ring of chaos"] = 71,
+	["shard of the fallen star"] = 75,
+	["gloves of the redeemed prophecy"] = 75,
 	
 	--prophet
 	["staff of the qiraji prophets"] = 75,
@@ -1017,14 +1054,14 @@ itemsIndex =
 	["stygian buckler"] = 83,
 	["ring of the eternal flame"] = 83,
 	["ghoul skin tunic"] = 83,
-	["wartorn cloth scrap"] = 0,
-	["wartorn leather scrap"] = 0,
-	["wartorn chain scrap"] = 0,
-	["wartorn plate scrap"] = 0,
-	["resilience of the scourge"] = 0,
-	["fortitude of the scourge"] = 0,
-	["might of the scourge"] = 0,
-	["power of the scourge"] = 0,
+	["wartorn cloth scrap"] = 60,
+	["wartorn leather scrap"] = 60,
+	["wartorn chain scrap"] = 60,
+	["wartorn plate scrap"] = 60,
+	["resilience of the scourge"] = 60,
+	["fortitude of the scourge"] = 60,
+	["might of the scourge"] = 60,
+	["power of the scourge"] = 60,
 	
 	--construct quarter
 	--patchwerk
