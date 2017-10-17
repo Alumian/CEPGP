@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.6.1";
+VERSION = "1.6.2";
 mode = "guild";
 recordholder = "";
 target = nil;
@@ -24,6 +24,7 @@ distributing = false;
 overwritelog = false;
 confirmrestore = false;
 RAZORGORE_EGG_COUNT = 0;
+THEKAL_PARAMS = {["ZATH_DEAD"] = false, ["LOR'KHAN_DEAD"] = false, ["THEKAL_DEAD"] = false};
 criteria = 4;
 kills = 0;
 frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_options_page_2, CEPGP_distribute_popup, CEPGP_context_popup};
@@ -353,11 +354,21 @@ function CEPGP_OnEvent()
 		CEPGP_UpdateVersionScrollBar();
 		CEPGP_UpdateRaidScrollBar();
 	elseif event == "CHAT_MSG_MONSTER_EMOTE" then
-		if arg1 == "%s casts Destroy Egg" then
+		if arg1 == "%s is resurrected by a nearby ally!" then
+			if arg2 == "Zealot Lor'Khan" then
+				THEKAL_PARAMS["LOR'KHAN_DEAD"] = false;
+			elseif arg2 == "High Priest Thekal" and not (THEKAL_PARAMS["LOR'KHAN_DEAD"] or THEKAL_PARAMS["ZATH_DEAD"]) then
+				THEKAL_PARAMS["THEKAL_DEAD"] = false;
+			elseif arg2 == "Zealot Zath" then
+				THEKAL_PARAMS["ZATH_DEAD"] = false;
+			end
+		
+		elseif arg1 == "%s casts Destroy Egg" then
 			RAZORGORE_EGG_COUNT = RAZORGORE_EGG_COUNT + 1;
 			CEPGP_print(RAZORGORE_EGG_COUNT);
 			this:RegisterEvent("PLAYER_REGEN_ENABLED");
 		end
+		
 	elseif event == "CHAT_MSG_COMBAT_HOSTILE_DEATH" then
 		if not strfind(arg1, " dies") then
 			return;
@@ -396,7 +407,7 @@ function CEPGP_OnEvent()
 									end
 								end
 							end
-							end
+						end
 						elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
 							kills = kills + 1;
@@ -419,8 +430,7 @@ function CEPGP_OnEvent()
 									end
 								end
 							end
-							end
-							
+						end
 						elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
 							kills = kills + 1;
@@ -443,6 +453,30 @@ function CEPGP_OnEvent()
 									end
 								end
 							end
+						end
+						elseif name == "High Priest Thekal" then
+							this:RegisterEvent("PLAYER_REGEN_ENABLED");
+							if THEKAL_PARAMS["THEKAL_DEAD"] then
+								addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
+								CEPGP_print("He ded");
+								if STANDBYEP then
+									for k, v in pairs(roster) do
+										if not tContains(raidRoster, k, true) then
+											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+												for i = 1, table.getn(STANDBYRANKS) do
+													if STANDBYRANKS[i][1] == rank then
+														if STANDBYRANKS[i][2] == true then
+															addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
+														end
+													end
+												end
+											end
+										end
+									end
+								end
+							else
+								THEKAL_PARAMS["THEKAL_DEAD"] = true;
 							end
 						elseif (name ~= "Majordomo Executus" and name ~= "Razorgore the Untamed") or (name == "Razorgore the Untamed" and RAZORGORE_EGG_COUNT == 30) then
 							addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
@@ -489,6 +523,12 @@ function CEPGP_OnEvent()
 							end
 						end
 					end
+				elseif name == "Zealot Zath" then
+					this:RegisterEvent("PLAYER_REGEN_ENABLED");
+					THEKAL_PARAMS["ZATH_DEAD"] = true;
+				elseif name == "Zealot Lor'Khan" then
+					this:RegisterEvent("PLAYER_REGEN_ENABLED");
+					THEKAL_PARAMS["LOR'KHAN_DEAD"] = true;
 				end
 			end
 		end
@@ -496,15 +536,13 @@ function CEPGP_OnEvent()
 	elseif event == "PLAYER_REGEN_ENABLED" then
 		kills = 0;
 		RAZORGORE_EGG_COUNT = 0;
+		THEKAL_PARAMS = {["ZATH_DEAD"] = false, ["LOR'KHAN_DEAD"] = false, ["THEKAL_DEAD"] = false};
 		this:UnregisterEvent("PLAYER_REGEN_ENABLED");
 		
 	elseif (event == "CHAT_MSG_ADDON") then
 		if (arg1 == "CEPGP")then
 			CEPGP_IncAddonMsg(arg2, arg4);
 		end
-	
-	--elseif event == "UI_ERROR_MESSAGE" then
-		--CEPGP_print(arg1, 1);
 	end
 end
 

@@ -280,7 +280,7 @@
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 							<Offset>
-								<AbsDimension x="-120" y="0"/>
+								<AbsDimension x="-150" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -6544,7 +6544,6 @@
 				this:RegisterEvent("RAID_ROSTER_UPDATE");
 				this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
 				this:RegisterEvent("CHAT_MSG_ADDON");
-				this:RegisterAllEvents();
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();
