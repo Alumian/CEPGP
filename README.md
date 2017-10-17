@@ -14,7 +14,11 @@ Functionality:
 * /cepgp show - Shows the CEPGP window
 * /cepgp debug - Enables debug mode
 * /cepgp setdefaultchannel - Changes the default reporting channel. This is set to Guild by default
-* /cepgp check - Allows you to check if each raid member is running the addon - and if so, what version of the addon they are using
+* /cepgp version - Allows you to check if each raid member is running the addon - and if so, what version of the addon they are using
+
+**Note: CEPGP is a context sensitive addon and elements will be visible when they are relevent**
+
+Any function that involves modifying EPGP standings requires you to be able to edit officer notes to have it available to you.
 
 The following commands can be used to get EPGP reports.
 
