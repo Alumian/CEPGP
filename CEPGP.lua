@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.6.2";
+VERSION = "1.7.0";
 mode = "guild";
 recordholder = "";
 target = nil;
@@ -666,6 +666,10 @@ function CEPGP_IncAddonMsg(message, sender)
 		CEPGP_print(string.sub(message, string.find(message, ",")+1));
 	elseif string.find(message, "!info"..UnitName("player")) then
 		CEPGP_print(string.sub(message, 5+string.len(UnitName("player"))+1));
+	elseif string.find(message, UnitName("player") .. "-import") then
+		CEPGP_SendAddonMsg(arg2.."-impresponse~"..roster);
+	elseif string.find(message, UnitName("player") .. "-impresponse~") then
+		local import = string.sub(message, 0, string.find(message, "~")+1);
 	end
 end
 

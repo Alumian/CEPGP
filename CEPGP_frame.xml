@@ -342,24 +342,24 @@
                 </Scripts>
             </Button>
 			<Button name="CEPGP_button_options" inherits="GameMenuButtonTemplate" text="Options">
-                <HitRectInsets>
+              <HitRectInsets>
 					<AbsInset left="0" right="0" top="0" bottom="0" />
 				</HitRectInsets>
 				<Size>
                     <AbsDimension x="100" y="21" />
-                </Size>
-                <Anchors>
+				</Size>
+				<Anchors>
                     <Anchor point="TOPLEFT" relativeTo="CEPGP_frame">
                         <Offset>
                             <AbsDimension x="10" y="-35"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
-                <Scripts>
+				<Scripts>
 					<OnLoad>
 						GuildRoster();
 					</OnLoad>
-                    <OnClick>
+                  <OnClick>
 						GuildRoster();
                         PlaySound("gsTitleOptionExit");
 						toggleFrame("CEPGP_options");
@@ -367,7 +367,6 @@
 						CEPGP_options_mod_edit:SetText(tostring(MOD));
 						CEPGP_options_coef_edit:SetText(tostring(COEF));
 						CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
-						FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
 						for k, v in pairs(AUTOEP) do
 							if k == "lord kri" or k == "vem" or k == "princess yauj" then
 								getglobal("CEPGP_options_the bug trio_auto_check"):SetChecked(v);
@@ -436,7 +435,6 @@
 							getglobal("CEPGP_options_standby_ep_offline_check"):SetChecked(false);
 						end
 						CEPGP_options_standby_ep_val:SetText(tostring(STANDBYPERCENT));
-						CEPGP_options_formula:SetText(FORMULA);
 						for k, v in pairs(SLOTWEIGHTS) do
 							if k ~= "ROBE" and k ~= "WEAPON" then
 								getglobal("CEPGP_options_" .. k .. "_weight"):SetText(tonumber(SLOTWEIGHTS[k]));
@@ -444,7 +442,7 @@
 						end
 						populateFrame();
                     </OnClick>
-                </Scripts>
+				</Scripts>
             </Button>
 			<Button name="CEPGP_button_raid" inherits="GameMenuButtonTemplate" text="Raid">
                 <Size>
@@ -1842,32 +1840,22 @@
 								<Anchor point="CENTER" relativePoint="TOP" />
 							</Anchors>
 						</FontString>
-						<FontString name="CEPGP_options_formula" inherits="GameFontNormal">
+						<FontString name="CEPGP_options_formula" inherits="GameFontNormal" text="x (2^(ilvl/26+(rarity-4))) x slot) x">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="TOPLEFT">
 									<Offset>
-										<AbsDimension x="15" y="-20" />
+										<AbsDimension x="140" y="-62.5" />
 									</Offset>
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="CEPGP_options_formula_coef" inherits="GameFontNormal" text="Base Coefficient: ">
+						<FontString name="CEPGP_options_formula_desc" inherits="GameFontNormal" text="GP Formula:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_formula">
+								<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_formula">
 									<Offset>
-										<AbsDimension x="0" y="-10" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="CEPGP_options_formula_mod" inherits="GameFontNormal" text="Modifier:">
-							<Color r="1" g="1" b="1"/>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_formula_coef">
-									<Offset>
-										<AbsDimension x="0" y="-10" />
+										<AbsDimension x="-50" y="0" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -1875,9 +1863,9 @@
 						<FontString name="CEPGP_options_gp_base" inherits="GameFontNormal" text="Initial/Minimum Player GP:">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_formula_mod">
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_formula">
 									<Offset>
-										<AbsDimension x="0" y="-10" />
+										<AbsDimension x="-125" y="-10" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -2235,14 +2223,32 @@
 					</Layer>
 				</Layers>
 				<Frames>
+					<Button name="CEPGP_button_options_import" inherits="GameMenuButtonTemplate" text="Import Settings">
+						<Size>
+							<AbsDimension x="125" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="CEPGP_frame">
+								<Offset>
+									<AbsDimension x="10" y="-65" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								ShowUIPanel(CEPGP_settings_import);
+							</OnClick>
+						</Scripts>
+					</Button>
 					<EditBox name="CEPGP_options_coef_edit" inherits="InputBoxTemplate">
 						<Size>
 							<AbsDimension x="40" y="20" />
 						</Size>
 						<Anchors>
-							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_coef">
+							<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_options_formula">
 								<Offset>
-									<AbsDimension x="5" y="0" />
+									<AbsDimension x="0" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2260,9 +2266,9 @@
 							<AbsDimension x="40" y="20" />
 						</Size>
 						<Anchors>
-							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula_mod">
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_formula">
 								<Offset>
-									<AbsDimension x="10" y="0" />
+									<AbsDimension x="5" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -3018,13 +3024,11 @@
 								CEPGP_options_coef_edit:SetText("0.483");
 								CEPGP_options_mod_edit:SetText("1");
 								CEPGP_options_gp_base_edit:SetText("1");
-								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
 								for k, v in pairs(SLOTWEIGHTS) do
 									if k ~= "ROBE" and k ~= "WEAPON" then
 										getglobal("CEPGP_options_" .. k .. "_weight"):SetText(tonumber(DEFSLOTWEIGHTS[k]));
 									end
 								end
-								CEPGP_options_formula:SetText(FORMULA);
 								CEPGP_print("GP settings have been reset to default - click Apply to confirm");
 							</OnClick>
 						</Scripts>
@@ -3062,8 +3066,6 @@
 								else
 									BASEGP = tonumber(CEPGP_options_gp_base_edit:GetText());
 								end
-								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
-								CEPGP_options_formula:SetText(FORMULA);
 								CEPGP_options_mod_edit:ClearFocus();
 								CEPGP_options_coef_edit:ClearFocus();
 								CEPGP_options_gp_base_edit:ClearFocus();
@@ -6440,8 +6442,6 @@
 								else
 									COEF = tonumber(CEPGP_options_coef_edit:GetText());
 								end
-								FORMULA = "GP Formula: "..tostring(COEF).."*(2^(ilvl/26+(rarity-4)))*slot)*"..tostring(MOD);
-								CEPGP_options_formula:SetText(FORMULA);
 								CEPGP_options_mod_edit:ClearFocus();
 								CEPGP_options_coef_edit:ClearFocus();
 								
@@ -7522,6 +7522,137 @@
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
 				CEPGP_guild_log_restore_desc:SetText("Enter the name of the record\nyou want to restore\n|c00FF0000Make sure this is what you want to do.\nThis will overwrite ALL current guild EPGP\nstandings with the record.");
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CEPGP_settings_import" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="300" y="175"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="CEPGP_settings_import_header" inherits="GameFontNormal" text="Import Settings">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_settings_import_desc" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="CENTER">
+                            <Offset>
+                                <AbsDimension x="0" y="35"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="CEPGP_settings_import_name" inherits="InputBoxTemplate">
+				<Size>
+					<AbsDimension x="100" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:SetAutoFocus(false);
+					</OnLoad>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+				</Scripts>
+			</EditBox>
+			<Button name="CEPGP_settings_import_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
+				<Size>
+					<AbsDimension x="75" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						CEPGP_settings_import_name:SetText("");
+						HideUIPanel(CEPGP_settings_import);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CEPGP_settings_import_confirm" inherits="GameMenuButtonTemplate" text="Confirm">
+				<Size>
+					<AbsDimension x="75" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						local target = CEPGP_settings_import_name:GetText();
+						if raidRoster[target] then
+							CEPGP_SendAddonMsg(target .. "-import");
+						end
+						CEPGP_settings_import_name:ClearFocus();
+						HideUIPanel(CEPGP_settings_import);
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+				CEPGP_settings_import_desc:SetText("Enter the name of the player\nyou would like to import settings from.\nThis will overwrite all of your existing settings.\n\nPlayer must be in your guild or raid group");
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();
