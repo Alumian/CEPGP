@@ -7011,6 +7011,9 @@
 			<OnEvent>
 				CEPGP_distribute_popup_OnEvent(event);
 			</OnEvent>
+			<OnHide>
+				this:SetID(-1);
+			</OnHide>
 		</Scripts>
 	</Frame>
 	

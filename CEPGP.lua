@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.7.0";
+VERSION = "1.6.2"; --Reverted to prevent addon spam
 mode = "guild";
 recordholder = "";
 target = nil;
@@ -9,7 +9,6 @@ CHANNEL = nil;
 MOD = nil;
 COEF = nil;
 BASEGP = nil;
-FORMULA = nil;
 STANDBYEP = false;
 STANDBYOFFLINE = false;
 STANDBYPERCENT = nil;
@@ -667,9 +666,28 @@ function CEPGP_IncAddonMsg(message, sender)
 	elseif string.find(message, "!info"..UnitName("player")) then
 		CEPGP_print(string.sub(message, 5+string.len(UnitName("player"))+1));
 	elseif string.find(message, UnitName("player") .. "-import") then
-		CEPGP_SendAddonMsg(arg2.."-impresponse~"..roster);
-	elseif string.find(message, UnitName("player") .. "-impresponse~") then
-		local import = string.sub(message, 0, string.find(message, "~")+1);
+		CEPGP_SendAddonMsg(arg2.."-impresponse!CHANNEL~"..CHANNEL);
+		CEPGP_SendAddonMsg(arg2.."-impresponse!MOD~"..MOD);
+		CEPGP_SendAddonMsg(arg2.."-impresponse!COEF~"..COEF);
+		CEPGP_SendAddonMsg(arg2.."-impresponse!BASEGP~"..BASEGP);
+		CEPGP_SendAddonMsg(arg2.."-impresponse!STANDBYEP~"..STANDBYEP);
+		CEPGP_SendAddonMsg(arg2.."-impresponse!STANDBYOFFLINE~"..STANDBYOFFLINE);
+		CEPGP_SendAddonMsg(arg2.."-impresponse!STANDBYPERCENT~"..STANDBYPERCENT);
+		for k, v in pairs(SLOTWEIGHTS) do
+			CEPGP_SendAddonMsg(arg2.."-impresponse!SLOTWEIGHTS~"..k.."?"..v);
+		end
+		
+	elseif string.find(message, UnitName("player") .. "-impresponse!") then
+		local option = string.sub(message, string.find(message, "!")+1, string.find(message, "~"));
+		CEPGP_print("abc");
+		CEPGP_print(option);
+		if option == "SLOTWEIGHTS" then
+			local val = string.sub(message, string.find(message, "?")+1);
+			CEPGP_print(val);
+		else
+			local val = string.sub(message, string.find(message, "~")+1);
+			CEPGP_print(val);
+		end
 	end
 end
 
@@ -1183,9 +1201,11 @@ function CEPGP_distribute_popup_OnEvent(event)
 	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and value then
 		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. "'s inventory is full", 1);
 		CEPGP_distribute_value:SetText("");
+		CEPGP_distribute_popup:Hide();
 	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and value then
 		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
 		CEPGP_distribute_value:SetText("");
+		CEPGP_distribute_popup:Hide();
 	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() and CEPGP_distribute_value:GetText() then
 		distributing = false;
 		if value == "true" then
@@ -1194,6 +1214,7 @@ function CEPGP_distribute_popup_OnEvent(event)
 		else
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for free", RAID, LANGUAGE);
 		end
+		CEPGP_distribute_popup:Hide();
 		CEPGP_distribute_value:SetText("");
 		CEPGP_distribute:Hide();
 		CEPGP_loot:Show();
