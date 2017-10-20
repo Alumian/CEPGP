@@ -676,18 +676,42 @@ function CEPGP_IncAddonMsg(message, sender)
 		for k, v in pairs(SLOTWEIGHTS) do
 			CEPGP_SendAddonMsg(arg2.."-impresponse!SLOTWEIGHTS~"..k.."?"..v);
 		end
+		for k, v in pairs(STANDBYRANKS) do
+			CEPGP_SendAddonMsg(arg2.."-impresponse!STANDBYRANKS~"..k.."?"..v);
+		end
 		
 	elseif string.find(message, UnitName("player") .. "-impresponse!") then
 		local option = string.sub(message, string.find(message, "!")+1, string.find(message, "~"));
-		CEPGP_print("abc");
 		CEPGP_print(option);
-		if option == "SLOTWEIGHTS" then
+		
+		--[[if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" then
 			local val = string.sub(message, string.find(message, "?")+1);
-			CEPGP_print(val);
+			if option == "SLOTWEIGHTS" then
+				SLOTWEIGHTS[k] = val;
+			else
+				STANDBYRANKS[k] = val;
+			end
 		else
 			local val = string.sub(message, string.find(message, "~")+1);
 			CEPGP_print(val);
-		end
+		
+		if option == "CHANNEL" then
+			CHANNEL = val;
+		elseif option == "MOD" then
+			MOD = val;
+		elseif option == "COEF" then
+			COEF = val;
+		elseif option == "BASEGP" then
+			BASEGP = val;
+		elseif option == "STANDBYEP" then
+			STANDBYEP = val;
+		elseif option == "STANDBYOFFLINE" then
+			STANDBYOFFLINE = val;
+		elseif option == "STANDBYPERCENT" then
+			STANDBYPERCENT = val;
+		else
+		
+		end]]
 	end
 end
 
