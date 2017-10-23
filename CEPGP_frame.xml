@@ -102,7 +102,7 @@
 			</OnLoad>
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
-				if isML() == 0 then
+				if isML() == 0 or debugMode then
 					CEPGP_ListButton_OnClick();
 				end
 			</OnClick>
@@ -333,7 +333,7 @@
 					<OnLoad>
 						GuildRoster();
 					</OnLoad>
-                    <OnClick>
+					<OnClick>
                         PlaySound("gsTitleOptionExit");
 						toggleFrame("CEPGP_guild");
 						mode = "guild";
@@ -430,7 +430,7 @@
 				</Anchors>
                 <Scripts>
 					<OnLoad>
-						if not UnitInRaid("player") then
+						if not UnitInRaid("player") or debugMode then
 							this:Hide();
 						end
 					</OnLoad>
@@ -455,11 +455,11 @@
 				</Anchors>
                 <Scripts>
 					<OnLoad>
-						if not UnitInRaid("player") then
+						if not UnitInRaid("player") or debugMode then
 							this:Hide();
 						end
 					</OnLoad>
-                    <OnClick>
+					<OnClick>
                         PlaySound("gsTitleOptionExit");
 						toggleFrame("CEPGP_loot");
 						mode = "loot";
@@ -1404,8 +1404,6 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-					</Layer>
-					<Layer level="OVERLAY">
 						<FontString name="CEPGP_distribute_item" inherits="GameFontNormal" text="Item">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
@@ -1426,8 +1424,6 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-					</Layer>
-					<Layer level="OVERLAY">
 						<FontString name="CEPGP_distribute_GP_head" inherits="GameFontNormal" text="GP">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
@@ -1438,8 +1434,6 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-					</Layer>
-					<Layer level="OVERLAY">
 						<FontString name="CEPGP_distribute_GP_value" inherits="GameFontNormal" text="0">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>

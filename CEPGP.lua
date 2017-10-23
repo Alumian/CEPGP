@@ -838,6 +838,9 @@ function CEPGP_UpdateLootScrollBar()
 	GuildRoster();
 	for x = 1, tSize do
 		name = responses[x]
+		if debugMode and not UnitInRaid("player") then
+			class = UnitClass("player");
+		end
 		for i = 1, GetNumRaidMembers() do
 			if name == GetRaidRosterInfo(i) then
 				_, _, _, _, class = GetRaidRosterInfo(i);
@@ -1161,7 +1164,7 @@ function CEPGP_UpdateVersionScrollBar()
 end
 
 function CEPGP_ListButton_OnClick()
-	if CanEditOfficerNote() == nil then
+	if CanEditOfficerNote() == nil and not debugMode then
 		CEPGP_print("You don't have access to modify EPGP", 1);
 		return;
 	end
@@ -1399,7 +1402,7 @@ function LootFrame_OnEvent(event)
 			CEPGP_UpdateLootScrollBar();
 		end
 		
-	elseif event == "LOOT_OPENED" and UnitInRaid("player") then
+	elseif event == "LOOT_OPENED" and (UnitInRaid("player") or debugMode) then
 		LootFrame_Update();
 		ShowUIPanel(CEPGP_button_loot_dist);
 	
@@ -1525,7 +1528,6 @@ function SlashCmdList.ARG(msg, editbox)
 	if msg == "" then
 		CEPGP_print("Classic EPGP Usage");
 		CEPGP_print("/cepgp |cFF80FF80show|r - |cFFFF8080Manually shows the CEPGP window|r");
-		CEPGP_print("/cepgp |cFF80FF80debug|r - |cFFFF8080Toggles debug mode|r");
 		CEPGP_print("/cepgp |cFF80FF80setDefaultChannel channel|r - |cFFFF8080Sets the default channel to send confirmation messages. Default is Guild|r");
 		CEPGP_print("/cepgp |cFF80FF80version|r - |cFFFF8080Checks the version of the addon everyone in your raid is running|r");
 		
@@ -1739,7 +1741,7 @@ end
 ]]
 function distribute(link, x)
 	itemsTable = {};
-	if isML() == 0 then
+	if isML() == 0 or debugMode then
 		local iString = getItemString(link);
 		local name, _, _, _, _, _, _, slot, tex = GetItemInfo(iString);
 		local id = getItemId(iString);
