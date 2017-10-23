@@ -2,6 +2,7 @@
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
 VERSION = "1.7.0";
+BUILD = "alpha";
 mode = "guild";
 recordholder = "";
 target = nil;
@@ -47,7 +48,9 @@ function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		getglobal("CEPGP_version_number"):SetText("Running Version: " .. VERSION);
 		local ver2 = string.gsub(VERSION, "%.", ",");
-		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
+		if BUILD == "release" then
+			CEPGP_SendAddonMsg("version-"..ver2..",".."-");
+		end
 		if CHANNEL == nil then
 			CHANNEL = "GUILD";
 		end
@@ -1174,6 +1177,7 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_distribute_popup);
 		CEPGP_distribute_popup_title:SetText(getglobal(this:GetName() .. "Info"):GetText());
 		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID());
+		CEPGP_print(CEPGP_distribute_popup:GetID());
 	
 		--[[ Guild Menu ]]--
 	elseif strfind(obj, "GuildButton") then --A player from the guild menu is clicked (awards EP)
