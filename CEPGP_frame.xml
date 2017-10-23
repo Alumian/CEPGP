@@ -6992,7 +6992,6 @@
 					<OnClick>
 						CEPGP_distribute_value:SetText("true")
 						PlaySound("gsTitleOptionExit");
-						HideUIPanel(CEPGP_distribute_popup);
 						CEPGP_distribute_popup_give(true);
 						CEPGP_loot_distributing:Hide();
 					</OnClick>
@@ -7030,7 +7029,9 @@
 				CEPGP_distribute_popup_OnEvent(event);
 			</OnEvent>
 			<OnHide>
+				CEPGP_print(this:GetID());
 				this:SetID(-1);
+				CEPGP_print(this:GetID());
 			</OnHide>
 		</Scripts>
 	</Frame>

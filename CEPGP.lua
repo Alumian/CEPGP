@@ -1520,6 +1520,7 @@ end
 
 SLASH_ARG1 = "/cepgp";
 function SlashCmdList.ARG(msg, editbox)
+	msg = string.lower(msg);
 	
 	if msg == "" then
 		CEPGP_print("Classic EPGP Usage");
@@ -1574,7 +1575,8 @@ function SlashCmdList.ARG(msg, editbox)
 			CEPGP_print("Please enter a valid chat channel. Valid options are:");
 			CEPGP_print("say, yell, party, raid, guild, officer");
 		end
-	
+	else
+		CEPGP_print("|cFF80FF80" .. msg .. "|r |cFFFF8080is not a valid request. Type /cepgp to check addon usage|r", true);
 	end
 end
 
