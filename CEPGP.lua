@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.6.2"; --Reverted to prevent addon spam
+VERSION = "1.7.0";
 mode = "guild";
 recordholder = "";
 target = nil;
@@ -328,7 +328,7 @@ function CEPGP_OnEvent()
 		end
 	elseif event == "RAID_ROSTER_UPDATE" then
 		vInfo = {};
-		CEPGP_SendAddonMsg("version-check");
+		CEPGP_SendAddonMsg("version-check", "RAID");
 		GuildRoster();
 		raidRoster = {};
 		for i = 1, GetNumRaidMembers() do
@@ -665,53 +665,151 @@ function CEPGP_IncAddonMsg(message, sender)
 		CEPGP_print(string.sub(message, string.find(message, ",")+1));
 	elseif string.find(message, "!info"..UnitName("player")) then
 		CEPGP_print(string.sub(message, 5+string.len(UnitName("player"))+1));
-	elseif string.find(message, UnitName("player") .. "-import") then
-		CEPGP_SendAddonMsg(arg2.."-impresponse!CHANNEL~"..CHANNEL);
-		CEPGP_SendAddonMsg(arg2.."-impresponse!MOD~"..MOD);
-		CEPGP_SendAddonMsg(arg2.."-impresponse!COEF~"..COEF);
-		CEPGP_SendAddonMsg(arg2.."-impresponse!BASEGP~"..BASEGP);
-		CEPGP_SendAddonMsg(arg2.."-impresponse!STANDBYEP~"..STANDBYEP);
-		CEPGP_SendAddonMsg(arg2.."-impresponse!STANDBYOFFLINE~"..STANDBYOFFLINE);
-		CEPGP_SendAddonMsg(arg2.."-impresponse!STANDBYPERCENT~"..STANDBYPERCENT);
+	elseif message == UnitName("player").."-import" then
+		local lane;
+		if raidRoster[arg4] then
+			lane = "RAID";
+		elseif roster[arg4] then
+			lane = "GUILD";
+		end
+		CEPGP_SendAddonMsg(arg4.."-impresponse!CHANNEL~"..CHANNEL, lane);
+		CEPGP_SendAddonMsg(arg4.."-impresponse!MOD~"..MOD, lane);
+		CEPGP_SendAddonMsg(arg4.."-impresponse!COEF~"..COEF, lane);
+		CEPGP_SendAddonMsg(arg4.."-impresponse!BASEGP~"..BASEGP, lane);
+		if STANDBYEP then
+			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYEP~1", lane);
+		else
+			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYEP~0", lane);
+		end
+		if STANDBYOFFLINE then
+			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYOFFLINE~1", lane);
+		else
+			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYOFFLINE~0", lane);
+		end
+		CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYPERCENT~"..STANDBYPERCENT, lane);
 		for k, v in pairs(SLOTWEIGHTS) do
-			CEPGP_SendAddonMsg(arg2.."-impresponse!SLOTWEIGHTS~"..k.."?"..v);
+			CEPGP_SendAddonMsg(arg4.."-impresponse!SLOTWEIGHTS~"..k.."?"..v, lane);
 		end
 		for k, v in pairs(STANDBYRANKS) do
-			CEPGP_SendAddonMsg(arg2.."-impresponse!STANDBYRANKS~"..k.."?"..v);
+			if STANDBYRANKS[k][2] then
+				CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYRANKS~"..k.."?1", lane);
+			else
+				CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYRANKS~"..k.."?0", lane);
+			end
 		end
+		for k, v in pairs(EPVALS) do
+			CEPGP_SendAddonMsg(arg4.."-impresponse!EPVALS~"..k.."?"..v, lane);
+		end
+		for k, v in pairs(AUTOEP) do
+			if AUTOEP[k] then
+				CEPGP_SendAddonMsg(arg4.."-impresponse!AUTOEP~"..k.."?1", lane);
+			else
+				CEPGP_SendAddonMsg(arg4.."-impresponse!AUTOEP~"..k.."?0", lane);
+			end
+		end
+		CEPGP_SendAddonMsg(arg4.."-impresponse!COMPLETE~");
 		
-	elseif string.find(message, UnitName("player") .. "-impresponse!") then
-		local option = string.sub(message, string.find(message, "!")+1, string.find(message, "~"));
-		CEPGP_print(option);
+	elseif string.find(message, UnitName("player")) and string.find(message, "-impresponse!") then
+		local option = string.sub(message, string.find(message, "!")+1, string.find(message, "~")-1);
 		
-		--[[if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" then
+		if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" or option == "EPVALS" or option == "AUTOEP" then
+			local field = string.sub(message, string.find(message, "~")+1, string.find(message, "?")-1);
 			local val = string.sub(message, string.find(message, "?")+1);
 			if option == "SLOTWEIGHTS" then
-				SLOTWEIGHTS[k] = val;
-			else
-				STANDBYRANKS[k] = val;
+				SLOTWEIGHTS[field] = val;
+			elseif option == "STANDBYRANKS" then
+				if val == "1" then
+					STANDBYRANKS[tonumber(field)][2] = true;
+				else
+					STANDBYRANKS[tonumber(field)][2] = false;
+				end
+			elseif option == "EPVALS" then
+				EPVALS[field] = val;
+			elseif option == "AUTOEP" then
+				if val == "1" then
+					AUTOEP[field] = true;
+				else
+					AUTOEP[field] = false;
+				end
 			end
 		else
 			local val = string.sub(message, string.find(message, "~")+1);
-			CEPGP_print(val);
+			if option == "CHANNEL" then
+				CHANNEL = val;
+			elseif option == "MOD" then
+				MOD = tonumber(val);
+			elseif option == "COEF" then
+				COEF = tonumber(val);
+			elseif option == "BASEGP" then
+				BASEGP = tonumber(val);
+			elseif option == "STANDBYEP" then
+				if tonumber(val) == 1 then
+					STANDBYEP = true;
+				else
+					STANDBYEP = false;
+				end
+			elseif option == "STANDBYOFFLINE" then
+				if tonumber(val) == 1 then
+					STANDBYOFFLINE = true;
+				else
+					STANDBYOFFLINE = false;
+				end
+			elseif option == "STANDBYPERCENT" then
+				STANDBYPERCENT = tonumber(val);		
+			elseif option == "COMPLETE" then
+				CEPGP_print("Import complete");
+			end
+		end
 		
-		if option == "CHANNEL" then
-			CHANNEL = val;
-		elseif option == "MOD" then
-			MOD = val;
-		elseif option == "COEF" then
-			COEF = val;
-		elseif option == "BASEGP" then
-			BASEGP = val;
-		elseif option == "STANDBYEP" then
-			STANDBYEP = val;
-		elseif option == "STANDBYOFFLINE" then
-			STANDBYOFFLINE = val;
-		elseif option == "STANDBYPERCENT" then
-			STANDBYPERCENT = val;
+		CEPGP_options_mod_edit:SetText(tostring(MOD));
+		CEPGP_options_coef_edit:SetText(tostring(COEF));
+		CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
+		if STANDBYEP then
+			CEPGP_options_standby_ep_check:SetChecked(true);
 		else
-		
-		end]]
+			CEPGP_options_standby_ep_check:SetChecked(false);
+		end
+		CEPGP_options_standby_ep_val:SetText(tostring(STANDBYPERCENT));
+		for i = 1, 10 do
+			if not GuildControlGetRankName(i) then
+				STANDBYRANKS[i][1] = nil;
+			else
+				STANDBYRANKS[i][1] = GuildControlGetRankName(i);
+			end
+		end
+		for i = 1, 10 do
+			if STANDBYRANKS[i][1] ~= nil then
+				getglobal("CEPGP_options_standby_ep_rank_"..i):Show();
+				getglobal("CEPGP_options_standby_ep_rank_"..i):SetText(tostring(STANDBYRANKS[i][1]));
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):Show();
+				if STANDBYRANKS[i][2] == true then
+					getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(true);
+				else
+					getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
+				end
+			end
+			if GuildControlGetRankName(i) == nil then
+				getglobal("CEPGP_options_standby_ep_rank_"..i):Hide();
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):Hide();
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
+			end
+		end
+		if STANDBYEP then
+			getglobal("CEPGP_options_standby_ep_check"):SetChecked(true);
+		else
+			getglobal("CEPGP_options_standby_ep_check"):SetChecked(false);
+		end
+		if STANDBYOFFLINE then
+			getglobal("CEPGP_options_standby_ep_offline_check"):SetChecked(true);
+		else
+			getglobal("CEPGP_options_standby_ep_offline_check"):SetChecked(false);
+		end
+		CEPGP_options_standby_ep_val:SetText(tostring(STANDBYPERCENT));
+		for k, v in pairs(SLOTWEIGHTS) do
+			if k ~= "ROBE" and k ~= "WEAPON" then
+				getglobal("CEPGP_options_" .. k .. "_weight"):SetText(tonumber(SLOTWEIGHTS[k]));
+			end
+		end
 	end
 end
 

@@ -278,9 +278,9 @@
 				</FontString>
 				<FontString name="$parentversion" inherits="GameFontHighlight" justifyH="CENTER">
 					<Anchors>
-						<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="RIGHT">
 							<Offset>
-								<AbsDimension x="-150" y="0"/>
+								<AbsDimension x="-105" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -367,33 +367,6 @@
 						CEPGP_options_mod_edit:SetText(tostring(MOD));
 						CEPGP_options_coef_edit:SetText(tostring(COEF));
 						CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
-						for k, v in pairs(AUTOEP) do
-							if k == "lord kri" or k == "vem" or k == "princess yauj" then
-								getglobal("CEPGP_options_the bug trio_auto_check"):SetChecked(v);
-							elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
-								getglobal("CEPGP_options_twin emps_auto_check"):SetChecked(v);
-							elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
-								getglobal("CEPGP_options_four horsemen_auto_check"):SetChecked(v);
-							elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
-								getglobal("CEPGP_options_edge of madness_auto_check"):SetChecked(v);
-							else
-								getglobal("CEPGP_options_"..k.."_auto_check"):SetChecked(v);
-							end
-
-						end
-						for k, v in pairs(EPVALS) do
-							if k == "lord kri" or k == "vem" or k == "princess yauj" then
-								getglobal("CEPGP_options_the bug trio_EP_value"):SetText(v);
-							elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
-								getglobal("CEPGP_options_twin emps_EP_value"):SetText(v);
-							elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
-								getglobal("CEPGP_options_four horsemen_EP_value"):SetText(v);
-							elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
-								getglobal("CEPGP_options_edge of madness_EP_value"):SetText(v);
-							else
-								getglobal("CEPGP_options_"..k.."_EP_value"):SetText(v);
-							end
-						end
 						if STANDBYEP then
 							CEPGP_options_standby_ep_check:SetChecked(true);
 						else
@@ -6523,6 +6496,35 @@
 					</Layer>
 				</Layers>
 				<Scripts>
+					<OnShow>
+						for k, v in pairs(AUTOEP) do
+							if k == "lord kri" or k == "vem" or k == "princess yauj" then
+								getglobal("CEPGP_options_the bug trio_auto_check"):SetChecked(v);
+							elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
+								getglobal("CEPGP_options_twin emps_auto_check"):SetChecked(v);
+							elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
+								getglobal("CEPGP_options_four horsemen_auto_check"):SetChecked(v);
+							elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
+								getglobal("CEPGP_options_edge of madness_auto_check"):SetChecked(v);
+							else
+								getglobal("CEPGP_options_"..k.."_auto_check"):SetChecked(v);
+							end
+
+						end
+						for k, v in pairs(EPVALS) do
+							if k == "lord kri" or k == "vem" or k == "princess yauj" then
+								getglobal("CEPGP_options_the bug trio_EP_value"):SetText(v);
+							elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
+								getglobal("CEPGP_options_twin emps_EP_value"):SetText(v);
+							elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
+								getglobal("CEPGP_options_four horsemen_EP_value"):SetText(v);
+							elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
+								getglobal("CEPGP_options_edge of madness_EP_value"):SetText(v);
+							else
+								getglobal("CEPGP_options_"..k.."_EP_value"):SetText(v);
+							end
+						end
+					</OnShow>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
 					</OnLoad>
@@ -6825,14 +6827,14 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="CEPGP_version_check" inherits="GameMenuButtonTemplate" text="Get Raid Addon Status">
+			<Button name="CEPGP_version_raid_check" inherits="GameMenuButtonTemplate" text="Raid Addon Status">
 				<Size>
-					<AbsDimension x="160" y="21" />
+					<AbsDimension x="140" y="21" />
 				</Size>
 				<Anchors>
-					<Anchor point="BOTTOMRIGHT">
+					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
 						<Offset>
-							<AbsDimension x="-9" y="10" />
+							<AbsDimension x="-7.5" y="10" />
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -6840,10 +6842,26 @@
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
 						vInfo = {};
-						CEPGP_SendAddonMsg("version-check");
+						CEPGP_SendAddonMsg("version-check", "RAID");
 					</OnClick>
 				</Scripts>
 			</Button>
+			<!--TO BE ADDED-->
+			<!--<Button name="CEPGP_version_guild_check" inherits="GameMenuButtonTemplate" text="Guild Addon Status">
+				<Size>
+					<AbsDimension x="145" y="21" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CEPGP_version_raid_check" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						vInfo = {};
+						CEPGP_SendAddonMsg("version-check", "GUILD");
+					</OnClick>
+				</Scripts>
+			</Button>-->
 		</Frames>
 		<Layers>
 			<Layer level="OVERLAY">
@@ -7644,7 +7662,11 @@
 					<OnClick>
 						local target = CEPGP_settings_import_name:GetText();
 						if raidRoster[target] then
-							CEPGP_SendAddonMsg(target .. "-import");
+							CEPGP_SendAddonMsg(target .. "-import", "RAID");
+						elseif roster[target] then
+							CEPGP_SendAddonMsg(target .. "-import", "GUILD");
+						else
+							CEPGP_print(target .. " not found in guild or raid group", true);
 						end
 						CEPGP_settings_import_name:ClearFocus();
 						HideUIPanel(CEPGP_settings_import);
