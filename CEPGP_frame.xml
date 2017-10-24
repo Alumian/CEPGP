@@ -7340,6 +7340,7 @@
 									CEPGP_print("Record saved [" .. name .. "]");
 								end
 								SetGuildRosterShowOffline(false);
+								HideUIPanel(CEPGP_save_guild_logs);
 							else
 								RECORDS[name] = {};
 								for i = 1, GetNumGuildMembers(), 1 do

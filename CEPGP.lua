@@ -302,14 +302,12 @@ function CEPGP_OnEvent()
 			ShowUIPanel(CEPGP_guild_decay);
 			ShowUIPanel(CEPGP_guild_reset);
 			ShowUIPanel(CEPGP_raid_add_EP);
-			ShowUIPanel(CEPGP_button_guild_dump);
 			ShowUIPanel(CEPGP_button_guild_restore);
 		else --[[ Hides context sensitive options if player cannot edit officer notes ]]--
 			HideUIPanel(CEPGP_guild_add_EP);
 			HideUIPanel(CEPGP_guild_decay);
 			HideUIPanel(CEPGP_guild_reset);
 			HideUIPanel(CEPGP_raid_add_EP);
-			HideUIPanel(CEPGP_button_guild_dump);
 			HideUIPanel(CEPGP_button_guild_restore);
 		end
 		for i = 1, GetNumGuildMembers() do
