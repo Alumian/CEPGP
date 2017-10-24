@@ -5,6 +5,9 @@ VERSION = "1.7.0";
 BUILD = "alpha";
 mode = "guild";
 recordholder = "";
+distPlayer = "";
+distGP = false;
+lootSlot = nil;
 target = nil;
 CHANNEL = nil;
 MOD = nil;
@@ -1176,8 +1179,11 @@ function CEPGP_ListButton_OnClick()
 	if strfind(obj, "LootDistButton") then --A player in the distribution menu is clicked
 		ShowUIPanel(CEPGP_distribute_popup);
 		CEPGP_distribute_popup_title:SetText(getglobal(this:GetName() .. "Info"):GetText());
-		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID());
-		CEPGP_print(CEPGP_distribute_popup:GetID());
+		distPlayer = getglobal(this:GetName() .. "Info"):GetText();
+		lootSlot = CEPGP_distribute:GetID();
+		CEPGP_print("Loot slot ID: " .. lootSlot);
+		CEPGP_print("distPlayer: " .. distPlayer);
+		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID()); --CEPGP_distribute:GetID gets the ID of the LOOT SLOT. Not the player.
 	
 		--[[ Guild Menu ]]--
 	elseif strfind(obj, "GuildButton") then --A player from the guild menu is clicked (awards EP)
@@ -1317,7 +1323,7 @@ function CEPGP_ListButton_OnClick()
 	end
 end
 
-function CEPGP_distribute_popup_give(value)
+function CEPGP_distribute_popup_give()
 	for i = 1, 40 do
 		if GetMasterLootCandidate(i) == CEPGP_distribute_popup_title:GetText() then
 			GiveMasterLoot(CEPGP_distribute_popup:GetID(), i);
@@ -1335,7 +1341,7 @@ function CEPGP_distribute_popup_OnEvent(event)
 		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
 		CEPGP_distribute_value:SetText("");
 		CEPGP_distribute_popup:Hide();
-	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() and CEPGP_distribute_value:GetText() then
+	elseif event == "LOOT_SLOT_CLEARED" and arg1 == lootSlot and CEPGP_distribute_value:GetText() then
 		distributing = false;
 		if value == "true" then
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, LANGUAGE);

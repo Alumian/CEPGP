@@ -6926,6 +6926,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
 				<FontString name="CEPGP_distribute_popup_header" inherits="GameFontNormal" text="Distributing Item">
 					<Anchors>
 						<Anchor point="TOP" relativeTo="CEPGP_distribute_popup">
@@ -6984,9 +6986,10 @@
 			</Anchors>
 				<Scripts>
 					<OnClick>
+						distGP = true;
 						CEPGP_distribute_value:SetText("true")
 						PlaySound("gsTitleOptionExit");
-						CEPGP_distribute_popup_give(true);
+						CEPGP_distribute_popup_give();
 						CEPGP_loot_distributing:Hide();
 					</OnClick>
 				</Scripts>
@@ -7023,9 +7026,7 @@
 				CEPGP_distribute_popup_OnEvent(event);
 			</OnEvent>
 			<OnHide>
-				CEPGP_print(this:GetID());
-				this:SetID(-1);
-				CEPGP_print(this:GetID());
+				CEPGP_distribute_popup_title:SetText("");
 			</OnHide>
 		</Scripts>
 	</Frame>
