@@ -6946,12 +6946,6 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
-				<FontString name="CEPGP_distribute_value" inherits="GameFontNormal" text="">
-					<Size>
-						<AbsDimension x="0" y="0" />
-					</Size>
-                    <Anchors />
-                </FontString>
 			</Layer>
 		</Layers>
 		<Frames>
@@ -6987,8 +6981,8 @@
 				<Scripts>
 					<OnClick>
 						distGP = true;
-						CEPGP_distribute_value:SetText("true")
 						PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_distribute_popup);
 						CEPGP_distribute_popup_give();
 						CEPGP_loot_distributing:Hide();
 					</OnClick>
@@ -7007,10 +7001,10 @@
 			</Anchors>
 				<Scripts>
 					<OnClick>
-						CEPGP_distribute_value:SetText("false")
+						distGP = false;
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(CEPGP_distribute_popup);
-						CEPGP_distribute_popup_give(false);
+						CEPGP_distribute_popup_give();
 						CEPGP_loot_distributing:Hide();
 					</OnClick>
 				</Scripts>

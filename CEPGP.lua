@@ -2,7 +2,7 @@
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
 VERSION = "1.7.0";
-BUILD = "alpha";
+BUILD = "release";
 mode = "guild";
 recordholder = "";
 distPlayer = "";
@@ -123,7 +123,7 @@ function CEPGP_OnEvent()
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and distributing then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "~need" and distributing then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -386,7 +386,7 @@ function CEPGP_OnEvent()
 					_, isLead = GetRaidRosterInfo(i);
 				end
 			end
-			if ((GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2)) and ntgetn(roster) > 0 then
+			if (((GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2)) and ntgetn(roster) > 0) or debugMode then
 				if tContains(bossNameIndex, string.lower(name), true) then --[[ If the npc is in the boss name index ]]--
 					EP = EPVALS[string.lower(name)]
 					if AUTOEP[string.lower(name)] then
@@ -1181,8 +1181,6 @@ function CEPGP_ListButton_OnClick()
 		CEPGP_distribute_popup_title:SetText(getglobal(this:GetName() .. "Info"):GetText());
 		distPlayer = getglobal(this:GetName() .. "Info"):GetText();
 		lootSlot = CEPGP_distribute:GetID();
-		CEPGP_print("Loot slot ID: " .. lootSlot);
-		CEPGP_print("distPlayer: " .. distPlayer);
 		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID()); --CEPGP_distribute:GetID gets the ID of the LOOT SLOT. Not the player.
 	
 		--[[ Guild Menu ]]--
@@ -1325,32 +1323,28 @@ end
 
 function CEPGP_distribute_popup_give()
 	for i = 1, 40 do
-		if GetMasterLootCandidate(i) == CEPGP_distribute_popup_title:GetText() then
-			GiveMasterLoot(CEPGP_distribute_popup:GetID(), i);
+		if GetMasterLootCandidate(i) == distPlayer then
+			GiveMasterLoot(lootSlot, i);
 		end
 	end
 end
 
 function CEPGP_distribute_popup_OnEvent(event)
-	local value = CEPGP_distribute_value:GetText();
-	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and value then
+	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and distPlayer ~= "" then
 		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. "'s inventory is full", 1);
-		CEPGP_distribute_value:SetText("");
 		CEPGP_distribute_popup:Hide();
-	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and value then
-		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
-		CEPGP_distribute_value:SetText("");
+	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and distPlayer ~= "" then
+		CEPGP_print(distPlayer .. " can't carry any more of this unique item", 1);
 		CEPGP_distribute_popup:Hide();
-	elseif event == "LOOT_SLOT_CLEARED" and arg1 == lootSlot and CEPGP_distribute_value:GetText() then
+	elseif event == "LOOT_SLOT_CLEARED" and arg1 == lootSlot and distPlayer ~= "" then
 		distributing = false;
-		if value == "true" then
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, LANGUAGE);
-			addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
+		if distGP then
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
+			addGP(distPlayer, CEPGP_distribute_GP_value:GetText());
 		else
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for free", RAID, LANGUAGE);
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", RAID, LANGUAGE);
 		end
 		CEPGP_distribute_popup:Hide();
-		CEPGP_distribute_value:SetText("");
 		CEPGP_distribute:Hide();
 		CEPGP_loot:Show();
 	end
@@ -2044,7 +2038,8 @@ function addGP(player, amount)
 		CEPGP_SendAddonMsg("update");
 		SendChatMessage(amount .. " GP added to " .. player, CHANNEL, LANGUAGE, CHANNEL);
 	else
-		CEPGP_print("Player not found in guild roster. No GP given.");
+		CEPGP_print("Player not found in guild roster - no GP given");
+		CEPGP_print("If this was a mistake, you can manually award them GP via the CEPGP guild menu");
 	end
 end
 
