@@ -1,15 +1,18 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.6.2";
+VERSION = "1.7.0";
+BUILD = "release";
 mode = "guild";
 recordholder = "";
+distPlayer = "";
+distGP = false;
+lootSlot = nil;
 target = nil;
 CHANNEL = nil;
 MOD = nil;
 COEF = nil;
 BASEGP = nil;
-FORMULA = nil;
 STANDBYEP = false;
 STANDBYOFFLINE = false;
 STANDBYPERCENT = nil;
@@ -48,7 +51,9 @@ function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		getglobal("CEPGP_version_number"):SetText("Running Version: " .. VERSION);
 		local ver2 = string.gsub(VERSION, "%.", ",");
-		CEPGP_SendAddonMsg("version-"..ver2..",".."-");
+		if BUILD == "release" then
+			CEPGP_SendAddonMsg("version-"..ver2..",".."-");
+		end
 		if CHANNEL == nil then
 			CHANNEL = "GUILD";
 		end
@@ -118,7 +123,7 @@ function CEPGP_OnEvent()
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and distributing then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "~need" and distributing then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -329,7 +334,7 @@ function CEPGP_OnEvent()
 		end
 	elseif event == "RAID_ROSTER_UPDATE" then
 		vInfo = {};
-		CEPGP_SendAddonMsg("version-check");
+		CEPGP_SendAddonMsg("version-check", "RAID");
 		GuildRoster();
 		raidRoster = {};
 		for i = 1, GetNumRaidMembers() do
@@ -381,7 +386,7 @@ function CEPGP_OnEvent()
 					_, isLead = GetRaidRosterInfo(i);
 				end
 			end
-			if ((GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2)) and ntgetn(roster) > 0 then
+			if (((GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2)) and ntgetn(roster) > 0) or debugMode then
 				if tContains(bossNameIndex, string.lower(name), true) then --[[ If the npc is in the boss name index ]]--
 					EP = EPVALS[string.lower(name)]
 					if AUTOEP[string.lower(name)] then
@@ -666,6 +671,151 @@ function CEPGP_IncAddonMsg(message, sender)
 		CEPGP_print(string.sub(message, string.find(message, ",")+1));
 	elseif string.find(message, "!info"..UnitName("player")) then
 		CEPGP_print(string.sub(message, 5+string.len(UnitName("player"))+1));
+	elseif message == UnitName("player").."-import" then
+		local lane;
+		if raidRoster[arg4] then
+			lane = "RAID";
+		elseif roster[arg4] then
+			lane = "GUILD";
+		end
+		CEPGP_SendAddonMsg(arg4.."-impresponse!CHANNEL~"..CHANNEL, lane);
+		CEPGP_SendAddonMsg(arg4.."-impresponse!MOD~"..MOD, lane);
+		CEPGP_SendAddonMsg(arg4.."-impresponse!COEF~"..COEF, lane);
+		CEPGP_SendAddonMsg(arg4.."-impresponse!BASEGP~"..BASEGP, lane);
+		if STANDBYEP then
+			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYEP~1", lane);
+		else
+			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYEP~0", lane);
+		end
+		if STANDBYOFFLINE then
+			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYOFFLINE~1", lane);
+		else
+			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYOFFLINE~0", lane);
+		end
+		CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYPERCENT~"..STANDBYPERCENT, lane);
+		for k, v in pairs(SLOTWEIGHTS) do
+			CEPGP_SendAddonMsg(arg4.."-impresponse!SLOTWEIGHTS~"..k.."?"..v, lane);
+		end
+		for k, v in pairs(STANDBYRANKS) do
+			if STANDBYRANKS[k][2] then
+				CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYRANKS~"..k.."?1", lane);
+			else
+				CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYRANKS~"..k.."?0", lane);
+			end
+		end
+		for k, v in pairs(EPVALS) do
+			CEPGP_SendAddonMsg(arg4.."-impresponse!EPVALS~"..k.."?"..v, lane);
+		end
+		for k, v in pairs(AUTOEP) do
+			if AUTOEP[k] then
+				CEPGP_SendAddonMsg(arg4.."-impresponse!AUTOEP~"..k.."?1", lane);
+			else
+				CEPGP_SendAddonMsg(arg4.."-impresponse!AUTOEP~"..k.."?0", lane);
+			end
+		end
+		CEPGP_SendAddonMsg(arg4.."-impresponse!COMPLETE~");
+		
+	elseif string.find(message, UnitName("player")) and string.find(message, "-impresponse!") then
+		local option = string.sub(message, string.find(message, "!")+1, string.find(message, "~")-1);
+		
+		if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" or option == "EPVALS" or option == "AUTOEP" then
+			local field = string.sub(message, string.find(message, "~")+1, string.find(message, "?")-1);
+			local val = string.sub(message, string.find(message, "?")+1);
+			if option == "SLOTWEIGHTS" then
+				SLOTWEIGHTS[field] = val;
+			elseif option == "STANDBYRANKS" then
+				if val == "1" then
+					STANDBYRANKS[tonumber(field)][2] = true;
+				else
+					STANDBYRANKS[tonumber(field)][2] = false;
+				end
+			elseif option == "EPVALS" then
+				EPVALS[field] = val;
+			elseif option == "AUTOEP" then
+				if val == "1" then
+					AUTOEP[field] = true;
+				else
+					AUTOEP[field] = false;
+				end
+			end
+		else
+			local val = string.sub(message, string.find(message, "~")+1);
+			if option == "CHANNEL" then
+				CHANNEL = val;
+			elseif option == "MOD" then
+				MOD = tonumber(val);
+			elseif option == "COEF" then
+				COEF = tonumber(val);
+			elseif option == "BASEGP" then
+				BASEGP = tonumber(val);
+			elseif option == "STANDBYEP" then
+				if tonumber(val) == 1 then
+					STANDBYEP = true;
+				else
+					STANDBYEP = false;
+				end
+			elseif option == "STANDBYOFFLINE" then
+				if tonumber(val) == 1 then
+					STANDBYOFFLINE = true;
+				else
+					STANDBYOFFLINE = false;
+				end
+			elseif option == "STANDBYPERCENT" then
+				STANDBYPERCENT = tonumber(val);		
+			elseif option == "COMPLETE" then
+				CEPGP_print("Import complete");
+			end
+		end
+		
+		CEPGP_options_mod_edit:SetText(tostring(MOD));
+		CEPGP_options_coef_edit:SetText(tostring(COEF));
+		CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
+		if STANDBYEP then
+			CEPGP_options_standby_ep_check:SetChecked(true);
+		else
+			CEPGP_options_standby_ep_check:SetChecked(false);
+		end
+		CEPGP_options_standby_ep_val:SetText(tostring(STANDBYPERCENT));
+		for i = 1, 10 do
+			if not GuildControlGetRankName(i) then
+				STANDBYRANKS[i][1] = nil;
+			else
+				STANDBYRANKS[i][1] = GuildControlGetRankName(i);
+			end
+		end
+		for i = 1, 10 do
+			if STANDBYRANKS[i][1] ~= nil then
+				getglobal("CEPGP_options_standby_ep_rank_"..i):Show();
+				getglobal("CEPGP_options_standby_ep_rank_"..i):SetText(tostring(STANDBYRANKS[i][1]));
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):Show();
+				if STANDBYRANKS[i][2] == true then
+					getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(true);
+				else
+					getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
+				end
+			end
+			if GuildControlGetRankName(i) == nil then
+				getglobal("CEPGP_options_standby_ep_rank_"..i):Hide();
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):Hide();
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
+			end
+		end
+		if STANDBYEP then
+			getglobal("CEPGP_options_standby_ep_check"):SetChecked(true);
+		else
+			getglobal("CEPGP_options_standby_ep_check"):SetChecked(false);
+		end
+		if STANDBYOFFLINE then
+			getglobal("CEPGP_options_standby_ep_offline_check"):SetChecked(true);
+		else
+			getglobal("CEPGP_options_standby_ep_offline_check"):SetChecked(false);
+		end
+		CEPGP_options_standby_ep_val:SetText(tostring(STANDBYPERCENT));
+		for k, v in pairs(SLOTWEIGHTS) do
+			if k ~= "ROBE" and k ~= "WEAPON" then
+				getglobal("CEPGP_options_" .. k .. "_weight"):SetText(tonumber(SLOTWEIGHTS[k]));
+			end
+		end
 	end
 end
 
@@ -694,6 +844,9 @@ function CEPGP_UpdateLootScrollBar()
 	GuildRoster();
 	for x = 1, tSize do
 		name = responses[x]
+		if debugMode and not UnitInRaid("player") then
+			class = UnitClass("player");
+		end
 		for i = 1, GetNumRaidMembers() do
 			if name == GetRaidRosterInfo(i) then
 				_, _, _, _, class = GetRaidRosterInfo(i);
@@ -1017,7 +1170,7 @@ function CEPGP_UpdateVersionScrollBar()
 end
 
 function CEPGP_ListButton_OnClick()
-	if CanEditOfficerNote() == nil then
+	if CanEditOfficerNote() == nil and not debugMode then
 		CEPGP_print("You don't have access to modify EPGP", 1);
 		return;
 	end
@@ -1026,7 +1179,9 @@ function CEPGP_ListButton_OnClick()
 	if strfind(obj, "LootDistButton") then --A player in the distribution menu is clicked
 		ShowUIPanel(CEPGP_distribute_popup);
 		CEPGP_distribute_popup_title:SetText(getglobal(this:GetName() .. "Info"):GetText());
-		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID());
+		distPlayer = getglobal(this:GetName() .. "Info"):GetText();
+		lootSlot = CEPGP_distribute:GetID();
+		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID()); --CEPGP_distribute:GetID gets the ID of the LOOT SLOT. Not the player.
 	
 		--[[ Guild Menu ]]--
 	elseif strfind(obj, "GuildButton") then --A player from the guild menu is clicked (awards EP)
@@ -1166,31 +1321,30 @@ function CEPGP_ListButton_OnClick()
 	end
 end
 
-function CEPGP_distribute_popup_give(value)
+function CEPGP_distribute_popup_give()
 	for i = 1, 40 do
-		if GetMasterLootCandidate(i) == CEPGP_distribute_popup_title:GetText() then
-			GiveMasterLoot(CEPGP_distribute_popup:GetID(), i);
+		if GetMasterLootCandidate(i) == distPlayer then
+			GiveMasterLoot(lootSlot, i);
 		end
 	end
 end
 
 function CEPGP_distribute_popup_OnEvent(event)
-	local value = CEPGP_distribute_value:GetText();
-	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and value then
+	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and distPlayer ~= "" then
 		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. "'s inventory is full", 1);
-		CEPGP_distribute_value:SetText("");
-	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and value then
-		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. " can't carry any more of this unique item", 1);
-		CEPGP_distribute_value:SetText("");
-	elseif event == "LOOT_SLOT_CLEARED" and arg1 == CEPGP_distribute_popup:GetID() and CEPGP_distribute_value:GetText() then
+		CEPGP_distribute_popup:Hide();
+	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and distPlayer ~= "" then
+		CEPGP_print(distPlayer .. " can't carry any more of this unique item", 1);
+		CEPGP_distribute_popup:Hide();
+	elseif event == "LOOT_SLOT_CLEARED" and arg1 == lootSlot and distPlayer ~= "" then
 		distributing = false;
-		if value == "true" then
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", RAID, LANGUAGE);
-			addGP(CEPGP_distribute_popup_title:GetText(), CEPGP_distribute_GP_value:GetText());
+		if distGP then
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
+			addGP(distPlayer, CEPGP_distribute_GP_value:GetText());
 		else
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to "..CEPGP_distribute_popup_title:GetText() .. " for free", RAID, LANGUAGE);
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", RAID, LANGUAGE);
 		end
-		CEPGP_distribute_value:SetText("");
+		CEPGP_distribute_popup:Hide();
 		CEPGP_distribute:Hide();
 		CEPGP_loot:Show();
 	end
@@ -1252,7 +1406,7 @@ function LootFrame_OnEvent(event)
 			CEPGP_UpdateLootScrollBar();
 		end
 		
-	elseif event == "LOOT_OPENED" and UnitInRaid("player") then
+	elseif event == "LOOT_OPENED" and (UnitInRaid("player") or debugMode) then
 		LootFrame_Update();
 		ShowUIPanel(CEPGP_button_loot_dist);
 	
@@ -1373,11 +1527,11 @@ end
 
 SLASH_ARG1 = "/cepgp";
 function SlashCmdList.ARG(msg, editbox)
+	msg = string.lower(msg);
 	
 	if msg == "" then
 		CEPGP_print("Classic EPGP Usage");
 		CEPGP_print("/cepgp |cFF80FF80show|r - |cFFFF8080Manually shows the CEPGP window|r");
-		CEPGP_print("/cepgp |cFF80FF80debug|r - |cFFFF8080Toggles debug mode|r");
 		CEPGP_print("/cepgp |cFF80FF80setDefaultChannel channel|r - |cFFFF8080Sets the default channel to send confirmation messages. Default is Guild|r");
 		CEPGP_print("/cepgp |cFF80FF80version|r - |cFFFF8080Checks the version of the addon everyone in your raid is running|r");
 		
@@ -1427,7 +1581,8 @@ function SlashCmdList.ARG(msg, editbox)
 			CEPGP_print("Please enter a valid chat channel. Valid options are:");
 			CEPGP_print("say, yell, party, raid, guild, officer");
 		end
-	
+	else
+		CEPGP_print("|cFF80FF80" .. msg .. "|r |cFFFF8080is not a valid request. Type /cepgp to check addon usage|r", true);
 	end
 end
 
@@ -1590,7 +1745,7 @@ end
 ]]
 function distribute(link, x)
 	itemsTable = {};
-	if isML() == 0 then
+	if isML() == 0 or debugMode then
 		local iString = getItemString(link);
 		local name, _, _, _, _, _, _, slot, tex = GetItemInfo(iString);
 		local id = getItemId(iString);
@@ -1883,7 +2038,8 @@ function addGP(player, amount)
 		CEPGP_SendAddonMsg("update");
 		SendChatMessage(amount .. " GP added to " .. player, CHANNEL, LANGUAGE, CHANNEL);
 	else
-		CEPGP_print("Player not found in guild roster. No GP given.");
+		CEPGP_print("Player not found in guild roster - no GP given");
+		CEPGP_print("If this was a mistake, you can manually award them GP via the CEPGP guild menu");
 	end
 end
 
