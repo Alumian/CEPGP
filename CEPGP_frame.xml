@@ -7867,32 +7867,32 @@
 					</OnEnterPressed>
 				</Scripts>
 			</EditBox>
-			<Button name="CEPGP_override_cancel" inherits="GameMenuButtonTemplate" text="Cancel">
-				<Size>
-					<AbsDimension x="75" y="30"/>
-				</Size>
-				<Anchors>
-					<Anchor point="BOTTOMRIGHT">
-						<Offset>
-							<AbsDimension x="-16" y="16"/>
+			<Button name="CEPGP_override_close" inherits="UIPanelCloseButton">
+                <Size>
+                    <AbsDimension x="40" y="40" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-3" y="-3" />
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Scripts>
-					<OnClick>
-						PlaySound("gsTitleOptionExit");
-						HideUIPanel(CEPGP_override);
-					</OnClick>
-				</Scripts>
-			</Button>
-			<Button name="CEPGP_override_confirm" inherits="GameMenuButtonTemplate" text="Confirm">
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+							HideUIPanel(CEPGP_override);
+                    </OnClick>
+                </Scripts>
+            </Button>
+			<Button name="CEPGP_override_confirm" inherits="GameMenuButtonTemplate" text="Add Override">
 				<Size>
-					<AbsDimension x="75" y="30"/>
+					<AbsDimension x="150" y="30"/>
 				</Size>
 				<Anchors>
-					<Anchor point="BOTTOMLEFT">
+					<Anchor point="TOP" relativePoint="TOP">
 						<Offset>
-							<AbsDimension x="16" y="16"/>
+							<AbsDimension x="0" y="-115"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -7915,11 +7915,14 @@
 							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been overriden to " .. gp);
 							CEPGP_UpdateOverrideScrollBar();
 							override = false;
+							CEPGP_override_item_name:SetText("");
+							CEPGP_override_item_name:ClearFocus();
+							CEPGP_override_item_gp:SetText("");
+							CEPGP_override_item_gp:ClearFocus();
 						else
-							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click confirm again to change this to " .. gp);
+							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add override again to change this to " .. gp);
 							override = true;
 						end
-						HideUIPanel(CEPGP_override);
 					</OnClick>
 					<OnHide>
 						CEPGP_override_item_name:SetText("");
@@ -7935,7 +7938,7 @@
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="CEPGP_override" relativePoint="TOPLEFT">
 						<Offset>
-							<AbsDimension x="10" y="-125"/>
+							<AbsDimension x="10" y="-140"/>
 						</Offset>
 					</Anchor>
 				</Anchors>

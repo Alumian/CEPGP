@@ -713,12 +713,15 @@ function CEPGP_IncAddonMsg(message, sender)
 				CEPGP_SendAddonMsg(arg4.."-impresponse!AUTOEP~"..k.."?0", lane);
 			end
 		end
-		CEPGP_SendAddonMsg(arg4.."-impresponse!COMPLETE~");
+		for k, v in pairs(OVERRIDE_INDEX) do
+			CEPGP_SendAddonMsg(arg4.."-impresponse!OVERRIDE~"..k.."?"..v, lane);
+		end
+		CEPGP_SendAddonMsg(arg4.."-impresponse!COMPLETE~", lane);
 		
 	elseif string.find(message, UnitName("player")) and string.find(message, "-impresponse!") then
 		local option = string.sub(message, string.find(message, "!")+1, string.find(message, "~")-1);
 		
-		if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" or option == "EPVALS" or option == "AUTOEP" then
+		if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" or option == "EPVALS" or option == "AUTOEP" or option == "OVERRIDE" then
 			local field = string.sub(message, string.find(message, "~")+1, string.find(message, "?")-1);
 			local val = string.sub(message, string.find(message, "?")+1);
 			if option == "SLOTWEIGHTS" then
@@ -737,6 +740,8 @@ function CEPGP_IncAddonMsg(message, sender)
 				else
 					AUTOEP[field] = false;
 				end
+			elseif option == "OVERRIDE" then
+				OVERRIDE_INDEX[field] = val;
 			end
 		else
 			local val = string.sub(message, string.find(message, "~")+1);
@@ -763,6 +768,7 @@ function CEPGP_IncAddonMsg(message, sender)
 			elseif option == "STANDBYPERCENT" then
 				STANDBYPERCENT = tonumber(val);		
 			elseif option == "COMPLETE" then
+				CEPGP_UpdateOverrideScrollBar();
 				CEPGP_print("Import complete");
 			end
 		end
