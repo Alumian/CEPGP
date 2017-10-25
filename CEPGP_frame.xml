@@ -297,6 +297,62 @@
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
 	</Button>
+	<Button name="lootOverrideButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="360" y="15"/>
+		</Size>
+		<Frames>
+			<Button name="$parentDelete" inherits="UIPanelCloseButton">
+                <Size>
+                    <AbsDimension x="30" y="30" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parentitem">
+                        <Offset>
+                            <AbsDimension x="320" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+						CEPGP_ListButton_OnClick();
+                    </OnClick>
+                </Scripts>
+            </Button>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentitem" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentitem" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="290" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
 	
 	<Frame name="CEPGP_frame" parent="UIParent" hidden="true" enableMouse="true" toplevel="true" movable="true">
 		<Size>
@@ -2205,6 +2261,24 @@
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
 								ShowUIPanel(CEPGP_settings_import);
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_button_options_override" inherits="GameMenuButtonTemplate" text="Override Settings">
+						<Size>
+							<AbsDimension x="125" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="CEPGP_frame">
+								<Offset>
+									<AbsDimension x="10" y="-85" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								ShowUIPanel(CEPGP_override);
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -7322,6 +7396,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
+						PlaySound("gsTitleOptionExit");
 						local name = CEPGP_guild_log_save_name:GetText();
 						GuildRoster();
 						if RECORDS[name] == nil or (overwritelog and name == recordholder) then
@@ -7669,6 +7744,399 @@
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
 				CEPGP_settings_import_desc:SetText("Enter the name of the player\nyou would like to import settings from.\nThis will overwrite all of your existing settings.\n\nPlayer must be in your guild or raid group");
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CEPGP_override" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="400" y="480"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="CEPGP_override_header" inherits="GameFontNormal" text="Item Override">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_override_desc" inherits="GameFontNormal" text=""> <!--Text intentionally left blank here because line breaks can only be added using LUA-->
+					<Anchors>
+						<Anchor point="TOP" relativePoint="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-30"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_override_item_name_string" inherits="GameFontNormal" text="Item Name">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+							<Offset>
+								<AbsDimension x="85" y="-75"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_override_item_gp_string" inherits="GameFontNormal" text="GP">
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="-85" y="-75"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="CEPGP_override_item_name" inherits="InputBoxTemplate">
+				<Size>
+					<AbsDimension x="200" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_override_item_name_string">
+						<Offset>
+							<AbsDimension x="0" y="-5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:SetAutoFocus(false);
+					</OnLoad>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+				</Scripts>
+			</EditBox>
+			<EditBox name="CEPGP_override_item_gp" inherits="InputBoxTemplate" numeric="true">
+				<Size>
+					<AbsDimension x="50" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_override_item_gp_string">
+						<Offset>
+							<AbsDimension x="0" y="-5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:SetAutoFocus(false);
+					</OnLoad>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+				</Scripts>
+			</EditBox>
+			<Button name="CEPGP_override_close" inherits="UIPanelCloseButton">
+                <Size>
+                    <AbsDimension x="40" y="40" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-3" y="-3" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+							HideUIPanel(CEPGP_override);
+                    </OnClick>
+                </Scripts>
+            </Button>
+			<Button name="CEPGP_override_confirm" inherits="GameMenuButtonTemplate" text="Add Override">
+				<Size>
+					<AbsDimension x="150" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-115"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						if CEPGP_override_item_name:GetText() == "" then
+								CEPGP_print("Enter an item name", true);
+							return;
+						end
+						local item = string.lower(CEPGP_override_item_name:GetText());
+						local gp;
+						if CEPGP_override_item_gp:GetText() == "" then
+							gp = 0;
+						else
+							gp = tonumber(CEPGP_override_item_gp:GetText());
+						end
+						if (OVERRIDE_INDEX[item] and overwrite) or not OVERRIDE_INDEX[item] then
+							OVERRIDE_INDEX[item] = gp;
+							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been overriden to " .. gp);
+							CEPGP_UpdateOverrideScrollBar();
+							override = false;
+							CEPGP_override_item_name:SetText("");
+							CEPGP_override_item_name:ClearFocus();
+							CEPGP_override_item_gp:SetText("");
+							CEPGP_override_item_gp:ClearFocus();
+						else
+							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add override again to change this to " .. gp);
+							override = true;
+						end
+					</OnClick>
+					<OnHide>
+						CEPGP_override_item_name:SetText("");
+						CEPGP_override_item_gp:SetText("");
+						override = false;
+					</OnHide>
+				</Scripts>
+			</Button>
+			<Frame name="CEPGP_override_scrollframe">
+				<Size>
+					<AbsDimension x="360" y="300"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CEPGP_override" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="10" y="-140"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<ScrollFrame name="overrideScrollFrame" inherits="FauxScrollFrameTemplate">
+						<Size>
+							<AbsDimension x="360" y="350"/>
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT">
+								<Offset>
+									<AbsDimension x="-7" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnVerticalScroll>
+								FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateOverrideScrollBar); 
+							</OnVerticalScroll>
+							<OnShow>
+								CEPGP_UpdateOverrideScrollBar();
+							</OnShow>
+						</Scripts>
+					</ScrollFrame>
+					<Button name="overrideButton1" inherits="lootOverrideButtonTemplate" id="1" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="5" y="-6"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton2" inherits="lootOverrideButtonTemplate" id="2" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton3" inherits="lootOverrideButtonTemplate" id="3" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton4" inherits="lootOverrideButtonTemplate" id="4" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton5" inherits="lootOverrideButtonTemplate" id="5" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton6" inherits="lootOverrideButtonTemplate" id="6" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton5" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton7" inherits="lootOverrideButtonTemplate" id="7" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton6" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton8" inherits="lootOverrideButtonTemplate" id="8" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton7" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton9" inherits="lootOverrideButtonTemplate" id="9" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton8" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton10" inherits="lootOverrideButtonTemplate" id="10" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton9" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton11" inherits="lootOverrideButtonTemplate" id="11" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton10" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton12" inherits="lootOverrideButtonTemplate" id="12" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton11" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton13" inherits="lootOverrideButtonTemplate" id="13" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton12" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton14" inherits="lootOverrideButtonTemplate" id="14" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton13" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton15" inherits="lootOverrideButtonTemplate" id="15" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton14" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton16" inherits="lootOverrideButtonTemplate" id="16" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton15" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton17" inherits="lootOverrideButtonTemplate" id="17" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton16" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="overrideButton18" inherits="lootOverrideButtonTemplate" id="18" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="overrideButton17" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Scripts>
+					<OnLoad>
+						this:SetBackdropColor(0.1, 0.1, 0.1);
+					</OnLoad>
+				</Scripts>
+				</Frames>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+				CEPGP_override_desc:SetText("This window allows your to permanently\n(or until the log is removed), override the gp\nvalue of an item to what ever you specify");
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();

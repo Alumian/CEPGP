@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.7.1";
+VERSION = "1.7.2";
 BUILD = "release";
 mode = "guild";
 recordholder = "";
@@ -25,6 +25,7 @@ debugMode = false;
 critReverse = false; --Criteria reverse
 distributing = false;
 overwritelog = false;
+override = false;
 confirmrestore = false;
 RAZORGORE_EGG_COUNT = 0;
 THEKAL_PARAMS = {["ZATH_DEAD"] = false, ["LOR'KHAN_DEAD"] = false, ["THEKAL_DEAD"] = false};
@@ -40,6 +41,7 @@ roster = {};
 raidRoster = {};
 vInfo = {};
 RECORDS = {};
+OVERRIDE_INDEX = {};
 
 
 --[[ Stock function backups ]]--
@@ -711,12 +713,15 @@ function CEPGP_IncAddonMsg(message, sender)
 				CEPGP_SendAddonMsg(arg4.."-impresponse!AUTOEP~"..k.."?0", lane);
 			end
 		end
-		CEPGP_SendAddonMsg(arg4.."-impresponse!COMPLETE~");
+		for k, v in pairs(OVERRIDE_INDEX) do
+			CEPGP_SendAddonMsg(arg4.."-impresponse!OVERRIDE~"..k.."?"..v, lane);
+		end
+		CEPGP_SendAddonMsg(arg4.."-impresponse!COMPLETE~", lane);
 		
 	elseif string.find(message, UnitName("player")) and string.find(message, "-impresponse!") then
 		local option = string.sub(message, string.find(message, "!")+1, string.find(message, "~")-1);
 		
-		if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" or option == "EPVALS" or option == "AUTOEP" then
+		if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" or option == "EPVALS" or option == "AUTOEP" or option == "OVERRIDE" then
 			local field = string.sub(message, string.find(message, "~")+1, string.find(message, "?")-1);
 			local val = string.sub(message, string.find(message, "?")+1);
 			if option == "SLOTWEIGHTS" then
@@ -735,6 +740,8 @@ function CEPGP_IncAddonMsg(message, sender)
 				else
 					AUTOEP[field] = false;
 				end
+			elseif option == "OVERRIDE" then
+				OVERRIDE_INDEX[field] = val;
 			end
 		else
 			local val = string.sub(message, string.find(message, "~")+1);
@@ -761,6 +768,7 @@ function CEPGP_IncAddonMsg(message, sender)
 			elseif option == "STANDBYPERCENT" then
 				STANDBYPERCENT = tonumber(val);		
 			elseif option == "COMPLETE" then
+				CEPGP_UpdateOverrideScrollBar();
 				CEPGP_print("Import complete");
 			end
 		end
@@ -1167,12 +1175,72 @@ function CEPGP_UpdateVersionScrollBar()
     end
 end
 
+function CEPGP_UpdateOverrideScrollBar()
+	if OVERRIDE_INDEX == nil then
+		return;
+	end
+    local x, y;
+    local yoffset;
+    local t;
+    local tSize;
+    local item;
+	local gp;
+	local colour;
+	local quality;
+	t = {};
+    tSize = ntgetn(OVERRIDE_INDEX);
+	if tSize == 0 then
+		for y = 1, 18, 1 do
+			getglobal("overrideButton" .. y):Hide();
+		end
+	end
+	local count = 1;
+	for k, v in pairs(OVERRIDE_INDEX) do
+		t[count] = {
+			[1] = k,
+			[2] = v
+		};
+		count = count + 1;
+	end
+    FauxScrollFrame_Update(overrideScrollFrame, tSize, 18, 240);
+    for y = 1, 18, 1 do
+        yoffset = y + FauxScrollFrame_GetOffset(overrideScrollFrame);
+        if (yoffset <= tSize) then
+            if not tContains(t, yoffset, true) then
+                getglobal("overrideButton" .. y):Hide();
+            else
+				t2 = t[yoffset];
+				item = t2[1];
+				gp = t2[2];
+				quality = t2[3];
+				getglobal("overrideButton" .. y .. "item"):SetText(item);
+				getglobal("overrideButton" .. y .. "item"):SetTextColor(1, 1, 1);
+				getglobal("overrideButton" .. y .. "GP"):SetText(gp);
+				getglobal("overrideButton" .. y .. "GP"):SetTextColor(1, 1, 1);
+				getglobal("overrideButton" .. y):Show();
+			end
+        else
+            getglobal("overrideButton" .. y):Hide();
+        end
+    end
+end
+
 function CEPGP_ListButton_OnClick()
+	obj = this:GetName();
+		
+	if strfind(obj, "Delete") then
+		local name = getglobal("overrideButton" .. this:GetParent():GetID() .. "item"):GetText();
+		OVERRIDE_INDEX[name] = nil;
+		CEPGP_print(name .. " removed from GP override");
+		CEPGP_UpdateOverrideScrollBar();
+		return;
+	end
+	
 	if CanEditOfficerNote() == nil and not debugMode then
 		CEPGP_print("You don't have access to modify EPGP", 1);
 		return;
 	end
-	obj = this:GetName();
+	
 	--[[ Distribution Menu ]]--
 	if strfind(obj, "LootDistButton") then --A player in the distribution menu is clicked
 		ShowUIPanel(CEPGP_distribute_popup);
@@ -2143,6 +2211,9 @@ end
 function calcGP(link)
 	local name, _, rarity, level, _, itemType, _, slot = GetItemInfo(link);
 	name = string.lower(name);
+	if OVERRIDE_INDEX[name] then
+		return OVERRIDE_INDEX[name];
+	end
 	local GP;
 	local ilvl;
 	local found = false;
