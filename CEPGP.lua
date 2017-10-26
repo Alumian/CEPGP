@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.7.3";
+VERSION = "1.7.4";
 BUILD = "release";
 mode = "guild";
 recordholder = "";
@@ -40,6 +40,8 @@ itemsTable = {};
 roster = {};
 raidRoster = {};
 vInfo = {};
+vSearch = "GUILD";
+groupVersion = {};
 RECORDS = {};
 OVERRIDE_INDEX = {};
 
@@ -120,12 +122,11 @@ function CEPGP_OnEvent()
 				raidRoster[name] = name;
 			end 
 		end
-		vInfo = {};
 		CEPGP_SendAddonMsg("version-check");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and distributing then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "~need" and distributing then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -624,10 +625,20 @@ function CEPGP_IncAddonMsg(message, sender)
 			CEPGP_UpdateLootScrollBar();
 		end
 	elseif string.find(message, UnitName("player").."versioncheck") then
-		vInfo[sender] = string.sub(message, string.find(message, " ")+1);
+		
+		if vSearch == "GUILD" then
+			groupVersion[sender] = string.sub(message, string.find(message, " ")+1);
+		else
+			groupVersion[sender] = string.sub(message, string.find(message, " ")+1);
+			vInfo[sender] = string.sub(message, string.find(message, " ")+1);
+		end
 		CEPGP_UpdateVersionScrollBar();
 	elseif message == "version-check" then
-		CEPGP_SendAddonMsg(sender .. "versioncheck " .. VERSION);
+		if roster[sender] then
+			CEPGP_SendAddonMsg(sender .. "versioncheck " .. VERSION, "GUILD");
+		else
+			CEPGP_SendAddonMsg(sender .. "versioncheck " .. VERSION, "RAID");
+		end
 	elseif string.find(message, "version") then
 		local s1, s2, s3, s4 = CEPGP_strSplit(message, "-");
 		if s1 == "update" then
@@ -1117,42 +1128,57 @@ function CEPGP_UpdateRaidScrollBar()
 end
 
 function CEPGP_UpdateVersionScrollBar()
-    local x, y;
-    local yoffset;
-    local t;
-    local tSize;
-    local name;
+	local x, y;
+	local yoffset;
+	local t;
+	local tSize;
+	local name;
 	local colour;
 	local version;
 	local online;
 	t = {};
-    tSize = GetNumRaidMembers();
+	if vSearch == "GUILD" then
+		tSize = GetNumGuildMembers();
+	else
+		tSize = GetNumRaidMembers();
+	end
 	if tSize == 0 then
 		for y = 1, 18, 1 do
 			getglobal("versionButton" .. y):Hide();
 		end
 	end
-	for x = 1, tSize do
-		name, _, group, _, class, _, _, online = GetRaidRosterInfo(x);
-		t[x] = {
-			[1] = name,
-			[2] = class,
-			[3] = online
-		}
+	if vSearch == "GUILD" then
+		for x = 1, tSize do
+			name, _, _, _, class, _, _, _, online = GetGuildRosterInfo(x);
+			t[x] = {
+				[1] = name,
+				[2] = class,
+				[3] = online
+			}
+		end
+	else
+		for x = 1, tSize do
+			name, _, group, _, class, _, _, online = GetRaidRosterInfo(x);
+			t[x] = {
+				[1] = name,
+				[2] = class,
+				[3] = online
+			}
+		end
 	end
-    FauxScrollFrame_Update(VersionScrollFrame, tSize, 18, 240);
-    for y = 1, 18, 1 do
-        yoffset = y + FauxScrollFrame_GetOffset(VersionScrollFrame);
-        if (yoffset <= tSize) then
-            if not tContains(t, yoffset, true) then
-                getglobal("versionButton" .. y):Hide();
-            else
+	FauxScrollFrame_Update(VersionScrollFrame, tSize, 18, 240);
+	for y = 1, 18, 1 do
+		yoffset = y + FauxScrollFrame_GetOffset(VersionScrollFrame);
+		if (yoffset <= tSize) then
+			if not tContains(t, yoffset, true) then
+				getglobal("versionButton" .. y):Hide();
+			else
 				t2 = t[yoffset];
 				name = t2[1];
 				class = t2[2];
 				online = t2[3];
-				if vInfo[name] then
-					version = vInfo[name];
+				if groupVersion[name] then
+					version = groupVersion[name];
 				elseif online == 1 then
 					version = "Addon not running";
 				else
@@ -1169,10 +1195,10 @@ function CEPGP_UpdateVersionScrollBar()
 				getglobal("versionButton" .. y .. "version"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("versionButton" .. y):Show();
 			end
-        else
-            getglobal("versionButton" .. y):Hide();
-        end
-    end
+		else
+			getglobal("versionButton" .. y):Hide();
+		end
+	end
 end
 
 function CEPGP_UpdateOverrideScrollBar()
@@ -1408,7 +1434,7 @@ function CEPGP_distribute_popup_OnEvent(event)
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
 			addGP(distPlayer, CEPGP_distribute_GP_value:GetText());
 		else
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", RAID, LANGUAGE);
+			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", CHANNEL, LANGUAGE);
 		end
 		CEPGP_distribute_popup:Hide();
 		CEPGP_distribute:Hide();
@@ -1581,7 +1607,7 @@ function LootFrame_Update()
 		end
 	end
 	for i = 1, table.getn(items) do
-		if items[i][3] == 4 and UnitInRaid("player") then
+		if (items[i][3] == 4 or OVERRIDE_INDEX[string.lower(item)]) and (UnitInRaid("player") or debugMode) then
 			CEPGP_frame:Show();
 			mode = "loot";
 			toggleFrame("CEPGP_loot");
@@ -1750,7 +1776,7 @@ function populateFrame(criteria, items, lootNum)
 				
 				_G[mode..'itemGP'..i]:SetText(gp);
 				_G[mode..'itemGP'..i]:SetTextColor(colour.r, colour.g, colour.b);
-				_G[mode..'itemGP'..i]:SetWidth(25);
+				_G[mode..'itemGP'..i]:SetWidth(35);
 				_G[mode..'itemGP'..i]:SetScript('OnEnterPressed', function() this:ClearFocus() end);
 				_G[mode..'itemGP'..i]:SetAutoFocus(false);
 				_G[mode..'itemGP'..i]:Show();
@@ -1778,7 +1804,7 @@ function populateFrame(criteria, items, lootNum)
 					subframe.announce:SetPoint('CENTER', _G['CEPGP_'..mode..'_announce'], 'BOTTOM', -10, -20);
 					subframe.tex:SetPoint('LEFT', _G[mode..'announce'..i], 'RIGHT', 10, 0);
 					subframe.itemName:SetPoint('LEFT', _G[mode..'tex'..i], 'RIGHT', 10, 0);
-					subframe.itemGP:SetPoint('CENTER', _G['CEPGP_'..mode..'_GP'], 'BOTTOM', 0, -20);
+					subframe.itemGP:SetPoint('CENTER', _G['CEPGP_'..mode..'_GP'], 'BOTTOM', 10, -20);
 				else
 					subframe.announce:SetPoint('CENTER', _G[mode..'announce'..(i-1)], 'BOTTOM', 0, -20);
 					subframe.tex:SetPoint('LEFT', _G[mode..'announce'..i], 'RIGHT', 10, 0);
@@ -2240,30 +2266,34 @@ function calcGP(link)
 	end
 	if slot == "" then
 		--Tier 3 slots
-		if strfind(name, "Desecrated") and rarity == 4 then
-			slot = (name == "Desecrated Shoulderpads" or name == "Desecrated Spaulders" or name == "Desecrated Pauldrons") and "INVTYPE_SHOULDER"
-				or (name == "Desecrated Sandals" or name == "Desecrated Boots" or name == "Desecrated Sabatons") and "INVTYPE_FEET"
-				or (name == "Desecrated Bindings" or name == "Desecrated Wristguards" or name == "Desecrated Bracers") and "INVTYPE_WRIST"
-				or (name == "Desecrated Gloves" or name == "Desecrated Handguards" or name == "Desecrated Gauntlets") and "INVTYPE_HAND"
-				or (name == "Desecrated Belt" or name == "Desecrated Waistguard" or name == "Desecrated Girdle") and "INVTYPE_WAIST"
-				or (name == "Desecrated Leggings" or name == "Desecrated Legguards" or name == "Desecrated Legplates") and "INVTYPE_LEGS"
-				or (name == "Desecrated Circlet" or name == "Desecrated Headpiece" or name == "Desecrated Helmet") and "INVTYPE_HEAD"
-				or name == "Desecrated Robe" and "INVTYPE_ROBE" or (name == "Desecrated Tunic" or name == "Desecrated Breastplate") and "INVTYPE_CHEST";
+		if strfind(name, "desecrated") and rarity == 4 then
+			if (name == "desecrated shoulderpads" or name == "desecrated spaulders" or name == "desecrated pauldrons") then slot = "INVTYPE_SHOULDER";
+			elseif (name == "desecrated sandals" or name == "desecrated boots" or name == "desecrated sabatons") then slot = "INVTYPE_FEET";
+			elseif (name == "desecrated bindings" or name == "desecrated wristguards" or name == "desecrated bracers") then slot = "INVTYPE_WRIST";
+			elseif (name == "desecrated gloves" or name == "desecrated handguards" or name == "desecrated gauntlets") then slot = "INVTYPE_HAND";
+			elseif (name == "desecrated belt" or name == "desecrated waistguard" or name == "desecrated girdle") then slot = "INVTYPE_WAIST";
+			elseif (name == "desecrated leggings" or name == "desecrated legguards" or name == "desecrated legplates") then slot = "INVTYPE_LEGS";
+			elseif (name == "desecrated circlet" or name == "desecrated headpiece" or name == "desecrated helmet") then slot = "INVTYPE_HEAD";
+			elseif name == "desecrated robe" then slot = "INVTYPE_ROBE";
+			elseif (name == "desecrated tunic" or name == "desecrated breastplate") then slot = "INVTYPE_CHEST";
+			end
+			CEPGP_print(slot);
 				
-		elseif strfind(name, "Primal Hakkari") and rarity == 4 then
-			slot = (name == "Primal Hakkari Bindings" or name == "Primal Hakkari Armsplint" or name == "Primal Hakkari Stanchion") and "INVTYPE_WRIST"
-				or (name == "Primal Hakkari Girdle" or name == "Primal Hakkari Sash" or name == "Primal Hakkari Shawl") and "INVTYPE_WAIST"
-				or (name == "Primal Hakkari Tabard" or name == "Primal Hakkari Kossack" or name == "Primal Hakkari Aegis") and "INVTYPE_CHEST";
+		elseif strfind(name, "primal hakkari") and rarity == 4 then
+			if (name == "primal hakkari bindings" or name == "primal hakkari armsplint" or name == "primal hakkari stanchion") then slot = "INVTYPE_WRIST";
+			elseif (name == "primal hakkari girdle" or name == "primal hakkari sash" or name == "primal hakkari shawl") then slot = "INVTYPE_WAIST";
+			elseif (name == "primal hakkari tabard" or name == "primal hakkari kossack" or name == "primal hakkari aegis") then slot = "INVTYPE_CHEST";
+			end
 				
 		--Exceptions: Items that should not carry GP but still need to be distributed
-		elseif name == "Splinter of Atiesh"
-			or name == "Tome of Tranquilizing Shot"
-			or name == "Bindings of the Windseeker"
-			or name == "Resilience of the Scourge"
-			or name == "Fortitude of the Scourge"
-			or name == "Might of the Scourge" 
-			or name == "Power of the Scourge"
-			or name == "Sulfuron Ingot" then
+		elseif name == "splinter of atiesh"
+			or name == "tome of tranquilizing shot"
+			or name == "bindings of the windseeker"
+			or name == "resilience of the scourge"
+			or name == "fortitude of the scourge"
+			or name == "might of the scourge" 
+			or name == "power of the scourge"
+			or name == "sulfuron ingot" then
 			slot = "INVTYPE_EXCEPTION";
 		end
 	end
@@ -2286,7 +2316,6 @@ function calcGP(link)
 	else
 		return 0;
 	end
-	--Original formula: GP = 0.483 x 2^(ilvl/26 + (rarity - 4)) x slot mod
 end
 
 --[[getVal(string) - Working as intended

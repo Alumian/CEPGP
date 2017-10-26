@@ -39,7 +39,7 @@
 			</Button>
 		</Frames>
 		<Layers>
-			<Layer level="BORDER">
+			<Layer level="OVERLAY">
 				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
@@ -6910,12 +6910,14 @@
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
 						vInfo = {};
+						groupVersion = {};
+						vSearch = "RAID";
 						CEPGP_SendAddonMsg("version-check", "RAID");
+						CEPGP_UpdateVersionScrollBar();
 					</OnClick>
 				</Scripts>
 			</Button>
-			<!--TO BE ADDED-->
-			<!--<Button name="CEPGP_version_guild_check" inherits="GameMenuButtonTemplate" text="Guild Addon Status">
+			<Button name="CEPGP_version_guild_check" inherits="GameMenuButtonTemplate" text="Guild Addon Status">
 				<Size>
 					<AbsDimension x="145" y="21" />
 				</Size>
@@ -6925,11 +6927,14 @@
 				<Scripts>
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
-						vInfo = {};
+						GuildRoster();
+						groupVersion = {};
+						vSearch = "GUILD";
 						CEPGP_SendAddonMsg("version-check", "GUILD");
+						CEPGP_UpdateVersionScrollBar();
 					</OnClick>
 				</Scripts>
-			</Button>-->
+			</Button>
 		</Frames>
 		<Layers>
 			<Layer level="OVERLAY">
