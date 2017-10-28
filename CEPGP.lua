@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.7.4";
+VERSION = "1.7.5";
 BUILD = "release";
 mode = "guild";
 recordholder = "";
@@ -53,6 +53,7 @@ CFEvent = ChatFrame_OnEvent;
 
 function CEPGP_OnEvent()
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
+		_, _, _, pfUI = GetAddOnInfo("pfUI");
 		getglobal("CEPGP_version_number"):SetText("Running Version: " .. VERSION);
 		local ver2 = string.gsub(VERSION, "%.", ",");
 		if BUILD == "release" then
@@ -634,6 +635,7 @@ function CEPGP_IncAddonMsg(message, sender)
 		end
 		CEPGP_UpdateVersionScrollBar();
 	elseif message == "version-check" then
+		GuildRoster();
 		if roster[sender] then
 			CEPGP_SendAddonMsg(sender .. "versioncheck " .. VERSION, "GUILD");
 		else
@@ -1634,7 +1636,7 @@ function SlashCmdList.ARG(msg, editbox)
 	
 	elseif msg == "version" then
 		vInfo = {};
-		CEPGP_SendAddonMsg("version-check");
+		CEPGP_SendAddonMsg("version-check", vSearch);
 		ShowUIPanel(CEPGP_version);
 	
 	elseif strfind(msg, "currentchannel") then
@@ -1973,26 +1975,55 @@ end
 ]]
 function addRaidEP(amount, msg)
 	amount = math.floor(amount);
-	local total = GetNumRaidMembers();
-	if total > 0 then
-		for i = 1, total do
-			local name = GetRaidRosterInfo(i);
-			if tContains(roster, name, true) then
-				local index = getGuildInfo(name);
-				if not checkEPGP(roster[name][5]) then
-					GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
-				else
-					EP,GP = getEPGP(roster[name][5]);
-					EP = tonumber(EP);
-					GP = tonumber(GP);
-					EP = EP + amount;
-					if GP < BASEGP then
-						GP = BASEGP;
+	if not GetGuildRosterShowOffline() then
+		SetGuildRosterShowOffline(true);
+		local total = GetNumRaidMembers();
+		if total > 0 then
+			for i = 1, total do
+				local name = GetRaidRosterInfo(i);
+				if tContains(roster, name, true) then
+					local index = getGuildInfo(name);
+					if not checkEPGP(roster[name][5]) then
+						GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
+					else
+						EP,GP = getEPGP(roster[name][5]);
+						EP = tonumber(EP);
+						GP = tonumber(GP);
+						EP = EP + amount;
+						if GP < BASEGP then
+							GP = BASEGP;
+						end
+						if EP < 0 then
+							EP = 0;
+						end
+						GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 					end
-					if EP < 0 then
-						EP = 0;
+				end
+			end
+		end
+		SetGuildRosterShowOffline(false);
+	else
+		local total = GetNumRaidMembers();
+		if total > 0 then
+			for i = 1, total do
+				local name = GetRaidRosterInfo(i);
+				if tContains(roster, name, true) then
+					local index = getGuildInfo(name);
+					if not checkEPGP(roster[name][5]) then
+						GuildRosterSetOfficerNote(index, amount .. "," .. BASEGP);
+					else
+						EP,GP = getEPGP(roster[name][5]);
+						EP = tonumber(EP);
+						GP = tonumber(GP);
+						EP = EP + amount;
+						if GP < BASEGP then
+							GP = BASEGP;
+						end
+						if EP < 0 then
+							EP = 0;
+						end
+						GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 					end
-					GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 				end
 			end
 		end

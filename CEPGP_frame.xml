@@ -6895,7 +6895,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="CEPGP_version_raid_check" inherits="GameMenuButtonTemplate" text="Raid Addon Status">
+			<Button name="CEPGP_version_raid_check" inherits="GameMenuButtonTemplate" text="Get Raid Status">
 				<Size>
 					<AbsDimension x="140" y="21" />
 				</Size>
@@ -6917,7 +6917,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="CEPGP_version_guild_check" inherits="GameMenuButtonTemplate" text="Guild Addon Status">
+			<Button name="CEPGP_version_guild_check" inherits="GameMenuButtonTemplate" text="Get Guild Status">
 				<Size>
 					<AbsDimension x="145" y="21" />
 				</Size>
