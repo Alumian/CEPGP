@@ -6607,6 +6607,9 @@
 			</Frames>
 		<Scripts>
 			<OnLoad>
+				this:RegisterEvent("LOOT_OPENED");
+				this:RegisterEvent("LOOT_CLOSED");
+				this:RegisterEvent("LOOT_SLOT_CLEARED");
 				this:RegisterForDrag("LeftButton");
 				this:RegisterEvent("CHAT_MSG_WHISPER");
 				this:RegisterEvent("ADDON_LOADED");

@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.7.5";
+VERSION = "1.8.0";
 BUILD = "release";
 mode = "guild";
 recordholder = "";
@@ -27,6 +27,7 @@ distributing = false;
 overwritelog = false;
 override = false;
 confirmrestore = false;
+looting = false;
 RAZORGORE_EGG_COUNT = 0;
 THEKAL_PARAMS = {["ZATH_DEAD"] = false, ["LOR'KHAN_DEAD"] = false, ["THEKAL_DEAD"] = false};
 criteria = 4;
@@ -44,6 +45,7 @@ vSearch = "GUILD";
 groupVersion = {};
 RECORDS = {};
 OVERRIDE_INDEX = {};
+pfUI = nil; --nil or 1
 
 
 --[[ Stock function backups ]]--
@@ -52,6 +54,12 @@ LFEvent = LootFrame_OnEvent;
 CFEvent = ChatFrame_OnEvent;
 
 function CEPGP_OnEvent()
+	if event == "LOOT_OPENED" and not pfUI then
+		LootFrame_OnEvent(event);
+	elseif (event == "LOOT_OPENED" or event == "LOOT_CLOSED" or event == "LOOT_SLOT_CLEARED") and pfUI then
+		LootFrame_OnEvent(event);
+	end
+	
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		_, _, _, pfUI = GetAddOnInfo("pfUI");
 		getglobal("CEPGP_version_number"):SetText("Running Version: " .. VERSION);
@@ -127,7 +135,7 @@ function CEPGP_OnEvent()
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and distributing then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "~need" and distributing then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -355,7 +363,6 @@ function CEPGP_OnEvent()
 			HideUIPanel(CEPGP_context_popup);
 			mode = "guild";
 			ShowUIPanel(CEPGP_guild);
-			populateFrame();
 		end
 		vInfo = {};
 		CEPGP_UpdateVersionScrollBar();
@@ -1423,9 +1430,9 @@ function CEPGP_distribute_popup_give()
 	end
 end
 
-function CEPGP_distribute_popup_OnEvent(event)
+function CEPGP_distribute_popup_OnEvent(event)	
 	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and distPlayer ~= "" then
-		CEPGP_print(CEPGP_distribute_popup_title:GetText() .. "'s inventory is full", 1);
+		CEPGP_print(distPlayer .. "'s inventory is full", 1);
 		CEPGP_distribute_popup:Hide();
 	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and distPlayer ~= "" then
 		CEPGP_print(distPlayer .. " can't carry any more of this unique item", 1);
@@ -1434,7 +1441,7 @@ function CEPGP_distribute_popup_OnEvent(event)
 		distributing = false;
 		if distGP then
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
-			addGP(distPlayer, CEPGP_distribute_GP_value:GetText());
+			addGP(distPlayer, CEPGP_distribute_GP_value:GetText(), true);
 		else
 			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", CHANNEL, LANGUAGE);
 		end
@@ -1465,7 +1472,9 @@ function ChatFrame_OnEvent(event, msg) --Thinking of using this to get !need mes
 end
 
 function LootFrame_OnEvent(event)
-	LFEvent(event);
+	if not pfUI then
+		LFEvent(event);
+	end
 	if event == "LOOT_CLOSED" then
 		if mode == "loot" then
 			cleanTable();
@@ -1475,9 +1484,7 @@ function LootFrame_OnEvent(event)
 			end
 		end
 		HideUIPanel(CEPGP_distribute_popup);
-		if isML() == 0 then
-			HideUIPanel(CEPGP_loot_distributing);
-		end
+		HideUIPanel(CEPGP_loot_distributing);
 		--HideUIPanel(CEPGP_button_loot_dist);
 		HideUIPanel(CEPGP_loot);
 		HideUIPanel(CEPGP_distribute);
@@ -1576,47 +1583,82 @@ function RaidAssistLootDist(link, gp)
 end
 
 function LootFrame_Update()
-	LFUpdate();
-	local numLootItems = LootFrame.numLootItems;
-	--Logic to determine how many items to show per page
-	local numLootToShow = LOOTFRAME_NUMBUTTONS;
-	if ( numLootItems > LOOTFRAME_NUMBUTTONS ) then
-		numLootToShow = numLootToShow - 1;
-	end
-	local texture, item, quantity, quality;
-	local items = {};
-	local count = 0;
-	for index = 1, numLootItems do--LOOTFRAME_NUMBUTTONS do
-		local slot = index;
-		if ( slot <= numLootItems ) then	
-			if (LootSlotIsItem(slot) or LootSlotIsCoin(slot)) then
-				texture, item, quantity, quality = GetLootSlotInfo(slot);
-				if tostring(GetLootSlotLink(slot)) ~= "nil" then
-					items[index-count] = {};
-					items[index-count][1] = texture;
-					items[index-count][2] = item;
-					items[index-count][3] = quality;
-					items[index-count][4] = GetLootSlotLink(slot);
-					local link = GetLootSlotLink(index);
-					local itemString = string.find(link, "item[%-?%d:]+");
-					itemString = strsub(link, itemString, string.len(link)-string.len(item)-6);
-					items[index-count][5] = itemString;
-					items[index-count][6] = slot;
-				else
-					count = count + 1;
+	if pfUI then
+		local items = {};
+		local numLootItems = GetNumLootItems();
+		local count = 0;
+		local numSlots = 0;
+		for i = 1, GetNumLootItems() do
+			numSlots = numSlots + 1;
+			local texture, item, quantity, quality, locked = GetLootSlotInfo(i);
+			if GetLootSlotLink(i) ~= nil then
+				local link = GetLootSlotLink(i);
+				local itemString = string.find(link, "item[%-?%d:]+");
+				itemString = strsub(link, itemString, string.len(link)-string.len(item)-6);
+				items[i-count] = {
+					[1] = texture,
+					[2] = item,
+					[3] = quality,
+					[4] = GetLootSlotLink(i),
+					[5] = itemString,
+					[6] = i
+				};
+			else
+				count = count + 1;
+			end
+		end
+		for i = 1, ntgetn(items) do
+			if (items[i][3] == 4 or OVERRIDE_INDEX[string.lower(items[i][2])]) and (UnitInRaid("player") or debugMode) then
+				CEPGP_frame:Show();
+				mode = "loot";
+				toggleFrame("CEPGP_loot");
+				break;
+			end
+		end
+		populateFrame(_, items, numSlots);
+	else
+		LFUpdate();
+		local numLootItems = LootFrame.numLootItems;
+		--Logic to determine how many items to show per page
+		local numLootToShow = LOOTFRAME_NUMBUTTONS;
+		if ( numLootItems > LOOTFRAME_NUMBUTTONS ) then
+			numLootToShow = numLootToShow - 1;
+		end
+		local texture, item, quantity, quality;
+		local items = {};
+		local count = 0;
+		for index = 1, numLootItems do--LOOTFRAME_NUMBUTTONS do
+			local slot = index;
+			if ( slot <= numLootItems ) then	
+				if (LootSlotIsItem(slot) or LootSlotIsCoin(slot)) then
+					texture, item, quantity, quality = GetLootSlotInfo(slot);
+					if tostring(GetLootSlotLink(slot)) ~= "nil" then
+						items[index-count] = {};
+						items[index-count][1] = texture;
+						items[index-count][2] = item;
+						items[index-count][3] = quality;
+						items[index-count][4] = GetLootSlotLink(slot);
+						local link = GetLootSlotLink(index);
+						local itemString = string.find(link, "item[%-?%d:]+");
+						itemString = strsub(link, itemString, string.len(link)-string.len(item)-6);
+						items[index-count][5] = itemString;
+						items[index-count][6] = slot;
+					else
+						count = count + 1;
+					end
 				end
 			end
 		end
-	end
-	for i = 1, table.getn(items) do
-		if (items[i][3] == 4 or OVERRIDE_INDEX[string.lower(item)]) and (UnitInRaid("player") or debugMode) then
-			CEPGP_frame:Show();
-			mode = "loot";
-			toggleFrame("CEPGP_loot");
-			break;
+		for i = 1, ntgetn(items) do
+			if (items[i][3] == 4 or OVERRIDE_INDEX[string.lower(item)]) and (UnitInRaid("player") or debugMode) then
+				CEPGP_frame:Show();
+				mode = "loot";
+				toggleFrame("CEPGP_loot");
+				break;
+			end
 		end
+		populateFrame(_, items, numLootItems);
 	end
-	populateFrame(_, items, numLootItems);
 end
 
 SLASH_ARG1 = "/cepgp";
@@ -2133,7 +2175,7 @@ end
 	Adds 'amount' GP to 'player'
 	Note: Player must be part of the guild
 ]]
-function addGP(player, amount)
+function addGP(player, amount, item)
 	if amount == nil then
 		CEPGP_print("Please enter a valid number", 1);
 		return;
@@ -2159,7 +2201,9 @@ function addGP(player, amount)
 		end
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		CEPGP_SendAddonMsg("update");
-		SendChatMessage(amount .. " GP added to " .. player, CHANNEL, LANGUAGE, CHANNEL);
+		if not item then
+			SendChatMessage(amount .. " GP added to " .. player, CHANNEL, LANGUAGE, CHANNEL);
+		end
 	else
 		CEPGP_print("Player not found in guild roster - no GP given");
 		CEPGP_print("If this was a mistake, you can manually award them GP via the CEPGP guild menu");
@@ -2271,6 +2315,8 @@ function calcGP(link)
 	if OVERRIDE_INDEX[name] then
 		return OVERRIDE_INDEX[name];
 	end
+	name = string.gsub(name, " ", "");
+	name = string.gsub(name, "'", "");
 	local GP;
 	local ilvl;
 	local found = false;
@@ -2284,7 +2330,7 @@ function calcGP(link)
 		if ((slot ~= "" and level == 60 and rarity > 3) or (slot == "" and rarity > 3))
 			and (itemType ~= "Blacksmithing" and itemType ~= "Tailoring" and itemType ~= "Alchemy" and itemType ~= "Leatherworking"
 			and itemType ~= "Enchanting" and itemType ~= "Engineering" and itemType ~= "Mining") then
-			local quality = rarity == 0 and "Poor" or rarity == 1 and LANGUAGE or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
+			local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
 			CEPGP_print("Warning: " .. name .. " not found in index! Please report this to the addon developer");
 			if slot ~= "" then
 				slot = strsub(slot,strfind(slot,"INVTYPE_")+8,string.len(slot));
@@ -2308,7 +2354,6 @@ function calcGP(link)
 			elseif name == "desecrated robe" then slot = "INVTYPE_ROBE";
 			elseif (name == "desecrated tunic" or name == "desecrated breastplate") then slot = "INVTYPE_CHEST";
 			end
-			CEPGP_print(slot);
 				
 		elseif strfind(name, "primal hakkari") and rarity == 4 then
 			if (name == "primal hakkari bindings" or name == "primal hakkari armsplint" or name == "primal hakkari stanchion") then slot = "INVTYPE_WRIST";
@@ -2530,4 +2575,8 @@ function isNumber(num)
 	else
 		return false;
 	end
+end
+
+function CEPGP_stackTrace(msg)
+	CEPGP_print(msg .. "\nCall stack: \n" .. debugstack(1, 5, 5));
 end
