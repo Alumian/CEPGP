@@ -1428,7 +1428,7 @@ function CEPGP_distribute_popup_give()
 	end
 end
 
-function CEPGP_distribute_popup_OnEvent(event)	
+function CEPGP_distribute_popup_OnEvent(event)
 	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and distPlayer ~= "" then
 		CEPGP_print(distPlayer .. "'s inventory is full", 1);
 		CEPGP_distribute_popup:Hide();
@@ -1605,7 +1605,7 @@ function LootFrame_Update()
 				count = count + 1;
 			end
 		end
-		for i = 1, ntgetn(items) do
+		for i = 1, table.getn(items) do
 			if (items[i][3] == 4 or OVERRIDE_INDEX[string.lower(items[i][2])]) and (UnitInRaid("player") or debugMode) then
 				CEPGP_frame:Show();
 				mode = "loot";
@@ -1647,7 +1647,7 @@ function LootFrame_Update()
 				end
 			end
 		end
-		for i = 1, ntgetn(items) do
+		for i = 1, table.getn(items) do
 			if (items[i][3] == 4 or OVERRIDE_INDEX[string.lower(item)]) and (UnitInRaid("player") or debugMode) then
 				CEPGP_frame:Show();
 				mode = "loot";
@@ -2332,10 +2332,7 @@ function calcGP(link)
 			CEPGP_print("Warning: " .. name .. " not found in index! Please report this to the addon developer");
 			if slot ~= "" then
 				slot = strsub(slot,strfind(slot,"INVTYPE_")+8,string.len(slot));
-				CEPGP_print("Slot: " .. slot);
 			end
-			CEPGP_print("Item Type: " .. itemType);
-			CEPGP_print("Quality: " .. quality);
 		end
 		return 0;
 	end
