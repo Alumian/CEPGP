@@ -601,7 +601,6 @@ function CEPGP_IncAddonMsg(message, sender)
 			itemID = string.sub(message, string.find(message, "receiving")+10);
 		end
 		if itemID == "noitem" then
-			--CEPGP_print("Unable to retrieve the item in slot for " .. sender .. " or they don't have an item in that slot");
 			itemsTable[sender] = {};
 			CEPGP_UpdateLootScrollBar();
 		elseif itemID == "noslot" then
@@ -612,9 +611,7 @@ function CEPGP_IncAddonMsg(message, sender)
 			if itemID2 then
 				local name2, iString2 = GetItemInfo(itemID2);
 				if name == nil then
-					--CEPGP_print("Could not retrieve item information from the server for item " .. itemID .. " from player " .. sender, true);
 					if name2 == nil then
-						--CEPGP_print("Could not retrieve item information from the server for item " .. itemID2 .. " from player " .. sender, true);
 					else
 						itemsTable[sender] = {iString2 .. "[" .. name2 .. "]"};
 					end
@@ -623,7 +620,6 @@ function CEPGP_IncAddonMsg(message, sender)
 				end
 			else
 				if name == nil then
-					--CEPGP_print("Could not retrieve item information from the server for item " .. itemID .. " from player " .. sender, true);
 				else
 					itemsTable[sender] = {iString .. "[" .. name .. "]"};
 				end
