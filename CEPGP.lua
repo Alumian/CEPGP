@@ -379,7 +379,6 @@ function CEPGP_OnEvent()
 		
 		elseif arg1 == "%s casts Destroy Egg" then
 			RAZORGORE_EGG_COUNT = RAZORGORE_EGG_COUNT + 1;
-			CEPGP_print(RAZORGORE_EGG_COUNT);
 			this:RegisterEvent("PLAYER_REGEN_ENABLED");
 		end
 		
@@ -472,7 +471,6 @@ function CEPGP_OnEvent()
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
 							if THEKAL_PARAMS["THEKAL_DEAD"] then
 								addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
-								CEPGP_print("He ded");
 								if STANDBYEP then
 									for k, v in pairs(roster) do
 										if not tContains(raidRoster, k, true) then
@@ -2344,37 +2342,37 @@ function calcGP(link)
 	if slot == "" then
 		--Tier 3 slots
 		if strfind(name, "desecrated") and rarity == 4 then
-			if (name == "desecrated shoulderpads" or name == "desecrated spaulders" or name == "desecrated pauldrons") then slot = "INVTYPE_SHOULDER";
-			elseif (name == "desecrated sandals" or name == "desecrated boots" or name == "desecrated sabatons") then slot = "INVTYPE_FEET";
-			elseif (name == "desecrated bindings" or name == "desecrated wristguards" or name == "desecrated bracers") then slot = "INVTYPE_WRIST";
-			elseif (name == "desecrated gloves" or name == "desecrated handguards" or name == "desecrated gauntlets") then slot = "INVTYPE_HAND";
-			elseif (name == "desecrated belt" or name == "desecrated waistguard" or name == "desecrated girdle") then slot = "INVTYPE_WAIST";
-			elseif (name == "desecrated leggings" or name == "desecrated legguards" or name == "desecrated legplates") then slot = "INVTYPE_LEGS";
-			elseif (name == "desecrated circlet" or name == "desecrated headpiece" or name == "desecrated helmet") then slot = "INVTYPE_HEAD";
-			elseif name == "desecrated robe" then slot = "INVTYPE_ROBE";
-			elseif (name == "desecrated tunic" or name == "desecrated breastplate") then slot = "INVTYPE_CHEST";
+			if (name == "desecratedshoulderpads" or name == "desecratedspaulders" or name == "desecratedpauldrons") then slot = "INVTYPE_SHOULDER";
+			elseif (name == "desecratedsandals" or name == "desecratedboots" or name == "desecratedsabatons") then slot = "INVTYPE_FEET";
+			elseif (name == "desecratedbindings" or name == "desecratedwristguards" or name == "desecratedbracers") then slot = "INVTYPE_WRIST";
+			elseif (name == "desecratedgloves" or name == "desecratedhandguards" or name == "desecratedgauntlets") then slot = "INVTYPE_HAND";
+			elseif (name == "desecratedbelt" or name == "desecratedwaistguard" or name == "desecratedgirdle") then slot = "INVTYPE_WAIST";
+			elseif (name == "desecratedleggings" or name == "desecratedlegguards" or name == "desecratedlegplates") then slot = "INVTYPE_LEGS";
+			elseif (name == "desecratedcirclet" or name == "desecratedheadpiece" or name == "desecratedhelmet") then slot = "INVTYPE_HEAD";
+			elseif name == "desecratedrobe" then slot = "INVTYPE_ROBE";
+			elseif (name == "desecratedtunic" or name == "desecratedbreastplate") then slot = "INVTYPE_CHEST";
 			end
-				
-		elseif strfind(name, "primal hakkari") and rarity == 4 then
-			if (name == "primal hakkari bindings" or name == "primal hakkari armsplint" or name == "primal hakkari stanchion") then slot = "INVTYPE_WRIST";
-			elseif (name == "primal hakkari girdle" or name == "primal hakkari sash" or name == "primal hakkari shawl") then slot = "INVTYPE_WAIST";
-			elseif (name == "primal hakkari tabard" or name == "primal hakkari kossack" or name == "primal hakkari aegis") then slot = "INVTYPE_CHEST";
+			
+		elseif strfind(name, "primalhakkari") and rarity == 4 then
+			if (name == "primalhakkari bindings" or name == "primalhakkari armsplint" or name == "primalhakkari stanchion") then slot = "INVTYPE_WRIST";
+			elseif (name == "primalhakkari girdle" or name == "primalhakkari sash" or name == "primalhakkari shawl") then slot = "INVTYPE_WAIST";
+			elseif (name == "primalhakkari tabard" or name == "primalhakkari kossack" or name == "primalhakkari aegis") then slot = "INVTYPE_CHEST";
 			end
 				
 		--Exceptions: Items that should not carry GP but still need to be distributed
-		elseif name == "splinter of atiesh"
-			or name == "tome of tranquilizing shot"
-			or name == "bindings of the windseeker"
-			or name == "resilience of the scourge"
-			or name == "fortitude of the scourge"
-			or name == "might of the scourge" 
-			or name == "power of the scourge"
-			or name == "sulfuron ingot" then
+		elseif name == "splinterofatiesh"
+			or name == "tomeoftranquilizingshot"
+			or name == "bindingsofthewindseeker"
+			or name == "resilienceofthescourge"
+			or name == "fortitudeofthescourge"
+			or name == "mightofthescourge" 
+			or name == "powerofthescourge"
+			or name == "sulfuroningot" then
 			slot = "INVTYPE_EXCEPTION";
 		end
 	end
 	if debugMode then
-		local quality = rarity == 0 and "Poor" or rarity == 1 and LANGUAGE or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
+		local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
 		CEPGP_print("Name: " .. name);
 		CEPGP_print("Rarity: " .. quality);
 		CEPGP_print("Slot: " .. slot);
