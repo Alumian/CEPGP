@@ -1461,7 +1461,7 @@ function getEPGP(offNote)
 	return EP, GP;
 end
 
-function ChatFrame_OnEvent(event, msg) --Thinking of using this to get !need messages
+function ChatFrame_OnEvent(event, msg)
 	CFEvent(event);
 end
 
