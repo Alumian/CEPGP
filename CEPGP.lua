@@ -1523,10 +1523,8 @@ function RaidAssistLootClosed()
 		HideUIPanel(CEPGP_distribute_popup);
 		HideUIPanel(CEPGP_distribute);
 		HideUIPanel(CEPGP_loot_distributing);
-		local y = 1;
-		while _G["LootDistButton"..y] ~= nil do
-			_G["LootDistButton"..y]:Hide();
-			getglobal("LootDistButton" .. y):Show();
+		for y = 1, 18 do
+			getglobal("LootDistButton"..y):Hide();
 			getglobal("LootDistButton" .. y .. "Info"):SetText("");
 			getglobal("LootDistButton" .. y .. "Class"):SetText("");
 			getglobal("LootDistButton" .. y .. "Rank"):SetText("");
@@ -1535,7 +1533,6 @@ function RaidAssistLootClosed()
 			getglobal("LootDistButton" .. y .. "PR"):SetText("");
 			getglobal("LootDistButton" .. y .. "Tex"):SetBackdrop(nil);
 			getglobal("LootDistButton" .. y .. "Tex2"):SetBackdrop(nil);
-			y = y + 1;
 		end
 	end
 end
@@ -1543,9 +1540,8 @@ end
 function RaidAssistLootDist(link, gp)
 	if IsRaidOfficer() and isML() == 1 then
 		local y = 1;
-		while _G["LootDistButton"..y] ~= nil do
-			_G["LootDistButton"..y]:Hide();
-			getglobal("LootDistButton" .. y):Show();
+		for y = 1, 18 do
+			getglobal("LootDistButton"..y):Hide();
 			getglobal("LootDistButton" .. y .. "Info"):SetText("");
 			getglobal("LootDistButton" .. y .. "Class"):SetText("");
 			getglobal("LootDistButton" .. y .. "Rank"):SetText("");
