@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.8.0";
+VERSION = "1.8.1";
 BUILD = "release";
 mode = "guild";
 recordholder = "";
@@ -135,7 +135,7 @@ function CEPGP_OnEvent()
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and distributing then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "~need" and distributing then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -1275,7 +1275,6 @@ function CEPGP_ListButton_OnClick()
 		ShowUIPanel(CEPGP_distribute_popup);
 		CEPGP_distribute_popup_title:SetText(getglobal(this:GetName() .. "Info"):GetText());
 		distPlayer = getglobal(this:GetName() .. "Info"):GetText();
-		lootSlot = CEPGP_distribute:GetID();
 		CEPGP_distribute_popup:SetID(CEPGP_distribute:GetID()); --CEPGP_distribute:GetID gets the ID of the LOOT SLOT. Not the player.
 	
 		--[[ Guild Menu ]]--
@@ -1442,6 +1441,12 @@ function CEPGP_distribute_popup_OnEvent(event)
 		CEPGP_distribute_popup:Hide();
 		CEPGP_distribute:Hide();
 		CEPGP_loot:Show();
+	elseif event == "LOOT_SLOT_CLEARED" and arg1 == lootSlot and distPlayer == "" and distributing then
+		distributing = false;
+		SendChatMessage(getglobal("CEPGP_distribute_item_name"):GetText() .. " has been distributed without EPGP", CHANNEL, LANGUAGE);
+		CEPGP_distribute_popup:Hide();
+		CEPGP_distribute:Hide();
+		CEPGP_loot:Show();
 	end
 end
 
@@ -1470,9 +1475,9 @@ function LootFrame_OnEvent(event)
 		LFEvent(event);
 	end
 	if event == "LOOT_CLOSED" then
+		distributing = false;
 		if mode == "loot" then
 			cleanTable();
-			distributing = false;
 			if isML() == 0 then
 				CEPGP_SendAddonMsg("RaidAssistLootClosed");
 			end
@@ -1797,7 +1802,7 @@ function populateFrame(criteria, items, lootNum)
 			if _G[mode..'item'..i] ~= nil then
 				_G[mode..'announce'..i]:Show();
 				_G[mode..'announce'..i]:SetWidth(20);
-				_G[mode..'announce'..i]:SetScript('OnClick', function() distribute(link, x) CEPGP_distribute:SetID(this:GetID()) end);
+				_G[mode..'announce'..i]:SetScript('OnClick', function() distribute(link, x, slot) CEPGP_distribute:SetID(this:GetID()) end);
 				_G[mode..'announce'..i]:SetID(slot);
 				
 				_G[mode..'tex'..i]:Show();
@@ -1822,7 +1827,7 @@ function populateFrame(criteria, items, lootNum)
 				subframe.announce = CreateFrame('Button', mode..'announce'..i, subframe, 'UIPanelButtonTemplate');
 				subframe.announce:SetHeight(20);
 				subframe.announce:SetWidth(20);
-				subframe.announce:SetScript('OnClick', function() distribute(link, x) CEPGP_distribute:SetID(this:GetID()); end);
+				subframe.announce:SetScript('OnClick', function() distribute(link, x, slot) CEPGP_distribute:SetID(this:GetID()); end);
 				subframe.announce:SetID(slot);
 	
 				subframe.tex = CreateFrame('Button', mode..'tex'..i, subframe);
@@ -1873,7 +1878,7 @@ end
 --[[distribute(link) - In progress
 	Calls for raid members to whisper for items
 ]]
-function distribute(link, x)
+function distribute(link, x, slotNum)
 	itemsTable = {};
 	if isML() == 0 or debugMode then
 		local iString = getItemString(link);
@@ -1882,8 +1887,8 @@ function distribute(link, x)
 		distID = id;
 		distSlot = slot;
 		tex = {bgFile = tex,};
-		
 		gp = _G[mode..'itemGP'..x]:GetText();
+		lootSlot = slotNum;
 		responses = {};
 		CEPGP_UpdateLootScrollBar();
 		CEPGP_SendAddonMsg("RaidAssistLootDist"..link..","..gp.."\\"..UnitName("player"));

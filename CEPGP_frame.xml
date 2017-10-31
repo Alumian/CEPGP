@@ -520,7 +520,7 @@
 						toggleFrame("CEPGP_loot");
 						mode = "loot";
 						cleanTable();
-						if LootFrame:IsVisible() == 1 then
+						if LootFrame:IsVisible() == 1 or pfUI then
 							LootFrame_Update();
 						end
 					</OnClick>
@@ -7851,8 +7851,11 @@
 						this:SetAutoFocus(false);
 					</OnLoad>
 					<OnEnterPressed>
-						this:ClearFocus();
+						CEPGP_override_item_gp:SetFocus();
 					</OnEnterPressed>
+					<OnTabPressed>
+						CEPGP_override_item_gp:SetFocus();
+					</OnTabPressed>
 				</Scripts>
 			</EditBox>
 			<EditBox name="CEPGP_override_item_gp" inherits="InputBoxTemplate" numeric="true">
@@ -7872,7 +7875,34 @@
 					</OnLoad>
 					<OnEnterPressed>
 						this:ClearFocus();
+						PlaySound("gsTitleOptionExit");
+						if CEPGP_override_item_name:GetText() == "" then
+								CEPGP_print("Enter an item name", true);
+							return;
+						end
+						local item = string.lower(CEPGP_override_item_name:GetText());
+						local gp;
+						if CEPGP_override_item_gp:GetText() == "" then
+							gp = 0;
+						else
+							gp = tonumber(CEPGP_override_item_gp:GetText());
+						end
+						if (OVERRIDE_INDEX[item] and overwrite) or not OVERRIDE_INDEX[item] then
+							OVERRIDE_INDEX[item] = gp;
+							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been overriden to " .. gp);
+							CEPGP_UpdateOverrideScrollBar();
+							override = false;
+							CEPGP_override_item_name:SetText("");
+							CEPGP_override_item_gp:SetText("");
+							CEPGP_override_item_name:SetFocus();
+						else
+							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add override again to change this to " .. gp);
+							override = true;
+						end
 					</OnEnterPressed>
+					<OnTabPressed>
+						CEPGP_override_item_name:SetFocus();
+					</OnTabPressed>
 				</Scripts>
 			</EditBox>
 			<Button name="CEPGP_override_close" inherits="UIPanelCloseButton">
