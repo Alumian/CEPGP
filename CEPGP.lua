@@ -1603,7 +1603,7 @@ function LootFrame_Update()
 			end
 		end
 		for i = 1, table.getn(items) do
-			if (items[i][3] == 4 or OVERRIDE_INDEX[string.lower(items[i][2])]) and (UnitInRaid("player") or debugMode) then
+			if (items[i][3] == 4 or inOverride(items[i][2])) and (UnitInRaid("player") or debugMode) then
 				CEPGP_frame:Show();
 				mode = "loot";
 				toggleFrame("CEPGP_loot");
@@ -1645,7 +1645,7 @@ function LootFrame_Update()
 			end
 		end
 		for i = 1, table.getn(items) do
-			if (items[i][3] == 4 or OVERRIDE_INDEX[string.lower(item)]) and (UnitInRaid("player") or debugMode) then
+			if (items[i][3] == 4 or inOverride(item)) and (UnitInRaid("player") or debugMode) then
 				CEPGP_frame:Show();
 				mode = "loot";
 				toggleFrame("CEPGP_loot");
@@ -2306,12 +2306,15 @@ end
 ]]
 function calcGP(link)
 	local name, _, rarity, level, _, itemType, _, slot = GetItemInfo(link);
-	name = string.lower(name);
-	if OVERRIDE_INDEX[name] then
-		return OVERRIDE_INDEX[name];
+	name = string.gsub(string.gsub(string.lower(name), " ", ""), "'", "");
+	for k, v in pairs(OVERRIDE_INDEX) do
+		if name == string.gsub(string.gsub(string.lower(k), " ", ""), "'", "") then
+			return OVERRIDE_INDEX[k];
+		end
 	end
-	name = string.gsub(name, " ", "");
-	name = string.gsub(name, "'", "");
+	--[[if OVERRIDE_INDEX[name] then
+		return OVERRIDE_INDEX[name];
+	end]]
 	local GP;
 	local ilvl;
 	local found = false;
@@ -2571,4 +2574,13 @@ end
 
 function CEPGP_stackTrace(msg)
 	CEPGP_print(msg .. "\nCall stack: \n" .. debugstack(1, 5, 5));
+end
+
+function inOverride(itemName)
+	for k, _ in pairs(OVERRIDE_INDEX) do
+		if string.gsub(string.lower(k), " ", "") == k then
+			return true;
+		end
+	end
+	return false;
 end

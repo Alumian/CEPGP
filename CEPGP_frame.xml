@@ -7880,7 +7880,7 @@
 								CEPGP_print("Enter an item name", true);
 							return;
 						end
-						local item = string.lower(CEPGP_override_item_name:GetText());
+						local item = CEPGP_override_item_name:GetText();
 						local gp;
 						if CEPGP_override_item_gp:GetText() == "" then
 							gp = 0;
@@ -7941,7 +7941,7 @@
 								CEPGP_print("Enter an item name", true);
 							return;
 						end
-						local item = string.lower(CEPGP_override_item_name:GetText());
+						local item = CEPGP_override_item_name:GetText();
 						local gp;
 						if CEPGP_override_item_gp:GetText() == "" then
 							gp = 0;
