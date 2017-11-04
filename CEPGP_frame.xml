@@ -353,6 +353,97 @@
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
 	</Button>
+	<Button name="trafficButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="760" y="15"/>
+		</Size>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentName" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentAction" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentName" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="155" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEPBefore" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentName" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="530" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEPAfter" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentName" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="580" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGPBefore" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentName" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="660" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGPAfter" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentName" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="710" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentItem">
+				<Size>
+					<AbsDimension x="250" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parentName">
+						<Offset>
+							<AbsDimension x="250" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentName" inherits="GameFontNormal" justifyH="LEFT"/>
+					</Layer>
+				</Layers>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
 	
 	<Frame name="CEPGP_frame" parent="UIParent" hidden="true" enableMouse="true" toplevel="true" movable="true">
 		<Size>
@@ -588,6 +679,24 @@
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
 								CEPGP_save_guild_logs:Show();
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_button_guild_traffic" inherits="GameMenuButtonTemplate" text="View EPGP Traffic">
+						<Size>
+							<AbsDimension x="125" y="21" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_button_guild_dump">
+								<Offset>
+									<AbsDimension x="2.5" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								ShowUIPanel(CEPGP_traffic);
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -8182,6 +8291,340 @@
 			<OnDragStop>
 				this:StopMovingOrSizing();
 			</OnDragStop>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CEPGP_traffic" toplevel="true" frameStrata="BACKGROUND" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="800" y="480"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="CEPGP_traffic_header" inherits="GameFontNormal" text="EPGP Traffic">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_traffic_desc" inherits="GameFontNormal" text="A record of the EPGP traffic in your guild">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-30"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_traffic_name" inherits="GameFontNormal" text="Player">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+							<Offset>
+								<AbsDimension x="15" y="-75"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_traffic_action" inherits="GameFontNormal" text="Action">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_traffic_name">
+							<Offset>
+								<AbsDimension x="97.5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_traffic_ep" inherits="GameFontNormal" text="EP Before / After">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_traffic_action">
+							<Offset>
+								<AbsDimension x="325" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="CEPGP_traffic_gp_" inherits="GameFontNormal" text="GP Before / After">
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_traffic_ep">
+							<Offset>
+								<AbsDimension x="30" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="CEPGP_traffic_close" inherits="UIPanelCloseButton">
+                <Size>
+                    <AbsDimension x="40" y="40" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-3" y="-3" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+                    <OnClick>
+                        PlaySound("gsTitleOptionExit");
+						HideUIPanel(CEPGP_traffic);
+                    </OnClick>
+                </Scripts>
+            </Button>
+			<Frame name="CEPGP_traffic_scrollframe">
+				<Size>
+					<AbsDimension x="760" y="300"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CEPGP_traffic" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="10" y="-140"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<ScrollFrame name="trafficScrollFrame" inherits="FauxScrollFrameTemplate">
+						<Size>
+							<AbsDimension x="760" y="350"/>
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT">
+								<Offset>
+									<AbsDimension x="-7" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnVerticalScroll>
+								FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateTrafficScrollBar); 
+							</OnVerticalScroll>
+						</Scripts>
+					</ScrollFrame>
+					<Button name="trafficButton1" inherits="trafficButtonTemplate" id="1" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="5" y="-6"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton2" inherits="trafficButtonTemplate" id="2" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton3" inherits="trafficButtonTemplate" id="3" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton4" inherits="trafficButtonTemplate" id="4" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton5" inherits="trafficButtonTemplate" id="5" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton6" inherits="trafficButtonTemplate" id="6" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton5" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton7" inherits="trafficButtonTemplate" id="7" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton6" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton8" inherits="trafficButtonTemplate" id="8" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton7" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton9" inherits="trafficButtonTemplate" id="9" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton8" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton10" inherits="trafficButtonTemplate" id="10" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton9" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton11" inherits="trafficButtonTemplate" id="11" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton10" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton12" inherits="trafficButtonTemplate" id="12" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton11" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton13" inherits="trafficButtonTemplate" id="13" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton12" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton14" inherits="trafficButtonTemplate" id="14" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton13" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton15" inherits="trafficButtonTemplate" id="15" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton14" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton16" inherits="trafficButtonTemplate" id="16" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton15" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton17" inherits="trafficButtonTemplate" id="17" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton16" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="trafficButton18" inherits="trafficButtonTemplate" id="18" hidden="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="trafficButton17" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Scripts>
+					<OnLoad>
+						this:SetBackdropColor(0.1, 0.1, 0.1);
+					</OnLoad>
+				</Scripts>
+				</Frames>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+				_, _, _, pfUIFrames = GetAddOnInfo("pfUI");
+				if pfUIFrames then
+					for i = 1, 18 do
+						getglobal("trafficButton" .. i .. "Action"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 145, 0);
+						getglobal("trafficButton" .. i .. "EPBefore"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 500, 0);
+						getglobal("trafficButton" .. i .. "EPAfter"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 540, 0);
+						getglobal("trafficButton" .. i .. "GPBefore"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 600, 0);
+						getglobal("trafficButton" .. i .. "GPAfter"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 640, 0);
+					end
+				end
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+			<OnShow>
+				CEPGP_UpdateTrafficScrollBar();
+			</OnShow>
 		</Scripts>
 	</Frame>
 </Ui>

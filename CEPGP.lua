@@ -21,6 +21,7 @@ SLOTWEIGHTS = {};
 DEFSLOTWEIGHTS = {["2HWEAPON"] = 2,["WEAPONMAINHAND"] = 1.5,["WEAPON"] = 1.5,["WEAPONOFFHAND"] = 0.5,["HOLDABLE"] = 0.5,["SHIELD"] = 0.5,["RANGED"] = 0.5,["RANGEDRIGHT"] = 0.5,["RELIC"] = 0.5,["HEAD"] = 1,["NECK"] = 0.5,["SHOULDER"] = 0.75,["CLOAK"] = 0.5,["CHEST"] = 1,["ROBE"] = 1,["WRIST"] = 0.5,["HAND"] = 0.75,["WAIST"] = 0.75,["LEGS"] = 1,["FEET"] = 0.75,["FINGER"] = 0.5,["TRINKET"] = 0.75};
 distID = nil;
 distSlot = nil;
+distItemLink = nil;
 debugMode = false;
 critReverse = false; --Criteria reverse
 distributing = false;
@@ -45,6 +46,7 @@ vSearch = "GUILD";
 groupVersion = {};
 RECORDS = {};
 OVERRIDE_INDEX = {};
+TRAFFIC = {};
 pfUI = nil; --nil or 1
 
 
@@ -54,12 +56,6 @@ LFEvent = LootFrame_OnEvent;
 CFEvent = ChatFrame_OnEvent;
 
 function CEPGP_OnEvent()
-	if event == "LOOT_OPENED" and not pfUI then
-		LootFrame_OnEvent(event);
-	elseif (event == "LOOT_OPENED" or event == "LOOT_CLOSED" or event == "LOOT_SLOT_CLEARED") and pfUI then
-		LootFrame_OnEvent(event);
-	end
-	
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		_, _, _, pfUI = GetAddOnInfo("pfUI");
 		getglobal("CEPGP_version_number"):SetText("Running Version: " .. VERSION);
@@ -134,8 +130,11 @@ function CEPGP_OnEvent()
 		CEPGP_SendAddonMsg("version-check");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
+		
+	elseif (event == "LOOT_OPENED" and not pfUI) or ((event == "LOOT_OPENED" or event == "LOOT_CLOSED" or event == "LOOT_SLOT_CLEARED") and pfUI) then
+		LootFrame_OnEvent(event);
 	
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "~need" and distributing then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and distributing then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -416,6 +415,7 @@ function CEPGP_OnEvent()
 													end
 												end
 											end
+											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
 										end
 									end
 								end
@@ -439,6 +439,7 @@ function CEPGP_OnEvent()
 													end
 												end
 											end
+											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
 										end
 									end
 								end
@@ -462,6 +463,7 @@ function CEPGP_OnEvent()
 													end
 												end
 											end
+											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
 										end
 									end
 								end
@@ -483,6 +485,7 @@ function CEPGP_OnEvent()
 														end
 													end
 												end
+												TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
 											end
 										end
 									end
@@ -504,6 +507,7 @@ function CEPGP_OnEvent()
 													end
 												end
 											end
+											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
 										end
 									end
 								end
@@ -530,6 +534,7 @@ function CEPGP_OnEvent()
 												end
 											end
 										end
+										TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
 									end
 								end
 							end
@@ -898,13 +903,13 @@ function CEPGP_UpdateLootScrollBar()
 		rank = nil;
 	end
 	t = tSort(t, criteria)
-    FauxScrollFrame_Update(DistributeScrollFrame, tSize, 18, 120);
-    for y = 1, 18, 1 do
-        yoffset = y + FauxScrollFrame_GetOffset(DistributeScrollFrame);
-        if (yoffset <= tSize) then
-            if not tContains(t, yoffset, true) then
-                getglobal("LootDistButton" .. y):Hide();
-            else
+	FauxScrollFrame_Update(DistributeScrollFrame, tSize, 18, 120);
+	for y = 1, 18, 1 do
+		yoffset = y + FauxScrollFrame_GetOffset(DistributeScrollFrame);
+		if (yoffset <= tSize) then
+			if not tContains(t, yoffset, true) then
+				getglobal("LootDistButton" .. y):Hide();
+			else
 				name = t[yoffset][1];
 				class = t[yoffset][2];
 				rank = t[yoffset][3];
@@ -933,18 +938,18 @@ function CEPGP_UpdateLootScrollBar()
 				tex = {bgFile = tex,};
 				tex2 = {bgFile = tex2,};
 				getglobal("LootDistButton" .. y):Show();
-                getglobal("LootDistButton" .. y .. "Info"):SetText(name);
-                getglobal("LootDistButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("LootDistButton" .. y .. "Info"):SetText(name);
+				getglobal("LootDistButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "Class"):SetText(class);
-                getglobal("LootDistButton" .. y .. "Class"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("LootDistButton" .. y .. "Class"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "Rank"):SetText(rank);
-                getglobal("LootDistButton" .. y .. "Rank"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("LootDistButton" .. y .. "Rank"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "EP"):SetText(EP);
-                getglobal("LootDistButton" .. y .. "EP"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("LootDistButton" .. y .. "EP"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "GP"):SetText(GP);
-                getglobal("LootDistButton" .. y .. "GP"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("LootDistButton" .. y .. "GP"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "PR"):SetText(math.floor((EP/GP)*100)/100);
-                getglobal("LootDistButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("LootDistButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("LootDistButton" .. y .. "Tex"):SetBackdrop(tex);
 				getglobal("LootDistButton" .. y .. "Tex2"):SetBackdrop(tex2);
 				getglobal("LootDistButton" .. y .. "Tex"):SetScript('OnLeave', function()
@@ -973,10 +978,10 @@ function CEPGP_UpdateLootScrollBar()
 					getglobal("LootDistButton" .. y .. "Tex"):SetScript('OnEnter', function() end);
 				end
 			end
-        else
-            getglobal("LootDistButton" .. y):Hide();
-        end
-    end
+		else
+			getglobal("LootDistButton" .. y):Hide();
+		end
+	end
 end
 
 function CEPGP_UpdateGuildScrollBar()
@@ -1208,16 +1213,16 @@ function CEPGP_UpdateOverrideScrollBar()
 	if OVERRIDE_INDEX == nil then
 		return;
 	end
-    local x, y;
-    local yoffset;
-    local t;
-    local tSize;
-    local item;
+	local x, y;
+	local yoffset;
+	local t;
+	local tSize;
+	local item;
 	local gp;
 	local colour;
 	local quality;
 	t = {};
-    tSize = ntgetn(OVERRIDE_INDEX);
+	tSize = ntgetn(OVERRIDE_INDEX);
 	if tSize == 0 then
 		for y = 1, 18, 1 do
 			getglobal("overrideButton" .. y):Hide();
@@ -1231,13 +1236,13 @@ function CEPGP_UpdateOverrideScrollBar()
 		};
 		count = count + 1;
 	end
-    FauxScrollFrame_Update(overrideScrollFrame, tSize, 18, 240);
-    for y = 1, 18, 1 do
-        yoffset = y + FauxScrollFrame_GetOffset(overrideScrollFrame);
-        if (yoffset <= tSize) then
-            if not tContains(t, yoffset, true) then
-                getglobal("overrideButton" .. y):Hide();
-            else
+	FauxScrollFrame_Update(overrideScrollFrame, tSize, 18, 240);
+	for y = 1, 18, 1 do
+		yoffset = y + FauxScrollFrame_GetOffset(overrideScrollFrame);
+		if (yoffset <= tSize) then
+			if not tContains(t, yoffset, true) then
+				getglobal("overrideButton" .. y):Hide();
+			else
 				t2 = t[yoffset];
 				item = t2[1];
 				gp = t2[2];
@@ -1248,10 +1253,56 @@ function CEPGP_UpdateOverrideScrollBar()
 				getglobal("overrideButton" .. y .. "GP"):SetTextColor(1, 1, 1);
 				getglobal("overrideButton" .. y):Show();
 			end
-        else
-            getglobal("overrideButton" .. y):Hide();
-        end
-    end
+		else
+			getglobal("overrideButton" .. y):Hide();
+		end
+	end
+end
+
+function CEPGP_UpdateTrafficScrollBar()
+	if TRAFFIC == nil then
+		return;
+	end
+	local yoffset;
+	local tSize;
+	tSize = ntgetn(TRAFFIC);
+	FauxScrollFrame_Update(trafficScrollFrame, tSize, 18, 240);
+	for y = 1, 18, 1 do
+		yoffset = y + FauxScrollFrame_GetOffset(trafficScrollFrame);
+		if (yoffset <= tSize) then
+			local name = TRAFFIC[ntgetn(TRAFFIC) - (yoffset-1)][1];
+			local action = TRAFFIC[ntgetn(TRAFFIC) - (yoffset-1)][2];
+			local EPB = TRAFFIC[ntgetn(TRAFFIC) - (yoffset-1)][3];
+			local EPA = TRAFFIC[ntgetn(TRAFFIC) - (yoffset-1)][4];
+			local GPB = TRAFFIC[ntgetn(TRAFFIC) - (yoffset-1)][5];
+			local GPA = TRAFFIC[ntgetn(TRAFFIC) - (yoffset-1)][6];
+			local item = TRAFFIC[ntgetn(TRAFFIC) - (yoffset-1)][7];
+			getglobal("trafficButton" .. y .. "Name"):SetText(name);
+			getglobal("trafficButton" .. y .. "Name"):SetTextColor(1, 1, 1);
+			if item then
+				getglobal("trafficButton" .. y .. "ItemName"):SetText(item);
+				getglobal("trafficButton" .. y .. "ItemName"):Show();
+				getglobal("trafficButton" .. y .. "Item"):SetScript('OnClick', function() SetItemRef(tostring(getItemString(item))) end);
+			else
+				getglobal("trafficButton" .. y .. "ItemName"):SetText("");
+				getglobal("trafficButton" .. y .. "ItemName"):Hide();
+				getglobal("trafficButton" .. y .. "Item"):SetScript('OnClick', function() end);
+			end
+			getglobal("trafficButton" .. y .. "Action"):SetText(action);
+			getglobal("trafficButton" .. y .. "Action"):SetTextColor(1, 1, 1);
+			getglobal("trafficButton" .. y .. "EPBefore"):SetText(EPB);
+			getglobal("trafficButton" .. y .. "EPBefore"):SetTextColor(1, 1, 1);
+			getglobal("trafficButton" .. y .. "EPAfter"):SetText(EPA);
+			getglobal("trafficButton" .. y .. "EPAfter"):SetTextColor(1, 1, 1);
+			getglobal("trafficButton" .. y .. "GPBefore"):SetText(GPB);
+			getglobal("trafficButton" .. y .. "GPBefore"):SetTextColor(1, 1, 1);
+			getglobal("trafficButton" .. y .. "GPAfter"):SetText(GPA);
+			getglobal("trafficButton" .. y .. "GPAfter"):SetTextColor(1, 1, 1);
+			getglobal("trafficButton" .. y):Show();
+		else
+			getglobal("trafficButton" .. y):Hide();
+		end
+	end
 end
 
 function CEPGP_ListButton_OnClick()
@@ -1469,6 +1520,7 @@ function LootFrame_OnEvent(event)
 	end
 	if event == "LOOT_CLOSED" then
 		distributing = false;
+		distItemLink = nil;
 		if mode == "loot" then
 			cleanTable();
 			if isML() == 0 then
@@ -1512,7 +1564,7 @@ function LootFrame_OnEvent(event)
 				distributing = false;
 				if distGP then
 					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
-					addGP(distPlayer, CEPGP_distribute_GP_value:GetText(), true);
+					addGP(distPlayer, CEPGP_distribute_GP_value:GetText(), true, distItemLink);
 				else
 					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", CHANNEL, LANGUAGE);
 				end
@@ -1889,6 +1941,7 @@ end
 ]]
 function distribute(link, x, slotNum)
 	itemsTable = {};
+	distItemLink = link;
 	if isML() == 0 or debugMode then
 		local iString = getItemString(link);
 		local name, _, _, _, _, _, _, slot, tex = GetItemInfo(iString);
@@ -2016,6 +2069,8 @@ function resetAll()
 		end
 	end
 	CEPGP_SendAddonMsg("update");
+	TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Cleared EPGP standings"};
+	CEPGP_UpdateTrafficScrollBar();
 	SendChatMessage("All EPGP standings have been cleared!", "GUILD", LANGUAGE);
 end
 
@@ -2078,11 +2133,13 @@ function addRaidEP(amount, msg)
 			end
 		end
 	end
+	CEPGP_UpdateTrafficScrollBar();
 	if msg then
 		CEPGP_SendAddonMsg("update");
 		SendChatMessage(msg, "RAID", LANGUAGE);
 	else
 		CEPGP_SendAddonMsg("update");
+		TRAFFIC[ntgetn(TRAFFIC)+1] = {"Raid", "Add Raid EP +" .. amount};
 		SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, LANGUAGE);
 	end
 end
@@ -2146,9 +2203,11 @@ function addGuildEP(amount)
 					GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 				end
 			end
-		end
+		end		
 	end
 	CEPGP_SendAddonMsg("update");
+	TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add Guild EP +" .. amount};
+	CEPGP_UpdateTrafficScrollBar();
 	SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, LANGUAGE);
 end
 
@@ -2183,7 +2242,7 @@ end
 	Adds 'amount' GP to 'player'
 	Note: Player must be part of the guild
 ]]
-function addGP(player, amount, item)
+function addGP(player, amount, item, itemLink)
 	if amount == nil then
 		CEPGP_print("Please enter a valid number", 1);
 		return;
@@ -2199,6 +2258,18 @@ function addGP(player, amount, item)
 			offNote = "0," .. BASEGP;
 		end
 		EP,GP = getEPGP(offNote);
+		TRAFFIC[ntgetn(TRAFFIC)+1] = {
+			[1] = player,
+			[2] = "Add GP +" .. amount,
+			[3] = EP,
+			[4] = EP,
+			[5] = GP,
+			[6] = GP + amount
+		};
+		if itemLink then
+			TRAFFIC[ntgetn(TRAFFIC)][7] = itemLink;
+		end
+		CEPGP_UpdateTrafficScrollBar();
 		GP = tonumber(GP) + amount;
 		EP = tonumber(EP);
 		if GP < BASEGP then
@@ -2238,6 +2309,15 @@ function addEP(player, amount)
 			offNote = "0," .. BASEGP;
 		end
 		EP,GP = getEPGP(offNote);
+		TRAFFIC[ntgetn(TRAFFIC)+1] = {
+			[1] = player,
+			[2] = "Add EP +" .. amount,
+			[3] = EP,
+			[4] = EP + amount,
+			[5] = GP,
+			[6] = GP
+		};
+		CEPGP_UpdateTrafficScrollBar();
 		EP = tonumber(EP) + amount;
 		GP = tonumber(GP);
 		if GP < BASEGP then
@@ -2308,6 +2388,8 @@ function decay(amount)
 		end
 	end
 	CEPGP_SendAddonMsg("update");
+	TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Decay EPGP -" .. amount .. "%"}; 
+	CEPGP_UpdateTrafficScrollBar();
 	SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, LANGUAGE, CHANNEL);
 	
 end
