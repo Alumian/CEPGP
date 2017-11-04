@@ -135,7 +135,7 @@ function CEPGP_OnEvent()
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 	
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and distributing then --arg1 = message, arg2 = player
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "~need" and distributing then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
 			if responses[i] == arg2 then
@@ -1419,34 +1419,27 @@ function CEPGP_distribute_popup_give()
 	for i = 1, 40 do
 		if GetMasterLootCandidate(i) == distPlayer then
 			GiveMasterLoot(lootSlot, i);
+			return;
 		end
 	end
+	CEPGP_print(distPlayer .. " is not on the candidate list for loot", true);
 end
 
 function CEPGP_distribute_popup_OnEvent(event)
-	if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and distPlayer ~= "" then
-		CEPGP_print(distPlayer .. "'s inventory is full", 1);
-		CEPGP_distribute_popup:Hide();
-	elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and distPlayer ~= "" then
-		CEPGP_print(distPlayer .. " can't carry any more of this unique item", 1);
-		CEPGP_distribute_popup:Hide();
-	elseif event == "LOOT_SLOT_CLEARED" and arg1 == lootSlot and distPlayer ~= "" and distributing then
-		distributing = false;
-		if distGP then
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
-			addGP(distPlayer, CEPGP_distribute_GP_value:GetText(), true);
-		else
-			SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", CHANNEL, LANGUAGE);
+	if event == "CHAT_MSG_LOOT" then
+		distPlayer = string.sub(arg1, 0, string.find(arg1, " ")-1);
+		if distPlayer == "You" then
+			distPlayer = UnitName("player");
 		end
-		CEPGP_distribute_popup:Hide();
-		CEPGP_distribute:Hide();
-		CEPGP_loot:Show();
-	elseif event == "LOOT_SLOT_CLEARED" and arg1 == lootSlot and distPlayer == "" and distributing then
-		distributing = false;
-		SendChatMessage(getglobal("CEPGP_distribute_item_name"):GetText() .. " has been distributed without EPGP", CHANNEL, LANGUAGE);
-		CEPGP_distribute_popup:Hide();
-		CEPGP_distribute:Hide();
-		CEPGP_loot:Show();
+	end
+	if distributing then
+		if event == "UI_ERROR_MESSAGE" and arg1 == "Inventory is full." and distPlayer ~= "" then
+			CEPGP_print(distPlayer .. "'s inventory is full", 1);
+			CEPGP_distribute_popup:Hide();
+		elseif event == "UI_ERROR_MESSAGE" and arg1 == "You can't carry any more of those items." and distPlayer ~= "" then
+			CEPGP_print(distPlayer .. " can't carry any more of this unique item", 1);
+			CEPGP_distribute_popup:Hide();
+		end
 	end
 end
 
@@ -1513,6 +1506,26 @@ function LootFrame_OnEvent(event)
 	elseif event == "LOOT_SLOT_CLEARED" then
 		if isML() == 0 then
 			CEPGP_SendAddonMsg("RaidAssistLootClosed");
+		end
+		if distributing and arg1 == lootSlot then
+			if distPlayer ~= "" then
+				distributing = false;
+				if distGP then
+					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
+					addGP(distPlayer, CEPGP_distribute_GP_value:GetText(), true);
+				else
+					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", CHANNEL, LANGUAGE);
+				end
+				CEPGP_distribute_popup:Hide();
+				CEPGP_distribute:Hide();
+				CEPGP_loot:Show();
+			else
+				distributing = false;
+				SendChatMessage(getglobal("CEPGP_distribute_item_name"):GetText() .. " has been distributed without EPGP", CHANNEL, LANGUAGE);
+				CEPGP_distribute_popup:Hide();
+				CEPGP_distribute:Hide();
+				CEPGP_loot:Show();
+			end
 		end
 		LootFrame_Update();
 	end
@@ -2200,7 +2213,7 @@ function addGP(player, amount, item)
 			SendChatMessage(amount .. " GP added to " .. player, CHANNEL, LANGUAGE, CHANNEL);
 		end
 	else
-		CEPGP_print("Player not found in guild roster - no GP given");
+		CEPGP_print(player .. " not found in guild roster - no GP given");
 		CEPGP_print("If this was a mistake, you can manually award them GP via the CEPGP guild menu");
 	end
 end

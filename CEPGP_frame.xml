@@ -7064,9 +7064,7 @@
 					<OnClick>
 						distGP = true;
 						PlaySound("gsTitleOptionExit");
-						HideUIPanel(CEPGP_distribute_popup);
 						CEPGP_distribute_popup_give();
-						CEPGP_loot_distributing:Hide();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -7085,9 +7083,7 @@
 					<OnClick>
 						distGP = false;
 						PlaySound("gsTitleOptionExit");
-						HideUIPanel(CEPGP_distribute_popup);
 						CEPGP_distribute_popup_give();
-						CEPGP_loot_distributing:Hide();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -7095,14 +7091,18 @@
 		<Scripts>
 			<OnLoad>
 				this:RegisterEvent("UI_ERROR_MESSAGE");
-				this:RegisterEvent("LOOT_SLOT_CLEARED");
 				this:RegisterForDrag("LeftButton");
 			</OnLoad>
+			<OnShow>
+				this:RegisterEvent("CHAT_MSG_LOOT");
+			</OnShow>
 			<OnEvent>
 				CEPGP_distribute_popup_OnEvent(event);
 			</OnEvent>
 			<OnHide>
+				this:UnregisterEvent("CHAT_MSG_LOOT");
 				CEPGP_distribute_popup_title:SetText("");
+				distPlayer = "";
 			</OnHide>
 		</Scripts>
 	</Frame>
