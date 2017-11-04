@@ -3294,6 +3294,7 @@
 							CEPGP_options_slot_WAIST:SetPoint("LEFT", CEPGP_options_slot_HEAD, "RIGHT", 90, 0);
 							CEPGP_options_slot_HOLDABLE:SetPoint("LEFT", CEPGP_options_slot_WAIST, "RIGHT", 105, 0);
 							CEPGP_options_standby_ep_offline_check:SetPoint("TOP", CEPGP_options_standby_ep_val, "BOTTOM", 30, 0);
+							CEPGP_options_standby_ep_rank_6:SetPoint("LEFT", CEPGP_options_standby_ep_rank_1, "RIGHT", 100, 0);
 						end
 					</OnLoad>
 					<OnDragStart>
@@ -8300,7 +8301,7 @@
 		</Scripts>
 	</Frame>
 	
-	<Frame name="CEPGP_traffic" toplevel="true" frameStrata="BACKGROUND" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+	<Frame name="CEPGP_traffic" toplevel="true" frameStrata="HIGH" enableMouse="true" parent="UIParent" hidden="true" movable="true">
 		<Size>
 			<AbsDimension x="800" y="480"/>
 		</Size>
