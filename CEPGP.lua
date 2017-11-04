@@ -658,12 +658,15 @@ function CEPGP_IncAddonMsg(message, sender)
 			local nv1, nv2, nv3 = CEPGP_strSplit(s2, ",");
 			local s5 = (nv1.."."..nv2.."."..nv3)
 			outMessage = "Your addon is out of date. Version " .. s5 .. " is now available for download at https://github.com/Alumian/CEPGP"
-			if v1 > v1 then
-				CEPGP_print(outMessage);
-			elseif nv1 == v1 and nv2 > v2 then
-				CEPGP_print(outMessage);
-			elseif nv1 == v1 and nv2 == v2 and nv3 > v3 then
-				CEPGP_print(outMessage);
+			if not VERSION_NOTIFIED then
+				VERSION_NOTIFIED = true;
+				if v1 > v1 then
+					CEPGP_print(outMessage);
+				elseif nv1 == v1 and nv2 > v2 then
+					CEPGP_print(outMessage);
+				elseif nv1 == v1 and nv2 == v2 and nv3 > v3 then
+					CEPGP_print(outMessage);
+				end
 			end
 		end
 	elseif string.find(message, "RaidAssistLoot") and sender ~= UnitName("player") then
