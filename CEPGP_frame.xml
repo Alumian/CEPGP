@@ -3289,6 +3289,12 @@
 				<Scripts>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
+						_, _, _, pfUIFrames = GetAddOnInfo("pfUI");
+						if pfUIFrames then
+							CEPGP_options_slot_WAIST:SetPoint("LEFT", CEPGP_options_slot_HEAD, "RIGHT", 90, 0);
+							CEPGP_options_slot_HOLDABLE:SetPoint("LEFT", CEPGP_options_slot_WAIST, "RIGHT", 105, 0);
+							CEPGP_options_standby_ep_offline_check:SetPoint("TOP", CEPGP_options_standby_ep_val, "BOTTOM", 30, 0);
+						end
 					</OnLoad>
 					<OnDragStart>
 						CEPGP_frame:StartMoving()
