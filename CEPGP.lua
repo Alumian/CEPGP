@@ -1494,9 +1494,6 @@ function CEPGP_distribute_popup_OnEvent(event)
 	end
 end
 
---[[getEPGP(Officer Note) - Working as intended
-	returns EP and GP
-	]]
 function getEPGP(offNote)
 	if not offNote or not checkEPGP then
 		return 0, BASEGP;
@@ -1782,7 +1779,6 @@ function SlashCmdList.ARG(msg, editbox)
 	end
 end
 
---[[cleanTable() - Working as intended
 	Wipes all frame texts and resets the headers when the mode is changed
 ]]--
 function cleanTable()
@@ -1808,7 +1804,6 @@ function cleanTable()
 	end
 end
 
---[[populateFrame(criteria, items) - In progress
 	Populates the frames based on what mode is set.
 ]]--
 function populateFrame(criteria, items, lootNum)
@@ -1936,7 +1931,6 @@ function populateFrame(criteria, items, lootNum)
 	end
 end
 
---[[distribute(link) - In progress
 	Calls for raid members to whisper for items
 ]]
 function distribute(link, x, slotNum)
@@ -2044,7 +2038,6 @@ function slotNameToId(name)
 	end
 end
 
---[[resetAll()
 	Reverts the EP and GP values of all guild members to 0 and 1 respectively.
 	Any new members with no EP or GP assigned will also be set to this default.
 	Note: A player's GP must NEVER fall below 1
@@ -2074,7 +2067,6 @@ function resetAll()
 	SendChatMessage("All EPGP standings have been cleared!", "GUILD", LANGUAGE);
 end
 
---[[addRaidEP(amount) - Working as intended
 	Adds 'amount' EP to the whole raid group
 	If a raid boss is killed, 'boss' should be parsed where name is the boss name
 ]]
@@ -2144,7 +2136,6 @@ function addRaidEP(amount, msg)
 	end
 end
 
---[[addGuildEP(amount) - Working as intended
 	Adds 'amount' EP to the whole guild
 ]]
 function addGuildEP(amount)
@@ -2238,7 +2229,6 @@ function addStandbyEP(player, amount, boss)
 	CEPGP_SendAddonMsg("STANDBYEP"..player..",You have been awarded "..amount.." standby EP for encounter " .. boss, "GUILD");
 end
 
---[[addGP(player, amount) - Working as intended
 	Adds 'amount' GP to 'player'
 	Note: Player must be part of the guild
 ]]
@@ -2289,7 +2279,6 @@ function addGP(player, amount, item, itemLink)
 	end
 end
 
---[[addEP(player, amount) - Working as intended
 	Adds 'amount' EP to 'player'
 	Note: Player must be part of the guild
 ]]
@@ -2334,7 +2323,6 @@ function addEP(player, amount)
 	end
 end
 
---[[EPDecay(amount) - Working as intended
 	Decays the EP of the entire guild by 'amount'%
 ]]
 function decay(amount)
@@ -2394,7 +2382,6 @@ function decay(amount)
 	
 end
 
---[[calcGP(link) - Working as intended
 	Calculates the GP of an item based on the item level, rarity and slot type of the item.
 	GP Formula sourced from: http://www.epgpweb.com/help/gearpoints
 	The formula has been altered to increase GP values by x10
@@ -2484,7 +2471,6 @@ function calcGP(link)
 	end
 end
 
---[[getVal(string) - Working as intended
 	Gets the value parsed when using chat commands
 	Serves the same purpose as string.split in JavaScript
 ]]
@@ -2502,7 +2488,6 @@ function getGuildInfo(name)
 	end
 end
 
---[[tContains(t, val, bool) - Working as intended
     Checks if table t contains value val. If bool == true then, it checks if table t has index val. Leave bool nil otherwise.
 ]]
 function tContains(t, val, bool)
@@ -2579,7 +2564,6 @@ function tSort(t, index)
 	return t2;
 end
 
---[[ntgetn(table) - Working as intended
 	table.getn clone that can handle tables which do not have numerical indexes.
 ]]
 function ntgetn(tbl)
@@ -2614,7 +2598,7 @@ function setCriteria(x, disp)
 		CEPGP_UpdateLootScrollBar();
 	end
 end
---[[CEPGP_print(string) - Working as intended
+
 	Faster way of writing DEFAULT_CHAT_FRAME:AddMessage(string)
 	I'm lazy. Sue me. Wait - Don't sue me.
 ]]
@@ -2640,9 +2624,6 @@ function CEPGP_strSplit(msgStr, c)
 	return unpack(table_str);
 end
 
-
---[[ isML(player) ]]--
---[[ Returns the index of the loot master in the raid group. 
 	 The main functionality of this method is it returns 0 if the local player is the loot master ]]--
 function isML()
 	local _, isML = GetLootMethod();
