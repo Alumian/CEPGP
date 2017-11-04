@@ -1,8 +1,9 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.9.0";
+VERSION = "1.9.1";
 BUILD = "release";
+VERSION_NOTIFIED = false;
 mode = "guild";
 recordholder = "";
 distPlayer = "";
@@ -1707,7 +1708,7 @@ function LootFrame_Update()
 			end
 		end
 		for i = 1, table.getn(items) do
-			if (items[i][3] == 4 or inOverride(item)) and (UnitInRaid("player") or debugMode) then
+			if (items[i][3] == 4 or inOverride(items[i][2])) and (UnitInRaid("player") or debugMode) then
 				CEPGP_frame:Show();
 				mode = "loot";
 				toggleFrame("CEPGP_loot");
@@ -2615,7 +2616,7 @@ end
 
 function inOverride(itemName)
 	for k, _ in pairs(OVERRIDE_INDEX) do
-		if string.gsub(string.lower(k), " ", "") == k then
+		if string.gsub(string.gsub(string.lower(itemName), " ", ""), ",", "") == string.gsub(string.gsub(string.lower(k), " ", ""), "'", "") then
 			return true;
 		end
 	end
