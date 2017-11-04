@@ -853,19 +853,19 @@ function CEPGP_SendAddonMsg(message, channel)
 end
 
 function CEPGP_UpdateLootScrollBar()
-    local y;
-    local yoffset;
-    local t;
-    local tSize;
-    local name;
+	local y;
+	local yoffset;
+	local t;
+	local tSize;
+	local name;
 	local class;
 	local rank;
 	local EP;
 	local GP;
 	local offNote;
 	local colour;
-    t = {};
-    tSize = table.getn(responses);
+	t = {};
+	tSize = table.getn(responses);
 	GuildRoster();
 	for x = 1, tSize do
 		name = responses[x]
@@ -985,18 +985,18 @@ function CEPGP_UpdateLootScrollBar()
 end
 
 function CEPGP_UpdateGuildScrollBar()
-    local x, y;
-    local yoffset;
-    local t;
-    local tSize;
-    local name;
+	local x, y;
+	local yoffset;
+	local t;
+	local tSize;
+	local name;
 	local class;
 	local rank;
 	local EP;
 	local GP;
 	local offNote;
 	local colour;
-    t = {};
+	t = {};
 	tSize = ntgetn(roster);
 	for x = 1, tSize do
 		name = indexToName(x);
@@ -1014,13 +1014,13 @@ function CEPGP_UpdateGuildScrollBar()
 		}
 	end
 	t = tSort(t, criteria)
-    FauxScrollFrame_Update(GuildScrollFrame, tSize, 18, 240);
-    for y = 1, 18, 1 do
-        yoffset = y + FauxScrollFrame_GetOffset(GuildScrollFrame);
-        if (yoffset <= tSize) then
-		    if not tContains(t, yoffset, true) then
-                getglobal("GuildButton" .. y):Hide();
-            else
+	FauxScrollFrame_Update(GuildScrollFrame, tSize, 18, 240);
+	for y = 1, 18, 1 do
+		yoffset = y + FauxScrollFrame_GetOffset(GuildScrollFrame);
+		if (yoffset <= tSize) then
+			if not tContains(t, yoffset, true) then
+				getglobal("GuildButton" .. y):Hide();
+			else
 				name = t[yoffset][1]
 				class = t[yoffset][2];
 				rank = t[yoffset][3];
@@ -1049,23 +1049,23 @@ function CEPGP_UpdateGuildScrollBar()
 		else
 			getglobal("GuildButton" .. y):Hide();
 		end
-    end
+	end
 end
 
 function CEPGP_UpdateRaidScrollBar()
-    local x, y;
-    local yoffset;
-    local t;
-    local tSize;
+	local x, y;
+	local yoffset;
+	local t;
+	local tSize;
 	local group;
-    local name;
+	local name;
 	local rank;
 	local EP;
 	local GP;
 	local offNote;
 	local colour;
 	t = {};
-    tSize = GetNumRaidMembers();
+	tSize = GetNumRaidMembers();
 	for x = 1, tSize do
 		name, _, group, _, class = GetRaidRosterInfo(x);
 		local a = getGuildInfo(name);
@@ -1095,13 +1095,13 @@ function CEPGP_UpdateRaidScrollBar()
 		}
 	end
 	t = tSort(t, criteria)
-    FauxScrollFrame_Update(RaidScrollFrame, tSize, 18, 240);
-    for y = 1, 18, 1 do
-        yoffset = y + FauxScrollFrame_GetOffset(RaidScrollFrame);
-        if (yoffset <= tSize) then
-            if not tContains(t, yoffset, true) then
-                getglobal("RaidButton" .. y):Hide();
-            else
+	FauxScrollFrame_Update(RaidScrollFrame, tSize, 18, 240);
+	for y = 1, 18, 1 do
+		yoffset = y + FauxScrollFrame_GetOffset(RaidScrollFrame);
+		if (yoffset <= tSize) then
+			if not tContains(t, yoffset, true) then
+				getglobal("RaidButton" .. y):Hide();
+			else
 				t2 = t[yoffset];
 				name = t2[1];
 				class = t2[2];
@@ -1129,10 +1129,10 @@ function CEPGP_UpdateRaidScrollBar()
 				getglobal("RaidButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
 				getglobal("RaidButton" .. y):Show();
 			end
-        else
-            getglobal("RaidButton" .. y):Hide();
-        end
-    end
+		else
+			getglobal("RaidButton" .. y):Hide();
+		end
+	end
 end
 
 function CEPGP_UpdateVersionScrollBar()
@@ -1779,8 +1779,6 @@ function SlashCmdList.ARG(msg, editbox)
 	end
 end
 
-	Wipes all frame texts and resets the headers when the mode is changed
-]]--
 function cleanTable()
 	local i = 1;
 	while _G[mode..'member_name'..i] ~= nil do
@@ -1804,8 +1802,6 @@ function cleanTable()
 	end
 end
 
-	Populates the frames based on what mode is set.
-]]--
 function populateFrame(criteria, items, lootNum)
 	local sorting = nil;
 	local subframe = nil;
@@ -1931,8 +1927,6 @@ function populateFrame(criteria, items, lootNum)
 	end
 end
 
-	Calls for raid members to whisper for items
-]]
 function distribute(link, x, slotNum)
 	itemsTable = {};
 	distItemLink = link;
@@ -2038,11 +2032,6 @@ function slotNameToId(name)
 	end
 end
 
-	Reverts the EP and GP values of all guild members to 0 and 1 respectively.
-	Any new members with no EP or GP assigned will also be set to this default.
-	Note: A player's GP must NEVER fall below 1
-	Function Status: Working as intended
-]]
 function resetAll()
 	if GetGuildRosterShowOffline() == nil then
 		SetGuildRosterShowOffline(true);
@@ -2067,9 +2056,6 @@ function resetAll()
 	SendChatMessage("All EPGP standings have been cleared!", "GUILD", LANGUAGE);
 end
 
-	Adds 'amount' EP to the whole raid group
-	If a raid boss is killed, 'boss' should be parsed where name is the boss name
-]]
 function addRaidEP(amount, msg)
 	amount = math.floor(amount);
 	if not GetGuildRosterShowOffline() then
@@ -2136,8 +2122,6 @@ function addRaidEP(amount, msg)
 	end
 end
 
-	Adds 'amount' EP to the whole guild
-]]
 function addGuildEP(amount)
 	if amount == nil then
 		CEPGP_print("Please enter a valid number", 1);
@@ -2229,9 +2213,6 @@ function addStandbyEP(player, amount, boss)
 	CEPGP_SendAddonMsg("STANDBYEP"..player..",You have been awarded "..amount.." standby EP for encounter " .. boss, "GUILD");
 end
 
-	Adds 'amount' GP to 'player'
-	Note: Player must be part of the guild
-]]
 function addGP(player, amount, item, itemLink)
 	if amount == nil then
 		CEPGP_print("Please enter a valid number", 1);
@@ -2279,9 +2260,6 @@ function addGP(player, amount, item, itemLink)
 	end
 end
 
-	Adds 'amount' EP to 'player'
-	Note: Player must be part of the guild
-]]
 function addEP(player, amount)
 	if amount == nil then
 		CEPGP_print("Please enter a valid number", 1);
@@ -2323,8 +2301,6 @@ function addEP(player, amount)
 	end
 end
 
-	Decays the EP of the entire guild by 'amount'%
-]]
 function decay(amount)
 	if amount == nil then
 		CEPGP_print("Please enter a valid number", 1);
@@ -2382,10 +2358,6 @@ function decay(amount)
 	
 end
 
-	Calculates the GP of an item based on the item level, rarity and slot type of the item.
-	GP Formula sourced from: http://www.epgpweb.com/help/gearpoints
-	The formula has been altered to increase GP values by x10
-]]
 function calcGP(link)
 	local name, _, rarity, level, _, itemType, _, slot = GetItemInfo(link);
 	name = string.gsub(string.gsub(string.lower(name), " ", ""), "'", "");
@@ -2471,9 +2443,6 @@ function calcGP(link)
 	end
 end
 
-	Gets the value parsed when using chat commands
-	Serves the same purpose as string.split in JavaScript
-]]
 function getVal(str)
 	local val = nil;
 	val = strsub(str, strfind(str, " ")+1, string.len(str));
@@ -2488,8 +2457,6 @@ function getGuildInfo(name)
 	end
 end
 
-    Checks if table t contains value val. If bool == true then, it checks if table t has index val. Leave bool nil otherwise.
-]]
 function tContains(t, val, bool)
 	if bool == nil then
 		for _,value in pairs(t) do
@@ -2564,8 +2531,6 @@ function tSort(t, index)
 	return t2;
 end
 
-	table.getn clone that can handle tables which do not have numerical indexes.
-]]
 function ntgetn(tbl)
 	if tbl == nil then
 		return 0;
@@ -2599,9 +2564,6 @@ function setCriteria(x, disp)
 	end
 end
 
-	Faster way of writing DEFAULT_CHAT_FRAME:AddMessage(string)
-	I'm lazy. Sue me. Wait - Don't sue me.
-]]
 function CEPGP_print(str, err)
 	if err == nil then
 		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFCEPGP: " .. tostring(str) .. "|r");
@@ -2624,7 +2586,6 @@ function CEPGP_strSplit(msgStr, c)
 	return unpack(table_str);
 end
 
-	 The main functionality of this method is it returns 0 if the local player is the loot master ]]--
 function isML()
 	local _, isML = GetLootMethod();
 	return isML;
