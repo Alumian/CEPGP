@@ -2,7 +2,7 @@
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
 VERSION = "1.9.1";
-BUILD = "alpha";
+BUILD = "release";
 VERSION_NOTIFIED = false;
 mode = "guild";
 recordholder = "";
@@ -403,81 +403,87 @@ function CEPGP_OnEvent()
 							kills = kills + 1;
 							if kills == 3 then
 								kills = 0;
-								addRaidEP(EP, "The Bug Trio have been slain! The raid has been awarded " .. EP .. " EP");
+								addRaidEP(EP, "The Bug Trio have been slain! The raid has been awarded " .. EP .. " EP", "The Bug Trio");
 								if STANDBYEP then
-								for k, v in pairs(roster) do
-									if not tContains(raidRoster, k, true) then
-										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
-										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
-											for i = 1, table.getn(STANDBYRANKS) do
-												if STANDBYRANKS[i][1] == rank then
-													if STANDBYRANKS[i][2] == true then
-														addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Bug Trio");
+									TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Bug Trio"};
+									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Bug Trio");
+									CEPGP_UpdateTrafficScrollBar();
+									for k, v in pairs(roster) do
+										if not tContains(raidRoster, k, true) then
+											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+												for i = 1, table.getn(STANDBYRANKS) do
+													if STANDBYRANKS[i][1] == rank then
+														if STANDBYRANKS[i][2] == true then
+															addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Bug Trio");
+														end
 													end
 												end
 											end
-											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
-											CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 										end
 									end
 								end
 							end
-						end
 						elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
 							kills = kills + 1;
 							if kills == 2 then
 								kills = 0;
-								addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP");
+								addRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP", "The Twin Emperors");
 								if STANDBYEP then
-								for k, v in pairs(roster) do
-									if not tContains(raidRoster, k, true) then
-										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
-										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
-											for i = 1, table.getn(STANDBYRANKS) do
-												if STANDBYRANKS[i][1] == rank then
-													if STANDBYRANKS[i][2] == true then
-														addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Twin Emperors");
+									TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Twin Emperors"};
+									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Twin Emperors");
+									CEPGP_UpdateTrafficScrollBar();
+									for k, v in pairs(roster) do
+										if not tContains(raidRoster, k, true) then
+											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+												for i = 1, table.getn(STANDBYRANKS) do
+													if STANDBYRANKS[i][1] == rank then
+														if STANDBYRANKS[i][2] == true then
+															addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Twin Emperors");
+														end
 													end
 												end
 											end
-											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
-											CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 										end
 									end
 								end
 							end
-						end
 						elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
 							kills = kills + 1;
 							if kills == 4 then
 								kills = 0;
-								addRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP");
+								addRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP", "The Four Horsemen");
 								if STANDBYEP then
-								for k, v in pairs(roster) do
-									if not tContains(raidRoster, k, true) then
-										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
-										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
-											for i = 1, table.getn(STANDBYRANKS) do
-												if STANDBYRANKS[i][1] == rank then
-													if STANDBYRANKS[i][2] == true then
-														addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Four Horsemen");
+									TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Four Horsemen"};
+									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Four Horsemen");
+									CEPGP_UpdateTrafficScrollBar();
+									for k, v in pairs(roster) do
+										if not tContains(raidRoster, k, true) then
+											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
+											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+												for i = 1, table.getn(STANDBYRANKS) do
+													if STANDBYRANKS[i][1] == rank then
+														if STANDBYRANKS[i][2] == true then
+															addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Four Horsemen");
+														end
 													end
 												end
 											end
-											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
-											CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 										end
 									end
 								end
 							end
-						end
 						elseif name == "High Priest Thekal" then
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
 							if THEKAL_PARAMS["THEKAL_DEAD"] then
-								addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
+								addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid", "High Priest Thekal");
 								if STANDBYEP then
+									TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - High Priest Thekal"};
+									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - High Priest Thekal");
+									CEPGP_UpdateTrafficScrollBar();
 									for k, v in pairs(roster) do
 										if not tContains(raidRoster, k, true) then
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
@@ -489,8 +495,6 @@ function CEPGP_OnEvent()
 														end
 													end
 												end
-												TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
-												CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 											end
 										end
 									end
@@ -499,8 +503,11 @@ function CEPGP_OnEvent()
 								THEKAL_PARAMS["THEKAL_DEAD"] = true;
 							end
 						elseif (name ~= "Majordomo Executus" and name ~= "Razorgore the Untamed") or (name == "Razorgore the Untamed" and RAZORGORE_EGG_COUNT == 30) then
-							addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid");
+							addRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid", name);
 							if STANDBYEP then
+								TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name};
+								CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name);
+								CEPGP_UpdateTrafficScrollBar();
 								for k, v in pairs(roster) do
 									if not tContains(raidRoster, k, true) then
 										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
@@ -512,8 +519,6 @@ function CEPGP_OnEvent()
 													end
 												end
 											end
-											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
-											CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 										end
 									end
 								end
@@ -527,8 +532,11 @@ function CEPGP_OnEvent()
 					kills = kills + 1;
 					if kills == 8 then
 						kills = 0;
-						addRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP");
+						addRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP", "Majordomo Executus");
 						if STANDBYEP then
+							TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - Majordomo Executus"};
+							CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - Majordomo Executus");
+							CEPGP_UpdateTrafficScrollBar();
 							for k, v in pairs(roster) do
 								if not tContains(raidRoster, k, true) then
 									local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(roster[k][1]);
@@ -539,9 +547,7 @@ function CEPGP_OnEvent()
 													addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
 												end
 											end
-										end
-										TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
-										CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
+										end										
 									end
 								end
 							end
@@ -2127,7 +2133,7 @@ function resetAll()
 	SendChatMessage("All EPGP standings have been cleared!", "GUILD", LANGUAGE);
 end
 
-function addRaidEP(amount, msg)
+function addRaidEP(amount, msg, encounter)
 	amount = math.floor(amount);
 	if not GetGuildRosterShowOffline() then
 		SetGuildRosterShowOffline(true);
@@ -2182,17 +2188,18 @@ function addRaidEP(amount, msg)
 			end
 		end
 	end
-	TRAFFIC[ntgetn(TRAFFIC)+1] = {"Raid", "Add Raid EP +" .. amount};
-	CEPGP_ShareTraffic("Raid", "Add Raid EP +" .. amount);
-	CEPGP_UpdateTrafficScrollBar();
 	if msg then
 		CEPGP_SendAddonMsg("update");
+		TRAFFIC[ntgetn(TRAFFIC)+1] = {"Raid", "Add Raid EP +" .. amount .. " - " .. encounter};
+		CEPGP_ShareTraffic("Raid", "Add Raid EP +" .. amount .. " - " .. encounter);
 		SendChatMessage(msg, "RAID", LANGUAGE);
 	else
 		CEPGP_SendAddonMsg("update");
 		TRAFFIC[ntgetn(TRAFFIC)+1] = {"Raid", "Add Raid EP +" .. amount};
+		CEPGP_ShareTraffic("Raid", "Add Raid EP +" .. amount);
 		SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, LANGUAGE);
 	end
+	CEPGP_UpdateTrafficScrollBar();
 end
 
 function addGuildEP(amount)
