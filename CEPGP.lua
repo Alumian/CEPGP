@@ -2,7 +2,7 @@
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
 VERSION = "1.9.1";
-BUILD = "release";
+BUILD = "alpha";
 VERSION_NOTIFIED = false;
 mode = "guild";
 recordholder = "";
@@ -417,6 +417,7 @@ function CEPGP_OnEvent()
 												end
 											end
 											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
+											CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 										end
 									end
 								end
@@ -441,6 +442,7 @@ function CEPGP_OnEvent()
 												end
 											end
 											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
+											CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 										end
 									end
 								end
@@ -465,6 +467,7 @@ function CEPGP_OnEvent()
 												end
 											end
 											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
+											CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 										end
 									end
 								end
@@ -487,6 +490,7 @@ function CEPGP_OnEvent()
 													end
 												end
 												TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
+												CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 											end
 										end
 									end
@@ -509,6 +513,7 @@ function CEPGP_OnEvent()
 												end
 											end
 											TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
+											CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 										end
 									end
 								end
@@ -536,6 +541,7 @@ function CEPGP_OnEvent()
 											end
 										end
 										TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100)};
+										CEPGP_ShareTraffic("Guild", "Add STANDBY EP +" .. EP*(STANDBYPERCENT/100));
 									end
 								end
 							end
@@ -845,6 +851,27 @@ function CEPGP_IncAddonMsg(message, sender)
 				getglobal("CEPGP_options_" .. k .. "_weight"):SetText(tonumber(SLOTWEIGHTS[k]));
 			end
 		end
+	
+	elseif string.find(message, "CEPGP_TRAFFIC") then
+		if sender == UnitName("player") then return; end
+		local player = string.sub(message, 21, string.find(message, "ACTION")-1);
+		local action = string.sub(message, string.find(message, "ACTION")+6, string.find(message, "EPB")-1);
+		local EPB = string.sub(message, string.find(message, "EPB")+3, string.find(message, "EPA")-1);
+		local EPA = string.sub(message, string.find(message, "EPA")+3, string.find(message, "GPB")-1);
+		local GPB = string.sub(message, string.find(message, "GPB")+3, string.find(message, "GPA")-1);
+		local GPA = string.sub(message, string.find(message, "GPA")+3, string.find(message, "ITEMID")-1);
+		local itemID = string.sub(message, string.find(message, "ITEMID")+6);
+		local itemLink = getItemLink(itemID);
+		TRAFFIC[ntgetn(TRAFFIC)+1] = {
+			[1] = player,
+			[2] = action,
+			[3] = EPB,
+			[4] = EPA,
+			[5] = GPB,
+			[6] = GPA,
+			[7] = itemLink
+		};
+		CEPGP_UpdateTrafficScrollBar();
 	end
 end
 
@@ -853,6 +880,28 @@ function CEPGP_SendAddonMsg(message, channel)
 		SendAddonMessage("CEPGP", message, string.upper(channel));
 	else
 		SendAddonMessage("CEPGP", message, "RAID");
+	end
+end
+
+function CEPGP_ShareTraffic(player, action, EPB, EPA, GPB, GPA, itemID)
+	if not player or not action then return; end
+	if not itemID then
+		itemID = "";
+	end
+	if not EPB then
+		EPB = "";
+	end
+	if not EPA then
+		EPA = "";
+	end
+	if not GPB then
+		GPB = "";
+	end
+	if not GPA then
+		GPA = "";
+	end
+	if CanEditOfficerNote() then
+		CEPGP_SendAddonMsg("CEPGP_TRAFFIC-PLAYER" .. player .. "ACTION" .. action .. "EPB" .. EPB .. "EPA" .. EPA .. "GPB" .. GPB .. "GPA" .. GPA .. "ITEMID" .. itemID, "GUILD");
 	end
 end
 
@@ -2001,6 +2050,23 @@ function getItemId(iString)
 	return string.sub(itemString, 1, string.find(itemString, ":")-1);
 end
 
+function getItemLink(id)
+	local name, _, rarity = GetItemInfo(id);
+	if rarity == 0 then -- Poor
+		return "\124cff9d9d9d\124Hitem:" .. id .. "::::::::110:::::\124h[" .. name .. "]\124h\124r";
+	elseif rarity == 1 then -- Common
+		return "\124cffffffff\124Hitem:" .. id .. "::::::::110:::::\124h[" .. name .. "]\124h\124r";
+	elseif rarity == 2 then -- Uncommon
+		return "\124cff1eff00\124Hitem:" .. id .. "::::::::110:::::\124h[" .. name .. "]\124h\124r";
+	elseif rarity == 3 then -- Rare
+		return "\124cff0070dd\124Hitem:" .. id .. "::::::::110:::::\124h[" .. name .. "]\124h\124r";
+	elseif rarity == 4 then -- Epic
+		return "\124cffa335ee\124Hitem:" .. id .. "::::::::110:::::\124h[" .. name .. "]\124h\124r";
+	elseif rarity == 5 then -- Legendary
+		return "\124cffff8000\124Hitem:" .. id .. "::::::::110:::::\124h[" .. name .. "]\124h\124r";
+	end
+end
+
 function slotNameToId(name)
 	if name == nil then
 		return nil
@@ -2056,6 +2122,7 @@ function resetAll()
 	end
 	CEPGP_SendAddonMsg("update");
 	TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Cleared EPGP standings"};
+	CEPGP_ShareTraffic("Guild", "Cleared EPGP standings");
 	CEPGP_UpdateTrafficScrollBar();
 	SendChatMessage("All EPGP standings have been cleared!", "GUILD", LANGUAGE);
 end
@@ -2115,6 +2182,8 @@ function addRaidEP(amount, msg)
 			end
 		end
 	end
+	TRAFFIC[ntgetn(TRAFFIC)+1] = {"Raid", "Add Raid EP +" .. amount};
+	CEPGP_ShareTraffic("Raid", "Add Raid EP +" .. amount);
 	CEPGP_UpdateTrafficScrollBar();
 	if msg then
 		CEPGP_SendAddonMsg("update");
@@ -2186,6 +2255,7 @@ function addGuildEP(amount)
 	end
 	CEPGP_SendAddonMsg("update");
 	TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Add Guild EP +" .. amount};
+	CEPGP_ShareTraffic("Guild", "Add Guild EP +" .. amount);
 	CEPGP_UpdateTrafficScrollBar();
 	SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, LANGUAGE);
 end
@@ -2244,6 +2314,7 @@ function addGP(player, amount, item, itemLink)
 		if itemLink then
 			TRAFFIC[ntgetn(TRAFFIC)][7] = itemLink;
 		end
+		CEPGP_ShareTraffic(player, "Add GP +" .. amount, EP, EP, GP, GP + amount, getItemId(getItemString(itemLink)));
 		CEPGP_UpdateTrafficScrollBar();
 		GP = tonumber(GP) + amount;
 		EP = tonumber(EP);
@@ -2288,6 +2359,7 @@ function addEP(player, amount)
 			[5] = GP,
 			[6] = GP
 		};
+		CEPGP_ShareTraffic(player, "Add EP +" .. amount, EP, EP + amount, GP, GP);
 		CEPGP_UpdateTrafficScrollBar();
 		EP = tonumber(EP) + amount;
 		GP = tonumber(GP);
@@ -2357,6 +2429,7 @@ function decay(amount)
 	end
 	CEPGP_SendAddonMsg("update");
 	TRAFFIC[ntgetn(TRAFFIC)+1] = {"Guild", "Decay EPGP -" .. amount .. "%"}; 
+	CEPGP_ShareTraffic("Guild", "Decay EPGP -" .. amount .. "%");
 	CEPGP_UpdateTrafficScrollBar();
 	SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, LANGUAGE, CHANNEL);
 	
