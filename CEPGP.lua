@@ -1608,16 +1608,13 @@ function LootFrame_OnEvent(event)
 			if ( allButtonsHidden and LootFrameDownButton:IsVisible() ) then
 				LootFrame_PageDown();
 			end
-			return;
 		end
 		if ( event == "LOOT_CLOSED" ) then
 			StaticPopup_Hide("LOOT_BIND");
 			HideUIPanel(LootFrame);
-			return;
 		end
 		if ( event == "OPEN_MASTER_LOOT_LIST" ) then
 			ToggleDropDownMenu(1, nil, GroupLootDropDown, LootFrame.selectedLootButton, 0, 0);
-			return;
 		end
 		if ( event == "UPDATE_MASTER_LOOT_LIST" ) then
 			UIDropDownMenu_Refresh(GroupLootDropDown);
@@ -1631,6 +1628,7 @@ function LootFrame_OnEvent(event)
 			if isML() == 0 then
 				CEPGP_SendAddonMsg("RaidAssistLootClosed");
 			end
+			HideUIPanel(CEPGP_frame);
 		end
 		HideUIPanel(CEPGP_distribute_popup);
 		HideUIPanel(CEPGP_loot_distributing);
