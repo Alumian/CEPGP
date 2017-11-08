@@ -53,7 +53,6 @@ pfUI = nil; --nil or 1
 
 --[[ Stock function backups ]]--
 LFUpdate = LootFrame_Update;
-LFEvent = LootFrame_OnEvent;
 CFEvent = ChatFrame_OnEvent;
 
 function CEPGP_OnEvent()
@@ -1572,7 +1571,57 @@ end
 
 function LootFrame_OnEvent(event)
 	if not pfUI then
-		LFEvent(event);
+		if ( event == "LOOT_OPENED" ) then
+		LootFrame.page = 1;
+		ShowUIPanel(LootFrame);
+		if ( not LootFrame:IsVisible() ) then
+			CloseLoot(1);	-- The parameter tells code that we were unable to open the UI
+		end
+		return;
+		end
+		if ( event == "LOOT_SLOT_CLEARED" ) then
+			if ( not LootFrame:IsVisible() ) then
+				return;
+			end
+
+			local numLootToShow = LOOTFRAME_NUMBUTTONS;
+			if ( LootFrame.numLootItems > LOOTFRAME_NUMBUTTONS ) then
+				numLootToShow = numLootToShow - 1;
+			end
+			local slot = arg1 - ((LootFrame.page - 1) * numLootToShow);
+			if ( (slot > 0) and (slot < (numLootToShow + 1)) ) then
+				local button = getglobal("LootButton"..slot);
+				if ( button ) then
+					button:Hide();
+				end
+			end
+			-- try to move second page of loot items to the first page
+			local button;
+			local allButtonsHidden = 1;
+
+			for index = 1, LOOTFRAME_NUMBUTTONS do
+				button = getglobal("LootButton"..index);
+				if ( button:IsVisible() ) then
+					allButtonsHidden = nil;
+				end
+			end
+			if ( allButtonsHidden and LootFrameDownButton:IsVisible() ) then
+				LootFrame_PageDown();
+			end
+			return;
+		end
+		if ( event == "LOOT_CLOSED" ) then
+			StaticPopup_Hide("LOOT_BIND");
+			HideUIPanel(LootFrame);
+			return;
+		end
+		if ( event == "OPEN_MASTER_LOOT_LIST" ) then
+			ToggleDropDownMenu(1, nil, GroupLootDropDown, LootFrame.selectedLootButton, 0, 0);
+			return;
+		end
+		if ( event == "UPDATE_MASTER_LOOT_LIST" ) then
+			UIDropDownMenu_Refresh(GroupLootDropDown);
+		end
 	end
 	if event == "LOOT_CLOSED" then
 		distributing = false;
