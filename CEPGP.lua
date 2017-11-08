@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.9.1";
+VERSION = "1.9.2";
 BUILD = "release";
 VERSION_NOTIFIED = false;
 mode = "guild";
@@ -397,7 +397,7 @@ function CEPGP_OnEvent()
 			if (((GetLootMethod() == "master" and isML() == 0) or (GetLootMethod() == "group" and isLead == 2)) and ntgetn(roster) > 0) or debugMode then
 				if tContains(bossNameIndex, string.lower(name), true) then --[[ If the npc is in the boss name index ]]--
 					EP = EPVALS[string.lower(name)]
-					if AUTOEP[string.lower(name)] then
+					if AUTOEP[string.lower(name)] and EP > 0 then
 						if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
 							kills = kills + 1;

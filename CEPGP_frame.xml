@@ -6733,6 +6733,12 @@
 				this:RegisterEvent("RAID_ROSTER_UPDATE");
 				this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
 				this:RegisterEvent("CHAT_MSG_ADDON");
+				_, _, _, pfUIFrames = GetAddOnInfo("pfUI");
+				if pfUIFrames then
+					CEPGP_options_auto_1:SetPoint("TOPLEFT", CEPGP_options_page_2, "TOPLEFT", 40, -20);
+					CEPGP_options_auto_2:SetPoint("LEFT", CEPGP_options_auto_1, "RIGHT", 32.5, 0);
+					CEPGP_options_auto_3:SetPoint("LEFT", CEPGP_options_auto_2, "RIGHT", 60, 0);
+				end
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();
@@ -8291,6 +8297,11 @@
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
 				CEPGP_override_desc:SetText("This window allows your to permanently\n(or until the log is removed), override the gp\nvalue of an item to what ever you specify");
+				_, _, _, pfUIFrames = GetAddOnInfo("pfUI");
+				if pfUIFrames then
+					CEPGP_override_item_name:SetPoint("TOP", CEPGP_override_item_name_string, "BOTTOM", 10, 0);
+					CEPGP_override_item_gp:SetPoint("TOP", CEPGP_override_item_gp_string, "BOTTOM", 0, 0);
+				end	
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();
