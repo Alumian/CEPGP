@@ -6742,10 +6742,10 @@
 			</OnLoad>
 			<OnDragStart>
 				this:StartMoving();
-            </OnDragStart>
-            <OnDragStop>
+			</OnDragStart>
+			<OnDragStop>
 				this:StopMovingOrSizing();
-            </OnDragStop>
+			</OnDragStop>
 			<OnEvent>
 				CEPGP_OnEvent();
 			</OnEvent>

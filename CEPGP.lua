@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-VERSION = "1.9.2";
+VERSION = "1.9.3";
 BUILD = "release";
 VERSION_NOTIFIED = false;
 mode = "guild";
@@ -50,12 +50,10 @@ OVERRIDE_INDEX = {};
 TRAFFIC = {};
 pfUI = nil; --nil or 1
 
-
---[[ Stock function backups ]]--
-LFUpdate = LootFrame_Update;
-CFEvent = ChatFrame_OnEvent;
-
 function CEPGP_OnEvent()
+
+	--[[ INITIALISATION  ]]--
+	
 	if event == "ADDON_LOADED" and arg1 == "CEPGP" then --arg1 = addon name
 		_, _, _, pfUI = GetAddOnInfo("pfUI");
 		getglobal("CEPGP_version_number"):SetText("Running Version: " .. VERSION);
@@ -131,9 +129,6 @@ function CEPGP_OnEvent()
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. VERSION .. " Loaded|r");
 		DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
 		
-	elseif (event == "LOOT_OPENED" and not pfUI) or ((event == "LOOT_OPENED" or event == "LOOT_CLOSED" or event == "LOOT_SLOT_CLEARED") and pfUI) then
-		LootFrame_OnEvent(event);
-	
 	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and distributing then --arg1 = message, arg2 = player
 		local duplicate = false;
 		for i = 1, table.getn(responses) do
@@ -572,7 +567,74 @@ function CEPGP_OnEvent()
 		if (arg1 == "CEPGP")then
 			CEPGP_IncAddonMsg(arg2, arg4);
 		end
-	end
+		
+		
+		--[[ LOOTING ]]--
+		
+		
+	elseif event == "LOOT_CLOSED" then
+		distributing = false;
+		distItemLink = nil;
+		if mode == "loot" then
+			cleanTable();
+			if isML() == 0 then
+				CEPGP_SendAddonMsg("RaidAssistLootClosed");
+			end
+			HideUIPanel(CEPGP_frame);
+		end
+		HideUIPanel(CEPGP_distribute_popup);
+		HideUIPanel(CEPGP_loot_distributing);
+		--HideUIPanel(CEPGP_button_loot_dist);
+		HideUIPanel(CEPGP_loot);
+		HideUIPanel(CEPGP_distribute);
+		HideUIPanel(CEPGP_loot_distributing);
+		if UnitInRaid("player") then
+			toggleFrame(CEPGP_raid);
+		elseif GetGuildRosterInfo(1) then
+			toggleFrame(CEPGP_guild);
+		else
+			HideUIPanel(CEPGP_frame);
+			if isML() == 0 then
+				CEPGP_loot_distributing:Hide();
+			end
+		end
+		
+		if CEPGP_distribute:IsVisible() == 1 then
+			HideUIPanel(CEPGP_distribute);
+			ShowUIPanel(CEPGP_loot);
+			responses = {};
+			CEPGP_UpdateLootScrollBar();
+		end
+	elseif event == "LOOT_OPENED" then --and (UnitInRaid("player") or debugMode) then
+		CEPGP_LootFrame_Update();
+		ShowUIPanel(CEPGP_button_loot_dist);
+	
+	elseif event == "LOOT_SLOT_CLEARED" then
+		if isML() == 0 then
+			CEPGP_SendAddonMsg("RaidAssistLootClosed");
+		end
+		if distributing and arg1 == lootSlot then
+			if distPlayer ~= "" then
+				distributing = false;
+				if distGP then
+					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
+					addGP(distPlayer, CEPGP_distribute_GP_value:GetText(), true, distItemLink);
+				else
+					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", CHANNEL, LANGUAGE);
+				end
+				CEPGP_distribute_popup:Hide();
+				CEPGP_distribute:Hide();
+				CEPGP_loot:Show();
+			else
+				distributing = false;
+				SendChatMessage(getglobal("CEPGP_distribute_item_name"):GetText() .. " has been distributed without EPGP", CHANNEL, LANGUAGE);
+				CEPGP_distribute_popup:Hide();
+				CEPGP_distribute:Hide();
+				CEPGP_loot:Show();
+			end
+		end
+		CEPGP_LootFrame_Update();
+		end	
 end
 
 function CEPGP_IncAddonMsg(message, sender)
@@ -1565,127 +1627,6 @@ function getEPGP(offNote)
 	return EP, GP;
 end
 
-function ChatFrame_OnEvent(event, msg)
-	CFEvent(event);
-end
-
-function LootFrame_OnEvent(event)
-	if not pfUI then
-		if ( event == "LOOT_OPENED" ) then
-		LootFrame.page = 1;
-		ShowUIPanel(LootFrame);
-		if ( not LootFrame:IsVisible() ) then
-			CloseLoot(1);	-- The parameter tells code that we were unable to open the UI
-		end
-		return;
-		end
-		if ( event == "LOOT_SLOT_CLEARED" ) then
-			if ( not LootFrame:IsVisible() ) then
-				return;
-			end
-
-			local numLootToShow = LOOTFRAME_NUMBUTTONS;
-			if ( LootFrame.numLootItems > LOOTFRAME_NUMBUTTONS ) then
-				numLootToShow = numLootToShow - 1;
-			end
-			local slot = arg1 - ((LootFrame.page - 1) * numLootToShow);
-			if ( (slot > 0) and (slot < (numLootToShow + 1)) ) then
-				local button = getglobal("LootButton"..slot);
-				if ( button ) then
-					button:Hide();
-				end
-			end
-			-- try to move second page of loot items to the first page
-			local button;
-			local allButtonsHidden = 1;
-
-			for index = 1, LOOTFRAME_NUMBUTTONS do
-				button = getglobal("LootButton"..index);
-				if ( button:IsVisible() ) then
-					allButtonsHidden = nil;
-				end
-			end
-			if ( allButtonsHidden and LootFrameDownButton:IsVisible() ) then
-				LootFrame_PageDown();
-			end
-		end
-		if ( event == "LOOT_CLOSED" ) then
-			StaticPopup_Hide("LOOT_BIND");
-			HideUIPanel(LootFrame);
-		end
-		if ( event == "OPEN_MASTER_LOOT_LIST" ) then
-			ToggleDropDownMenu(1, nil, GroupLootDropDown, LootFrame.selectedLootButton, 0, 0);
-		end
-		if ( event == "UPDATE_MASTER_LOOT_LIST" ) then
-			UIDropDownMenu_Refresh(GroupLootDropDown);
-		end
-	end
-	if event == "LOOT_CLOSED" then
-		distributing = false;
-		distItemLink = nil;
-		if mode == "loot" then
-			cleanTable();
-			if isML() == 0 then
-				CEPGP_SendAddonMsg("RaidAssistLootClosed");
-			end
-			HideUIPanel(CEPGP_frame);
-		end
-		HideUIPanel(CEPGP_distribute_popup);
-		HideUIPanel(CEPGP_loot_distributing);
-		--HideUIPanel(CEPGP_button_loot_dist);
-		HideUIPanel(CEPGP_loot);
-		HideUIPanel(CEPGP_distribute);
-		HideUIPanel(CEPGP_loot_distributing);
-		if UnitInRaid("player") then
-			toggleFrame(CEPGP_raid);
-		elseif GetGuildRosterInfo(1) then
-			toggleFrame(CEPGP_guild);
-		else
-			HideUIPanel(CEPGP_frame);
-			if isML() == 0 then
-				CEPGP_loot_distributing:Hide();
-			end
-		end
-		
-		if CEPGP_distribute:IsVisible() == 1 then
-			HideUIPanel(CEPGP_distribute);
-			ShowUIPanel(CEPGP_loot);
-			responses = {};
-			CEPGP_UpdateLootScrollBar();
-		end
-		
-	elseif event == "LOOT_OPENED" and (UnitInRaid("player") or debugMode) then
-		LootFrame_Update();
-		ShowUIPanel(CEPGP_button_loot_dist);
-	
-	elseif event == "LOOT_SLOT_CLEARED" then
-		if isML() == 0 then
-			CEPGP_SendAddonMsg("RaidAssistLootClosed");
-		end
-		if distributing and arg1 == lootSlot then
-			if distPlayer ~= "" then
-				distributing = false;
-				if distGP then
-					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for " .. CEPGP_distribute_GP_value:GetText() .. " GP", CHANNEL, LANGUAGE);
-					addGP(distPlayer, CEPGP_distribute_GP_value:GetText(), true, distItemLink);
-				else
-					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. distPlayer .. " for free", CHANNEL, LANGUAGE);
-				end
-				CEPGP_distribute_popup:Hide();
-				CEPGP_distribute:Hide();
-				CEPGP_loot:Show();
-			else
-				distributing = false;
-				SendChatMessage(getglobal("CEPGP_distribute_item_name"):GetText() .. " has been distributed without EPGP", CHANNEL, LANGUAGE);
-				CEPGP_distribute_popup:Hide();
-				CEPGP_distribute:Hide();
-				CEPGP_loot:Show();
-			end
-		end
-		LootFrame_Update();
-	end
-end
-
 function RaidAssistLootClosed()
 	if IsRaidOfficer() and isML() == 1 then
 		HideUIPanel(CEPGP_distribute_popup);
@@ -1745,7 +1686,7 @@ function RaidAssistLootDist(link, gp)
 	end
 end
 
-function LootFrame_Update()
+function CEPGP_LootFrame_Update()
 	if pfUI then
 		local items = {};
 		local numLootItems = GetNumLootItems();
@@ -1780,7 +1721,6 @@ function LootFrame_Update()
 		end
 		populateFrame(_, items, numSlots);
 	else
-		LFUpdate();
 		local numLootItems = LootFrame.numLootItems;
 		--Logic to determine how many items to show per page
 		local numLootToShow = LOOTFRAME_NUMBUTTONS;
