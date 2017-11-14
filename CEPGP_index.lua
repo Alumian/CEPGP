@@ -268,7 +268,7 @@ itemsIndex =
 	["judgementbreastplate"]=76,
 	["judgementcrown"]=76,
 	["judgementgauntlets"]=76,
-	["judgementlegguards"]=76,
+	["judgementplates"]=76,
 	["judgementsabatons"]=76,
 	["judgementspaulders"]=76,
 	
