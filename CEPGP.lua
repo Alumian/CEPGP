@@ -2685,8 +2685,9 @@ function CEPGP_stackTrace(msg)
 end
 
 function inOverride(itemName)
+	itemName = string.gsub(string.gsub(string.gsub(string.lower(itemName), " ", ""), "'", ""), ",", "");
 	for k, _ in pairs(OVERRIDE_INDEX) do
-		if string.gsub(string.gsub(string.lower(itemName), " ", ""), ",", "") == string.gsub(string.gsub(string.lower(k), " ", ""), "'", "") then
+		if itemName == string.gsub(string.gsub(string.gsub(string.lower(k), " ", ""), "'", ""), ",", "") then
 			return true;
 		end
 	end
