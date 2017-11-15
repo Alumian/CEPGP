@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-CEPGP_VERSION = "1.9.3";
+CEPGP_VERSION = "1.9.4";
 SLASH_CEPGP1 = "/cepgp";
 CEPGP_VERSION_NOTIFIED = false;
 CEPGP_mode = "guild";
@@ -1411,7 +1411,7 @@ end
 --[[ UTILITY FUNCTIONS ]]--
 
 function CEPGP_initialise()
-	_, _, _, CEPGP_pfUI = GetAddOnInfo("CEPGP_pfUI");
+	_, _, _, CEPGP_pfUI = GetAddOnInfo("pfUI");
 	getglobal("CEPGP_version_number"):SetText("Running Version: " .. CEPGP_VERSION);
 	local ver2 = string.gsub(CEPGP_VERSION, "%.", ",");
 	if CHANNEL == nil then

@@ -3289,7 +3289,7 @@
 				<Scripts>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
-						_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("CEPGP_pfUI");
+						_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("pfUI");
 						if CEPGP_pfUIFrames then
 							CEPGP_options_slot_WAIST:SetPoint("LEFT", CEPGP_options_slot_HEAD, "RIGHT", 90, 0);
 							CEPGP_options_slot_HOLDABLE:SetPoint("LEFT", CEPGP_options_slot_WAIST, "RIGHT", 105, 0);
@@ -6733,7 +6733,7 @@
 				this:RegisterEvent("RAID_ROSTER_UPDATE");
 				this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
 				this:RegisterEvent("CHAT_MSG_ADDON");
-				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("CEPGP_pfUI");
+				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("pfUI");
 				if CEPGP_pfUIFrames then
 					CEPGP_options_auto_1:SetPoint("TOPLEFT", CEPGP_options_page_2, "TOPLEFT", 40, -20);
 					CEPGP_options_auto_2:SetPoint("LEFT", CEPGP_options_auto_1, "RIGHT", 32.5, 0);
@@ -8297,7 +8297,7 @@
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
 				CEPGP_CEPGP_override_desc:SetText("This window allows your to permanently\n(or until the log is removed), CEPGP_override the gp\nvalue of an item to what ever you specify");
-				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("CEPGP_pfUI");
+				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("pfUI");
 				if CEPGP_pfUIFrames then
 					CEPGP_CEPGP_override_item_name:SetPoint("TOP", CEPGP_CEPGP_override_item_name_string, "BOTTOM", 10, 0);
 					CEPGP_CEPGP_override_item_gp:SetPoint("TOP", CEPGP_CEPGP_override_item_gp_string, "BOTTOM", 0, 0);
@@ -8623,10 +8623,10 @@
 		<Scripts>
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
-				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("CEPGP_pfUI");
+				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("pfUI");
 				if CEPGP_pfUIFrames then
 					for i = 1, 18 do
-						getglobal("trafficButton" .. i .. "Action"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 145, 0);
+						getglobal("trafficButton" .. i .. "Action"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 170, 0);
 						getglobal("trafficButton" .. i .. "EPBefore"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 500, 0);
 						getglobal("trafficButton" .. i .. "EPAfter"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 540, 0);
 						getglobal("trafficButton" .. i .. "GPBefore"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 600, 0);
