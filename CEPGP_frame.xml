@@ -102,7 +102,7 @@
 			</OnLoad>
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
-				if CEPGP_isML() == 0 or debugMode then
+				if CEPGP_isML() == 0 or CEPGP_debugMode then
 					CEPGP_ListButton_OnClick();
 				end
 			</OnClick>
@@ -483,7 +483,7 @@
 					<OnClick>
                         PlaySound("gsTitleOptionExit");
 						CEPGP_toggleFrame("CEPGP_guild");
-						mode = "guild";
+						CEPGP_mode = "guild";
 						CEPGP_populateFrame();
                     </OnClick>
                 </Scripts>
@@ -510,7 +510,7 @@
 						GuildRoster();
                         PlaySound("gsTitleOptionExit");
 						CEPGP_toggleFrame("CEPGP_options");
-						mode = "options";
+						CEPGP_mode = "options";
 						CEPGP_options_mod_edit:SetText(tostring(MOD));
 						CEPGP_options_coef_edit:SetText(tostring(COEF));
 						CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
@@ -577,14 +577,14 @@
 				</Anchors>
                 <Scripts>
 					<OnLoad>
-						if not UnitInRaid("player") or debugMode then
+						if not UnitInRaid("player") or CEPGP_debugMode then
 							this:Hide();
 						end
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
 						CEPGP_toggleFrame("CEPGP_raid");
-						mode = "raid";
+						CEPGP_mode = "raid";
 						CEPGP_populateFrame();
                     </OnClick>
                 </Scripts>
@@ -602,16 +602,16 @@
 				</Anchors>
                 <Scripts>
 					<OnLoad>
-						if not UnitInRaid("player") or debugMode then
+						if not UnitInRaid("player") or CEPGP_debugMode then
 							this:Hide();
 						end
 					</OnLoad>
 					<OnClick>
                         PlaySound("gsTitleOptionExit");
 						CEPGP_toggleFrame("CEPGP_loot");
-						mode = "loot";
+						CEPGP_mode = "loot";
 						CEPGP_cleanTable();
-						if LootFrame:IsVisible() == 1 or pfUI then
+						if LootFrame:IsVisible() == 1 or CEPGP_pfUI then
 							LootFrame_Update();
 						end
 					</OnClick>
@@ -635,7 +635,7 @@
                     </OnClick>
                 </Scripts>
             </Button>
-			<Button name="CEPGP_loot_distributing" inherits="GameMenuButtonTemplate" text="Distributing" hidden="true">
+			<Button name="CEPGP_loot_CEPGP_distributing" inherits="GameMenuButtonTemplate" text="Distributing" hidden="true">
 				<Size>
 					<AbsDimension x="100" y="22" />
 				</Size>
@@ -1094,7 +1094,7 @@
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="CEPGP_guild_mode" inherits="GameFontNormal" text="Current View: Guild">
+						<FontString name="CEPGP_guild_CEPGP_mode" inherits="GameFontNormal" text="Current View: Guild">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="CENTER" relativePoint="TOP" />
@@ -1127,7 +1127,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="CEPGP_raid_mode" inherits="GameFontNormal" text="Current View: Raid">
+						<FontString name="CEPGP_raid_CEPGP_mode" inherits="GameFontNormal" text="Current View: Raid">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="CENTER" relativePoint="TOP" />
@@ -1488,7 +1488,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="CEPGP_loot_mode" inherits="GameFontNormal" text="Current View: Loot Distribution">
+						<FontString name="CEPGP_loot_CEPGP_mode" inherits="GameFontNormal" text="Current View: Loot Distribution">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="CENTER" relativePoint="TOP" />
@@ -1559,7 +1559,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="CEPGP_distribute_mode" inherits="GameFontNormal" text="Distributing Item">
+						<FontString name="CEPGP_distribute_CEPGP_mode" inherits="GameFontNormal" text="Distributing Item">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="CENTER" relativePoint="TOP">
@@ -1940,7 +1940,7 @@
 				</Frames>
 				<Scripts>
 					<OnShow>
-						CEPGP_loot_distributing:Show();
+						CEPGP_loot_CEPGP_distributing:Show();
 					</OnShow>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
@@ -1966,7 +1966,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="CEPGP_options_mode" inherits="GameFontNormal" text="Current View: Options">
+						<FontString name="CEPGP_options_CEPGP_mode" inherits="GameFontNormal" text="Current View: Options">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="CENTER" relativePoint="TOP" />
@@ -2373,7 +2373,7 @@
 							</OnClick>
 						</Scripts>
 					</Button>
-					<Button name="CEPGP_button_options_override" inherits="GameMenuButtonTemplate" text="Override Settings">
+					<Button name="CEPGP_button_options_CEPGP_override" inherits="GameMenuButtonTemplate" text="Override Settings">
 						<Size>
 							<AbsDimension x="125" y="21" />
 						</Size>
@@ -2387,7 +2387,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
-								ShowUIPanel(CEPGP_override);
+								ShowUIPanel(CEPGP_CEPGP_override);
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -3232,7 +3232,7 @@
 											end
 										end
 										if name then
-											roster[name] = {
+											CEPGP_roster[name] = {
 											[1] = i,
 											[2] = class,
 											[3] = rank,
@@ -3289,8 +3289,8 @@
 				<Scripts>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
-						_, _, _, pfUIFrames = GetAddOnInfo("pfUI");
-						if pfUIFrames then
+						_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("CEPGP_pfUI");
+						if CEPGP_pfUIFrames then
 							CEPGP_options_slot_WAIST:SetPoint("LEFT", CEPGP_options_slot_HEAD, "RIGHT", 90, 0);
 							CEPGP_options_slot_HOLDABLE:SetPoint("LEFT", CEPGP_options_slot_WAIST, "RIGHT", 105, 0);
 							CEPGP_options_standby_ep_offline_check:SetPoint("TOP", CEPGP_options_standby_ep_val, "BOTTOM", 30, 0);
@@ -6671,7 +6671,7 @@
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString name="CEPGP_options_mode" inherits="GameFontNormal" text="Current View: Options">
+						<FontString name="CEPGP_options_CEPGP_mode" inherits="GameFontNormal" text="Current View: Options">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
 								<Anchor point="CENTER" relativePoint="TOP" />
@@ -6733,8 +6733,8 @@
 				this:RegisterEvent("RAID_ROSTER_UPDATE");
 				this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
 				this:RegisterEvent("CHAT_MSG_ADDON");
-				_, _, _, pfUIFrames = GetAddOnInfo("pfUI");
-				if pfUIFrames then
+				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("CEPGP_pfUI");
+				if CEPGP_pfUIFrames then
 					CEPGP_options_auto_1:SetPoint("TOPLEFT", CEPGP_options_page_2, "TOPLEFT", 40, -20);
 					CEPGP_options_auto_2:SetPoint("LEFT", CEPGP_options_auto_1, "RIGHT", 32.5, 0);
 					CEPGP_options_auto_3:SetPoint("LEFT", CEPGP_options_auto_2, "RIGHT", 60, 0);
@@ -7034,9 +7034,9 @@
 				<Scripts>
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
-						vInfo = {};
-						groupVersion = {};
-						vSearch = "RAID";
+						CEPGP_vInfi = {};
+						CEPGP_groupVersion = {};
+						CEPGP_vSearch = "RAID";
 						CEPGP_SendAddonMsg("version-check", "RAID");
 						CEPGP_UpdateVersionScrollBar();
 					</OnClick>
@@ -7053,8 +7053,8 @@
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
 						GuildRoster();
-						groupVersion = {};
-						vSearch = "GUILD";
+						CEPGP_groupVersion = {};
+						CEPGP_vSearch = "GUILD";
 						CEPGP_SendAddonMsg("version-check", "GUILD");
 						CEPGP_UpdateVersionScrollBar();
 					</OnClick>
@@ -7063,7 +7063,7 @@
 		</Frames>
 		<Layers>
 			<Layer level="OVERLAY">
-				<FontString name="CEPGP_version_mode" inherits="GameFontNormal" text="Current View: Version">
+				<FontString name="CEPGP_version_CEPGP_mode" inherits="GameFontNormal" text="Current View: Version">
 					<Color r="1" g="1" b="1"/>
 					<Anchors>
 						<Anchor point="CENTER" relativePoint="TOP">
@@ -7076,7 +7076,7 @@
 				<FontString name="CEPGP_version_number" inherits="GameFontNormal">
 					<Color r="1" g="1" b="1"/>
 					<Anchors>
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_version_mode">
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_version_CEPGP_mode">
 							<Offset>
 								<AbsDimension x="0" y="0" />
 							</Offset>
@@ -7184,7 +7184,7 @@
 			</Anchors>
 				<Scripts>
 					<OnClick>
-						distGP = true;
+						CEPGP_distGP = true;
 						PlaySound("gsTitleOptionExit");
 						CEPGP_distribute_popup_give();
 					</OnClick>
@@ -7203,7 +7203,7 @@
 			</Anchors>
 				<Scripts>
 					<OnClick>
-						distGP = false;
+						CEPGP_distGP = false;
 						PlaySound("gsTitleOptionExit");
 						CEPGP_distribute_popup_give();
 					</OnClick>
@@ -7224,7 +7224,7 @@
 			<OnHide>
 				this:UnregisterEvent("CHAT_MSG_LOOT");
 				CEPGP_distribute_popup_title:SetText("");
-				distPlayer = "";
+				CEPGP_distPlayer = "";
 			</OnHide>
 		</Scripts>
 	</Frame>
@@ -7529,7 +7529,7 @@
 						PlaySound("gsTitleOptionExit");
 						local name = CEPGP_guild_log_save_name:GetText();
 						GuildRoster();
-						if RECORDS[name] == nil or (overwritelog and name == recordholder) then
+						if RECORDS[name] == nil or (CEPGP_overwritelog and name == CEPGP_recordholder) then
 							if GetGuildRosterShowOffline() == nil then
 								SetGuildRosterShowOffline(true);
 								RECORDS[name] = {};
@@ -7538,9 +7538,9 @@
 									local _, _, _, _, _, _, _, oNote = GetGuildRosterInfo(i);
 									RECORDS[name][GetGuildRosterInfo(i)] = oNote;
 								end
-								if overwritelog then
+								if CEPGP_overwritelog then
 									CEPGP_print("Record overwritten [" .. name .. "]");
-									overwritelog = false;
+									CEPGP_overwritelog = false;
 								else
 									CEPGP_print("Record saved [" .. name .. "]");
 								end
@@ -7552,9 +7552,9 @@
 									local _, _, _, _, _, _, _, oNote = GetGuildRosterInfo(i);
 									RECORDS[name][GetGuildRosterInfo(i)] = oNote;
 								end
-								if overwritelog and name == recordholder then
+								if CEPGP_overwritelog and name == CEPGP_recordholder then
 									CEPGP_print("Record overwritten [" .. name .. "]");
-									overwritelog = false;
+									CEPGP_overwritelog = false;
 								else
 									CEPGP_print("Record saved [" .. name .. "]");
 								end
@@ -7562,13 +7562,13 @@
 							end
 						else
 							CEPGP_print("Record [" .. name .. "] already exists. Click confirm again to overwrite");
-							recordholder = name;
-							overwritelog = true;
+							CEPGP_recordholder = name;
+							CEPGP_overwritelog = true;
 						end
 					</OnClick>
 					<OnHide>
-						overwritelog = false;
-						recordholder = nil;
+						CEPGP_overwritelog = false;
+						CEPGP_recordholder = nil;
 					</OnHide>
 				</Scripts>
 			</Button>
@@ -7695,7 +7695,7 @@
 					<OnClick>
 						local name = CEPGP_guild_log_restore_name:GetText();
 						GuildRoster();
-						if RECORDS[name] ~= nil and confirmrestore then
+						if RECORDS[name] ~= nil and CEPGP_confirmrestore then
 							if GetGuildRosterShowOffline() == nil then
 								SetGuildRosterShowOffline(true);
 								for i = 1, GetNumGuildMembers(), 1 do
@@ -7707,7 +7707,7 @@
 								end
 								SetGuildRosterShowOffline(false);
 								CEPGP_print("Guild EPGP standings have been restored from record [" .. name .. "]");
-								confirmrestore = false;
+								CEPGP_confirmrestore = false;
 								HideUIPanel(CEPGP_restore_guild_logs);
 							else
 								for i = 1, GetNumGuildMembers(), 1 do
@@ -7718,19 +7718,19 @@
 									end
 								end
 								CEPGP_print("Guild EPGP standings have been restored from record [" .. name .. "]");
-								confirmrestore = false;
+								CEPGP_confirmrestore = false;
 								HideUIPanel(CEPGP_restore_guild_logs);
 							end
 						elseif RECORDS[name] ~= nil then
 							CEPGP_print("Are you sure you would like to restore guild EPGP standings from record [" .. name .. "]?");
 							CEPGP_print("This action CANNOT be undone. Press confirm again to restore.");
-							confirmrestore = true;
+							CEPGP_confirmrestore = true;
 						else
 							CEPGP_print("Record [" .. name .. "] could not be found", true);
 						end
 					</OnClick>
 					<OnHide>
-						confirmrestore = false;
+						CEPGP_confirmrestore = false;
 					</OnHide>
 				</Scripts>
 			</Button>
@@ -7856,13 +7856,13 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						local target = CEPGP_settings_import_name:GetText();
-						if raidRoster[target] then
-							CEPGP_SendAddonMsg(target .. "-import", "RAID");
-						elseif roster[target] then
-							CEPGP_SendAddonMsg(target .. "-import", "GUILD");
+						local CEPGP_target = CEPGP_settings_import_name:GetText();
+						if CEPGP_raidRoster[CEPGP_target] then
+							CEPGP_SendAddonMsg(CEPGP_target .. "-import", "RAID");
+						elseif CEPGP_roster[CEPGP_target] then
+							CEPGP_SendAddonMsg(CEPGP_target .. "-import", "GUILD");
 						else
-							CEPGP_print(target .. " not found in guild or raid group", true);
+							CEPGP_print(CEPGP_target .. " not found in guild or raid group", true);
 						end
 						CEPGP_settings_import_name:ClearFocus();
 						HideUIPanel(CEPGP_settings_import);
@@ -7884,7 +7884,7 @@
 		</Scripts>
 	</Frame>
 	
-	<Frame name="CEPGP_override" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+	<Frame name="CEPGP_CEPGP_override" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
 		<Size>
 			<AbsDimension x="400" y="480"/>
 		</Size>
@@ -7918,7 +7918,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="CEPGP_override_header" inherits="GameFontNormal" text="Item Override">
+				<FontString name="CEPGP_CEPGP_override_header" inherits="GameFontNormal" text="Item Override">
 					<Anchors>
 						<Anchor point="TOP">
 							<Offset>
@@ -7927,7 +7927,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="CEPGP_override_desc" inherits="GameFontNormal" text=""> <!--Text intentionally left blank here because line breaks can only be added using LUA-->
+				<FontString name="CEPGP_CEPGP_override_desc" inherits="GameFontNormal" text=""> <!--Text intentionally left blank here because line breaks can only be added using LUA-->
 					<Anchors>
 						<Anchor point="TOP" relativePoint="TOP">
 							<Offset>
@@ -7936,7 +7936,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="CEPGP_override_item_name_string" inherits="GameFontNormal" text="Item Name">
+				<FontString name="CEPGP_CEPGP_override_item_name_string" inherits="GameFontNormal" text="Item Name">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
 							<Offset>
@@ -7945,7 +7945,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="CEPGP_override_item_gp_string" inherits="GameFontNormal" text="GP">
+				<FontString name="CEPGP_CEPGP_override_item_gp_string" inherits="GameFontNormal" text="GP">
 					<Anchors>
 						<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
 							<Offset>
@@ -7957,12 +7957,12 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<EditBox name="CEPGP_override_item_name" inherits="InputBoxTemplate">
+			<EditBox name="CEPGP_CEPGP_override_item_name" inherits="InputBoxTemplate">
 				<Size>
 					<AbsDimension x="200" y="20" />
 				</Size>
 				<Anchors>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_override_item_name_string">
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_CEPGP_override_item_name_string">
 						<Offset>
 							<AbsDimension x="0" y="-5" />
 						</Offset>
@@ -7973,19 +7973,19 @@
 						this:SetAutoFocus(false);
 					</OnLoad>
 					<OnEnterPressed>
-						CEPGP_override_item_gp:SetFocus();
+						CEPGP_CEPGP_override_item_gp:SetFocus();
 					</OnEnterPressed>
 					<OnTabPressed>
-						CEPGP_override_item_gp:SetFocus();
+						CEPGP_CEPGP_override_item_gp:SetFocus();
 					</OnTabPressed>
 				</Scripts>
 			</EditBox>
-			<EditBox name="CEPGP_override_item_gp" inherits="InputBoxTemplate" numeric="true">
+			<EditBox name="CEPGP_CEPGP_override_item_gp" inherits="InputBoxTemplate" numeric="true">
 				<Size>
 					<AbsDimension x="50" y="20" />
 				</Size>
 				<Anchors>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_override_item_gp_string">
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_CEPGP_override_item_gp_string">
 						<Offset>
 							<AbsDimension x="0" y="-5" />
 						</Offset>
@@ -7998,36 +7998,36 @@
 					<OnEnterPressed>
 						this:ClearFocus();
 						PlaySound("gsTitleOptionExit");
-						if CEPGP_override_item_name:GetText() == "" then
+						if CEPGP_CEPGP_override_item_name:GetText() == "" then
 								CEPGP_print("Enter an item name", true);
 							return;
 						end
-						local item = CEPGP_override_item_name:GetText();
+						local item = CEPGP_CEPGP_override_item_name:GetText();
 						local gp;
-						if CEPGP_override_item_gp:GetText() == "" then
+						if CEPGP_CEPGP_override_item_gp:GetText() == "" then
 							gp = 0;
 						else
-							gp = tonumber(CEPGP_override_item_gp:GetText());
+							gp = tonumber(CEPGP_CEPGP_override_item_gp:GetText());
 						end
 						if (OVERRIDE_INDEX[item] and overwrite) or not OVERRIDE_INDEX[item] then
 							OVERRIDE_INDEX[item] = gp;
-							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been overriden to " .. gp);
+							CEPGP_print("GP value for " .. CEPGP_CEPGP_override_item_name:GetText() .. " has been CEPGP_overriden to " .. gp);
 							CEPGP_UpdateOverrideScrollBar();
-							override = false;
-							CEPGP_override_item_name:SetText("");
-							CEPGP_override_item_gp:SetText("");
-							CEPGP_override_item_name:SetFocus();
+							CEPGP_override = false;
+							CEPGP_CEPGP_override_item_name:SetText("");
+							CEPGP_CEPGP_override_item_gp:SetText("");
+							CEPGP_CEPGP_override_item_name:SetFocus();
 						else
-							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add override again to change this to " .. gp);
-							override = true;
+							CEPGP_print(CEPGP_CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add CEPGP_override again to change this to " .. gp);
+							CEPGP_override = true;
 						end
 					</OnEnterPressed>
 					<OnTabPressed>
-						CEPGP_override_item_name:SetFocus();
+						CEPGP_CEPGP_override_item_name:SetFocus();
 					</OnTabPressed>
 				</Scripts>
 			</EditBox>
-			<Button name="CEPGP_override_close" inherits="UIPanelCloseButton">
+			<Button name="CEPGP_CEPGP_override_close" inherits="UIPanelCloseButton">
                 <Size>
                     <AbsDimension x="40" y="40" />
                 </Size>
@@ -8041,11 +8041,11 @@
                 <Scripts>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-							HideUIPanel(CEPGP_override);
+							HideUIPanel(CEPGP_CEPGP_override);
                     </OnClick>
                 </Scripts>
             </Button>
-			<Button name="CEPGP_override_confirm" inherits="GameMenuButtonTemplate" text="Add Override">
+			<Button name="CEPGP_CEPGP_override_confirm" inherits="GameMenuButtonTemplate" text="Add Override">
 				<Size>
 					<AbsDimension x="150" y="30"/>
 				</Size>
@@ -8059,51 +8059,51 @@
 				<Scripts>
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
-						if CEPGP_override_item_name:GetText() == "" then
+						if CEPGP_CEPGP_override_item_name:GetText() == "" then
 								CEPGP_print("Enter an item name", true);
 							return;
 						end
-						local item = CEPGP_override_item_name:GetText();
+						local item = CEPGP_CEPGP_override_item_name:GetText();
 						local gp;
-						if CEPGP_override_item_gp:GetText() == "" then
+						if CEPGP_CEPGP_override_item_gp:GetText() == "" then
 							gp = 0;
 						else
-							gp = tonumber(CEPGP_override_item_gp:GetText());
+							gp = tonumber(CEPGP_CEPGP_override_item_gp:GetText());
 						end
 						if (OVERRIDE_INDEX[item] and overwrite) or not OVERRIDE_INDEX[item] then
 							OVERRIDE_INDEX[item] = gp;
-							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been overriden to " .. gp);
+							CEPGP_print("GP value for " .. CEPGP_CEPGP_override_item_name:GetText() .. " has been CEPGP_overriden to " .. gp);
 							CEPGP_UpdateOverrideScrollBar();
-							override = false;
-							CEPGP_override_item_name:SetText("");
-							CEPGP_override_item_name:ClearFocus();
-							CEPGP_override_item_gp:SetText("");
-							CEPGP_override_item_gp:ClearFocus();
+							CEPGP_override = false;
+							CEPGP_CEPGP_override_item_name:SetText("");
+							CEPGP_CEPGP_override_item_name:ClearFocus();
+							CEPGP_CEPGP_override_item_gp:SetText("");
+							CEPGP_CEPGP_override_item_gp:ClearFocus();
 						else
-							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add override again to change this to " .. gp);
-							override = true;
+							CEPGP_print(CEPGP_CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add CEPGP_override again to change this to " .. gp);
+							CEPGP_override = true;
 						end
 					</OnClick>
 					<OnHide>
-						CEPGP_override_item_name:SetText("");
-						CEPGP_override_item_gp:SetText("");
-						override = false;
+						CEPGP_CEPGP_override_item_name:SetText("");
+						CEPGP_CEPGP_override_item_gp:SetText("");
+						CEPGP_override = false;
 					</OnHide>
 				</Scripts>
 			</Button>
-			<Frame name="CEPGP_override_scrollframe">
+			<Frame name="CEPGP_CEPGP_override_scrollframe">
 				<Size>
 					<AbsDimension x="360" y="300"/>
 				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="CEPGP_override" relativePoint="TOPLEFT">
+					<Anchor point="TOPLEFT" relativeTo="CEPGP_CEPGP_override" relativePoint="TOPLEFT">
 						<Offset>
 							<AbsDimension x="10" y="-140"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 				<Frames>
-					<ScrollFrame name="overrideScrollFrame" inherits="FauxScrollFrameTemplate">
+					<ScrollFrame name="CEPGP_overrideScrollFrame" inherits="FauxScrollFrameTemplate">
 						<Size>
 							<AbsDimension x="360" y="350"/>
 						</Size>
@@ -8123,7 +8123,7 @@
 							</OnShow>
 						</Scripts>
 					</ScrollFrame>
-					<Button name="overrideButton1" inherits="lootOverrideButtonTemplate" id="1" hidden="true">
+					<Button name="CEPGP_overrideButton1" inherits="lootOverrideButtonTemplate" id="1" hidden="true">
 						<Anchors>
 							<Anchor point="TOPLEFT">
 								<Offset>
@@ -8132,153 +8132,153 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton2" inherits="lootOverrideButtonTemplate" id="2" hidden="true">
+					<Button name="CEPGP_overrideButton2" inherits="lootOverrideButtonTemplate" id="2" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton1" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton1" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton3" inherits="lootOverrideButtonTemplate" id="3" hidden="true">
+					<Button name="CEPGP_overrideButton3" inherits="lootOverrideButtonTemplate" id="3" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton2" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton2" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton4" inherits="lootOverrideButtonTemplate" id="4" hidden="true">
+					<Button name="CEPGP_overrideButton4" inherits="lootOverrideButtonTemplate" id="4" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton3" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton3" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton5" inherits="lootOverrideButtonTemplate" id="5" hidden="true">
+					<Button name="CEPGP_overrideButton5" inherits="lootOverrideButtonTemplate" id="5" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton4" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton4" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton6" inherits="lootOverrideButtonTemplate" id="6" hidden="true">
+					<Button name="CEPGP_overrideButton6" inherits="lootOverrideButtonTemplate" id="6" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton5" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton5" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton7" inherits="lootOverrideButtonTemplate" id="7" hidden="true">
+					<Button name="CEPGP_overrideButton7" inherits="lootOverrideButtonTemplate" id="7" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton6" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton6" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton8" inherits="lootOverrideButtonTemplate" id="8" hidden="true">
+					<Button name="CEPGP_overrideButton8" inherits="lootOverrideButtonTemplate" id="8" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton7" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton7" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton9" inherits="lootOverrideButtonTemplate" id="9" hidden="true">
+					<Button name="CEPGP_overrideButton9" inherits="lootOverrideButtonTemplate" id="9" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton8" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton8" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton10" inherits="lootOverrideButtonTemplate" id="10" hidden="true">
+					<Button name="CEPGP_overrideButton10" inherits="lootOverrideButtonTemplate" id="10" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton9" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton9" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton11" inherits="lootOverrideButtonTemplate" id="11" hidden="true">
+					<Button name="CEPGP_overrideButton11" inherits="lootOverrideButtonTemplate" id="11" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton10" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton10" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton12" inherits="lootOverrideButtonTemplate" id="12" hidden="true">
+					<Button name="CEPGP_overrideButton12" inherits="lootOverrideButtonTemplate" id="12" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton11" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton11" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton13" inherits="lootOverrideButtonTemplate" id="13" hidden="true">
+					<Button name="CEPGP_overrideButton13" inherits="lootOverrideButtonTemplate" id="13" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton12" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton12" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton14" inherits="lootOverrideButtonTemplate" id="14" hidden="true">
+					<Button name="CEPGP_overrideButton14" inherits="lootOverrideButtonTemplate" id="14" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton13" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton13" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton15" inherits="lootOverrideButtonTemplate" id="15" hidden="true">
+					<Button name="CEPGP_overrideButton15" inherits="lootOverrideButtonTemplate" id="15" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton14" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton14" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton16" inherits="lootOverrideButtonTemplate" id="16" hidden="true">
+					<Button name="CEPGP_overrideButton16" inherits="lootOverrideButtonTemplate" id="16" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton15" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton15" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton17" inherits="lootOverrideButtonTemplate" id="17" hidden="true">
+					<Button name="CEPGP_overrideButton17" inherits="lootOverrideButtonTemplate" id="17" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton16" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton16" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 					</Button>
-					<Button name="overrideButton18" inherits="lootOverrideButtonTemplate" id="18" hidden="true">
+					<Button name="CEPGP_overrideButton18" inherits="lootOverrideButtonTemplate" id="18" hidden="true">
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="overrideButton17" relativePoint="BOTTOMLEFT">
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_overrideButton17" relativePoint="BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x="0" y="-2"/>
 								</Offset>
@@ -8296,11 +8296,11 @@
 		<Scripts>
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
-				CEPGP_override_desc:SetText("This window allows your to permanently\n(or until the log is removed), override the gp\nvalue of an item to what ever you specify");
-				_, _, _, pfUIFrames = GetAddOnInfo("pfUI");
-				if pfUIFrames then
-					CEPGP_override_item_name:SetPoint("TOP", CEPGP_override_item_name_string, "BOTTOM", 10, 0);
-					CEPGP_override_item_gp:SetPoint("TOP", CEPGP_override_item_gp_string, "BOTTOM", 0, 0);
+				CEPGP_CEPGP_override_desc:SetText("This window allows your to permanently\n(or until the log is removed), CEPGP_override the gp\nvalue of an item to what ever you specify");
+				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("CEPGP_pfUI");
+				if CEPGP_pfUIFrames then
+					CEPGP_CEPGP_override_item_name:SetPoint("TOP", CEPGP_CEPGP_override_item_name_string, "BOTTOM", 10, 0);
+					CEPGP_CEPGP_override_item_gp:SetPoint("TOP", CEPGP_CEPGP_override_item_gp_string, "BOTTOM", 0, 0);
 				end	
 			</OnLoad>
 			<OnDragStart>
@@ -8623,8 +8623,8 @@
 		<Scripts>
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
-				_, _, _, pfUIFrames = GetAddOnInfo("pfUI");
-				if pfUIFrames then
+				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("CEPGP_pfUI");
+				if CEPGP_pfUIFrames then
 					for i = 1, 18 do
 						getglobal("trafficButton" .. i .. "Action"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 145, 0);
 						getglobal("trafficButton" .. i .. "EPBefore"):SetPoint("CENTER", getglobal("trafficButton" .. i .. "Name"), "LEFT", 500, 0);
