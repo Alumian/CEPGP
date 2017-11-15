@@ -1,9 +1,6 @@
 # Classic-EPGP
 **Do not redistribute this addon. Post a link to this github page instead**
 
-__**IMPORTANT NOTE TO CURRENT USERS**__
-In version 1.5.0 the slot weights reverted to the default GP slot weights. If you used the addon __before__ version 1.5.0, please read Slot_weight_info.txt
-
 An addon designed to handle your guild's EPGP standings by storing the respective values in your Officer Notes. Another primary function of the addon is to handle loot moderation which you must be the master looter to utilise.
 
 For this addon to work, anyone using the addon must be able to at the very least view Officer Notes. To adjust EP and GP values you must be able to edit Officer Notes.
