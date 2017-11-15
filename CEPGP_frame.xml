@@ -102,7 +102,7 @@
 			</OnLoad>
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
-				if isML() == 0 or debugMode then
+				if CEPGP_isML() == 0 or debugMode then
 					CEPGP_ListButton_OnClick();
 				end
 			</OnClick>
@@ -482,9 +482,9 @@
 					</OnLoad>
 					<OnClick>
                         PlaySound("gsTitleOptionExit");
-						toggleFrame("CEPGP_guild");
+						CEPGP_toggleFrame("CEPGP_guild");
 						mode = "guild";
-						populateFrame();
+						CEPGP_populateFrame();
                     </OnClick>
                 </Scripts>
             </Button>
@@ -509,7 +509,7 @@
                   <OnClick>
 						GuildRoster();
                         PlaySound("gsTitleOptionExit");
-						toggleFrame("CEPGP_options");
+						CEPGP_toggleFrame("CEPGP_options");
 						mode = "options";
 						CEPGP_options_mod_edit:SetText(tostring(MOD));
 						CEPGP_options_coef_edit:SetText(tostring(COEF));
@@ -560,7 +560,7 @@
 								getglobal("CEPGP_options_" .. k .. "_weight"):SetText(tonumber(SLOTWEIGHTS[k]));
 							end
 						end
-						populateFrame();
+						CEPGP_populateFrame();
                     </OnClick>
 				</Scripts>
             </Button>
@@ -583,9 +583,9 @@
 					</OnLoad>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-						toggleFrame("CEPGP_raid");
+						CEPGP_toggleFrame("CEPGP_raid");
 						mode = "raid";
-						populateFrame();
+						CEPGP_populateFrame();
                     </OnClick>
                 </Scripts>
             </Button>
@@ -608,9 +608,9 @@
 					</OnLoad>
 					<OnClick>
                         PlaySound("gsTitleOptionExit");
-						toggleFrame("CEPGP_loot");
+						CEPGP_toggleFrame("CEPGP_loot");
 						mode = "loot";
-						cleanTable();
+						CEPGP_cleanTable();
 						if LootFrame:IsVisible() == 1 or pfUI then
 							LootFrame_Update();
 						end
@@ -648,7 +648,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						toggleFrame("CEPGP_distribute");
+						CEPGP_toggleFrame("CEPGP_distribute");
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -933,7 +933,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(1, "Guild");
+								CEPGP_setCriteria(1, "Guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -950,7 +950,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(2, "Guild");
+								CEPGP_setCriteria(2, "Guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -967,7 +967,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(4, "Guild");
+								CEPGP_setCriteria(4, "Guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -984,7 +984,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(5, "Guild");
+								CEPGP_setCriteria(5, "Guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1001,7 +1001,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(6, "Guild");
+								CEPGP_setCriteria(6, "Guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1018,7 +1018,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(7, "Guild");
+								CEPGP_setCriteria(7, "Guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1350,7 +1350,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(8, "Raid");
+								CEPGP_setCriteria(8, "Raid");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1367,7 +1367,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(1, "Raid");
+								CEPGP_setCriteria(1, "Raid");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1384,7 +1384,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(4, "Raid");
+								CEPGP_setCriteria(4, "Raid");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1401,7 +1401,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(5, "Raid");
+								CEPGP_setCriteria(5, "Raid");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1418,7 +1418,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(6, "Raid");
+								CEPGP_setCriteria(6, "Raid");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1435,7 +1435,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(7, "Raid");
+								CEPGP_setCriteria(7, "Raid");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1848,7 +1848,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(1, "Loot");
+								CEPGP_setCriteria(1, "Loot");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1865,7 +1865,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(2, "Loot");
+								CEPGP_setCriteria(2, "Loot");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1882,7 +1882,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(4, "Loot");
+								CEPGP_setCriteria(4, "Loot");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1899,7 +1899,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(5, "Loot");
+								CEPGP_setCriteria(5, "Loot");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1916,7 +1916,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(6, "Loot");
+								CEPGP_setCriteria(6, "Loot");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1933,7 +1933,7 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								setCriteria(7, "Loot");
+								CEPGP_setCriteria(7, "Loot");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -3153,7 +3153,7 @@
 										getglobal("CEPGP_options_" .. k .. "_weight"):SetText(tonumber(SLOTWEIGHTS[k]));
 									end
 								end
-								toggleFrame("CEPGP_guild");
+								CEPGP_toggleFrame("CEPGP_guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -3226,7 +3226,7 @@
 									for i = 1, GetNumGuildMembers() do
 										local name, rank, rankIndex, _, class, _, _, officerNote = GetGuildRosterInfo(i);
 										if officerNote then
-											local EP, GP = getEPGP(officerNote);
+											local EP, GP = CEPGP_getEPGP(officerNote);
 											if BASEGP > GP then
 												GuildRosterSetOfficerNote(i, EP .. "," .. BASEGP);
 											end
@@ -3267,11 +3267,11 @@
 								STANDBYPERCENT = tonumber(CEPGP_options_standby_ep_val:GetText());
 								local fail = false;
 								for k, v in pairs(SLOTWEIGHTS) do
-									if k == "ROBE" and isNumber(getglobal("CEPGP_options_CHEST_weight"):GetText()) then
+									if k == "ROBE" and CEPGP_isNumber(getglobal("CEPGP_options_CHEST_weight"):GetText()) then
 										SLOTWEIGHTS[k] = tonumber(getglobal("CEPGP_options_CHEST_weight"):GetText());
-									elseif k == "WEAPON" and isNumber(getglobal("CEPGP_options_WEAPONMAINHAND_weight"):GetText()) then
+									elseif k == "WEAPON" and CEPGP_isNumber(getglobal("CEPGP_options_WEAPONMAINHAND_weight"):GetText()) then
 										SLOTWEIGHTS[k] = tonumber(getglobal("CEPGP_options_WEAPONMAINHAND_weight"):GetText());
-									elseif isNumber(getglobal("CEPGP_options_" .. k .. "_weight"):GetText()) then
+									elseif CEPGP_isNumber(getglobal("CEPGP_options_" .. k .. "_weight"):GetText()) then
 										SLOTWEIGHTS[k] = tonumber(getglobal("CEPGP_options_" .. k .. "_weight"):GetText());
 									else
 										CEPGP_print("Invalid input in slot weights", true);
@@ -3280,7 +3280,7 @@
 								end
 								if not fail then
 									CEPGP_print("Settings saved");
-									toggleFrame("CEPGP_guild");
+									CEPGP_toggleFrame("CEPGP_guild");
 								end
 							</OnClick>
 						</Scripts>
@@ -6525,7 +6525,7 @@
 								PlaySound("gsTitleOptionExit");
 								CEPGP_options_mod_edit:SetText(tostring(MOD));
 								CEPGP_options_coef_edit:SetText(tostring(COEF));
-								toggleFrame("guild");
+								CEPGP_toggleFrame("guild");
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -6604,26 +6604,26 @@
 								
 								for k, v in pairs(EPVALS) do
 									if k == "lord kri" or k == "vem" or k == "princess yauj" then
-										if isNumber(getglobal("CEPGP_options_the bug trio_EP_value"):GetText()) then
+										if CEPGP_isNumber(getglobal("CEPGP_options_the bug trio_EP_value"):GetText()) then
 											EPVALS[k] = tonumber(getglobal("CEPGP_options_the bug trio_EP_value"):GetText());
 										end
 										getglobal("CEPGP_options_the bug trio_EP_value"):ClearFocus();
 									elseif k == "emperor vek'lor" or k == "emperor vek'nilash" then
-										if isNumber(getglobal("CEPGP_options_twin emps_EP_value"):GetText()) then
+										if CEPGP_isNumber(getglobal("CEPGP_options_twin emps_EP_value"):GetText()) then
 											EPVALS[k] = tonumber(getglobal("CEPGP_options_twin emps_EP_value"):GetText());
 										end
 										getglobal("CEPGP_options_twin emps_EP_value"):ClearFocus();
 									elseif k == "highlord mograine" or k == "thane korth'azz" or k == "lady blaumeux" or k == "sir zeliek" then
-										if isNumber(getglobal("CEPGP_options_four horsemen_EP_value"):GetText()) then
+										if CEPGP_isNumber(getglobal("CEPGP_options_four horsemen_EP_value"):GetText()) then
 											EPVALS[k] = tonumber(getglobal("CEPGP_options_four horsemen_EP_value"):GetText());
 										end
 										getglobal("CEPGP_options_four horsemen_EP_value"):ClearFocus();
 									elseif k == "gri'lek" or k == "hazza'rah" or k == "renataki" or k == "wushoolay" then
-										if isNumber(getglobal("CEPGP_options_edge of madness_EP_value"):GetText()) then
+										if CEPGP_isNumber(getglobal("CEPGP_options_edge of madness_EP_value"):GetText()) then
 											EPVALS[k] = tonumber(getglobal("CEPGP_options_edge of madness_EP_value"):GetText());
 										end
 									else
-										if isNumber(getglobal("CEPGP_options_"..k.."_EP_value"):GetText()) then
+										if CEPGP_isNumber(getglobal("CEPGP_options_"..k.."_EP_value"):GetText()) then
 											EPVALS[k] = tonumber(getglobal("CEPGP_options_"..k.."_EP_value"):GetText());
 										end
 										getglobal("CEPGP_options_"..k.."_EP_value"):ClearFocus();
@@ -6664,7 +6664,7 @@
 									end
 								end
 								CEPGP_print("Settings saved");
-								toggleFrame("CEPGP_guild");
+								CEPGP_toggleFrame("CEPGP_guild");
 							</OnClick>
 						</Scripts>
 					</Button>
