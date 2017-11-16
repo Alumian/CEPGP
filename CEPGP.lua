@@ -1479,6 +1479,15 @@ function CEPGP_initialise()
 			CEPGP_raidRoster[name] = name;
 		end 
 	end
+	
+	tinsert(UISpecialFrames, "CEPGP_frame");
+	tinsert(UISpecialFrames, "CEPGP_context_popup");
+	tinsert(UISpecialFrames, "CEPGP_save_guild_logs");
+	tinsert(UISpecialFrames, "CEPGP_restore_guild_logs");
+	tinsert(UISpecialFrames, "CEPGP_settings_import");
+	tinsert(UISpecialFrames, "CEPGP_override");
+	tinsert(UISpecialFrames, "CEPGP_traffic");
+	
 	CEPGP_SendAddonMsg("version-check");
 	DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100Classic EPGP Version: " .. CEPGP_VERSION .. " Loaded|r");
 	DEFAULT_CHAT_FRAME:AddMessage("|c00FFC100CEPGP: Currently reporting to channel - " .. CHANNEL .. "|r");
