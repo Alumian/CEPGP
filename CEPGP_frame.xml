@@ -2387,7 +2387,7 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
-								ShowUIPanel(CEPGP_CEPGP_override);
+								ShowUIPanel(CEPGP_override);
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -7884,7 +7884,7 @@
 		</Scripts>
 	</Frame>
 	
-	<Frame name="CEPGP_CEPGP_override" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
+	<Frame name="CEPGP_override" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
 		<Size>
 			<AbsDimension x="400" y="480"/>
 		</Size>
@@ -7918,7 +7918,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="CEPGP_CEPGP_override_header" inherits="GameFontNormal" text="Item Override">
+				<FontString name="CEPGP_override_header" inherits="GameFontNormal" text="Item Override">
 					<Anchors>
 						<Anchor point="TOP">
 							<Offset>
@@ -7927,7 +7927,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="CEPGP_CEPGP_override_desc" inherits="GameFontNormal" text=""> <!--Text intentionally left blank here because line breaks can only be added using LUA-->
+				<FontString name="CEPGP_override_desc" inherits="GameFontNormal" text=""> <!--Text intentionally left blank here because line breaks can only be added using LUA-->
 					<Anchors>
 						<Anchor point="TOP" relativePoint="TOP">
 							<Offset>
@@ -7936,7 +7936,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="CEPGP_CEPGP_override_item_name_string" inherits="GameFontNormal" text="Item Name">
+				<FontString name="CEPGP_override_item_name_string" inherits="GameFontNormal" text="Item Name">
 					<Anchors>
 						<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
 							<Offset>
@@ -7945,7 +7945,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="CEPGP_CEPGP_override_item_gp_string" inherits="GameFontNormal" text="GP">
+				<FontString name="CEPGP_override_item_gp_string" inherits="GameFontNormal" text="GP">
 					<Anchors>
 						<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
 							<Offset>
@@ -7957,12 +7957,12 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<EditBox name="CEPGP_CEPGP_override_item_name" inherits="InputBoxTemplate">
+			<EditBox name="CEPGP_override_item_name" inherits="InputBoxTemplate">
 				<Size>
 					<AbsDimension x="200" y="20" />
 				</Size>
 				<Anchors>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_CEPGP_override_item_name_string">
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_override_item_name_string">
 						<Offset>
 							<AbsDimension x="0" y="-5" />
 						</Offset>
@@ -7973,19 +7973,19 @@
 						this:SetAutoFocus(false);
 					</OnLoad>
 					<OnEnterPressed>
-						CEPGP_CEPGP_override_item_gp:SetFocus();
+						CEPGP_override_item_gp:SetFocus();
 					</OnEnterPressed>
 					<OnTabPressed>
-						CEPGP_CEPGP_override_item_gp:SetFocus();
+						CEPGP_override_item_gp:SetFocus();
 					</OnTabPressed>
 				</Scripts>
 			</EditBox>
-			<EditBox name="CEPGP_CEPGP_override_item_gp" inherits="InputBoxTemplate" numeric="true">
+			<EditBox name="CEPGP_override_item_gp" inherits="InputBoxTemplate" numeric="true">
 				<Size>
 					<AbsDimension x="50" y="20" />
 				</Size>
 				<Anchors>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_CEPGP_override_item_gp_string">
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_override_item_gp_string">
 						<Offset>
 							<AbsDimension x="0" y="-5" />
 						</Offset>
@@ -7998,36 +7998,36 @@
 					<OnEnterPressed>
 						this:ClearFocus();
 						PlaySound("gsTitleOptionExit");
-						if CEPGP_CEPGP_override_item_name:GetText() == "" then
+						if CEPGP_override_item_name:GetText() == "" then
 								CEPGP_print("Enter an item name", true);
 							return;
 						end
-						local item = CEPGP_CEPGP_override_item_name:GetText();
+						local item = CEPGP_override_item_name:GetText();
 						local gp;
-						if CEPGP_CEPGP_override_item_gp:GetText() == "" then
+						if CEPGP_override_item_gp:GetText() == "" then
 							gp = 0;
 						else
-							gp = tonumber(CEPGP_CEPGP_override_item_gp:GetText());
+							gp = tonumber(CEPGP_override_item_gp:GetText());
 						end
 						if (OVERRIDE_INDEX[item] and overwrite) or not OVERRIDE_INDEX[item] then
 							OVERRIDE_INDEX[item] = gp;
-							CEPGP_print("GP value for " .. CEPGP_CEPGP_override_item_name:GetText() .. " has been CEPGP_overriden to " .. gp);
+							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been CEPGP_overriden to " .. gp);
 							CEPGP_UpdateOverrideScrollBar();
-							CEPGP_override = false;
-							CEPGP_CEPGP_override_item_name:SetText("");
-							CEPGP_CEPGP_override_item_gp:SetText("");
-							CEPGP_CEPGP_override_item_name:SetFocus();
+							CEPGP_override_confirm = false;
+							CEPGP_override_item_name:SetText("");
+							CEPGP_override_item_gp:SetText("");
+							CEPGP_override_item_name:SetFocus();
 						else
-							CEPGP_print(CEPGP_CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add CEPGP_override again to change this to " .. gp);
-							CEPGP_override = true;
+							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add CEPGP_override again to change this to " .. gp);
+							CEPGP_override_confirm = true;
 						end
 					</OnEnterPressed>
 					<OnTabPressed>
-						CEPGP_CEPGP_override_item_name:SetFocus();
+						CEPGP_override_item_name:SetFocus();
 					</OnTabPressed>
 				</Scripts>
 			</EditBox>
-			<Button name="CEPGP_CEPGP_override_close" inherits="UIPanelCloseButton">
+			<Button name="CEPGP_override_close" inherits="UIPanelCloseButton">
                 <Size>
                     <AbsDimension x="40" y="40" />
                 </Size>
@@ -8041,11 +8041,11 @@
                 <Scripts>
                     <OnClick>
                         PlaySound("gsTitleOptionExit");
-							HideUIPanel(CEPGP_CEPGP_override);
+							HideUIPanel(CEPGP_override);
                     </OnClick>
                 </Scripts>
             </Button>
-			<Button name="CEPGP_CEPGP_override_confirm" inherits="GameMenuButtonTemplate" text="Add Override">
+			<Button name="CEPGP_override_confirm" inherits="GameMenuButtonTemplate" text="Add Override">
 				<Size>
 					<AbsDimension x="150" y="30"/>
 				</Size>
@@ -8059,44 +8059,44 @@
 				<Scripts>
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
-						if CEPGP_CEPGP_override_item_name:GetText() == "" then
+						if CEPGP_override_item_name:GetText() == "" then
 								CEPGP_print("Enter an item name", true);
 							return;
 						end
-						local item = CEPGP_CEPGP_override_item_name:GetText();
+						local item = CEPGP_override_item_name:GetText();
 						local gp;
-						if CEPGP_CEPGP_override_item_gp:GetText() == "" then
+						if CEPGP_override_item_gp:GetText() == "" then
 							gp = 0;
 						else
-							gp = tonumber(CEPGP_CEPGP_override_item_gp:GetText());
+							gp = tonumber(CEPGP_override_item_gp:GetText());
 						end
 						if (OVERRIDE_INDEX[item] and overwrite) or not OVERRIDE_INDEX[item] then
 							OVERRIDE_INDEX[item] = gp;
-							CEPGP_print("GP value for " .. CEPGP_CEPGP_override_item_name:GetText() .. " has been CEPGP_overriden to " .. gp);
+							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been CEPGP_overriden to " .. gp);
 							CEPGP_UpdateOverrideScrollBar();
-							CEPGP_override = false;
-							CEPGP_CEPGP_override_item_name:SetText("");
-							CEPGP_CEPGP_override_item_name:ClearFocus();
-							CEPGP_CEPGP_override_item_gp:SetText("");
-							CEPGP_CEPGP_override_item_gp:ClearFocus();
+							CEPGP_override_confirm = false;
+							CEPGP_override_item_name:SetText("");
+							CEPGP_override_item_name:ClearFocus();
+							CEPGP_override_item_gp:SetText("");
+							CEPGP_override_item_gp:ClearFocus();
 						else
-							CEPGP_print(CEPGP_CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add CEPGP_override again to change this to " .. gp);
-							CEPGP_override = true;
+							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add CEPGP_override again to change this to " .. gp);
+							CEPGP_override_confirm = true;
 						end
 					</OnClick>
 					<OnHide>
-						CEPGP_CEPGP_override_item_name:SetText("");
-						CEPGP_CEPGP_override_item_gp:SetText("");
-						CEPGP_override = false;
+						CEPGP_override_item_name:SetText("");
+						CEPGP_override_item_gp:SetText("");
+						CEPGP_override_confirm = false;
 					</OnHide>
 				</Scripts>
 			</Button>
-			<Frame name="CEPGP_CEPGP_override_scrollframe">
+			<Frame name="CEPGP_override_scrollframe">
 				<Size>
 					<AbsDimension x="360" y="300"/>
 				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="CEPGP_CEPGP_override" relativePoint="TOPLEFT">
+					<Anchor point="TOPLEFT" relativeTo="CEPGP_override" relativePoint="TOPLEFT">
 						<Offset>
 							<AbsDimension x="10" y="-140"/>
 						</Offset>
@@ -8296,11 +8296,11 @@
 		<Scripts>
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
-				CEPGP_CEPGP_override_desc:SetText("This window allows your to permanently\n(or until the log is removed), CEPGP_override the gp\nvalue of an item to what ever you specify");
+				CEPGP_override_desc:SetText("This window allows your to permanently\n(or until the log is removed), CEPGP_override the gp\nvalue of an item to what ever you specify");
 				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("pfUI");
 				if CEPGP_pfUIFrames then
-					CEPGP_CEPGP_override_item_name:SetPoint("TOP", CEPGP_CEPGP_override_item_name_string, "BOTTOM", 10, 0);
-					CEPGP_CEPGP_override_item_gp:SetPoint("TOP", CEPGP_CEPGP_override_item_gp_string, "BOTTOM", 0, 0);
+					CEPGP_override_item_name:SetPoint("TOP", CEPGP_override_item_name_string, "BOTTOM", 10, 0);
+					CEPGP_override_item_gp:SetPoint("TOP", CEPGP_override_item_gp_string, "BOTTOM", 0, 0);
 				end	
 			</OnLoad>
 			<OnDragStart>
@@ -8653,6 +8653,7 @@
 		<Scripts>
 			<OnLoad>
 				this:RegisterForDrag("LeftButton");
+				this:EnableKeyboard(true);
 				_, _, _, CEPGP_pfUIFrames = GetAddOnInfo("pfUI");
 				if CEPGP_pfUIFrames then
 					for i = 1, 18 do
@@ -8665,6 +8666,10 @@
 					end
 				end
 			</OnLoad>
+			<OnEvent>
+				CEPGP_print(event);
+				CEPGP_print(arg1);
+			</OnEvent>
 			<OnDragStart>
 				this:StartMoving();
 			</OnDragStart>

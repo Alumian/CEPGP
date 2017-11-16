@@ -16,7 +16,7 @@ CEPGP_debugMode = false;
 CEPGP_critReverse = false; --Criteria reverse
 CEPGP_distributing = false;
 CEPGP_overwritelog = false;
-CEPGP_override = false;
+CEPGP_override_confirm = false;
 CEPGP_confirmrestore = false;
 CEPGP_looting = false;
 CEPGP_traffic_clear = false;
@@ -24,7 +24,7 @@ CEPGP_RAZORGORE_EGG_COUNT = 0;
 CEPGP_THEKAL_PARAMS = {["ZATH_DEAD"] = false, ["LOR'KHAN_DEAD"] = false, ["THEKAL_DEAD"] = false};
 CEPGP_criteria = 4;
 CEPGP_kills = 0;
-CEPGP_frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_options_page_2, CEPGP_distribute_popup, CEPGP_context_popup};
+CEPGP_frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_options_page_2, CEPGP_distribute_popup, CEPGP_context_popup, CEPGP_save_guild_logs, CEPGP_restore_guild_logs, CEPGP_settings_import, CEPGP_override, CEPGP_traffic};
 CEPGP_LANGUAGE = GetDefaultLanguage("player");
 CEPGP_responses = {};
 CEPGP_itemsTable = {};
@@ -62,7 +62,7 @@ function CEPGP_OnEvent()
 		CEPGP_initialise();
 		
 	elseif event == "GUILD_ROSTER_UPDATE" or event == "RAID_ROSTER_UPDATE" then
-		CEPGP_CEPGP_rosterUpdate(event);
+		CEPGP_rosterUpdate(event);
 		
 	elseif (event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and CEPGP_distributing) or
 		(event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!info") or
@@ -1753,7 +1753,7 @@ function CEPGP_toggleFrame(frame)
 	end
 end
 
-function CEPGP_CEPGP_rosterUpdate(event)
+function CEPGP_rosterUpdate(event)
 	if event == "GUILD_ROSTER_UPDATE" then
 		CEPGP_roster = {};
 		if CanEditOfficerNote() == 1 then
