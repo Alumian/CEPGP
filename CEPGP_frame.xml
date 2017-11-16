@@ -7883,7 +7883,6 @@
 			</OnDragStop>
 		</Scripts>
 	</Frame>
-	
 	<Frame name="CEPGP_override" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
 		<Size>
 			<AbsDimension x="400" y="480"/>
@@ -8013,13 +8012,13 @@
 							OVERRIDE_INDEX[item] = gp;
 							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been CEPGP_overriden to " .. gp);
 							CEPGP_UpdateOverrideScrollBar();
-							CEPGP_override_confirm = false;
+							CEPGP_override = false;
 							CEPGP_override_item_name:SetText("");
 							CEPGP_override_item_gp:SetText("");
 							CEPGP_override_item_name:SetFocus();
 						else
 							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add CEPGP_override again to change this to " .. gp);
-							CEPGP_override_confirm = true;
+							CEPGP_override = true;
 						end
 					</OnEnterPressed>
 					<OnTabPressed>
@@ -8074,20 +8073,20 @@
 							OVERRIDE_INDEX[item] = gp;
 							CEPGP_print("GP value for " .. CEPGP_override_item_name:GetText() .. " has been CEPGP_overriden to " .. gp);
 							CEPGP_UpdateOverrideScrollBar();
-							CEPGP_override_confirm = false;
+							CEPGP_override = false;
 							CEPGP_override_item_name:SetText("");
 							CEPGP_override_item_name:ClearFocus();
 							CEPGP_override_item_gp:SetText("");
 							CEPGP_override_item_gp:ClearFocus();
 						else
 							CEPGP_print(CEPGP_override_item_name:GetText() .. " has already been overridden to " .. OVERRIDE_INDEX[item] .. ". Click add CEPGP_override again to change this to " .. gp);
-							CEPGP_override_confirm = true;
+							CEPGP_override = true;
 						end
 					</OnClick>
 					<OnHide>
 						CEPGP_override_item_name:SetText("");
 						CEPGP_override_item_gp:SetText("");
-						CEPGP_override_confirm = false;
+						CEPGP_override = false;
 					</OnHide>
 				</Scripts>
 			</Button>
