@@ -1138,7 +1138,6 @@ end
 function CEPGP_LootFrame_Update()
 	if CEPGP_pfUI then
 		local items = {};
-		local numLootItems = GetNumLootItems();
 		local count = 0;
 		local numSlots = 0;
 		for i = 1, GetNumLootItems() do
@@ -1171,7 +1170,6 @@ function CEPGP_LootFrame_Update()
 		CEPGP_populateFrame(_, items, numSlots);
 	else
 		local numLootItems = LootFrame.numLootItems;
-		--Logic to determine how many items to show per page
 		local numLootToShow = LOOTFRAME_NUMBUTTONS;
 		if ( numLootItems > LOOTFRAME_NUMBUTTONS ) then
 			numLootToShow = numLootToShow - 1;
@@ -1179,7 +1177,7 @@ function CEPGP_LootFrame_Update()
 		local texture, item, quantity, quality;
 		local items = {};
 		local count = 0;
-		for index = 1, numLootItems do--LOOTFRAME_NUMBUTTONS do
+		for index = 1, numLootItems do
 			local slot = index;
 			if ( slot <= numLootItems ) then	
 				if (LootSlotIsItem(slot) or LootSlotIsCoin(slot)) then

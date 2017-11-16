@@ -612,7 +612,7 @@
 						CEPGP_mode = "loot";
 						CEPGP_cleanTable();
 						if LootFrame:IsVisible() == 1 or CEPGP_pfUI then
-							LootFrame_Update();
+							CEPGP_LootFrame_Update();
 						end
 					</OnClick>
                 </Scripts>
@@ -635,7 +635,7 @@
                     </OnClick>
                 </Scripts>
             </Button>
-			<Button name="CEPGP_loot_CEPGP_distributing" inherits="GameMenuButtonTemplate" text="Distributing" hidden="true">
+			<Button name="distributing" inherits="GameMenuButtonTemplate" text="Distributing" hidden="true">
 				<Size>
 					<AbsDimension x="100" y="22" />
 				</Size>
@@ -1940,7 +1940,7 @@
 				</Frames>
 				<Scripts>
 					<OnShow>
-						CEPGP_loot_CEPGP_distributing:Show();
+						distributing:Show();
 					</OnShow>
 					<OnLoad>
 						this:RegisterForDrag("LeftButton");
