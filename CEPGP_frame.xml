@@ -466,28 +466,28 @@
 		</Backdrop>
 		<Frames>
 			<Button name="CEPGP_button_guild" inherits="GameMenuButtonTemplate" text="Guild">
-                <Size>
-                    <AbsDimension x="100" y="21" />
-                </Size>
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="CEPGP_frame">
-                        <Offset>
-                            <AbsDimension x="10" y="-12" />
+				<Size>
+					<AbsDimension x="100" y="21" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CEPGP_frame">
+						<Offset>
+							<AbsDimension x="10" y="-12" />
 						</Offset>
 					</Anchor>
 				</Anchors>
-                <Scripts>
+				<Scripts>
 					<OnLoad>
 						GuildRoster();
 					</OnLoad>
 					<OnClick>
-                        PlaySound("gsTitleOptionExit");
+						PlaySound("gsTitleOptionExit");
 						CEPGP_toggleFrame("CEPGP_guild");
 						CEPGP_mode = "guild";
 						CEPGP_populateFrame();
-                    </OnClick>
-                </Scripts>
-            </Button>
+					</OnClick>
+				</Scripts>
+			</Button>
 			<Button name="CEPGP_button_options" inherits="GameMenuButtonTemplate" text="Options">
               <HitRectInsets>
 					<AbsInset left="0" right="0" top="0" bottom="0" />
@@ -8403,6 +8403,36 @@
 			</Layer>
 		</Layers>
 		<Frames>
+			<Button name="CEPGP_traffic_clear" inherits="GameMenuButtonTemplate" text="Clear EPGP Traffic">
+				<Size>
+					<AbsDimension x="125" y="21" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="10" y="12" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						if CEPGP_traffic_clear then
+							TRAFFIC = {};
+							CEPGP_UpdateTrafficScrollBar();
+							CEPGP_print("EPGP traffic wiped");
+							CEPGP_traffic_clear = false;
+						else
+							CEPGP_print("You are trying to clear your EPGP traffic log. This action cannot be reversed.");
+							CEPGP_print("Press Clear EPGP traffic again to confirm");
+							CEPGP_traffic_clear = true;
+						end
+					</OnClick>
+					<OnHide>
+						CEPGP_traffic_clear = false;
+					</OnHide>
+				</Scripts>
+			</Button>
 			<Button name="CEPGP_traffic_close" inherits="UIPanelCloseButton">
                 <Size>
                     <AbsDimension x="40" y="40" />

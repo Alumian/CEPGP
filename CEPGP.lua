@@ -19,6 +19,7 @@ CEPGP_overwritelog = false;
 CEPGP_override = false;
 CEPGP_confirmrestore = false;
 CEPGP_looting = false;
+CEPGP_traffic_clear = false;
 CEPGP_RAZORGORE_EGG_COUNT = 0;
 CEPGP_THEKAL_PARAMS = {["ZATH_DEAD"] = false, ["LOR'KHAN_DEAD"] = false, ["THEKAL_DEAD"] = false};
 CEPGP_criteria = 4;
