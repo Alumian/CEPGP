@@ -1170,10 +1170,6 @@ function CEPGP_LootFrame_Update()
 		CEPGP_populateFrame(_, items, numSlots);
 	else
 		local numLootItems = LootFrame.numLootItems;
-		local numLootToShow = LOOTFRAME_NUMBUTTONS;
-		if ( numLootItems > LOOTFRAME_NUMBUTTONS ) then
-			numLootToShow = numLootToShow - 1;
-		end
 		local texture, item, quantity, quality;
 		local items = {};
 		local count = 0;
