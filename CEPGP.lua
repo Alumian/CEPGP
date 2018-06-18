@@ -2252,6 +2252,7 @@ function CEPGP_handleLoot(event, arg1, arg2)
 				else
 					SendChatMessage("Awarded " .. getglobal("CEPGP_distribute_item_name"):GetText() .. " to ".. CEPGP_distPlayer .. " for free", CHANNEL, CEPGP_LANGUAGE);
 				end
+				CEPGP_distPlayer = "";
 				CEPGP_distribute_popup:Hide();
 				CEPGP_distribute:Hide();
 				CEPGP_loot:Show();
