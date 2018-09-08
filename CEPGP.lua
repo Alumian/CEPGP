@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-CEPGP_VERSION = "1.9.4";
+CEPGP_VERSION = "1.9.5";
 SLASH_CEPGP1 = "/cepgp";
 CEPGP_VERSION_NOTIFIED = false;
 CEPGP_mode = "guild";
@@ -9,7 +9,8 @@ CEPGP_recordholder = "";
 CEPGP_distPlayer = "";
 CEPGP_distGP = false;
 CEPGP_lootSlot = nil;
-CEPGP_target = nil;CEPGP_DistID = nil;
+CEPGP_target = nil;
+CEPGP_DistID = nil;
 CEPGP_distSlot = nil;
 CEPGP_distItemLink = nil;
 CEPGP_debugMode = false;
@@ -24,11 +25,12 @@ CEPGP_RAZORGORE_EGG_COUNT = 0;
 CEPGP_THEKAL_PARAMS = {["ZATH_DEAD"] = false, ["LOR'KHAN_DEAD"] = false, ["THEKAL_DEAD"] = false};
 CEPGP_criteria = 4;
 CEPGP_kills = 0;
-CEPGP_frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_options_page_2, CEPGP_distribute_popup, CEPGP_context_popup, CEPGP_save_guild_logs, CEPGP_restore_guild_logs, CEPGP_settings_import, CEPGP_override, CEPGP_traffic};
+CEPGP_frames = {CEPGP_guild, CEPGP_raid, CEPGP_loot, CEPGP_distribute, CEPGP_options, CEPGP_options_page_2, CEPGP_distribute_popup, CEPGP_context_popup, CEPGP_save_guild_logs, CEPGP_restore_guild_logs, CEPGP_settings_import, CEPGP_override, CEPGP_traffic, CEPGP_standby};
 CEPGP_LANGUAGE = GetDefaultLanguage("player");
 CEPGP_responses = {};
 CEPGP_itemsTable = {};
 CEPGP_roster = {};
+CEPGP_standbyRoster = {};
 CEPGP_raidRoster = {};
 CEPGP_vInfo = {};
 CEPGP_vSearch = "GUILD";
@@ -42,6 +44,9 @@ COEF = nil;
 BASEGP = nil;
 STANDBYEP = false;
 STANDBYOFFLINE = false;
+CEPGP_standby_accept_whispers = true;
+CEPGP_standby_byrank = true;
+CEPGP_standby_manual = false;
 STANDBYPERCENT = nil;
 STANDBYRANKS = {};
 SLOTWEIGHTS = {};
@@ -64,6 +69,14 @@ function CEPGP_OnEvent()
 	elseif event == "GUILD_ROSTER_UPDATE" or event == "RAID_ROSTER_UPDATE" then
 		CEPGP_rosterUpdate(event);
 		
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "$standby" and CEPGP_standby_manual and CEPGP_standby_accept_whispers then
+		if not CEPGP_tContains(CEPGP_standbyRoster, arg2)
+		and not CEPGP_tContains(CEPGP_raidRoster, arg2, true)
+		and CEPGP_tContains(CEPGP_roster, arg2, true) then
+			CEPGP_addToStandby(arg2);
+		end;
+			
+	
 	elseif (event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and CEPGP_distributing) or
 		(event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!info") or
 		(event == "CHAT_MSG_WHISPER" and (string.lower(arg1) == "!infoguild" or string.lower(arg1) == "!inforaid" or string.lower(arg1) == "!infoclass")) then
@@ -938,6 +951,74 @@ function CEPGP_UpdateTrafficScrollBar()
 	end
 end
 
+function CEPGP_UpdateStandbyScrollBar()
+	local x, y;
+	local yoffset;
+	local t;
+	local tSize;
+	local name;
+	local class;
+	local rank;
+	local EP;
+	local GP;
+	local offNote;
+	local colour;
+	t = {};
+	tSize = CEPGP_ntgetn(CEPGP_standbyRoster);
+	for x = 1, tSize do
+		name = CEPGP_standbyRoster[x];
+		index, class, rank, rankIndex, offNote = CEPGP_getGuildInfo(name);
+		EP, GP = CEPGP_getEPGP(offNote)
+		t[x] = {
+			[1] = name,
+			[2] = class,
+			[3] = rank,
+			[4] = rankIndex,
+			[5] = EP,
+			[6] = GP,
+			[7] = math.floor((EP/GP)*100)/100,
+			[8] = 0
+		}
+	end
+	t = CEPGP_tSort(t, CEPGP_criteria)
+	FauxScrollFrame_Update(CEPGP_StandbyScrollFrame, tSize, 18, 240);
+	for y = 1, 18, 1 do
+		yoffset = y + FauxScrollFrame_GetOffset(CEPGP_StandbyScrollFrame);
+		if (yoffset <= tSize) then
+			if not CEPGP_tContains(t, yoffset, true) then
+				getglobal("CEPGP_StandbyButton" .. y):Hide();
+			else
+				name = t[yoffset][1]
+				class = t[yoffset][2];
+				rank = t[yoffset][3];
+				EP = t[yoffset][5];
+				GP = t[yoffset][6];
+				PR = t[yoffset][7];
+				if class then
+					colour = RAID_CLASS_COLORS[string.upper(class)];
+				else
+					colour = RAID_CLASS_COLORS["WARRIOR"];
+				end
+				getglobal("CEPGP_StandbyButton" .. y .. "Info"):SetText(name);
+				getglobal("CEPGP_StandbyButton" .. y .. "Info"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("CEPGP_StandbyButton" .. y .. "Class"):SetText(class);
+				getglobal("CEPGP_StandbyButton" .. y .. "Class"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("CEPGP_StandbyButton" .. y .. "Rank"):SetText(rank);
+				getglobal("CEPGP_StandbyButton" .. y .. "Rank"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("CEPGP_StandbyButton" .. y .. "EP"):SetText(EP);
+				getglobal("CEPGP_StandbyButton" .. y .. "EP"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("CEPGP_StandbyButton" .. y .. "GP"):SetText(GP);
+				getglobal("CEPGP_StandbyButton" .. y .. "GP"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("CEPGP_StandbyButton" .. y .. "PR"):SetText(PR);
+				getglobal("CEPGP_StandbyButton" .. y .. "PR"):SetTextColor(colour.r, colour.g, colour.b);
+				getglobal("CEPGP_StandbyButton" .. y):Show();
+			end
+		else
+			getglobal("CEPGP_StandbyButton" .. y):Hide();
+		end
+	end
+end
+
 
 
 --[[ BUTTON FUNCTIONS ]]--
@@ -1098,6 +1179,28 @@ function CEPGP_ListButton_OnClick()
 															HideUIPanel(CEPGP_context_popup);
 															CEPGP_AddRaidEP(tonumber(CEPGP_context_amount:GetText()));
 														end);
+	elseif strfind(obj, "CEPGP_standby_ep_list_add") then
+		CEPGP_context_popup_EP_check:Hide();
+		CEPGP_context_popup_EP_check_text:Hide();
+		CEPGP_context_popup_GP_check:Hide();
+		CEPGP_context_popup_GP_check_text:Hide();
+		CEPGP_context_popup_header:SetText("Add to Standby");
+		CEPGP_context_popup_title:Hide();
+		CEPGP_context_popup_desc:SetText("Add a guild member to the standby list");
+		CEPGP_context_amount:SetText("");
+		CEPGP_context_popup_confirm:SetScript('OnClick', function()
+															PlaySound("gsTitleOptionExit");
+															HideUIPanel(CEPGP_context_popup);
+															CEPGP_addToStandby(CEPGP_context_amount:GetText());
+														end);
+	elseif strfind(obj, "CEPGP_StandbyButton") then
+		local name = getglobal(getglobal(this:GetName()):GetParent():GetName() .. "Info"):GetText();
+		for i = 1, CEPGP_ntgetn(CEPGP_standbyRoster) do
+			if CEPGP_standbyRoster[i] == name then
+				table.remove(CEPGP_standbyRoster, i);
+			end
+		end
+		CEPGP_UpdateStandbyScrollBar();
 	else
 		--CEPGP_print(obj);
 	end
@@ -1335,6 +1438,8 @@ function CEPGP_setCriteria(x, disp)
 		CEPGP_UpdateGuildScrollBar();
 	elseif disp == "Loot" then
 		CEPGP_UpdateLootScrollBar();
+	elseif disp == "Standby" then
+		CEPGP_UpdateStandbyScrollBar();
 	end
 end
 
@@ -2042,16 +2147,23 @@ function CEPGP_handleCombat(event, arg1, arg2)
 										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
 											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
-												for i = 1, table.getn(STANDBYRANKS) do
-													if STANDBYRANKS[i][1] == rank then
-														if STANDBYRANKS[i][2] == true then
-															CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Bug Trio");
+												if CEPGP_standby_byrank then
+													for i = 1, table.getn(STANDBYRANKS) do
+														if STANDBYRANKS[i][1] == rank then
+															if STANDBYRANKS[i][2] == true then
+																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Bug Trio");
+															end
 														end
+													end
+												elseif CEPGP_standby_manual then
+													for i = 1, table.getn(CEPGP_standbyRoster) do
+														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "The Bug Trio");
 													end
 												end
 											end
 										end
 									end
+									CEPGP_UpdateStandbyScrollBar();
 								end
 							end
 						elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
@@ -2068,16 +2180,23 @@ function CEPGP_handleCombat(event, arg1, arg2)
 										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
 											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
-												for i = 1, table.getn(STANDBYRANKS) do
-													if STANDBYRANKS[i][1] == rank then
-														if STANDBYRANKS[i][2] == true then
-															CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Twin Emperors");
+												if CEPGP_standby_byrank then
+													for i = 1, table.getn(STANDBYRANKS) do
+														if STANDBYRANKS[i][1] == rank then
+															if STANDBYRANKS[i][2] == true then
+																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Twin Emperors");
+															end
 														end
+													end
+												elseif CEPGP_standby_manual then
+													for i = 1, table.getn(CEPGP_standbyRoster) do
+														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "The Twin Emperors");
 													end
 												end
 											end
 										end
 									end
+									CEPGP_UpdateStandbyScrollBar();
 								end
 							end
 						elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
@@ -2094,11 +2213,17 @@ function CEPGP_handleCombat(event, arg1, arg2)
 										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
 											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
-												for i = 1, table.getn(STANDBYRANKS) do
-													if STANDBYRANKS[i][1] == rank then
-														if STANDBYRANKS[i][2] == true then
-															CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Four Horsemen");
+												if CEPGP_standby_byrank then
+													for i = 1, table.getn(STANDBYRANKS) do
+														if STANDBYRANKS[i][1] == rank then
+															if STANDBYRANKS[i][2] == true then
+																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Four Horsemen");
+															end
 														end
+													end
+												elseif CEPGP_standby_manual then
+													for i = 1, table.getn(CEPGP_standbyRoster) do
+														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "The Four Horsemen");
 													end
 												end
 											end
@@ -2118,11 +2243,17 @@ function CEPGP_handleCombat(event, arg1, arg2)
 										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
 											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
-												for i = 1, table.getn(STANDBYRANKS) do
-													if STANDBYRANKS[i][1] == rank then
-														if STANDBYRANKS[i][2] == true then
-															CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
+												if CEPGP_standby_byrank then
+													for i = 1, table.getn(STANDBYRANKS) do
+														if STANDBYRANKS[i][1] == rank then
+															if STANDBYRANKS[i][2] == true then
+																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "High Priest Thekal");
+															end
 														end
+													end
+												elseif CEPGP_standby_manual then
+													for i = 1, table.getn(CEPGP_standbyRoster) do
+														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "High Priest Thekal");
 													end
 												end
 											end
@@ -2142,11 +2273,17 @@ function CEPGP_handleCombat(event, arg1, arg2)
 									if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
 										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
 										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
-											for i = 1, table.getn(STANDBYRANKS) do
-												if STANDBYRANKS[i][1] == rank then
-													if STANDBYRANKS[i][2] == true then
-														CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
+											if CEPGP_standby_byrank then
+												for i = 1, table.getn(STANDBYRANKS) do
+													if STANDBYRANKS[i][1] == rank then
+														if STANDBYRANKS[i][2] == true then
+															CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
+														end
 													end
+												end
+											elseif CEPGP_standby_manual then
+												for i = 1, table.getn(CEPGP_standbyRoster) do
+													CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
 												end
 											end
 										end
@@ -2171,13 +2308,19 @@ function CEPGP_handleCombat(event, arg1, arg2)
 								if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
 									local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
 									if (STANDBYOFFLINE and online == 1) or online == 1 then
-										for i = 1, table.getn(STANDBYRANKS) do
-											if STANDBYRANKS[i][1] == rank then
-												if STANDBYRANKS[i][2] == true then
-													CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
+										if CEPGP_standby_byrank then
+											for i = 1, table.getn(STANDBYRANKS) do
+												if STANDBYRANKS[i][1] == rank then
+													if STANDBYRANKS[i][2] == true then
+														CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "Majordomo Executus");
+													end
 												end
 											end
-										end										
+										elseif CEPGP_standby_manual then
+											for i = 1, table.getn(CEPGP_standbyRoster) do
+												CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "Majordomo Executus");
+											end
+										end
 									end
 								end
 							end
@@ -2191,6 +2334,7 @@ function CEPGP_handleCombat(event, arg1, arg2)
 					CEPGP_THEKAL_PARAMS["LOR'KHAN_DEAD"] = true;
 				end
 			end
+			CEPGP_UpdateStandbyScrollBar();
 		end
 		
 	elseif event == "PLAYER_REGEN_ENABLED" then
@@ -2268,7 +2412,64 @@ function CEPGP_handleLoot(event, arg1, arg2)
 	end	
 end
 
+function CEPGP_addToStandby(player)
+	if not player then return; end;
+	player = CEPGP_standardiseString(player);
+	if not CEPGP_tContains(CEPGP_roster, player, true) then
+		CEPGP_print(player .. " is not a guild member", true);
+		return;
+	elseif CEPGP_tContains(CEPGP_standbyRoster, player) then
+		CEPGP_print(player .. " is already in the standby roster", true);
+		return;
+	elseif CEPGP_tContains(CEPGP_raidRoster, player, true) then
+		CEPGP_print(player .. " is part of the raid", true);
+		return;
+	else
+		table.insert(CEPGP_standbyRoster, player);
+		CEPGP_UpdateStandbyScrollBar();
+	end;
+end
 
+function CEPGP_standardiseString(value)
+	--Returns the same string with the first letter as capital
+	if not string then return; end;
+	local first = string.upper(strsub(value, 1, 1)); --The uppercase first character of the string
+	local rest = strsub(value, 2, strlen(value)); --The remainder of the string
+	return first .. rest;
+end
+
+function CEPGP_toggleStandbyRanks(show)
+	if show then
+		for i = 1, 10 do
+			if STANDBYRANKS[i][1] ~= nil then
+				getglobal("CEPGP_options_standby_ep_rank_"..i):Show();
+				getglobal("CEPGP_options_standby_ep_rank_"..i):SetText(tostring(STANDBYRANKS[i][1]));
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):Show();
+				if STANDBYRANKS[i][2] == true then
+					getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(true);
+				else
+					getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
+				end
+			end
+			if GuildControlGetRankName(i) == nil then
+				getglobal("CEPGP_options_standby_ep_rank_"..i):Hide();
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):Hide();
+				getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
+			end
+		end
+		CEPGP_options_standby_ep_list_button:Hide();
+		CEPGP_options_standby_ep_accept_whispers_check:Hide();
+		CEPGP_options_standby_ep_accept_whispers:Hide();
+	else
+		for i = 1, 10 do
+			getglobal("CEPGP_options_standby_ep_rank_"..i):Hide();
+			getglobal("CEPGP_options_standby_ep_check_rank_"..i):Hide();
+		end
+		CEPGP_options_standby_ep_list_button:Show();
+		CEPGP_options_standby_ep_accept_whispers_check:Show();
+		CEPGP_options_standby_ep_accept_whispers:Show();
+	end
+end
 
 --[[ ADD EPGP FUNCTIONS ]]--
 

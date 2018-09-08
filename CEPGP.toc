@@ -1,8 +1,8 @@
 ## Interface:11200
 ## Title: Classic EPGP
-## Author: Alumian <Eidolon> on Crestfall
+## Author: Alumian
 ## Notes: CEPGP handles your guild's EPGP and master loot distribution. Usage: /cepgp for options
-## SavedVariables: CHANNEL, MOD, AUTOEP, EPVALS, BASEGP, STANDBYEP, STANDBYOFFLINE, STANDBYPERCENT, STANDBYRANKS, SLOTWEIGHTS, RECORDS, OVERRIDE_INDEX, TRAFFIC
+## SavedVariables: CHANNEL, MOD, AUTOEP, EPVALS, BASEGP, STANDBYEP, STANDBYOFFLINE, STANDBYPERCENT, STANDBYRANKS, SLOTWEIGHTS, RECORDS, OVERRIDE_INDEX, TRAFFIC, CEPGP_accept_standby_whispers, CEPGP_standby_byrank, CEPGP_standby_manual
 
 CEPGP_frame.xml
 CEPGP.lua

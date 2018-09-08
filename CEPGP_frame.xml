@@ -303,23 +303,23 @@
 		</Size>
 		<Frames>
 			<Button name="$parentDelete" inherits="UIPanelCloseButton">
-                <Size>
-                    <AbsDimension x="30" y="30" />
-                </Size>
-                <Anchors>
-                    <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parentitem">
-                        <Offset>
-                            <AbsDimension x="320" y="0" />
+				<Size>
+					<AbsDimension x="30" y="30" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parentitem">
+						<Offset>
+							<AbsDimension x="320" y="0" />
 						</Offset>
 					</Anchor>
 				</Anchors>
-                <Scripts>
-                    <OnClick>
-                        PlaySound("gsTitleOptionExit");
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
 						CEPGP_ListButton_OnClick();
-                    </OnClick>
-                </Scripts>
-            </Button>
+					</OnClick>
+				</Scripts>
+			</Button>
 		</Frames>
 		<Layers>
 			<Layer level="BORDER">
@@ -444,6 +444,98 @@
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
 	</Button>
+	<Button name="StandbyButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="360" y="15"/>
+		</Size>
+		<Frames>
+			<Button name="$parentClose" inherits="UiPanelCloseButton">
+				<Size>
+					<AbsDimension x="20" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="5" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						CEPGP_ListButton_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentClass" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="85" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRank" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="160" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="260" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="295" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPR" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="340" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
 	
 	<Frame name="CEPGP_frame" parent="UIParent" hidden="true" enableMouse="true" toplevel="true" movable="true">
 		<Size>
@@ -489,16 +581,16 @@
 				</Scripts>
 			</Button>
 			<Button name="CEPGP_button_options" inherits="GameMenuButtonTemplate" text="Options">
-              <HitRectInsets>
+			  <HitRectInsets>
 					<AbsInset left="0" right="0" top="0" bottom="0" />
 				</HitRectInsets>
 				<Size>
-                    <AbsDimension x="100" y="21" />
+					<AbsDimension x="100" y="21" />
 				</Size>
 				<Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="CEPGP_frame">
-                        <Offset>
-                            <AbsDimension x="10" y="-35"/>
+					<Anchor point="TOPLEFT" relativeTo="CEPGP_frame">
+						<Offset>
+							<AbsDimension x="10" y="-35"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -506,9 +598,9 @@
 					<OnLoad>
 						GuildRoster();
 					</OnLoad>
-                  <OnClick>
+					<OnClick>
 						GuildRoster();
-                        PlaySound("gsTitleOptionExit");
+						PlaySound("gsTitleOptionExit");
 						CEPGP_toggleFrame("CEPGP_options");
 						CEPGP_mode = "options";
 						CEPGP_options_mod_edit:SetText(tostring(MOD));
@@ -525,23 +617,6 @@
 								STANDBYRANKS[i][1] = nil;
 							else
 								STANDBYRANKS[i][1] = GuildControlGetRankName(i);
-							end
-						end
-						for i = 1, 10 do
-							if STANDBYRANKS[i][1] ~= nil then
-								getglobal("CEPGP_options_standby_ep_rank_"..i):Show();
-								getglobal("CEPGP_options_standby_ep_rank_"..i):SetText(tostring(STANDBYRANKS[i][1]));
-								getglobal("CEPGP_options_standby_ep_check_rank_"..i):Show();
-								if STANDBYRANKS[i][2] == true then
-									getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(true);
-								else
-									getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
-								end
-							end
-							if GuildControlGetRankName(i) == nil then
-								getglobal("CEPGP_options_standby_ep_rank_"..i):Hide();
-								getglobal("CEPGP_options_standby_ep_check_rank_"..i):Hide();
-								getglobal("CEPGP_options_standby_ep_check_rank_"..i):SetChecked(false);
 							end
 						end
 						if STANDBYEP then
@@ -561,53 +636,53 @@
 							end
 						end
 						CEPGP_populateFrame();
-                    </OnClick>
+					</OnClick>
 				</Scripts>
-            </Button>
+			</Button>
 			<Button name="CEPGP_button_raid" inherits="GameMenuButtonTemplate" text="Raid">
-                <Size>
-                    <AbsDimension x="100" y="21" />
-                </Size>
-                <Anchors>
-                    <Anchor point="RIGHT" relativeTo="CEPGP_button_guild">
-                        <Offset>
-                            <AbsDimension x="100" y="0" />
+				<Size>
+					<AbsDimension x="100" y="21" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="CEPGP_button_guild">
+						<Offset>
+							<AbsDimension x="100" y="0" />
 						</Offset>
 					</Anchor>
 				</Anchors>
-                <Scripts>
-					<OnLoad>
-						if not UnitInRaid("player") or CEPGP_debugMode then
-							this:Hide();
-						end
-					</OnLoad>
-                    <OnClick>
-                        PlaySound("gsTitleOptionExit");
-						CEPGP_toggleFrame("CEPGP_raid");
-						CEPGP_mode = "raid";
-						CEPGP_populateFrame();
-                    </OnClick>
-                </Scripts>
-            </Button>
-			<Button name="CEPGP_button_loot_dist" inherits="GameMenuButtonTemplate" text="Loot Distribution">
-                <Size>
-                    <AbsDimension x="125" y="21" />
-                </Size>
-                <Anchors>
-                    <Anchor point="RIGHT" relativeTo="CEPGP_button_raid">
-                        <Offset>
-                            <AbsDimension x="155" y="0" />
-						</Offset>
-					</Anchor>
-				</Anchors>
-                <Scripts>
+				<Scripts>
 					<OnLoad>
 						if not UnitInRaid("player") or CEPGP_debugMode then
 							this:Hide();
 						end
 					</OnLoad>
 					<OnClick>
-                        PlaySound("gsTitleOptionExit");
+						PlaySound("gsTitleOptionExit");
+						CEPGP_toggleFrame("CEPGP_raid");
+						CEPGP_mode = "raid";
+						CEPGP_populateFrame();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CEPGP_button_loot_dist" inherits="GameMenuButtonTemplate" text="Loot Distribution">
+				<Size>
+					<AbsDimension x="125" y="21" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="CEPGP_button_raid">
+						<Offset>
+							<AbsDimension x="155" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						if not UnitInRaid("player") or CEPGP_debugMode then
+							this:Hide();
+						end
+					</OnLoad>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
 						CEPGP_toggleFrame("CEPGP_loot");
 						CEPGP_mode = "loot";
 						CEPGP_cleanTable();
@@ -615,26 +690,26 @@
 							CEPGP_LootFrame_Update();
 						end
 					</OnClick>
-                </Scripts>
-            </Button>
+				</Scripts>
+			</Button>
 			<Button name="CEPGP_frame_close" inherits="UIPanelCloseButton">
-                <Size>
-                    <AbsDimension x="40" y="40" />
-                </Size>
-                <Anchors>
-                    <Anchor point="TOPRIGHT">
-                        <Offset>
-                            <AbsDimension x="-3" y="-3" />
+				<Size>
+					<AbsDimension x="40" y="40" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-3" y="-3" />
 						</Offset>
 					</Anchor>
 				</Anchors>
-                <Scripts>
-                    <OnClick>
-                        PlaySound("gsTitleOptionExit");
-                        CEPGP_frame:Hide()
-                    </OnClick>
-                </Scripts>
-            </Button>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						CEPGP_frame:Hide()
+					</OnClick>
+				</Scripts>
+			</Button>
 			<Button name="distributing" inherits="GameMenuButtonTemplate" text="Distributing" hidden="true">
 				<Size>
 					<AbsDimension x="100" y="22" />
@@ -2232,6 +2307,36 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
+						<FontString name="CEPGP_options_standby_ep_byrank" inherits="GameFontNormal" text="Award Standby EP by Rank: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="RIGHT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="-40" y="-32.5" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_manual" inherits="GameFontNormal" text="Award Standby EP by Player: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="CEPGP_options_standby_ep_byrank">
+									<Offset>
+										<AbsDimension x="0" y="-5" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_byrank" inherits="GameFontNormal" text="Award Standby EP by Rank: ">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="RIGHT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="-40" y="-32.5" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
 						<FontString name="CEPGP_options_standby_ep_val_percent" inherits="GameFontNormal" text="Standby EP Percent: ">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
@@ -2248,6 +2353,16 @@
 								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_val_percent">
 									<Offset>
 										<AbsDimension x="0" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="CEPGP_options_standby_ep_accept_whispers" inherits="GameFontNormal" text="Allow Whispers for Standby EP Designation:">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="CEPGP_options_standby_ep_offline">
+									<Offset>
+										<AbsDimension x="0" y="-8" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -2431,7 +2546,7 @@
 							</OnEnterPressed>
 						</Scripts>
 					</EditBox>
-					<EditBox name="CEPGP_options_gp_base_edit" inherits="InputBoxTemplate">
+					<EditBox name="CEPGP_options_gp_base_edit" inherits="InputBoxTemplate" numeric="true">
 						<Size>
 							<AbsDimension x="40" y="20" />
 						</Size>
@@ -2895,7 +3010,7 @@
 						<Anchors>
 							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_val">
 								<Offset>
-									<AbsDimension x="85" y="0" />
+									<AbsDimension x="65" y="0" />
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -2903,6 +3018,103 @@
 							<OnLoad>
 								this:RegisterForClicks('LeftButtonDown');
 							</OnLoad>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_accept_whispers_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="RIGHT" relativeTo="CEPGP_options_standby_ep_offline_check">
+								<Offset>
+									<AbsDimension x="40" y="-17.5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+							<OnShow>
+								if CEPGP_standby_accept_whispers then
+									this:SetChecked(true);
+								end
+							</OnShow>
+							<OnClick>
+								if this:GetChecked() then
+									CEPGP_standby_accept_whispers = true;
+								else
+									CEPGP_standby_accept_whispers = false;
+								end
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_byrank_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="RIGHT" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="-15" y="-32.5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+							<OnShow>
+								this:SetChecked(CEPGP_standby_byrank);
+								if this:GetChecked() then
+									CEPGP_toggleStandbyRanks(true);
+									
+								else
+									CEPGP_toggleStandbyRanks(false);
+								end
+							</OnShow>
+							<OnClick>
+								if this:GetChecked() then
+									CEPGP_options_standby_ep_manual_check:SetChecked(false);
+									CEPGP_standby_manual = false;
+									CEPGP_standby_byrank = true;
+									CEPGP_options_standby_ep_list_button:Hide();
+									CEPGP_toggleStandbyRanks(true);
+								else
+									this:SetChecked(true);
+								end
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="CEPGP_options_standby_ep_manual_check" inherits="UIOptionsCheckButtonTemplate">
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="0" bottom="0" />
+						</HitRectInsets>
+						<Anchors>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CEPGP_options_standby_ep_byrank_check">
+								<Offset>
+									<AbsDimension x="0" y="8" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:RegisterForClicks('LeftButtonDown');
+							</OnLoad>
+							<OnShow>
+								this:SetChecked(CEPGP_standby_manual);
+							</OnShow>
+							<OnClick>
+								if this:GetChecked() then
+									CEPGP_options_standby_ep_byrank_check:SetChecked(false);
+									CEPGP_standby_manual = true;
+									CEPGP_standby_byrank = false;
+									CEPGP_options_standby_ep_list_button:Show();
+									CEPGP_toggleStandbyRanks(false);
+								else
+									this:SetChecked(true);
+								end
+							</OnClick>
 						</Scripts>
 					</CheckButton>
 					<CheckButton name="CEPGP_options_standby_ep_check_rank_1" inherits="UIOptionsCheckButtonTemplate">
@@ -3075,6 +3287,24 @@
 							</OnLoad>
 						</Scripts>
 					</CheckButton>
+					<Button name="CEPGP_options_standby_ep_list_button" inherits="GameMenuButtonTemplate" text="Standby List">
+						<Size>
+							<AbsDimension x="150" y="25"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="50"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("igMainMenuOptionCheckBoxOn");
+								CEPGP_toggleFrame("CEPGP_standby");
+							</OnClick>
+						</Scripts>
+					</Button>
 					<Button name="CEPGP_options_button_prev">
 						<Size>
 							<AbsDimension x="40" y="27.5"/>
@@ -3197,22 +3427,40 @@
 						<Scripts>
 							<OnClick>
 								PlaySound("gsTitleOptionExit");
-								if 0 >= tonumber(CEPGP_options_mod_edit:GetText()) then
-									CEPGP_print("Invalid number entered for GP modifier. Please enter a positive number", true);
+								local fail = false;
+								if not tonumber(CEPGP_options_mod_edit:GetText()) then
+									CEPGP_print("GP modifier cannot be blank", true);
+									fail = true;
+									CEPGP_options_mod_edit:SetText(tostring(MOD));
+								elseif 0 >= tonumber(CEPGP_options_mod_edit:GetText()) then
+									CEPGP_print("GP modifier cannot be 0", true);
+									fail = true;
+									CEPGP_options_mod_edit:SetText(tostring(MOD));
 								else
 									MOD = tonumber(CEPGP_options_mod_edit:GetText());
 								end
-								if 0 >= tonumber(CEPGP_options_coef_edit:GetText()) then
-									CEPGP_print("Invalid number entered for base coefficient. Please enter a positive number", true);
+								if not tonumber(CEPGP_options_coef_edit:GetText()) then
+									CEPGP_print("Base GP coefficient cannot be blank", true);
+									fail = true;
+									CEPGP_options_coef_edit:SetText(tostring(COEF));
+								elseif tonumber(CEPGP_options_coef_edit:GetText()) == 0 then
+									CEPGP_print("Base GP coefficient cannot be 0", true);
+									fail = true;
+									CEPGP_options_boef_edit:SetText(tostring(COEF));
 								else
 									COEF = tonumber(CEPGP_options_coef_edit:GetText());
 								end
-								if 0 >= tonumber(CEPGP_options_gp_base_edit:GetText()) then
-									if tonumber(CEPGP_options_gp_base_edit:GetText()) == 0 then
-										CEPGP_print("Base GP cannot be 0!", true);
-									else
-										CEPGP_print("Base GP must be a positive number", true);
-									end
+								if not tonumber(CEPGP_options_gp_base_edit:GetText()) then
+									CEPGP_print("Base GP cannot be blank", true);
+									fail = true;
+									CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
+								elseif tonumber(CEPGP_options_gp_base_edit:GetText()) == 0 then
+									CEPGP_print("Base GP cannot be 0", true);
+									fail = true;
+									CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
+								elseif 0 > tonumber(CEPGP_options_gp_base_edit:GetText()) then
+									CEPGP_print("Base GP must be a positive number", true);
+									CEPGP_options_gp_base_edit:SetText(tostring(BASEGP));
 								else
 									BASEGP = tonumber(CEPGP_options_gp_base_edit:GetText());
 								end
@@ -3265,7 +3513,6 @@
 									CEPGP_options_standby_ep_val:SetText(string.sub(CEPGP_options_standby_ep_val:GetText(), 0, string.find(CEPGP_options_standby_ep_val:GetText(), "%%")-1));
 								end
 								STANDBYPERCENT = tonumber(CEPGP_options_standby_ep_val:GetText());
-								local fail = false;
 								for k, v in pairs(SLOTWEIGHTS) do
 									if k == "ROBE" and CEPGP_isNumber(getglobal("CEPGP_options_CHEST_weight"):GetText()) then
 										SLOTWEIGHTS[k] = tonumber(getglobal("CEPGP_options_CHEST_weight"):GetText());
@@ -6720,7 +6967,366 @@
 					</OnDragStop>
 				</Scripts>
 			</Frame>
-			</Frames>
+			<Frame name="CEPGP_standby" enableMouse="true" toplevel="true" hidden="true">
+				<Size>
+					<AbsDimension x="400" y="450" />
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-30" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<Frame name="CEPGP_standby_scrollframe">
+						<Size>
+							<AbsDimension x="360" y="300"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CEPGP_standby" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="10" y="-75"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<ScrollFrame name="CEPGP_StandbyScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="360" y="350"/>
+								</Size>
+								<Anchors>
+									<Anchor point="RIGHT">
+										<Offset>
+											<AbsDimension x="-7" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										FauxScrollFrame_OnVerticalScroll(240, CEPGP_UpdateStandbyScrollBar); 
+									</OnVerticalScroll>
+									<OnShow>
+										CEPGP_UpdateStandbyScrollBar();
+									</OnShow>
+								</Scripts>
+							</ScrollFrame>
+							<Button name="CEPGP_StandbyButton1" inherits="StandbyButtonTemplate" id="1" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="5" y="-6"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton2" inherits="StandbyButtonTemplate" id="2" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton1" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton3" inherits="StandbyButtonTemplate" id="3" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton2" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton4" inherits="StandbyButtonTemplate" id="4" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton3" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton5" inherits="StandbyButtonTemplate" id="5" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton4" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton6" inherits="StandbyButtonTemplate" id="6" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton5" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton7" inherits="StandbyButtonTemplate" id="7" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton6" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton8" inherits="StandbyButtonTemplate" id="8" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton7" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton9" inherits="StandbyButtonTemplate" id="9" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton8" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton10" inherits="StandbyButtonTemplate" id="10" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton9" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton11" inherits="StandbyButtonTemplate" id="11" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton10" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton12" inherits="StandbyButtonTemplate" id="12" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton11" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton13" inherits="StandbyButtonTemplate" id="13" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton12" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton14" inherits="StandbyButtonTemplate" id="14" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton13" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton15" inherits="StandbyButtonTemplate" id="15" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton14" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton16" inherits="StandbyButtonTemplate" id="16" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton15" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton17" inherits="StandbyButtonTemplate" id="17" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="CEPGP_StandbyButton16" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="CEPGP_StandbyButton18" inherits="StandbyButtonTemplate" id="18" hidden="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="StandbyButton17" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Scripts>
+							<OnLoad>
+								this:SetBackdropColor(0.1, 0.1, 0.1);
+							</OnLoad>
+						</Scripts>
+						</Frames>
+					</Frame>
+					<Button name="CEPGP_standby_ep_list_add" inherits="GameMenuButtonTemplate" text="Add to Standby">
+						<Size>
+							<AbsDimension x="100" y="25" />
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="10" y="25"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySound("gsTitleOptionExit");
+								ShowUIPanel(CEPGP_context_popup);
+								CEPGP_ListButton_OnClick();
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_standby_name" inherits="CEPGPHeaderButton" text="Name">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="5" y="-50" />
+									<!--<AbsDimension x="40" y="0" />-->
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CEPGP_setCriteria(1, "Guild");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_standby_class" inherits="CEPGPHeaderButton" text="Class">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_standby_name">
+								<Offset>
+									<AbsDimension x="85" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CEPGP_setCriteria(2, "Guild");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_standby_rank" inherits="CEPGPHeaderButton" text="Rank">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_standby_class">
+								<Offset>
+									<AbsDimension x="75" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CEPGP_setCriteria(4, "Guild");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_standby_EP" inherits="CEPGPHeaderButton" text="EP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_standby_rank">
+								<Offset>
+									<AbsDimension x="85" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CEPGP_setCriteria(5, "Guild");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_standby_GP" inherits="CEPGPHeaderButton" text="GP">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_standby_EP">
+								<Offset>
+									<AbsDimension x="35" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CEPGP_setCriteria(6, "Guild");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="CEPGP_standby_PR" inherits="CEPGPHeaderButton" text="PR">
+						<Size>
+							<AbsDimension x="50" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="CEPGP_standby_GP">
+								<Offset>
+									<AbsDimension x="45" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								CEPGP_setCriteria(7, "Guild");
+							</OnClick>
+						</Scripts>
+					</Button>
+					
+				</Frames>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="CEPGP_standby_CEPGP_mode" inherits="GameFontNormal" text="Current View: Standby List">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="CENTER" relativePoint="TOP" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnDragStart>
+						CEPGP_frame:StartMoving()
+					</OnDragStart>
+					<OnDragStop>
+						CEPGP_frame:StopMovingOrSizing()
+					</OnDragStop>
+				</Scripts>
+			</Frame>
+		</Frames>
 		<Scripts>
 			<OnLoad>
 				this:RegisterEvent("LOOT_OPENED");
@@ -7142,14 +7748,14 @@
 					</Anchors>
 				</FontString>
 				<FontString name="CEPGP_distribute_popup_title" inherits="GameFontNormal" text="Item Info">
-                    <Anchors>
-                        <Anchor point="BOTTOM" relativeTo="CEPGP_distribute_popup_header">
-                            <Offset>
-                                <AbsDimension x="0" y="-30"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </FontString>
+					<Anchors>
+						<Anchor point="BOTTOM" relativeTo="CEPGP_distribute_popup_header">
+							<Offset>
+								<AbsDimension x="0" y="-30"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
@@ -7291,23 +7897,23 @@
 					</Anchors>
 				</FontString>
 				<FontString name="CEPGP_context_popup_title" inherits="GameFontNormal" text="Add Guild EP">
-                    <Anchors>
-                        <Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_header">
-                            <Offset>
-                                <AbsDimension x="0" y="-20"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </FontString>
+					<Anchors>
+						<Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_header">
+							<Offset>
+								<AbsDimension x="0" y="-20"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 				<FontString name="CEPGP_context_popup_desc" inherits="GameFontNormal" text="Add Guild EP">
-                    <Anchors>
-                        <Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_title">
-                            <Offset>
-                                <AbsDimension x="0" y="-45"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </FontString>
+					<Anchors>
+						<Anchor point="BOTTOM" relativeTo="CEPGP_context_popup_title">
+							<Offset>
+								<AbsDimension x="0" y="-45"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
@@ -7355,9 +7961,9 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<EditBox name="CEPGP_context_amount" inherits="InputBoxTemplate">
+			<EditBox name="CEPGP_context_amount" inherits="InputBoxTemplate" letters="15">
 				<Size>
-					<AbsDimension x="50" y="20" />
+					<AbsDimension x="105" y="20" />
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER">
@@ -7402,8 +8008,8 @@
 					<Anchor point="BOTTOMLEFT">
 						<Offset>
 							<AbsDimension x="16" y="16"/>
-					</Offset>
-				</Anchor>
+						</Offset>
+					</Anchor>
 				</Anchors>
 			</Button>
 		</Frames>
@@ -7464,14 +8070,14 @@
 					</Anchors>
 				</FontString>
 				<FontString name="CEPGP_guild_log_save_desc" inherits="GameFontNormal" text="">
-                    <Anchors>
-                        <Anchor point="CENTER">
-                            <Offset>
-                                <AbsDimension x="0" y="35"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </FontString>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="35"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
@@ -7631,14 +8237,14 @@
 					</Anchors>
 				</FontString>
 				<FontString name="CEPGP_guild_log_restore_desc" inherits="GameFontNormal" text="">
-                    <Anchors>
-                        <Anchor point="CENTER">
-                            <Offset>
-                                <AbsDimension x="0" y="35"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </FontString>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="35"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
@@ -7793,14 +8399,14 @@
 					</Anchors>
 				</FontString>
 				<FontString name="CEPGP_settings_import_desc" inherits="GameFontNormal">
-                    <Anchors>
-                        <Anchor point="CENTER">
-                            <Offset>
-                                <AbsDimension x="0" y="35"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </FontString>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="35"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
@@ -7883,6 +8489,7 @@
 			</OnDragStop>
 		</Scripts>
 	</Frame>
+	
 	<Frame name="CEPGP_override" toplevel="true" frameStrata="DIALOG" enableMouse="true" parent="UIParent" hidden="true" movable="true">
 		<Size>
 			<AbsDimension x="400" y="480"/>
@@ -8027,23 +8634,23 @@
 				</Scripts>
 			</EditBox>
 			<Button name="CEPGP_override_close" inherits="UIPanelCloseButton">
-                <Size>
-                    <AbsDimension x="40" y="40" />
-                </Size>
-                <Anchors>
-                    <Anchor point="TOPRIGHT">
-                        <Offset>
-                            <AbsDimension x="-3" y="-3" />
+				<Size>
+					<AbsDimension x="40" y="40" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-3" y="-3" />
 						</Offset>
 					</Anchor>
 				</Anchors>
-                <Scripts>
-                    <OnClick>
-                        PlaySound("gsTitleOptionExit");
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
 							HideUIPanel(CEPGP_override);
-                    </OnClick>
-                </Scripts>
-            </Button>
+					</OnClick>
+				</Scripts>
+			</Button>
 			<Button name="CEPGP_override_confirm" inherits="GameMenuButtonTemplate" text="Add Override">
 				<Size>
 					<AbsDimension x="150" y="30"/>
@@ -8433,23 +9040,23 @@
 				</Scripts>
 			</Button>
 			<Button name="CEPGP_traffic_close" inherits="UIPanelCloseButton">
-                <Size>
-                    <AbsDimension x="40" y="40" />
-                </Size>
-                <Anchors>
-                    <Anchor point="TOPRIGHT">
-                        <Offset>
-                            <AbsDimension x="-3" y="-3" />
+				<Size>
+					<AbsDimension x="40" y="40" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-3" y="-3" />
 						</Offset>
 					</Anchor>
 				</Anchors>
-                <Scripts>
-                    <OnClick>
-                        PlaySound("gsTitleOptionExit");
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
 						HideUIPanel(CEPGP_traffic);
-                    </OnClick>
-                </Scripts>
-            </Button>
+					</OnClick>
+				</Scripts>
+			</Button>
 			<Frame name="CEPGP_traffic_scrollframe">
 				<Size>
 					<AbsDimension x="760" y="300"/>
