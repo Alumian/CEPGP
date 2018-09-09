@@ -2130,7 +2130,7 @@ function CEPGP_handleCombat(event, arg1, arg2)
 				end
 			end
 			if (((GetLootMethod() == "master" and CEPGP_isML() == 0) or (GetLootMethod() == "group" and isLead == 2)) and CEPGP_ntgetn(CEPGP_roster) > 0) or CEPGP_debugMode then
-				if CEPGP_tContains(bossNameIndex, string.lower(name), true) then --[[ If the npc is in the boss name index ]]--
+				if CEPGP_tContains(bossNameIndex, string.lower(name), true) then -- If the npc is in the boss name index
 					EP = EPVALS[string.lower(name)]
 					if AUTOEP[string.lower(name)] and EP > 0 then
 						if name == "Lord Kri" or name == "Vem" or name == "Princess Yauj" then
@@ -2138,32 +2138,33 @@ function CEPGP_handleCombat(event, arg1, arg2)
 							CEPGP_kills = CEPGP_kills + 1;
 							if CEPGP_kills == 3 then
 								CEPGP_kills = 0;
-								CEPGP_AddRaidEP(EP, "The Bug Trio have been slain! The raid has been awarded " .. EP .. " EP", "The Bug Trio");
+								name = "The Bug Trio";
+								CEPGP_AddRaidEP(EP, "The Bug Trio have been slain! The raid has been awarded " .. EP .. " EP", name);
 								if STANDBYEP then
-									TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Bug Trio"};
-									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Bug Trio");
+									TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name};
+									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name);
 									CEPGP_UpdateTrafficScrollBar();
-									for k, v in pairs(CEPGP_roster) do
-										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
+									for k, v in pairs(CEPGP_roster) do -- The following module handles standby EP
+										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then -- If the player in question is NOT in the raid group, then proceed
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
-											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+											if online == 1 or (STANDBYOFFLINE and not online) or (not STANDBYOFFLINE and online == 1) then
 												if CEPGP_standby_byrank then
 													for i = 1, table.getn(STANDBYRANKS) do
 														if STANDBYRANKS[i][1] == rank then
 															if STANDBYRANKS[i][2] == true then
-																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Bug Trio");
+																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
 															end
 														end
 													end
 												elseif CEPGP_standby_manual then
 													for i = 1, table.getn(CEPGP_standbyRoster) do
-														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "The Bug Trio");
+														CEPGP_print(CEPGP_standbyRoster[i]);
+														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
 													end
 												end
 											end
 										end
 									end
-									CEPGP_UpdateStandbyScrollBar();
 								end
 							end
 						elseif name == "Emperor Vek'lor" or name == "Emperor Vek'nilash" then
@@ -2171,32 +2172,33 @@ function CEPGP_handleCombat(event, arg1, arg2)
 							CEPGP_kills = CEPGP_kills + 1;
 							if CEPGP_kills == 2 then
 								CEPGP_kills = 0;
-								CEPGP_AddRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP", "The Twin Emperors");
+								name = "The Twin Emperors";
+								CEPGP_AddRaidEP(EP, "The Twin Emperors have been slain! The raid has been awarded " .. EP .. " EP", name);
 								if STANDBYEP then
-									TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Twin Emperors"};
-									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Twin Emperors");
+									TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name};
+									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name);
 									CEPGP_UpdateTrafficScrollBar();
-									for k, v in pairs(CEPGP_roster) do
-										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
+									for k, v in pairs(CEPGP_roster) do -- The following module handles standby EP
+										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then -- If the player in question is NOT in the raid group, then proceed
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
-											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+											if online == 1 or (STANDBYOFFLINE and not online) or (not STANDBYOFFLINE and online == 1) then
 												if CEPGP_standby_byrank then
 													for i = 1, table.getn(STANDBYRANKS) do
 														if STANDBYRANKS[i][1] == rank then
 															if STANDBYRANKS[i][2] == true then
-																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Twin Emperors");
+																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
 															end
 														end
 													end
 												elseif CEPGP_standby_manual then
 													for i = 1, table.getn(CEPGP_standbyRoster) do
-														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "The Twin Emperors");
+														CEPGP_print(CEPGP_standbyRoster[i]);
+														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
 													end
 												end
 											end
 										end
 									end
-									CEPGP_UpdateStandbyScrollBar();
 								end
 							end
 						elseif name == "Highlord Mograine" or name == "Thane Korth'azz" or name == "Lady Blaumeux" or name == "Sir Zeliek" then
@@ -2204,26 +2206,28 @@ function CEPGP_handleCombat(event, arg1, arg2)
 							CEPGP_kills = CEPGP_kills + 1;
 							if CEPGP_kills == 4 then
 								CEPGP_kills = 0;
-								CEPGP_AddRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP", "The Four Horsemen");
+								name = "The Four Horsemen";
+								CEPGP_AddRaidEP(EP, "The Four Horsemen have been slain! The raid has been awarded " .. EP .. " EP", name);
 								if STANDBYEP then
-									TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Four Horsemen"};
-									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - The Four Horsemen");
+									TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name};
+									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name);
 									CEPGP_UpdateTrafficScrollBar();
-									for k, v in pairs(CEPGP_roster) do
-										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
+									for k, v in pairs(CEPGP_roster) do -- The following module handles standby EP
+										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then -- If the player in question is NOT in the raid group, then proceed
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
-											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+											if online == 1 or (STANDBYOFFLINE and not online) or (not STANDBYOFFLINE and online == 1) then
 												if CEPGP_standby_byrank then
 													for i = 1, table.getn(STANDBYRANKS) do
 														if STANDBYRANKS[i][1] == rank then
 															if STANDBYRANKS[i][2] == true then
-																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "The Four Horsemen");
+																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
 															end
 														end
 													end
 												elseif CEPGP_standby_manual then
 													for i = 1, table.getn(CEPGP_standbyRoster) do
-														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "The Four Horsemen");
+														CEPGP_print(CEPGP_standbyRoster[i]);
+														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
 													end
 												end
 											end
@@ -2234,26 +2238,28 @@ function CEPGP_handleCombat(event, arg1, arg2)
 						elseif name == "High Priest Thekal" then
 							this:RegisterEvent("PLAYER_REGEN_ENABLED");
 							if CEPGP_THEKAL_PARAMS["THEKAL_DEAD"] then
-								CEPGP_AddRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid", "High Priest Thekal");
+								name = "High Priest Thekal";
+								CEPGP_AddRaidEP(EP, name .. " has been defeated! " .. EP .. " EP has been awarded to the raid", name);
 								if STANDBYEP then
-									TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - High Priest Thekal"};
-									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - High Priest Thekal");
+									TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name};
+									CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name);
 									CEPGP_UpdateTrafficScrollBar();
-									for k, v in pairs(CEPGP_roster) do
-										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
+									for k, v in pairs(CEPGP_roster) do -- The following module handles standby EP
+										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then -- If the player in question is NOT in the raid group, then proceed
 											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
-											if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+											if online == 1 or (STANDBYOFFLINE and not online) or (not STANDBYOFFLINE and online == 1) then
 												if CEPGP_standby_byrank then
 													for i = 1, table.getn(STANDBYRANKS) do
 														if STANDBYRANKS[i][1] == rank then
 															if STANDBYRANKS[i][2] == true then
-																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "High Priest Thekal");
+																CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
 															end
 														end
 													end
 												elseif CEPGP_standby_manual then
 													for i = 1, table.getn(CEPGP_standbyRoster) do
-														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "High Priest Thekal");
+														CEPGP_print(CEPGP_standbyRoster[i]);
+														CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
 													end
 												end
 											end
@@ -2269,10 +2275,10 @@ function CEPGP_handleCombat(event, arg1, arg2)
 								TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name};
 								CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name);
 								CEPGP_UpdateTrafficScrollBar();
-								for k, v in pairs(CEPGP_roster) do
-									if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
+								for k, v in pairs(CEPGP_roster) do -- The following module handles standby EP
+									if not CEPGP_tContains(CEPGP_raidRoster, k, true) then -- If the player in question is NOT in the raid group, then proceed
 										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
-										if (STANDBYOFFLINE and online == 1) or (not STANDBYOFFLINE and online == 1) then
+										if online == 1 or (STANDBYOFFLINE and not online) or (not STANDBYOFFLINE and online == 1) then
 											if CEPGP_standby_byrank then
 												for i = 1, table.getn(STANDBYRANKS) do
 													if STANDBYRANKS[i][1] == rank then
@@ -2283,6 +2289,7 @@ function CEPGP_handleCombat(event, arg1, arg2)
 												end
 											elseif CEPGP_standby_manual then
 												for i = 1, table.getn(CEPGP_standbyRoster) do
+													CEPGP_print(CEPGP_standbyRoster[i]);
 													CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
 												end
 											end
@@ -2299,26 +2306,28 @@ function CEPGP_handleCombat(event, arg1, arg2)
 					CEPGP_kills = CEPGP_kills + 1;
 					if CEPGP_kills == 8 then
 						CEPGP_kills = 0;
-						CEPGP_AddRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP", "Majordomo Executus");
+						name = "Majordomo Executus";
+						CEPGP_AddRaidEP(EP, "Majordomo Executus has been defeated! The raid has been awarded " .. EP .. " EP", name);
 						if STANDBYEP then
-							TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - Majordomo Executus"};
-							CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - Majordomo Executus");
+							TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name};
+							CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name);
 							CEPGP_UpdateTrafficScrollBar();
-							for k, v in pairs(CEPGP_roster) do
-								if not CEPGP_tContains(CEPGP_raidRoster, k, true) then
+							for k, v in pairs(CEPGP_roster) do -- The following module handles standby EP
+								if not CEPGP_tContains(CEPGP_raidRoster, k, true) then -- If the player in question is NOT in the raid group, then proceed
 									local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
-									if (STANDBYOFFLINE and online == 1) or online == 1 then
+									if online == 1 or (STANDBYOFFLINE and not online) or (not STANDBYOFFLINE and online == 1) then
 										if CEPGP_standby_byrank then
 											for i = 1, table.getn(STANDBYRANKS) do
 												if STANDBYRANKS[i][1] == rank then
 													if STANDBYRANKS[i][2] == true then
-														CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), "Majordomo Executus");
+														CEPGP_addStandbyEP(pName, EP*(STANDBYPERCENT/100), name);
 													end
 												end
 											end
 										elseif CEPGP_standby_manual then
 											for i = 1, table.getn(CEPGP_standbyRoster) do
-												CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), "Majordomo Executus");
+												CEPGP_print(CEPGP_standbyRoster[i]);
+												CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
 											end
 										end
 									end
