@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-CEPGP_VERSION = "1.9.5";
+CEPGP_VERSION = "1.9.6";
 SLASH_CEPGP1 = "/cepgp";
 CEPGP_VERSION_NOTIFIED = false;
 CEPGP_mode = "guild";
@@ -45,7 +45,8 @@ COEF = nil;
 BASEGP = nil;
 STANDBYEP = false;
 STANDBYOFFLINE = false;
-CEPGP_standby_accept_whispers = true;
+CEPGP_standby_accept_whispers = false;
+CEPGP_standby_whisper_msg = "!standby";
 CEPGP_standby_byrank = true;
 CEPGP_standby_manual = false;
 STANDBYPERCENT = nil;
@@ -70,7 +71,7 @@ function CEPGP_OnEvent()
 	elseif event == "GUILD_ROSTER_UPDATE" or event == "RAID_ROSTER_UPDATE" then
 		CEPGP_rosterUpdate(event);
 		
-	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "$standby" and CEPGP_standby_manual and CEPGP_standby_accept_whispers then
+	elseif event == "CHAT_MSG_WHISPER" and string.lower(arg1) == CEPGP_standby_whisper_msg and CEPGP_standby_manual and CEPGP_standby_accept_whispers then
 		if not CEPGP_tContains(CEPGP_standbyRoster, arg2)
 		and not CEPGP_tContains(CEPGP_raidRoster, arg2, true)
 		and CEPGP_tContains(CEPGP_roster, arg2, true) then
@@ -1898,6 +1899,7 @@ function CEPGP_rosterUpdate(event)
 		elseif CEPGP_mode == "raid" then
 			CEPGP_UpdateRaidScrollBar();
 		end
+		CEPGP_UpdateStandbyScrollBar();
 	elseif event == "RAID_ROSTER_UPDATE" then
 		CEPGP_vInfo = {};
 		CEPGP_SendAddonMsg("version-check", "RAID");
@@ -2189,11 +2191,11 @@ function CEPGP_handleCombat(event, arg1, arg2)
 								TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name};
 								CEPGP_ShareTraffic("Guild", "Standby EP +" .. EP*(STANDBYPERCENT/100) .. " - " .. name);
 								CEPGP_UpdateTrafficScrollBar();
-								for k, v in pairs(CEPGP_roster) do -- The following module handles standby EP
-									if not CEPGP_tContains(CEPGP_raidRoster, k, true) then -- If the player in question is NOT in the raid group, then proceed
-										local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
-										if online == 1 or (STANDBYOFFLINE and not online) or (not STANDBYOFFLINE and online == 1) then
-											if CEPGP_standby_byrank then
+								if CEPGP_standby_byrank then
+									for k, v in pairs(CEPGP_roster) do -- The following module handles standby EP
+										if not CEPGP_tContains(CEPGP_raidRoster, k, true) then -- If the player in question is NOT in the raid group, then proceed
+											local pName, rank, _, _, _, _, _, _, online = GetGuildRosterInfo(CEPGP_roster[k][1]);
+											if online == 1 or (STANDBYOFFLINE and not online) or (not STANDBYOFFLINE and online == 1) then
 												for i = 1, table.getn(STANDBYRANKS) do
 													if STANDBYRANKS[i][1] == rank then
 														if STANDBYRANKS[i][2] == true then
@@ -2201,13 +2203,12 @@ function CEPGP_handleCombat(event, arg1, arg2)
 														end
 													end
 												end
-											elseif CEPGP_standby_manual then
-												for i = 1, table.getn(CEPGP_standbyRoster) do
-													CEPGP_print(CEPGP_standbyRoster[i]);
-													CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
-												end
 											end
 										end
+									end
+								elseif CEPGP_standby_manual then
+									for i = 1, table.getn(CEPGP_standbyRoster) do
+										CEPGP_addStandbyEP(CEPGP_standbyRoster[i], EP*(STANDBYPERCENT/100), name);
 									end
 								end
 							end
@@ -2226,7 +2227,7 @@ function CEPGP_handleCombat(event, arg1, arg2)
 			CEPGP_UpdateStandbyScrollBar();
 		end
 		
-	elseif event == "PLAYER_REGEN_ENABLED" then
+	elseif event == "PLAYER_REGEN_ENABLED" then -- Player has been removed from combat. Shouldn't trigger for feign death / vanish / combat res
 		CEPGP_kills = 0;
 		CEPGP_RAZORGORE_EGG_COUNT = 0;
 		CEPGP_THEKAL_PARAMS = {["ZATH_DEAD"] = false, ["LOR'KHAN_DEAD"] = false, ["THEKAL_DEAD"] = false};
