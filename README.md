@@ -1,4 +1,4 @@
-# Burning Crusade EPGP
+# Classic EPGP
 **Do not redistribute this addon. Post a link to this github page instead**
 
 An addon designed to handle your guild's EPGP standings by storing the respective values in your Officer Notes. Another primary function of the addon is to handle loot moderation which you must be the master looter to utilise.
@@ -8,13 +8,12 @@ For this addon to work, anyone using the addon must be able to at the very least
 The addon is entirely GUI based and the frame is designed to only appear automatically on raid bosses.
 
 Functionality:
-* Either /bcepgp or /bce can be used as a valid command call
-* show - Shows the bcepgp window
-* debug - Enables debug mode
+* Either /cepgp or /cep can be used as a valid command call
+* show - Shows the cepgp window
 * setdefaultchannel - Changes the default reporting channel. This is set to Guild by default
 * version - Allows you to check if each raid member is running the addon - and if so, what version of the addon they are using
 
-**Note: bcepgp is a context sensitive addon and elements will be visible when they are relevent**
+**Note: cepgp is a context sensitive addon and elements will be visible when they are relevent**
 
 Any function that involves modifying EPGP standings requires you to be able to edit officer notes to have it available to you.
 
@@ -41,7 +40,7 @@ __**IMPORTANT**__ - The initial/minimum GP should NEVER be exactly 0.
 To install:
   1. Download this addon 
   2. Extract it to ../Interface/AddOns/ 
-  3. Rename the extracted folder from bcepgp-master to bcepgp
+  3. Rename the extracted folder from cepgp-master to cepgp
 
 **Note:**
 If you get an error when adding an item to override for example (such as item not found), but you're sure you've spelled it correctly, then the item likely does not exist in your cache. This is a restriction in the API, items are cached as you see them in game. After seeing this item, you should not receive this error again (unless you delete your cache). This error should not prevent any functionality.
