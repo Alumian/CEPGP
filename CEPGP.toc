@@ -1,0 +1,16 @@
+## Interface:11200
+## Title: Classic EPGP
+## Author: Alumian
+## Notes: Classic EPGP handles your guild's EPGP and master loot distribution. Usage: /CEPGP or /bce for options
+## SavedVariables: CHANNEL, MOD, AUTOEP, EPVALS, BASEGP, STANDBYEP, STANDBYOFFLINE, STANDBYPERCENT, STANDBYRANKS, SLOTWEIGHTS, RECORDS, OVERRIDE_INDEX, TRAFFIC, CEPGP_standby_accept_whispers, CEPGP_standby_byrank, CEPGP_standby_manual, CEPGP_standby_whisper_msg, CEPGP_notice
+
+Virtual.xml
+Frame.xml
+Button.lua
+Utility.lua
+Scrollbar.lua
+Loot.lua
+Communications.lua
+Handlers.lua
+Index.lua
+Core.lua

@@ -1,0 +1,795 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	
+	<Button name="CEPGPHeaderButton" virtual="true">
+		<ButtonText name="$parentText"/>
+		<NormalFont inherits="GameFontNormal"/>
+		<HighlightFont inherits="GameFontHighlight"/>
+		<DisabledFont inherits="GameFontDisable"/>
+	</Button>
+	
+	<CheckButton name="UIOptionsCheckButtonTemplate" virtual="true" inherits="OptionsCheckButtonTemplate">
+		<Size>
+			<AbsDimension x="25" y="25" />
+		</Size>
+	</CheckButton>
+	
+	<Frame name="CEPGPFrameTemplate" virtual="true" enableMouse="true" toplevel="true" hidden="true">
+		<Size>
+			<AbsDimension x="450" y="450" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="-30" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+		<OnMouseDown>
+			CEPGP_frame:StartMoving()
+		</OnMouseDown>
+		<OnMouseUp>
+			CEPGP_frame:StopMovingOrSizing()
+		</OnMouseUp>
+	</Scripts>
+	</Frame>
+	
+	<Button name="LootDistButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="420" y="15"/>
+		</Size>
+		<Frames>
+			<Button name="$parentTex">
+				<Size>
+					<AbsDimension x="15" y="15" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="390" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentTex2">
+				<Size>
+					<AbsDimension x="15" y="15" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTex" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentClass" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="80" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRank" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="150" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="262.5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="312.5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPR" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="367.5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				if CEPGP_isML() == 0 or CEPGP_debugMode then
+					CEPGP_ListButton_OnClick();
+				end
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="GuildButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="420" y="15"/>
+		</Size>
+		<Frames>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentClass" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="90" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRank" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="165" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="290" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="340" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPR" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="400" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				CEPGP_ListButton_OnClick();
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="RaidButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="420" y="15"/>
+		</Size>
+		<Frames>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentGroup" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="40" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRank" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="140" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="290" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="340" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPR" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="400" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+				CEPGP_ListButton_OnClick();
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="versionButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="420" y="15"/>
+		</Size>
+		<Frames>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentname" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="45" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentversion" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="-105" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="lootOverrideButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="420" y="15"/>
+		</Size>
+		<Frames>
+			<Button name="$parentDelete" inherits="UIPanelCloseButton">
+				<Size>
+					<AbsDimension x="30" y="30" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parentitem">
+						<Offset>
+							<AbsDimension x="380" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						CEPGP_ListButton_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentitem" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentitem" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="350" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+			<OnEnter>
+				if GetItemInfo(getglobal(this:GetName() .. "item"):GetText()) then
+					CEPGP_setOverrideLink(this:GetName() .. "item", "enter");
+				end
+			</OnEnter>
+			<OnLeave>
+				if GetItemInfo(getglobal(this:GetName() .. "item"):GetText()) then
+					CEPGP_setOverrideLink(this:GetName() .. "item", "leave");
+				end
+			</OnLeave>
+			<OnShow>
+				local item = getglobal(this:GetName() .. "item"):GetText();
+				if item then
+					if GetItemInfo(item) then
+						local _, link = GetItemInfo(item);
+						if link and not OVERRIDE_INDEX[link] then
+							local gp = OVERRIDE_INDEX[item];
+							OVERRIDE_INDEX[item] = nil;
+							OVERRIDE_INDEX[link] = gp;
+							CEPGP_UpdateOverrideScrollBar();
+						end
+					end
+				end
+			</OnShow>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="trafficButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="760" y="15"/>
+		</Size>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentName" inherits="GameFontHighlightSmall" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentIssuer" inherits="GameFontHighlightSmall" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="105" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentAction" inherits="GameFontHighlightSmall" justifyH="RIGHT">
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentName" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="480" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEPBefore" inherits="GameFontHighlightSmall" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentAction" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="50" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEPAfter" inherits="GameFontHighlightSmall" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentEPBefore" relativePoint="CENTER">
+							<Offset>
+								<AbsDimension x="50" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGPBefore" inherits="GameFontHighlightSmall" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentEPAfter" relativePoint="CENTER">
+							<Offset>
+								<AbsDimension x="80" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGPAfter" inherits="GameFontHighlightSmall" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentGPBefore" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="50" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentItem">
+				<Size>
+					<AbsDimension x="250" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentIssuer">
+						<Offset>
+							<AbsDimension x="25" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentName" inherits="GameFontNormalSmall" justifyH="LEFT"/>
+					</Layer>
+				</Layers>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="StandbyButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="420" y="15"/>
+		</Size>
+		<Frames>
+			<Button name="$parentClose" inherits="UiPanelCloseButton">
+				<Size>
+					<AbsDimension x="20" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="5" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						CEPGP_ListButton_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentInfo" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="-5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentClass" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="85" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRank" inherits="GameFontHighlight" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="160" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="260" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGP" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="320" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPR" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="380" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonDown");
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+	</Button>
+	
+	<EditBox name="epValInputBoxTemplate" inherits="InputBoxTemplate" numeric="true" virtual="true">
+		<Size>
+			<AbsDimension x="50" y="10" />
+		</Size>
+		<Scripts>
+			<OnLoad>
+				this:SetAutoFocus(false);
+			</OnLoad>
+			<OnEnterPressed>
+				this:ClearFocus();
+			</OnEnterPressed>
+			<OnEditFocusLost>
+				local name = strsub(this:GetName(), 15, strfind(this:GetName(), "_EP")-1);
+				local value = this:GetText();
+				if value == "" or not CEPGP_isNumber(value) then
+					this:SetText(tostring(EPVALS[name]));
+				elseif value == EPVALS[name] then
+					return;
+				elseif EPVALS[name] ~= tonumber(value) then
+					if name == "The Edge of Madness" then
+						EPVALS["Gri'lek"] = value;
+						EPVALS["Hazza'rah"] = value;
+						EPVALS["Renataki"] = value;
+						EPVALS["Wushoolay"] = value;
+					elseif name == "The Bug Trio" then
+						EPVALS["Princess Yauj"] = value;
+						EPVALS["Vem"] = value;
+						EPVALS["Lord Kri"] = value;
+					elseif name == "The Twin Emperors" then
+						EPVALS["Emperor Vek'lor"] = value;
+						EPVALS["Emperor Vek'nilash"] = value;
+					elseif name == "The Four Horseman" then
+						EPVALS["Highlord Mograine"] = value;
+						EPVALS["Thane Korth'azz"] = value;
+						EPVALS["Lady Blaumeux"] = value;
+						EPVALS["Sir Zeliek"] = value;
+					else
+						EPVALS[name] = value;
+					end
+					CEPGP_print("Updated EP awarded for " .. name);
+				end
+			</OnEditFocusLost>
+			<OnShow>
+				local name = strsub(this:GetName(), 15, strfind(this:GetName(), "_EP")-1);
+				local target = getglobal("CEPGP_options_" .. name .. "_val");
+				if name == "The Edge of Madness" then
+					name = "Gri'lek"; --All bosses in the edge of madness will have the same value
+				elseif name == "The Bug Trio" then
+					name = "Princess Yauj";
+				elseif name == "The Twin Emperors" then
+					name = "Emperor Vek'lor";
+				elseif name == "The Four Horsemen" then
+					name = "Highlord Mograine";
+				end				
+				this:SetText(tostring(EPVALS[name]));
+				this:SetPoint('LEFT', target, 'LEFT', 275, 0); --FontStrings justify to the left, so for the sake of structuring, it's better to set the relative anchor to left
+			</OnShow>
+		</Scripts>
+	</EditBox>
+	
+	<EditBox name="slotWeightInputBoxTemplate" inherits="InputBoxTemplate" minvalue="0.0" virtual="true">
+		<Size>
+			<AbsDimension x="40" y="5" />
+		</Size>
+		<Scripts>
+			<OnLoad>
+				this:SetAutoFocus(false);
+			</OnLoad>
+			<OnEnterPressed>
+				this:ClearFocus();
+			</OnEnterPressed>
+			<OnEditFocusLost>
+				local slot = string.sub(this:GetName(), 15, string.find(this:GetName(), "_weight")-1);
+				local value = this:GetText();
+				if CEPGP_isNumber(this:GetText()) and SLOTWEIGHTS[slot] ~= tonumber(value) then
+					SLOTWEIGHTS[slot] = tonumber(value);
+					CEPGP_print("Modifier for " .. string.lower(slot) .. " slot updated");
+				else
+					this:SetText(SLOTWEIGHTS[slot]);
+				end
+			</OnEditFocusLost>
+			<OnShow>
+				local slot = strsub(this:GetName(), 15, strfind(this:GetName(), "_weight")-1);
+				this:SetPoint('LEFT', getglobal("CEPGP_options_slot_" .. slot), 'RIGHT', 10, 0);
+			</OnShow>
+		</Scripts>
+	</EditBox>
+	
+	<CheckButton name="AutoAwardEPCheckBox" inherits="UIOptionsCheckButtonTemplate" virtual="true">
+		<HitRectInsets>
+			<AbsInset left="0" right="0" top="0" bottom="0" />
+		</HitRectInsets>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks('LeftButtonDown');
+			</OnLoad>
+			<OnClick>
+				local name = strsub(this:GetName(), 15, strfind(this:GetName(), "_auto_check")-1);
+				if name == "The Edge of Madness" then
+					if this:GetChecked() then
+						AUTOEP["Gri'lek"] = true;
+						AUTOEP["Hazza'rah"] = true;
+						AUTOEP["Renataki"] = true;
+						AUTOEP["Wushoolay"] = true;
+					else
+						AUTOEP["Gri'lek"] = false;
+						AUTOEP["Hazza'rah"] = false;
+						AUTOEP["Renataki"] = false;
+						AUTOEP["Wushoolay"] = false;
+					end
+				elseif name == "The Bug Trio" then
+					if this:GetChecked() then
+						AUTOEP["Princess Yauj"] = true;
+						AUTOEP["Vem"] = true;
+						AUTOEP["Lord Kri"] = true;
+					else
+						AUTOEP["Princess Yauj"] = false;
+						AUTOEP["Vem"] = false;
+						AUTOEP["Lord Kri"] = false;
+					end
+				elseif name == "The Twin Emperors" then
+					if this:GetChecked() then
+						EPVALS["Emperor Vek'lor"] = true;
+						EPVALS["Emperor Vek'nilash"] = true;
+					else
+						EPVALS["Emperor Vek'lor"] = false;
+						EPVALS["Emperor Vek'nilash"] = false;
+					end
+				elseif name == "The Four Horseman" then
+					if this:GetChecked() then
+						AUTOEP["Highlord Mograine"] = true;
+						AUTOEP["Thane Korth'azz"] = true;
+						AUTOEP["Lady Blaumeux"] = true;
+						AUTOEP["Sir Zeliek"] = true;
+					else
+						AUTOEP["HIghlord Mograine"] = false;
+						AUTOEP["Thane Korth'azz"] = false;
+						AUTOEP["Lady Blaumeux"] = false;
+						AUTOEP["Sir Zeliek"] = false;
+					end
+				else
+					local name = strsub(this:GetName(), 15, strfind(this:GetName(), "_auto_check")-1);
+					if this:GetChecked() then
+						AUTOEP[name] = true;
+					else
+						AUTOEP[name] = false;
+					end
+				end
+				CEPGP_print("Updated auto award for " .. name);
+			</OnClick>
+			<OnShow>
+				local name = strsub(this:GetName(), 15, strfind(this:GetName(), "_auto_check")-1);
+				local target = getglobal("CEPGP_options_" .. name .. "_EP_value");
+				if name == "The Edge of Madness" then
+					name = "Gri'lek"; --All bosses in the edge of madness will have the same value
+				elseif name == "The Bug Trio" then
+					name = "Princess Yauj";
+				elseif name == "The Twin Emperors" then
+					name = "Emperor Vek'lor";
+				elseif name == "The Four Horsemen" then
+					name = "Highlord Mograine";
+				end				
+				this:SetChecked(AUTOEP[name]);
+				this:SetPoint('LEFT', target, 'RIGHT', 25, 0);
+			</OnShow>
+		</Scripts>
+	</CheckButton>
+
+	<FontString name="SlotWeightFontTemplate" inherits="GameFontNormal" virtual="true">
+		<Color r="1" g="1" b="1"/>
+	</FontString>
+
+	<CheckButton name="StandbyEPRankCheckBox" inherits="UIOptionsCheckButtonTemplate" virtual="true">
+		<HitRectInsets>
+			<AbsInset left="0" right="0" top="0" bottom="0" />
+		</HitRectInsets>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks('LeftButtonDown');
+			</OnLoad>
+			<OnClick>
+				local id = this:GetID();
+				if this:GetChecked() then 
+					STANDBYRANKS[id][2] = true;
+				else
+					STANDBYRANKS[id][2] = false;
+				end
+			</OnClick>
+			<OnShow>
+				local target = getglobal("CEPGP_options_standby_ep_rank_" .. this:GetID());
+				this:SetPoint("LEFT", target, "LEFT", 100, 0);
+			</OnShow>
+		</Scripts>
+	</CheckButton>
+	
+</Ui>
