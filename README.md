@@ -45,8 +45,8 @@ To install:
 **Note:**
 If you get an error when adding an item to override for example (such as item not found), but you're sure you've spelled it correctly, then the item likely does not exist in your cache. This is a restriction in the API, items are cached as you see them in game. After seeing this item, you should not receive this error again (unless you delete your cache). This error should not prevent any functionality.
 
-Patch Version: 2.4.3
+Patch Version: 1.12.1
 
-Build Number: 8606
+Build Number: 5875
 
 Author: Alumian
