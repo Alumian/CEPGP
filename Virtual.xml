@@ -437,38 +437,38 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentEPBefore" inherits="GameFontHighlightSmall" justifyH="CENTER">
+				<FontString name="$parentEPBefore" inherits="GameFontHighlightSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parentAction" relativePoint="RIGHT">
 							<Offset>
-								<AbsDimension x="50" y="0"/>
+								<AbsDimension x="35" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentEPAfter" inherits="GameFontHighlightSmall" justifyH="CENTER">
+				<FontString name="$parentEPAfter" inherits="GameFontHighlightSmall" justifyH="RIGHT">
 					<Anchors>
-						<Anchor point="CENTER" relativeTo="$parentEPBefore" relativePoint="CENTER">
+						<Anchor point="RIGHT" relativeTo="$parentEPBefore" relativePoint="LEFT">
 							<Offset>
-								<AbsDimension x="50" y="0"/>
+								<AbsDimension x="90" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentGPBefore" inherits="GameFontHighlightSmall" justifyH="CENTER">
+				<FontString name="$parentGPBefore" inherits="GameFontHighlightSmall" justifyH="LEFT">
 					<Anchors>
-						<Anchor point="CENTER" relativeTo="$parentEPAfter" relativePoint="CENTER">
+						<Anchor point="LEFT" relativeTo="$parentEPAfter" relativePoint="RIGHT">
 							<Offset>
-								<AbsDimension x="80" y="0"/>
+								<AbsDimension x="40" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentGPAfter" inherits="GameFontHighlightSmall" justifyH="CENTER">
+				<FontString name="$parentGPAfter" inherits="GameFontHighlightSmall" justifyH="RIGHT">
 					<Anchors>
-						<Anchor point="CENTER" relativeTo="$parentGPBefore" relativePoint="RIGHT">
+						<Anchor point="RIGHT" relativeTo="$parentGPBefore" relativePoint="LEFT">
 							<Offset>
-								<AbsDimension x="50" y="0"/>
+								<AbsDimension x="90" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
