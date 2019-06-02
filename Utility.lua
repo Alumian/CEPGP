@@ -149,10 +149,14 @@ function CEPGP_calcGP(link, quantity, id)
 			elseif (name == "qirajibindingsofcommand" or name == "qirajibindingsofdominance") then slot = "INVTYPE_WRIST";
 			end
 			
-		elseif name == "headofossiriantheunscarred" or name == "headofonyxia" or name == "headofnefarian" or name == "eyeofc'thun" then
+		elseif name == "headofossiriantheunscarred" or name == "headofonyxia" or name == "headofnefarian" or name == "eyeofcthun" then
 			slot = "INVTYPE_NECK";
-		elseif name == "thephylacteryofkel'thuzad" then
+		elseif name == "thephylacteryofkel'thuzad" or name == "heartofhakkar" then
 			slot = "INVTYPE_TRINKET";
+		elseif name == "huskoftheoldgod" or name == "carapaceoftheoldgod" then
+			slot = "INVTYPE_CHEST";
+		elseif name == "ourosintacthide" or name == "skinofthegreatsandworm" then
+			slot = "INVTYPE_LEGS";
 				
 		--Exceptions: Items that should not carry GP but still need to be distributed
 		elseif name == "splinterofatiesh"
@@ -163,7 +167,9 @@ function CEPGP_calcGP(link, quantity, id)
 			or name == "mightofthescourge" 
 			or name == "powerofthescourge"
 			or name == "sulfuroningot"
-			or name == "matureblackdragonsinew" then
+			or name == "matureblackdragonsinew"
+			or name == "nightmareengulfedobject"
+			or name == "ancientpetrifiedleaf" then
 			slot = "INVTYPE_EXCEPTION";
 		end
 	end
