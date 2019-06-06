@@ -1,5 +1,4 @@
 function CEPGP_handleComms(event, arg1, arg2)
-	CEPGP_print("abc");
 	if event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!need" and CEPGP_distributing then
 		local duplicate = false;
 		for i = 1, table.getn(CEPGP_responses) do

@@ -2125,7 +2125,6 @@
 									</OnShow>
 									<OnEditFocusLost>
 										local msg = tostring(this:GetText());
-										CEPGP_print(msg);
 										if value == "" then
 											this:SetText(CEPGP_standby_whisper_msg);
 										elseif CEPGP_standby_whisper_msg ~= value then
@@ -5710,10 +5709,6 @@
 				this:RegisterForDrag("LeftButton");
 				this:EnableKeyboard(true);
 			</OnLoad>
-			<OnEvent>
-				CEPGP_print(event);
-				CEPGP_print(arg1);
-			</OnEvent>
 			<OnDragStart>
 				this:StartMoving();
 			</OnDragStart>
