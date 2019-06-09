@@ -136,9 +136,9 @@ function CEPGP_calcGP(link, quantity, id)
 			end
 			
 		elseif strfind(name, "primalhakkari") and rarity == 4 then
-			if (name == "primalhakkari bindings" or name == "primalhakkari armsplint" or name == "primalhakkari stanchion") then slot = "INVTYPE_WRIST";
-			elseif (name == "primalhakkari girdle" or name == "primalhakkari sash" or name == "primalhakkari shawl") then slot = "INVTYPE_WAIST";
-			elseif (name == "primalhakkari tabard" or name == "primalhakkari kossack" or name == "primalhakkari aegis") then slot = "INVTYPE_CHEST";
+			if (name == "primalhakkaribindings" or name == "primalhakkariarmsplint" or name == "primalhakkaristanchion") then slot = "INVTYPE_WRIST";
+			elseif (name == "primalhakkarigirdle" or name == "primalhakkarisash" or name == "primalhakkarishawl") then slot = "INVTYPE_WAIST";
+			elseif (name == "primalhakkaritabard" or name == "primalhakkarikossack" or name == "primalhakkariaegis") then slot = "INVTYPE_CHEST";
 			end
 		
 		elseif strfind(name, "qiraji") then
