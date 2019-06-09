@@ -169,7 +169,9 @@ function CEPGP_calcGP(link, quantity, id)
 			or name == "sulfuroningot"
 			or name == "matureblackdragonsinew"
 			or name == "nightmareengulfedobject"
-			or name == "ancientpetrifiedleaf" then
+			or name == "ancientpetrifiedleaf"
+			or name == "primalhakkariidol"
+			or name == "tomeofpolymorph:turtle" then
 			slot = "INVTYPE_EXCEPTION";
 		end
 	end
@@ -177,6 +179,7 @@ function CEPGP_calcGP(link, quantity, id)
 		local quality = rarity == 0 and "Poor" or rarity == 1 and "Common" or rarity == 2 and "Uncommon" or rarity == 3 and "Rare" or rarity == 4 and "Epic" or "Legendary";
 		CEPGP_print("Name: " .. name);
 		CEPGP_print("Rarity: " .. quality);
+		CEPGP_print("Item Level: " .. ilvl);
 		CEPGP_print("Item Type: " .. itemType);
 		CEPGP_print("Subtype: " .. subType);
 		CEPGP_print("Slot: " .. slot);
