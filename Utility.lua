@@ -151,7 +151,7 @@ function CEPGP_calcGP(link, quantity, id)
 			
 		elseif name == "headofossiriantheunscarred" or name == "headofonyxia" or name == "headofnefarian" or name == "eyeofcthun" then
 			slot = "INVTYPE_NECK";
-		elseif name == "thephylacteryofkel'thuzad" or name == "heartofhakkar" then
+		elseif name == "thephylacteryofkelthuzad" or name == "heartofhakkar" then
 			slot = "INVTYPE_TRINKET";
 		elseif name == "huskoftheoldgod" or name == "carapaceoftheoldgod" then
 			slot = "INVTYPE_CHEST";
