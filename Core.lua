@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-CEPGP_VERSION = "1.10.0";
+CEPGP_VERSION = "1.10.1";
 SLASH_CEPGP1 = "/CEPGP";
 SLASH_CEPGP2 = "/cep";
 CEPGP_VERSION_NOTIFIED = false;
@@ -148,6 +148,7 @@ function SlashCmdList.CEPGP(msg, editbox)
 		CEPGP_print("|cFF80FF80version|r - |cFFFF8080Checks the version of the addon everyone in your raid is running|r");
 		
 	elseif msg == "show" then
+		CEPGP_print(date("%d/%m/%y"));
 		CEPGP_populateFrame();
 		ShowUIPanel(CEPGP_frame);
 		CEPGP_updateGuild();

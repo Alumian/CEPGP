@@ -191,6 +191,7 @@ function CEPGP_handleCombat(name, except)
 			name = "Majordomo Executus";
 		end
 		EP = EPVALS[name];
+		CEPGP_print(EP);
 		if AUTOEP[name] and EP > 0 then
 			if success then
 				if CEPGP_combatModule == "The Four Horsemen" or CEPGP_combatModule == "The Bug Trio" or CEPGP_combatModule == "The Twin Emperors" then

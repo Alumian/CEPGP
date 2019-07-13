@@ -616,6 +616,7 @@
 				elseif value == EPVALS[name] then
 					return;
 				elseif EPVALS[name] ~= tonumber(value) then
+					value = tonumber(value);
 					if name == "The Edge of Madness" then
 						EPVALS["Gri'lek"] = value;
 						EPVALS["Hazza'rah"] = value;
