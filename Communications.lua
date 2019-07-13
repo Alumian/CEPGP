@@ -266,11 +266,10 @@ function CEPGP_IncAddonMsg(message, sender)
 			elseif option == "COMPLETE" then
 				CEPGP_UpdateOverrideScrollBar();
 				CEPGP_print("Import complete");
-				CEPGP_button_options:OnClick();
 			end
 		end
 		
-		CEPGP_button_options:OnClick();
+		CEPGP_button_options_OnClick();
 		
 	
 	elseif strfind(message, "CEPGP_TRAFFIC") then
