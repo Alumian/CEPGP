@@ -148,7 +148,6 @@ function SlashCmdList.CEPGP(msg, editbox)
 		CEPGP_print("|cFF80FF80version|r - |cFFFF8080Checks the version of the addon everyone in your raid is running|r");
 		
 	elseif msg == "show" then
-		CEPGP_print(date("%d/%m/%y"));
 		CEPGP_populateFrame();
 		ShowUIPanel(CEPGP_frame);
 		CEPGP_updateGuild();
