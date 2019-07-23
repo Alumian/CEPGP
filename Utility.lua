@@ -964,67 +964,68 @@ end
 
 function CEPGP_getDebugInfo()
 	local info = "<details><summary>Debug Info</summary><br />";
-	info = info .. "Version: " .. CEPGP_VERSION .. "<br /><br />";
-	info = info .. "GP Modifier: " .. MOD .. "<br /><br />";
-	info = info .. "Base GP: " .. BASEGP .. "<br /><br />";
+	info = info .. "Version: " .. CEPGP_VERSION .. "<br />";
+	info = info .. "Keyword: " .. CEPGP_keyword .. " <br />";
+	info = info .. "GP Modifier: " .. MOD .. "<br />";
+	info = info .. "Base GP: " .. BASEGP .. "<br />";
 	if STANDBYEP then
-		info = info .. "Standby EP: True<br /><br />";
+		info = info .. "Standby EP: True<br />";
 	else
-		info = info .. "Standby EP: False<br /><br />";
+		info = info .. "Standby EP: False<br />";
 	end
 	if STANDBYOFFLINE then
-		info = info .. "Standby Offline: True<br /><br />";
+		info = info .. "Standby Offline: True<br />";
 	else
-		info = info .. "Standby Offline: False<br /><br />";
+		info = info .. "Standby Offline: False<br />";
 	end
-	info = info .. "Standby Percent: " .. STANDBYPERCENT .. "<br /><br />";
+	info = info .. "Standby Percent: " .. STANDBYPERCENT .. "<br />";
 		if CEPGP_standby_accept_whispers then
-		info = info .. "Standby Accept Whispers: True<br /><br />";
+		info = info .. "Standby Accept Whispers: True<br />";
 	else
-		info = info .. "Standby Accept Whispers: False<br /><br />";
+		info = info .. "Standby Accept Whispers: False<br />";
 	end
 	if CEPGP_standby_byrank then
-		info = info .. "Standby EP by Rank: True<br /><br />";
+		info = info .. "Standby EP by Rank: True<br />";
 	else
-		info = info .. "Standby EP by Rank: False<br /><br />";
+		info = info .. "Standby EP by Rank: False<br />";
 	end
 	if CEPGP_standby_manual then
-		info = info .. "Standby EP Manual Delegation: True<br /><br />";
+		info = info .. "Standby EP Manual Delegation: True<br />";
 	else
-		info = info .. "Standby EP Manual Delegation: False<br /><br />";
+		info = info .. "Standby EP Manual Delegation: False<br />";
 	end
-	info = info .. "Standby EP Whisper Keyphrase: " .. CEPGP_standby_whisper_msg .. "<br /><br />";
+	info = info .. "Standby EP Whisper Keyphrase: " .. CEPGP_standby_whisper_msg .. "<br />";
 
-	info = info .. "<details><summary>Auto EP</summary><br />";
+	info = info .. "<br /><details><summary>Auto EP</summary>";
 	for k, v in pairs(AUTOEP) do
 		if v then
-			info = info .. "<details><summary>" .. k .. "</summary>True</details><br />";
+			info = info .. k .. ": True<br />";
 		else
-			info = info .. "<details><summary>" .. k .. "</summary>False</details><br />";
+			info = info .. k .. ": False<br />";
 		end
 	end
-	info = info .. "</details><br />";
-	info = info .. "<details><summary>EP Values</summary><br />";
+	info = info .. "</details>";
+	info = info .. "<details><summary>EP Values</summary>";
 	for k, v in pairs(EPVALS) do
-		info = info .. "<details><summary>" .. k .. "</summary>" .. v .. "</details><br />";
+		info = info .. k .. ": " .. v .. "<br />";
 	end
-	info = info .. "</details><br />";
-	info = info .. "<details><summary>Standby Guild Ranks</summary><br />";
+	info = info .. "</details>";
+	info = info .. "<details><summary>Standby Guild Ranks</summary>";
 	for k, v in pairs(STANDBYRANKS) do
 		if v[1] then
 			if v[2] then
-				info = info .. "<details><summary>" .. v[1] .. "</summary>True</details><br />";
+				info = info .. v[1] .. ": True<br />";
 			else
-				info = info .. "<details><summary>" .. v[1] .. "</summary>False</details><br />";
+				info = info .. v[1] .. ": False<br />";
 			end
 		end
 	end
-	info = info .. "</details><br />";
-	info = info .. "<details><summary>Slot Weights</summary><br />";
+	info = info .. "</details>";
+	info = info .. "<details><summary>Slot Weights</summary>";
 	for k, _ in pairs(SLOTWEIGHTS) do
-		info = info .. "<details><summary>" .. k .. "</summary>" .. SLOTWEIGHTS[k] .. "</details><br />";
+		info = info .. k .. ": " .. SLOTWEIGHTS[k] .. "<br />";
 	end
-	info = info .. "</details><br />";
+	info = info .. "</details>";
 	info = info .. "</details>";
 	return info;
 end
