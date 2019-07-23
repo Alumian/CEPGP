@@ -119,7 +119,7 @@ function CEPGP_announce(link, x, slotNum, quantity)
 		else
 			SendChatMessage("GP Value: " .. gp, RAID, CEPGP_LANGUAGE);
 		end
-		SendChatMessage("Whisper me !need for mainspec only", RAID, CEPGP_LANGUAGE);
+		SendChatMessage("Whisper me " .. CEPGP_keyword .. " for mainspec only", RAID, CEPGP_LANGUAGE);
 		SendChatMessage("--------------------------", RAID, CEPGP_LANGUAGE);
 		CEPGP_distribute:Show();
 		CEPGP_loot:Hide();

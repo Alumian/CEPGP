@@ -1371,6 +1371,16 @@
 								<Anchor point="CENTER" relativePoint="TOP" />
 							</Anchors>
 						</FontString>
+						<FontString name="CEPGP_options_keyword" inherits="GameFontNormal" text="Response Keyword:">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="15" y="-37.5" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
 						<FontString name="CEPGP_options_formula" inherits="GameFontNormal" text="x (2^((ilvl/26)+(rarity-4)) x slot) x">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
@@ -1660,6 +1670,42 @@
 							</OnClick>
 						</Scripts>
 					</Button>
+					<EditBox name="CEPGP_options_keyword_edit" inherits="InputBoxTemplate">
+						<Size>
+							<AbsDimension x="80" y="20" />
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CEPGP_options_keyword">
+								<Offset>
+									<AbsDimension x="10" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this:SetAutoFocus(false);
+							</OnLoad>
+							<OnEnterPressed>
+								this:ClearFocus();
+							</OnEnterPressed>
+							<OnEditFocusLost>
+								local value = this:GetText();
+								if CEPGP_keyword == value then
+									return;
+								else
+									if value == "" then
+										this:SetText(CEPGP_keyword);
+										CEPGP_print("You must nominate a keyword to distribute loot", true);
+										return;
+									else
+										CEPGP_keyword = value;
+										CEPGP_print("Loot keyword updated");
+									end
+								end
+							</OnEditFocusLost>
+						</Scripts>
+					</EditBox>
+
 					<EditBox name="CEPGP_options_coef_edit" inherits="InputBoxTemplate">
 						<Size>
 							<AbsDimension x="40" y="20" />

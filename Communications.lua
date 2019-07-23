@@ -139,65 +139,65 @@ function CEPGP_IncAddonMsg(message, sender)
 		CEPGP_print(string.sub(message, 5+string.len(UnitName("player"))+1));
 	elseif message == UnitName("player").."-import" then
 		local lane;
-		if CEPGP_raidRoster[arg4] then
+		if CEPGP_raidRoster[sender] then
 			lane = "RAID";
-		elseif CEPGP_roster[arg4] then
+		elseif CEPGP_roster[sender] then
 			lane = "GUILD";
 		end
-		CEPGP_SendAddonMsg(arg4.."-impresponse!CHANNEL~"..CHANNEL, lane);
-		CEPGP_SendAddonMsg(arg4.."-impresponse!MOD~"..MOD, lane);
-		CEPGP_SendAddonMsg(arg4.."-impresponse!COEF~"..COEF, lane);
-		CEPGP_SendAddonMsg(arg4.."-impresponse!BASEGP~"..BASEGP, lane);
-		CEPGP_SendAddonMsg(arg4.."-impresponse!WHISPERMSG~"..CEPGP_standby_whisper_msg, lane);
+		CEPGP_SendAddonMsg(sender.."-impresponse!CHANNEL~"..CHANNEL, lane);
+		CEPGP_SendAddonMsg(sender.."-impresponse!MOD~"..MOD, lane);
+		CEPGP_SendAddonMsg(sender.."-impresponse!COEF~"..COEF, lane);
+		CEPGP_SendAddonMsg(sender.."-impresponse!BASEGP~"..BASEGP, lane);
+		CEPGP_SendAddonMsg(sender.."-impresponse!WHISPERMSG~"..CEPGP_standby_whisper_msg, lane);
+		CEPGP_SendAddonMsg(sender.."-impresponse!KEYWORD~"..CEPGP_keyword, lane);
 		if STANDBYEP then
-			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYEP~1", lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYEP~1", lane);
 		else
-			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYEP~0", lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYEP~0", lane);
 		end
 		if STANDBYOFFLINE then
-			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYOFFLINE~1", lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYOFFLINE~1", lane);
 		else
-			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYOFFLINE~0", lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYOFFLINE~0", lane);
 		end
-		CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYPERCENT~"..STANDBYPERCENT, lane);
+		CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYPERCENT~"..STANDBYPERCENT, lane);
 		for k, v in pairs(SLOTWEIGHTS) do
-			CEPGP_SendAddonMsg(arg4.."-impresponse!SLOTWEIGHTS~"..k.."?"..v, lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!SLOTWEIGHTS~"..k.."?"..v, lane);
 		end
 		if CEPGP_standby_byrank then --Implies result for both byrank and manual standby designation
-			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYBYRANK~1", lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYBYRANK~1", lane);
 		else
-			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYBYRANK~0", lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYBYRANK~0", lane);
 		end
 		if CEPGP_standby_accept_whispers then
-			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYALLOWWHISPERS~1", lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYALLOWWHISPERS~1", lane);
 		else
-			CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYALLOWWHISPERS~0", lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYALLOWWHISPERS~0", lane);
 		end
 		for k, v in pairs(STANDBYRANKS) do
 			if STANDBYRANKS[k][2] then
-				CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYRANKS~"..k.."?1", lane);
+				CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYRANKS~"..k.."?1", lane);
 			else
-				CEPGP_SendAddonMsg(arg4.."-impresponse!STANDBYRANKS~"..k.."?0", lane);
+				CEPGP_SendAddonMsg(sender.."-impresponse!STANDBYRANKS~"..k.."?0", lane);
 			end
 		end
 		for k, v in pairs(EPVALS) do
-			CEPGP_SendAddonMsg(arg4.."-impresponse!EPVALS~"..k.."?"..v, lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!EPVALS~"..k.."?"..v, lane);
 		end
 		for k, v in pairs(AUTOEP) do
 			if AUTOEP[k] then
-				CEPGP_SendAddonMsg(arg4.."-impresponse!AUTOEP~"..k.."?1", lane);
+				CEPGP_SendAddonMsg(sender.."-impresponse!AUTOEP~"..k.."?1", lane);
 			else
-				CEPGP_SendAddonMsg(arg4.."-impresponse!AUTOEP~"..k.."?0", lane);
+				CEPGP_SendAddonMsg(sender.."-impresponse!AUTOEP~"..k.."?0", lane);
 			end
 		end
 		for k, v in pairs(OVERRIDE_INDEX) do
-			CEPGP_SendAddonMsg(arg4.."-impresponse!OVERRIDE~"..k.."?"..v, lane);
+			CEPGP_SendAddonMsg(sender.."-impresponse!OVERRIDE~"..k.."?"..v, lane);
 		end
-		CEPGP_SendAddonMsg(arg4.."-impresponse!COMPLETE~", lane);
+		CEPGP_SendAddonMsg(sender.."-impresponse!COMPLETE~", lane);
 		
 	elseif strfind(message, UnitName("player")) and strfind(message, "-impresponse!") then
 		local option = string.sub(message, strfind(message, "!")+1, strfind(message, "~")-1);
-		
 		if option == "SLOTWEIGHTS" or option == "STANDBYRANKS" or option == "EPVALS" or option == "AUTOEP" or option == "OVERRIDE" then
 			local field = string.sub(message, strfind(message, "~")+1, strfind(message, "?")-1);
 			local val = string.sub(message, strfind(message, "?")+1);
@@ -224,6 +224,8 @@ function CEPGP_IncAddonMsg(message, sender)
 			local val = string.sub(message, strfind(message, "~")+1);
 			if option == "CHANNEL" then
 				CHANNEL = val;
+			elseif option == "KEYWORD" then
+				CEPGP_keyword = val;
 			elseif option == "MOD" then
 				MOD = tonumber(val);
 			elseif option == "COEF" then

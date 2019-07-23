@@ -2,7 +2,7 @@
 ## Title: Classic EPGP
 ## Author: Alumian
 ## Notes: Classic EPGP handles your guild's EPGP and master loot distribution. Usage: /CEPGP or /bce for options
-## SavedVariables: CHANNEL, MOD, AUTOEP, EPVALS, BASEGP, STANDBYEP, STANDBYOFFLINE, STANDBYPERCENT, STANDBYRANKS, SLOTWEIGHTS, RECORDS, OVERRIDE_INDEX, TRAFFIC, CEPGP_standby_accept_whispers, CEPGP_standby_byrank, CEPGP_standby_manual, CEPGP_standby_whisper_msg, CEPGP_notice, CEPGP_raidlogs
+## SavedVariables: CHANNEL, MOD, AUTOEP, EPVALS, BASEGP, STANDBYEP, STANDBYOFFLINE, STANDBYPERCENT, STANDBYRANKS, SLOTWEIGHTS, RECORDS, OVERRIDE_INDEX, TRAFFIC, CEPGP_standby_accept_whispers, CEPGP_standby_byrank, CEPGP_standby_manual, CEPGP_standby_whisper_msg, CEPGP_notice, CEPGP_raidlogs, CEPGP_keyword
 
 Virtual.xml
 Frame.xml

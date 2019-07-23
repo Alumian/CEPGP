@@ -1,7 +1,7 @@
 --[[ Globals ]]--
 CEPGP = CreateFrame("Frame");
 _G = getfenv(0);
-CEPGP_VERSION = "1.10.1";
+CEPGP_VERSION = "1.10.2";
 SLASH_CEPGP1 = "/CEPGP";
 SLASH_CEPGP2 = "/cep";
 CEPGP_VERSION_NOTIFIED = false;
@@ -49,6 +49,7 @@ STANDBYEP = false;
 STANDBYOFFLINE = false;
 CEPGP_standby_accept_whispers = false;
 CEPGP_standby_whisper_msg = "standby";
+CEPGP_keyword = "need";
 CEPGP_standby_byrank = true;
 CEPGP_standby_manual = false;
 CEPGP_notice = false;
@@ -80,7 +81,7 @@ function CEPGP_OnEvent()
 		end
 			
 	
-	elseif (event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "need" and CEPGP_distributing) or
+	elseif (event == "CHAT_MSG_WHISPER" and string.lower(arg1) == CEPGP_keyword and CEPGP_distributing) or
 		(event == "CHAT_MSG_WHISPER" and string.lower(arg1) == "!info") or
 		(event == "CHAT_MSG_WHISPER" and (string.lower(arg1) == "!infoguild" or string.lower(arg1) == "!inforaid" or string.lower(arg1) == "!infoclass")) then
 			CEPGP_handleComms(event, arg1, arg2);
