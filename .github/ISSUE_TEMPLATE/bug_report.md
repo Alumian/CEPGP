@@ -10,6 +10,9 @@ assignees: Alumian
 **Describe the bug**
 A clear and concise description of what the bug is.
 
+**Which server are you playing on?**
+Please be aware that if the server is not public (or if I can't join the server) then only limited support may be provided.
+
 **Error message**
 The error message provided when the issue occurs, if applicable.
 
