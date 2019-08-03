@@ -4444,7 +4444,7 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<EditBox name="CEPGP_context_amount" inherits="InputBoxTemplate" letters="15">
+			<EditBox name="CEPGP_context_amount" inherits="InputBoxTemplate">
 				<Size>
 					<AbsDimension x="105" y="20" />
 				</Size>
@@ -4494,6 +4494,9 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
+				<Scripts>
+					--OnClick events are handled in Button.lua and are broken up into modules
+				</Scripts>
 			</Button>
 		</Frames>
 		<Scripts>
