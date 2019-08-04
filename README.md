@@ -1,5 +1,7 @@
 # Classic EPGP
-**Do not redistribute this addon. Post a link to this github page instead**
+**IMPORTANT: This addon is for the original 1.12.1 Classic World of Warcraft**
+
+**If you are looking for the new retail release of Classic WoW, please see the updated addon here: https://github.com/Alumian/CEPGP-Retail**
 
 An addon designed to handle your guild's EPGP standings by storing the respective values in your Officer Notes. Another primary function of the addon is to handle loot moderation which you must be the master looter to utilise.
 
