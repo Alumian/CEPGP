@@ -331,9 +331,16 @@ function CEPGP_AddRaidEP(amount, msg, encounter)
 		SendChatMessage(msg, "RAID", CEPGP_LANGUAGE);
 	else
 		CEPGP_SendAddonMsg("update");
-		TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Raid", UnitName("player"), "Add Raid EP +" .. amount};
-		CEPGP_ShareTraffic("Raid", UnitName("player"), "Add Raid EP +" .. amount);
-		SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, CEPGP_LANGUAGE);
+		if tonumber(amount) <= 0 then
+			amount = string.sub(amount, 2, string.len(amount));
+			TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Raid", UnitName("player"), "Subtract Raid EP -" .. amount};
+			CEPGP_ShareTraffic("Raid", UnitName("player"), "Subtract Raid EP -" .. amount);	
+			SendChatMessage(amount .. " EP taken from all raid members", CHANNEL, CEPGP_LANGUAGE);
+		else
+			TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Raid", UnitName("player"), "Add Raid EP +" .. amount};
+			CEPGP_ShareTraffic("Raid", UnitName("player"), "Add Raid EP +" .. amount);
+			SendChatMessage(amount .. " EP awarded to all raid members", CHANNEL, CEPGP_LANGUAGE);
+		end
 	end
 	CEPGP_UpdateTrafficScrollBar();
 end
@@ -397,10 +404,18 @@ function CEPGP_addGuildEP(amount)
 		end		
 	end
 	CEPGP_SendAddonMsg("update");
-	TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", UnitName("player"), "Add Guild EP +" .. amount};
-	CEPGP_ShareTraffic("Guild", UnitName("player"), "Add Guild EP +" .. amount);
+	
+	if tonumber(amount) <= 0 then
+		amount = string.sub(amount, 2, string.len(amount));
+		SendChatMessage(amount .. " EP taken from all guild members", CHANNEL, CEPGP_LANGUAGE);
+		TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", UnitName("player"), "Subtract Guild EP -" .. amount};
+		CEPGP_ShareTraffic("Guild", UnitName("player"), "Subtract Guild EP -" .. amount);
+	else
+		SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, CEPGP_LANGUAGE);
+		TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", UnitName("player"), "Add Guild EP +" .. amount};
+		CEPGP_ShareTraffic("Guild", UnitName("player"), "Add Guild EP +" .. amount);
+	end
 	CEPGP_UpdateTrafficScrollBar();
-	SendChatMessage(amount .. " EP awarded to all guild members", CHANNEL, CEPGP_LANGUAGE);
 end
 
 function CEPGP_addStandbyEP(player, amount, boss)
@@ -435,7 +450,7 @@ function CEPGP_addGP(player, amount, item, itemLink)
 		CEPGP_print("Please enter a valid number", 1);
 		return;
 	end
-	local EP, GP = nil;
+	local EP, GP, GPB = nil;
 	amount = math.floor(amount);
 	if CEPGP_tContains(CEPGP_roster, player, true) then
 		offNote = CEPGP_roster[player][5];
@@ -446,20 +461,7 @@ function CEPGP_addGP(player, amount, item, itemLink)
 			offNote = "0," .. BASEGP;
 		end
 		EP,GP = CEPGP_getEPGP(offNote);
-		TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {
-			[1] = player,
-			[2] = UnitName("player"),
-			[3] = "Add GP +" .. amount,
-			[4] = EP,
-			[5] = EP,
-			[6] = GP,
-			[7] = GP + amount
-		};
-		if itemLink then
-			TRAFFIC[CEPGP_ntgetn(TRAFFIC)][8] = itemLink;
-		end
-		CEPGP_ShareTraffic(player, UnitName("player"), "Add GP +" .. amount, EP, EP, GP, GP + amount, CEPGP_getItemID(CEPGP_getItemString(itemLink)));
-		CEPGP_UpdateTrafficScrollBar();
+		GPB = GP;
 		GP = tonumber(GP) + amount;
 		EP = tonumber(EP);
 		if GP < BASEGP then
@@ -471,8 +473,47 @@ function CEPGP_addGP(player, amount, item, itemLink)
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		CEPGP_SendAddonMsg("update");
 		if not item then
-			SendChatMessage(amount .. " GP added to " .. player, CHANNEL, CEPGP_LANGUAGE, CHANNEL);
+			if tonumber(amount) <= 0 then
+				amount = string.sub(amount, 2, string.len(amount));
+				SendChatMessage(amount .. " GP taken from " .. player, CHANNEL, CEPGP_LANGUAGE, CHANNEL);
+				CEPGP_ShareTraffic(player, UnitName("player"), "Subtract GP -" .. amount, EP, EP, GP - amount, GP, CEPGP_getItemID(CEPGP_getItemString(itemLink)));
+				TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {
+					[1] = player,
+					[2] = UnitName("player"),
+					[3] = "Subtract GP -" .. amount,
+					[4] = EP,
+					[5] = EP,
+					[6] = GPB,
+					[7] = GP
+				};
+			else
+				SendChatMessage(amount .. " GP added to " .. player, CHANNEL, CEPGP_LANGUAGE, CHANNEL);
+				CEPGP_ShareTraffic(player, UnitName("player"), "Add GP +" .. amount, EP, EP, GP - amount, GP, CEPGP_getItemID(CEPGP_getItemString(itemLink)));
+				TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {
+					[1] = player,
+					[2] = UnitName("player"),
+					[3] = "Add GP +" .. amount,
+					[4] = EP,
+					[5] = EP,
+					[6] = GPB,
+					[7] = GP
+				};
+			end
+		else
+			TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {
+			[1] = player,
+			[2] = UnitName("player"),
+			[3] = "Add GP +" .. amount,
+			[4] = EP,
+			[5] = EP,
+			[6] = GP - amount,
+			[7] = GP
+		};
+			if itemLink then
+				TRAFFIC[CEPGP_ntgetn(TRAFFIC)][8] = itemLink;
+			end
 		end
+		CEPGP_UpdateTrafficScrollBar();
 	else
 		CEPGP_print(player .. " not found in guild CEPGP_roster - no GP given");
 		CEPGP_print("If this was a mistake, you can manually award them GP via the CEPGP guild menu");
@@ -485,7 +526,7 @@ function CEPGP_addEP(player, amount)
 		return;
 	end
 	amount = math.floor(amount);
-	local EP, GP = nil;
+	local EP, GP, EPB = nil;
 	if CEPGP_tContains(CEPGP_roster, player, true) then
 		offNote = CEPGP_roster[player][5];
 		index = CEPGP_roster[player][1];
@@ -495,17 +536,7 @@ function CEPGP_addEP(player, amount)
 			offNote = "0," .. BASEGP;
 		end
 		EP,GP = CEPGP_getEPGP(offNote);
-		TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {
-			[1] = player,
-			[2] = UnitName("player"),
-			[3] = "Add EP +" .. amount,
-			[4] = EP,
-			[5] = EP + amount,
-			[6] = GP,
-			[7] = GP
-		};
-		CEPGP_ShareTraffic(player, UnitName("player"), "Add EP +" .. amount, EP, EP + amount, GP, GP);
-		CEPGP_UpdateTrafficScrollBar();
+		EPB = EP;
 		EP = tonumber(EP) + amount;
 		GP = tonumber(GP);
 		if GP < BASEGP then
@@ -516,7 +547,33 @@ function CEPGP_addEP(player, amount)
 		end
 		GuildRosterSetOfficerNote(index, EP .. "," .. GP);
 		CEPGP_SendAddonMsg("update");
-		SendChatMessage(amount .. " EP added to " .. player, CHANNEL, CEPGP_LANGUAGE, CHANNEL);
+		if tonumber(amount) <= 0 then
+			amount = string.sub(amount, 2, string.len(amount));
+			SendChatMessage(amount .. " EP taken from " .. player, CHANNEL, CEPGP_LANGUAGE, CHANNEL);
+			TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {
+				[1] = player,
+				[2] = UnitName("player"),
+				[3] = "Subtract EP -" .. amount,
+				[4] = EPB,
+				[5] = EP,
+				[6] = GP,
+				[7] = GP
+			};
+			CEPGP_ShareTraffic(player, UnitName("player"), "Subtract EP -" .. amount, EP - amount, EP, GP, GP);
+		else
+			SendChatMessage(amount .. " EP added to " .. player, CHANNEL, CEPGP_LANGUAGE, CHANNEL);
+			TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {
+				[1] = player,
+				[2] = UnitName("player"),
+				[3] = "Add EP +" .. amount,
+				[4] = EPB,
+				[5] = EP,
+				[6] = GP,
+				[7] = GP
+			};
+			CEPGP_ShareTraffic(player, UnitName("player"), "Add EP +" .. amount, EP + amount, EP, GP, GP);
+		end
+		CEPGP_UpdateTrafficScrollBar();
 	else
 		CEPGP_print("Player not found in guild CEPGP_roster.", true);
 	end
@@ -573,11 +630,18 @@ function CEPGP_decay(amount)
 		end
 	end
 	CEPGP_SendAddonMsg("update");
-	TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", UnitName("player"), "Decay EPGP -" .. amount .. "%"}; 
-	CEPGP_ShareTraffic("Guild", UnitName("player"), "Decay EPGP -" .. amount .. "%");
-	CEPGP_UpdateTrafficScrollBar();
-	SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, CEPGP_LANGUAGE, CHANNEL);
 	
+	if tonumber(amount) <= 0 then
+		amount = string.sub(amount, 2, string.len(amount));
+		SendChatMessage("Guild EPGP inflated by " .. amount .. "%", CHANNEL, CEPGP_LANGUAGE, CHANNEL);
+		TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", UnitName("player"), "Inflated EPGP +" .. amount .. "%"}; 
+		CEPGP_ShareTraffic("Guild", UnitName("player"), "Inflated EPGP +" .. amount .. "%");
+	else
+		SendChatMessage("Guild EPGP decayed by " .. amount .. "%", CHANNEL, CEPGP_LANGUAGE, CHANNEL);
+		TRAFFIC[CEPGP_ntgetn(TRAFFIC)+1] = {"Guild", UnitName("player"), "Decay EPGP -" .. amount .. "%"}; 
+		CEPGP_ShareTraffic("Guild", UnitName("player"), "Decayed EPGP -" .. amount .. "%");
+	end
+	CEPGP_UpdateTrafficScrollBar();
 end
 
 function CEPGP_resetAll()
